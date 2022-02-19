@@ -1,2 +1,2 @@
 # Car_Location
-Site Web de location de voiture developpé dans le cadre du projet dev du second quadri à l'EPHEC
+Application Web de location de voiture développée dans le cadre du cours "Développement informatique III" du bachelier Technologie de l'informatique à l'EPHEC.
