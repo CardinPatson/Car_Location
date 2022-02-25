@@ -44,6 +44,7 @@ const Container = styled.div`
 	top: 0;
 	width: 100vw;
 	z-index: 100;
+	margin: auto;
 
 	/* padding: 0 24px; */
 `;
@@ -86,7 +87,7 @@ const Nav = styled.div`
 
 	p {
 		/* border: solid blue 1px; */
-		color: rgba(0, 0, 0, 1);
+		color: rgba(1, 1, 1, 0.7);
 		text-decoration: none;
 		margin: 0 auto;
 		padding: 5px;
@@ -107,9 +108,9 @@ const Login = styled.div`
 	padding: 5px;
 	font-size: 1.15em;
 	p {
-		color: rgba(0, 0, 0, 1);
+		color: rgba(0, 0, 0, 0.7);
 		&:hover {
-			color: #00a9ff;
+			color: #00a9f5;
 			cursor: pointer;
 		}
 	}
