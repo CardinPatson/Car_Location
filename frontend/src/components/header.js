@@ -16,6 +16,9 @@ function Header() {
 					<Link to="/cars" style={{ textDecoration: "none" }}>
 						<p>Cars</p>
 					</Link>
+					<Link to="/insertCars" style={{ textDecoration: "none" }}>
+						<p>Add Cars</p>
+					</Link>
 				</Nav>
 				<Login>
 					{/* {//TODO Si déjà inscris mentionner son nom } */}

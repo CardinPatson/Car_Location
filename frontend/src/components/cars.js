@@ -1,13 +1,13 @@
 import React from "react";
 import Header from "./header";
 import styled from "styled-components";
-function Cars() {
+function Cars(props) {
 	return (
 		<Container>
 			<Header />
 			<Content>
 				<Filter>left</Filter>
-				<Available>right</Available>
+				<Available>{props.name}</Available>
 			</Content>
 		</Container>
 	);
