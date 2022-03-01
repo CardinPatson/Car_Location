@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+
 // import "rsuite/dist/rsuite.min.css";
 // import { Calendar } from "rsuite";
 import styled from "styled-components";
+
 function Slot() {
+	const [startDate, setStartDate] = useState("");
+	const [startTime, setStartTime] = useState("");
+	const [endDate, setEndDate] = useState("");
+	const [endTime, setEndTime] = useState("");
+
+	const handleClick = (e) => {
+		e.preventDefault();
+		//TODO verifier les informations du formulaire
+		//TODO rechercher comment bloquer les anciennes date du calendrier
+	};
 	return (
 		<Container>
 			<Content>
@@ -11,13 +23,13 @@ function Slot() {
 					<legend>Choisissez une date</legend>
 					<StartDate>
 						<p>Du</p>
-						<input type="date" />
-						<input type="time" />
+						<input type="date" onChange={(e) => {}} />
+						<input type="time" onChange={(e) => {}} />
 					</StartDate>
 					<EndDate>
 						<p>Au </p>
-						<input type="date" />
-						<input type="time" />
+						<input type="date" onChange={(e) => {}} />
+						<input type="time" onChange={(e) => {}} />
 					</EndDate>
 					<button
 						onClick={() => {

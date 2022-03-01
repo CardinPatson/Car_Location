@@ -13,7 +13,7 @@ function Header() {
 					<Link to="/" style={{ textDecoration: "none" }}>
 						<p>Home</p>
 					</Link>
-					<Link to="#" style={{ textDecoration: "none" }}>
+					<Link to="/cars" style={{ textDecoration: "none" }}>
 						<p>Cars</p>
 					</Link>
 				</Nav>
