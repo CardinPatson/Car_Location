@@ -23,7 +23,7 @@ const Content = styled.div`
 const Filter = styled.div`
 	border: solid red 1px;
 	flex: 0.5;
-	height: 100vh;
+	/* height: 100vh; */
 `;
 const Available = styled.div`
 	border: solid red 1px;
