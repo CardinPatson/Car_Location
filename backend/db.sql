@@ -3,7 +3,7 @@ CREATE TABLE "Client" (
   "first_name" varchar NOT NULL,
   "last_name" varchar NOT NULL,
   "password" varchar NOT NULL,
-  "created_at" datetime DEFAULT 'now()',
+  "created_at" timestamp DEFAULT 'now()',
   "birth_date" date,
   "birth_place" varchar,
   "birth_country" varchar,
@@ -34,11 +34,11 @@ CREATE TABLE "Images" (
 
 CREATE TABLE "Commands" (
   "id" SERIAL PRIMARY KEY,
-  "id_car" int,
-  "id_cl" int,
+  "id_car" int DEFAULT -1,
+  "id_cl" int DEFAULT NULL,
   "com_date" varchar,
-  "com_start_date" datetime,
-  "com_end_date" datetime,
+  "com_start_date" timestamp ,
+  "com_end_date" timestamp ,
   "price" float
 );
 
