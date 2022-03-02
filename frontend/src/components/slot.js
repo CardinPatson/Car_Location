@@ -121,15 +121,9 @@ const StartDate = styled.div`
 		flex-direction: column;
 	}
 `;
-const EndDate = styled.div`
+const EndDate = styled(StartDate)`
 	/* border: solid red 1px; */
-	display: flex;
-	align-items: center;
-	margin-left: 20px;
 	padding: 5px;
-	@media (max-width: 1000px) {
-		flex-direction: column;
-	}
 `;
 const Date = styled.div`
 	/* border: solid black 1px; */
