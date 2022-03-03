@@ -69,6 +69,7 @@ function Cars(props) {
 					<button
 						onClick={() => {
 							/**Verifier les données du formulaire */
+							// todo pour la date envoyer les données au composant slot
 						}}
 					>
 						Valider
@@ -76,6 +77,7 @@ function Cars(props) {
 				</Filter>
 				<Available>
 					<h2>Car Available</h2>
+					{/*TODO: Boucler pour afficher les voitures */}
 				</Available>
 			</Content>
 		</Container>
@@ -88,8 +90,7 @@ const Container = styled.div`
 `;
 const Content = styled.div`
 	/* border: solid black 1px; */
-	padding: 5px;
-	margin-top: 80px;
+	margin-top: 85px;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;

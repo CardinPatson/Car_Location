@@ -16,7 +16,7 @@ function Header() {
 					<Link to="/cars" style={{ textDecoration: "none" }}>
 						<p>Cars</p>
 					</Link>
-					<Link to="/insertCars" style={{ textDecoration: "none" }}>
+					<Link to="/add-cars" style={{ textDecoration: "none" }}>
 						<p>Add Cars</p>
 					</Link>
 				</Nav>
