@@ -1,4 +1,4 @@
-CREATE TABLE "client" (
+CREATE TABLE "customers" (
   "id" SERIAL PRIMARY KEY,
   "first_name" varchar NOT NULL,
   "last_name" varchar NOT NULL,
@@ -12,8 +12,13 @@ CREATE TABLE "client" (
   "mail" varchar NOT NULL UNIQUE
 );
 
-CREATE TABLE "voiture" (
+CREATE TABLE "admins" (
+  "id_customer" int NOT NULL
+);
+
+CREATE TABLE "cars" (
   "id" SERIAL PRIMARY KEY,
+  "name" varchar NOT NULL,
   "price" float,
   "brand" varchar NOT NULL,
   "model" varchar NOT NULL,
@@ -24,28 +29,28 @@ CREATE TABLE "voiture" (
   "energy" varchar NOT NULL,
   "is_automatic" boolean NOT NULL,
   "passengers" int NOT NULL,
-  "air_cond" boolean NOT NULL
+  "air_conditioning" boolean NOT NULL
 );
 
 CREATE TABLE "images" (
   "id" int NOT NULL,
-  "pic_name" varchar UNIQUE
+  "names" TEXT [] UNIQUE
 );
 
-CREATE TABLE "commands" (
+CREATE TABLE "orders" (
   "id" SERIAL PRIMARY KEY,
   "id_car" int DEFAULT -1,
-  "id_cl" int DEFAULT NULL,
-  "com_date" varchar,
-  "com_start_date" timestamp ,
-  "com_end_date" timestamp ,
-  "price" float
+  "id_customer" int DEFAULT NULL,
+  "date_order" varchar,
+  "date_departure" timestamp,
+  "return_date" timestamp,
+  "total_price" float
 );
 
-ALTER TABLE "voiture" ADD FOREIGN KEY ("id") REFERENCES "commands" ("id_car");
+ALTER TABLE "cars" ADD FOREIGN KEY ("id") REFERENCES "orders" ("id_car");
 
-ALTER TABLE "client" ADD FOREIGN KEY ("id") REFERENCES "commands" ("id_cl");
+ALTER TABLE "customers" ADD FOREIGN KEY ("id") REFERENCES "orders" ("id_customer");
 
-ALTER TABLE "voiture" ADD FOREIGN KEY ("id") REFERENCES "images" ("id");
+ALTER TABLE "cars" ADD FOREIGN KEY ("id") REFERENCES "images" ("id");
 
-COMMENT ON TABLE "Client" IS 'table 'Client' contains client information';
+ALTER TABLE "admins" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id");

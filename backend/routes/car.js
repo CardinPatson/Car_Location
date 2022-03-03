@@ -2,10 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 const carCtrl = require("../controllers/car");
-//CONTROLLER
 
-router.post("/addCars", carCtrl.addCars);
 //API RESTFULL
+router.post("/", carCtrl.getCars);
+router.post("/:id", carCtrl.getCarById);
+router.post("/addCar", carCtrl.addCar);
+router.post("/:id", carCtrl.updateCar);
+router.post("/:id", carCtrl.deleteCar);
 
-//ROUTER
 module.exports = router;
