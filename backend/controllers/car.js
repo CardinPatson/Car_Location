@@ -2,7 +2,7 @@ const client = require("../db");
 client.connect();
 
 const getCars = (request, response) => {
-  client.query("SELECT * FROM voitures ORDER BY id ASC", (error, results) => {
+  client.query("SELECT * FROM cars ORDER BY id ASC", (error, results) => {
     if (error) {
       throw error;
     }
@@ -13,16 +13,12 @@ const getCars = (request, response) => {
 const getCarById = (request, response) => {
   const id = parseInt(request.params.id);
 
-  client.query(
-    "SELECT * FROM voitures WHERE id = $1",
-    [id],
-    (error, results) => {
-      if (error) {
-        throw error;
-      }
-      response.status(200).json(results.rows);
+  client.query("SELECT * FROM cars WHERE id = $1", [id], (error, results) => {
+    if (error) {
+      throw error;
     }
-  );
+    response.status(200).json(results.rows);
+  });
 };
 
 const addCar = (request, response) => {
@@ -42,7 +38,7 @@ const addCar = (request, response) => {
   } = request.body;
 
   client.query(
-    "INSERT INTO voitures(name, price, brand, model, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",
+    "INSERT INTO cars(name, price, brand, model, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",
     [
       name,
       price,
@@ -112,7 +108,7 @@ const updateCar = (request, response) => {
 const deleteCar = (request, response) => {
   const id = parseInt(request.params.id);
 
-  client.query("DELETE FROM voitures WHERE id = $1", [id], (error, results) => {
+  client.query("DELETE FROM cars WHERE id = $1", [id], (error, results) => {
     if (error) {
       throw error;
     }
