@@ -90,8 +90,9 @@ const Form = styled.form`
 		width: 200px;
 	}
 	input {
-		font-size: 1.25em;
+		font-size: 1em;
 		border: none;
+		font-family: "Roboto";
 		background-color: #f3f3f3;
 		padding: 5px;
 		@media (min-width: 1000px) {
