@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../header";
 import styled from "styled-components";
 function AddCars() {
+	const [photo, setPhoto] = useState([]);
+
+	const removePhoto = (e) => {};
+	const handlePhoto = (e) => {
+		const url = e.target.files[0];
+		console.log(url);
+		if (!photo) return;
+		setPhoto([...photo, URL.createObjectURL(url)]);
+		console.log(photo);
+	};
 	return (
 		<Container>
 			<Header />
@@ -84,12 +94,31 @@ function AddCars() {
 								accept="image/gif , image/png , image/jpeg"
 								name="image"
 								id="file"
-								placeholder="Cliquez pour selectionner des photos"
+								onChange={handlePhoto}
 							/>
 							<label htmlFor="file">
 								<span>Ajouter des Photos</span>
 							</label>
 						</div>
+					</div>
+					<div className="photo__cars">
+						{photo.map((x) => {
+							// console.log(<img className="cars__photo" alt="cars" src={x} />);
+							return (
+								<div key={x} className="container__photo">
+									<img className="cars__photo" alt="cars" src={x} />
+									<button
+										className="remove__photo__cars"
+										onClick={() => {
+											removePhoto(x);
+										}}
+										value={x}
+									>
+										Retirer
+									</button>
+								</div>
+							);
+						})}
 					</div>
 					<div className="submit__detail__cars">
 						<button>Envoyer</button>
@@ -152,6 +181,44 @@ const Form = styled.form`
 		font-family: "Roboto";
 		&:focus {
 			box-shadow: 2px 2px 12px #00a9ff;
+		}
+	}
+	.photo__cars {
+		/* border: solid red 1px; */
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		padding: 5px;
+		.container__photo {
+			/* border: solid red 1px; */
+			justify-self: center;
+			align-self: center;
+			width: 100%;
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			padding: 5px;
+			.cars__photo {
+                /* border : solid red 1px; */
+				/* padding: 5px; */
+				max-width: 100%;
+				height: auto;
+				object-fit: content;
+				border-radius: 3px;
+                margin : 5px; 
+			}
+			.remove__photo__cars {
+				border: 1px solid #ed1b0d;
+				margin-top: 15px;
+				padding: 5px 10px;
+				transition-duration: 0.5s;
+				background-color: #fa5e5e;
+				border-radius: 3px;
+				&:hover {
+					background-color: #ed1b0d;
+				}
+			}
 		}
 	}
 	.submit__detail__cars {
