@@ -2,23 +2,30 @@ const client = require("../db");
 client.connect();
 
 const getCars = (request, response) => {
-  client.query("SELECT * FROM cars ORDER BY id ASC", (error, results) => {
-    if (error) {
-      throw error;
+  client.query(
+    "SELECT * FROM cars c FULL OUTER JOIN images i ON c.id = i.id ORDER BY c.id ASC",
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows);
     }
-    response.status(200).json(results.rows);
-  });
+  );
 };
 
 const getCarById = (request, response) => {
   const id = parseInt(request.params.id);
 
-  client.query("SELECT * FROM cars WHERE id = $1", [id], (error, results) => {
-    if (error) {
-      throw error;
+  client.query(
+    "SELECT * FROM cars c FULL OUTER JOIN images i ON c.id = i.id WHERE c.id = $1",
+    [id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows);
     }
-    response.status(200).json(results.rows);
-  });
+  );
 };
 
 const addCar = (request, response) => {
