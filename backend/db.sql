@@ -9,7 +9,9 @@ CREATE TABLE "customers" (
   "birth_country" varchar,
   "address" varchar,
   "telephone" bigint,
-  "mail" varchar NOT NULL UNIQUE
+  "mail" varchar NOT NULL UNIQUE,
+  "driving_licence_path" varchar,
+  "id_card_path" varchar
 );
 
 CREATE TABLE "admins" (
@@ -30,6 +32,12 @@ CREATE TABLE "cars" (
   "is_automatic" boolean NOT NULL,
   "passengers" int NOT NULL,
   "air_conditioning" boolean NOT NULL
+);
+
+CREATE TABLE "cars_brands" (
+  "id" SERIAL PRIMARY KEY,
+  "brand" varchar NOT NULL,
+  "model" varchar NOT NULL
 );
 
 CREATE TABLE "images" (
@@ -54,3 +62,5 @@ ALTER TABLE "customers" ADD FOREIGN KEY ("id") REFERENCES "orders" ("id_customer
 ALTER TABLE "cars" ADD FOREIGN KEY ("id") REFERENCES "images" ("id");
 
 ALTER TABLE "admins" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id");
+
+ALTER TABLE "cars_brands" ADD FOREIGN KEY ("id") REFERENCES "Voiture" ("id");
