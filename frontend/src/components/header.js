@@ -16,6 +16,9 @@ function Header() {
 					<Link to="/cars" style={{ textDecoration: "none" }}>
 						<p>Cars</p>
 					</Link>
+					<Link to="/add-cars" style={{ textDecoration: "none" }}>
+						<p>Add Cars</p>
+					</Link>
 				</Nav>
 				<Login>
 					{/* {//TODO Si déjà inscris mentionner son nom } */}
@@ -38,15 +41,13 @@ function Header() {
 }
 
 const Container = styled.div`
-	/* border: solid 1px rgba(0, 0, 0, 0.08); */
+	border: solid 1px rgba(0, 0, 0, 0.08);
+	max-width: 1300px;
+	margin: auto;
 	position: fixed;
-	left: 0;
 	top: 0;
 	width: 100vw;
 	z-index: 100;
-	margin: auto;
-
-	/* padding: 0 24px; */
 `;
 const Content = styled.div`
 	/* border: solid black 1px; */
@@ -54,8 +55,6 @@ const Content = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	background: #f5f5f5;
-	margin: 0 auto;
-	max-width: 1300px;
 	height: 60px;
 `;
 const Logo = styled.div`

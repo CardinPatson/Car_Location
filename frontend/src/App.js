@@ -2,15 +2,14 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/home";
 import Cars from "./components/cars";
-import Connreg from "./components/connreg";
-
+import AddCars from "./components/admin/addCars";
 function App() {
 	return (
 		<Router>
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/cars" element={<Cars />} />
-				<Route path="/connreg" element={<Connreg />}/>
+				<Route path="/cars" element={<Cars name="mercedes" />} />
+				<Route path="/add-cars" element={<AddCars />} />
 			</Routes>
 		</Router>
 	);
