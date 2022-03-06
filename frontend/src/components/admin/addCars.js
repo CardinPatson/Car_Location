@@ -21,12 +21,12 @@ function AddCars() {
 					<div className="add__detail__cars">
 						<span>Marque</span>
 						{/* RECUPERER LES DIFFERENTES MARQUES DE VOITURE DANS LA DB */}
-						<input type="text"/>
+						<input type="text" />
 					</div>
 					<div className="add__detail__cars">
 						<span>Modèle</span>
 						{/* RECUPERER LES DIFFERENTS MODELES DE VOITURE DANS LA DB */}
-						<input type="text"/>
+						<input type="text" />
 					</div>
 					<div className="add__detail__cars">
 						<span>Couleur</span>
@@ -151,9 +151,9 @@ const Form = styled.form`
 		align-items: center;
 		margin: 20px 0;
 		padding: 0 10px;
-		select {
-			width: 81.5%;
-		}
+		/* select {
+			width: 76.8%;
+		} */
 		#file {
 			display: none;
 		}
@@ -166,18 +166,22 @@ const Form = styled.form`
 				background-color: #00a9ff;
 			}
 		}
-	}
-	input,
-	select {
-		width: 80%;
-		padding: 8px;
-		border: solid #00a9ff 1px;
-		border-radius: 5px;
-		outline: none;
-		font-size: 15px;
-		font-family: "Roboto";
-		&:focus {
-			box-shadow: 2px 2px 12px #00a9ff;
+		input,
+		select {
+			-ms-box-sizing: content-box;
+			-moz-box-sizing: content-box;
+			-webkit-box-sizing: content-box;
+			box-sizing: content-box;
+			width: 75%;
+			padding: 8px;
+			border: solid #00a9ff 1px;
+			border-radius: 5px;
+			outline: none;
+			font-size: 15px;
+			font-family: "Roboto";
+			&:focus {
+				box-shadow: 2px 2px 12px #00a9ff;
+			}
 		}
 	}
 	.photo__cars {
@@ -197,13 +201,13 @@ const Form = styled.form`
 			flex-direction: column;
 			padding: 5px;
 			.cars__photo {
-                /* border : solid red 1px; */
+				/* border : solid red 1px; */
 				/* padding: 5px; */
 				max-width: 100%;
 				height: auto;
 				object-fit: content;
 				border-radius: 3px;
-                margin : 5px; 
+				margin: 5px;
 			}
 			.remove__photo__cars {
 				border: 1px solid #ed1b0d;
