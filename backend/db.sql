@@ -22,8 +22,6 @@ CREATE TABLE "cars" (
   "id" SERIAL PRIMARY KEY,
   "name" varchar NOT NULL,
   "price" float,
-  "brand" varchar NOT NULL,
-  "model" varchar NOT NULL,
   "color" varchar,
   "doors" int NOT NULL,
   "boot_size" int,
