@@ -7,7 +7,7 @@ function Header() {
 		<Container>
 			<Content>
 				<Logo>
-					<div> Car Rental</div>
+					<div>Car Rental</div>
 				</Logo>
 				<Nav>
 					<Link to="/" style={{ textDecoration: "none" }}>
@@ -19,7 +19,7 @@ function Header() {
 				</Nav>
 				<Login>
 					{/* {//TODO Si déjà inscris mentionner son nom } */}
-					<Link to="/" style={{ textDecoration: "none" }}>
+					<Link to="/connreg" style={{ textDecoration: "none" }}>
 						<p>Inscription/Connexion</p>
 					</Link>
 				</Login>
