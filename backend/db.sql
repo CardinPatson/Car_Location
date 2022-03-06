@@ -29,7 +29,8 @@ CREATE TABLE "cars" (
   "energy" varchar NOT NULL,
   "is_automatic" boolean NOT NULL,
   "passengers" int NOT NULL,
-  "air_conditioning" boolean NOT NULL
+  "air_conditioning" boolean NOT NULL,
+  "description" varchar
 );
 
 CREATE TABLE "cars_brands" (

@@ -84,6 +84,10 @@ function AddCars() {
             <input type="number" placeholder="500€" />
           </div>
           <div className="add__detail__cars">
+            <span>Description</span>
+            <textarea placeholder="Déscription de la voiture..."></textarea>
+          </div>
+          <div className="add__detail__cars">
             <span>Photo</span>
             <div className="add__photo__cars">
               <input
