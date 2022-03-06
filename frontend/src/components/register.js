@@ -2,44 +2,44 @@ import React from "react";
 import styled from "styled-components";
 
 function Register() {
-    return(
-        <Container>
-            <Banner>Register a new account</Banner>
-            <Form>
-                <Login>
-                    <Ajust>
-                        <p>First Name</p>
-                        <input type="text" />
-                    </Ajust> 
-                    <Ajust>
-                        <p>Second Name</p>
-                        <input type="text" />
-                    </Ajust> 
-                </Login>
-                <Email>
-                    <p>Email</p>
-                    <input type="text" />
-                </Email>
-                <Password>
-                    <p>Password</p>
-                    <input type="text" />
-                </Password>
-                <Confirm>
-                    <button onClick={() => {}}>
-                        Register
-                    </button>
-                </Confirm>
-            </Form>
-        </Container>
-    );
+	return (
+		<Container>
+			<Content>
+				<Banner>Register a new account</Banner>
+				<Form>
+					<Login>
+						<Ajust>
+							<p>First Name</p>
+							<input type="text" />
+						</Ajust>
+						<Ajust>
+							<p>Second Name</p>
+							<input type="text" />
+						</Ajust>
+					</Login>
+					<Email>
+						<p>Email</p>
+						<input type="text" />
+					</Email>
+					<Password>
+						<p>Password</p>
+						<input type="text" />
+					</Password>
+					<Confirm>
+						<button onClick={() => {}}>Register</button>
+					</Confirm>
+				</Form>
+			</Content>
+		</Container>
+	);
 }
 
-
-const Container = styled.div`
-    box-shadow: 0 0 1px black;
-    border: solid #777777 1px;
+const Container = styled.div``;
+const Content = styled.div`
+	box-shadow: 0 0 1px black;
+	border: solid #777777 1px;
 	display: flex;
-    flex-direction: column;
+	flex-direction: column;
 	position: relative;
 	top: 60px;
 	margin: 3% 3% 3% 0%;
@@ -48,12 +48,12 @@ const Container = styled.div`
 `;
 
 const Banner = styled.div`
-    padding: 1vh 1vh 1vh 1vh;
-    border-bottom: solid #797979 1px;
-    background-color: #00A9FF;
-    color: #333333;
-    text-align: center;
-    font-size: 3.6vh;
+	padding: 1vh 1vh 1vh 1vh;
+	border-bottom: solid #797979 1px;
+	background-color: #00a9ff;
+	color: #333333;
+	text-align: center;
+	font-size: 3.6vh;
 `;
 
 const Form = styled.div`
@@ -87,35 +87,35 @@ const Form = styled.div`
     }
 `;
 const Login = styled.div`
-    margin: 1vh; 
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: row;
-    gap: 1vh;
+	margin: 1vh;
+	display: flex;
+	justify-content: flex-start;
+	flex-direction: row;
+	gap: 1vh;
 `;
 const Ajust = styled.div`
-    display: flex;
-    flex-direction: Column;
-    input {
-        width: 25vh;
-    }
-`
+	display: flex;
+	flex-direction: Column;
+	input {
+		width: 25vh;
+	}
+`;
 const Email = styled.div`
-    margin: 1vh; 
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
+	margin: 1vh;
+	display: flex;
+	justify-content: flex-start;
+	flex-direction: column;
 `;
 const Password = styled.div`
-    margin: 1vh; 
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
+	margin: 1vh;
+	display: flex;
+	justify-content: flex-start;
+	flex-direction: column;
 `;
 const Confirm = styled.div`
-    display: flex;
-    justify-content: center;
-    margin: 2vh;
+	display: flex;
+	justify-content: center;
+	margin: 2vh;
 `;
 
 export default Register;
