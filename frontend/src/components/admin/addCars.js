@@ -21,20 +21,12 @@ function AddCars() {
 					<div className="add__detail__cars">
 						<span>Marque</span>
 						{/* RECUPERER LES DIFFERENTES MARQUES DE VOITURE DANS LA DB */}
-						<select>
-							<option selected>Mercedes</option>
-							<option></option>
-							<option></option>
-						</select>
+						<input type="text"/>
 					</div>
 					<div className="add__detail__cars">
 						<span>Modèle</span>
 						{/* RECUPERER LES DIFFERENTS MODELES DE VOITURE DANS LA DB */}
-						<select>
-							<option selected>1981</option>
-							<option></option>
-							<option></option>
-						</select>
+						<input type="text"/>
 					</div>
 					<div className="add__detail__cars">
 						<span>Couleur</span>
@@ -45,16 +37,21 @@ function AddCars() {
 						<input type="number" placeholder="5" />
 					</div>
 					<div className="add__detail__cars">
-						<span>Taille du coffre</span>
-						<input type="number" placeholder="120kg" />
+						<span>Taille du coffre (L)</span>
+						<input type="number" placeholder="120L" />
 					</div>
 					<div className="add__detail__cars">
 						<span>Energie</span>
-						<input type="text" placeholder="Essence" />
-					</div>
-					<div className="add__detail__cars">
-						<span>Transmission</span>
-						<input type="text" />
+						<select>
+							<option value="true" selected>
+								Essence
+							</option>
+							<option>Diesel</option>
+							<option>Électrique</option>
+							<option>Hybride</option>
+							<option>LPG</option>
+							<option>CLG</option>
+						</select>
 					</div>
 					<div className="add__detail__cars">
 						<span>Nombre de place</span>
