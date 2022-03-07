@@ -171,7 +171,7 @@ const Form = styled.form`
       }
     }
     input,
-    select {
+    select, textarea {
       -ms-box-sizing: content-box;
       -moz-box-sizing: content-box;
       -webkit-box-sizing: content-box;
