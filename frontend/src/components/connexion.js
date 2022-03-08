@@ -31,7 +31,7 @@ function Connexion(props) {
                         <Link to="./" style={{ color: "#00A9FF" }}>Mot de passe oublié ?</Link> 
                     </Forgotpassword>
                     <NoAccount>
-                        <Link to="./" style={{ color: "#00A9FF" }}>Créer un compte</Link> 
+                        <Link to="./" style={{ color: "#00A9FF" }} onClick={()=>{}}>Créer un compte</Link> 
                     </NoAccount>
                 </Options>
             </Form>
