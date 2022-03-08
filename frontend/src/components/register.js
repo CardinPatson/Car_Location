@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-function Register() {
+function Register(props) {
 	return (
 		<Container>
 			<Content>
@@ -28,22 +28,24 @@ function Register() {
 					<Confirm>
 						<button onClick={() => {}}>S'inscrire</button>
 					</Confirm>
+					<Account>
+						<span onClick={props.onSwap} style={{ color: "#00A9FF" }}>Déjà inscrit ?</span>
+					</Account>
 				</Form>
 			</Content>
 		</Container>
 	);
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+`;
 const Content = styled.div`
 	box-shadow: 0 0 1px black;
 	border: solid #777777 1px;
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	top: 60px;
-	margin: 3% 3% 3% 0%;
-	height: 7v0h;
+	margin: 25% 0% 0% 0%;
 	width: 55vh;
 `;
 
@@ -117,9 +119,11 @@ const Confirm = styled.div`
 	justify-content: center;
 	margin: 2vh;
 `;
-const NoAccount = styled.label`
+const Account = styled.label`
 	display: flex;
 	margin: 1vh 1vh 2vh 2vh;
+	cursor: pointer;
+	text-decoration: underline #00A9FF;
 `;
 
 export default Register;
