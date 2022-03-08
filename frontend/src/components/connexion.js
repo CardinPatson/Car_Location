@@ -31,7 +31,7 @@ function Connexion(props) {
                         <Link to="./" style={{ color: "#00A9FF" }}>Mot de passe oublié ?</Link> 
                     </Forgotpassword>
                     <NoAccount>
-                        <Link to="./" style={{ color: "#00A9FF" }} onClick={props.onSwap}>Créer un compte</Link> 
+                        <span onClick={props.onSwap} style={{ color: "#00A9FF" }}>Créer un compte</span> 
                     </NoAccount>
                 </Options>
             </Form>
@@ -180,7 +180,9 @@ const Forgotpassword = styled.div`
 
 const NoAccount = styled.label`
     display: flex;
-    margin: 1vh 1vh 2vh 2vh;
+	margin: 1vh 1vh 2vh 2vh;
+	cursor: pointer;
+	text-decoration: underline #00A9FF;
 `
 
 export default Connexion;
