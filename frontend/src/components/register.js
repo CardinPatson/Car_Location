@@ -5,15 +5,15 @@ function Register() {
 	return (
 		<Container>
 			<Content>
-				<Banner>Register a new account</Banner>
+				<Banner>Créer un nouveau compte</Banner>
 				<Form>
 					<Login>
 						<Ajust>
-							<p>First Name</p>
+							<p>Nom</p>
 							<input type="text" />
 						</Ajust>
 						<Ajust>
-							<p>Second Name</p>
+							<p>Prénom</p>
 							<input type="text" />
 						</Ajust>
 					</Login>
@@ -22,11 +22,11 @@ function Register() {
 						<input type="text" />
 					</Email>
 					<Password>
-						<p>Password</p>
+						<p>Mot de passe</p>
 						<input type="text" />
 					</Password>
 					<Confirm>
-						<button onClick={() => {}}>Register</button>
+						<button onClick={() => {}}>S'inscrire</button>
 					</Confirm>
 				</Form>
 			</Content>

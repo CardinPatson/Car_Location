@@ -17,7 +17,7 @@ function AddCars() {
       <Header />
       <Content>
         <Form>
-          <legend>Add Cars</legend>
+          <legend>Ajouter une voiture</legend>
           <div className="add__detail__cars">
             <span>Marque</span>
             {/* RECUPERER LES DIFFERENTES MARQUES DE VOITURE DANS LA DB */}

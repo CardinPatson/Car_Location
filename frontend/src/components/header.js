@@ -11,19 +11,19 @@ function Header() {
 				</Logo>
 				<Nav>
 					<Link to="/" style={{ textDecoration: "none" }}>
-						<p>Home</p>
+						<p>Accueil</p>
 					</Link>
 					<Link to="/cars" style={{ textDecoration: "none" }}>
-						<p>Cars</p>
+						<p>Voitures</p>
 					</Link>
 					<Link to="/add-cars" style={{ textDecoration: "none" }}>
-						<p>Add Cars</p>
+						<p>Ajouter voitures</p>
 					</Link>
 				</Nav>
 				<Login>
 					{/* {//TODO Si déjà inscris mentionner son nom } */}
 					<Link to="/connreg" style={{ textDecoration: "none" }}>
-						<p>Inscription/Connexion</p>
+						<p>Connexion</p>
 					</Link>
 				</Login>
 				<Menu>

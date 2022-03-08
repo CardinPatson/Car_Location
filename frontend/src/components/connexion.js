@@ -3,32 +3,37 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 
-function Connexion() {
+function Connexion(props) {
     return(
         <Container>
-            <Banner>Connect to your account</Banner>
+            <Banner>Connectez-vous à votre compte</Banner>
             <Form>
                 <Login>
-                    <p>Username or email</p>
+                    <p>Nom d'utilisateur ou email</p>
                     <input type="text" />
                 </Login>
                 <Password>
-                    <p>Password</p>
+                    <p>Mot de passe</p>
                     <input type="text" />
                 </Password>
                 <Confirm>
                     <button onClick={() => {}}>
-                        Login
+                        Se connecter
                     </button>
                     <Remember>
-                        Remember Me
+                        Se souvenir de moi 
                         <input type="checkbox"/>
                         <span></span>
                     </Remember>
                 </Confirm>
-                <Forgotpassword>
-                    <Link to="/" style={{ color: "#00A9FF" }}>Forgot password ?</Link> 
-                </Forgotpassword>
+                <Options>
+                    <Forgotpassword>
+                        <Link to="/" style={{ color: "#00A9FF" }}>Mot de passe oublié ?</Link> 
+                    </Forgotpassword>
+                    <NoAccount>
+                    <Link to="/" style={{ color: "#00A9FF" }}>Créer un compte</Link> 
+                    </NoAccount>
+                </Options>
             </Form>
         </Container>
     );
@@ -106,24 +111,19 @@ const Confirm = styled.div`
     flex-direction: row;
 `;
 
-const Forgotpassword = styled.div`
-    display: flex;
-    margin: 1vh 1vh 2vh 2vh;
-    textDecoration: "none"
-`;
-
 const Remember = styled.label`
     display: block;
     position: relative;
     padding-left: 35px;
     cursor: pointer;
-    font-size: 3vh;
+    font-size: 2.5vh;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
     top: 35%;
     left: 5%;
+    height:5vh;
     input {
         position: absolute;
         opacity: 0;
@@ -167,5 +167,22 @@ const Remember = styled.label`
         transform: rotate(45deg);
     }
 `;
+
+const Options = styled.label`
+    display: flex;
+    flex-direction: row;
+    gap:7vh;
+`
+
+const Forgotpassword = styled.div`
+    display: flex;
+    margin: 1vh 1vh 2vh 2vh;
+    textDecoration: "none"
+`;
+
+const NoAccount = styled.label`
+    display: flex;
+    margin: 1vh 1vh 2vh 2vh;
+`
 
 export default Connexion;

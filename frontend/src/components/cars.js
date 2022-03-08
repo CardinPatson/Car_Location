@@ -12,11 +12,11 @@ function Cars(props) {
 						window.scrollTo(0, 0);
 					}}
 				>
-					<h2>Filter</h2>
+					<h2>Filtres</h2>
 					<Price>
-						<h5>Price/day</h5>
+						<h5>Prix/jour</h5>
 						<div>
-							<span>Min price</span>
+							<span>Prix Min</span>
 							<input
 								type="range"
 								min="200"
@@ -24,19 +24,19 @@ function Cars(props) {
 								// value="300"
 								class="slider"
 							/>
-							<span>Max price</span>
+							<span>Prix Max</span>
 						</div>
-						<p>value</p>
+						<p>Valeur</p>
 					</Price>
 					<Brand>
-						<h5>Brand and modal</h5>
+						<h5>Marque et modèle</h5>
 						<div>
 							<select>
 								<option value="Brand1" selected>
-									Brand1
+									Marque 1
 								</option>
-								<option value="Brand2">Brand2</option>
-								<option value="Brand3">Brand3</option>
+								<option value="Brand2">Marque 2</option>
+								<option value="Brand3">Marque 3</option>
 							</select>
 							<span>
 								<span className="foo rectangle"></span>
@@ -44,15 +44,15 @@ function Cars(props) {
 							</span>
 							<select>
 								<option value="Modal" selected>
-									Modal 1
+									Modèle 1
 								</option>
-								<option value="Modal 2">Modal 2</option>
-								<option value="Modal 3">Modal 3</option>
+								<option value="Modal 2">Modèle 2</option>
+								<option value="Modal 3">Modèle 3</option>
 							</select>
 						</div>
 					</Brand>
 					<Slot>
-						<h5>Rental time slot</h5>
+						<h5>Période de location</h5>
 						<div className="slot__range">
 							<div className="slot__time">
 								<p>Du</p>
@@ -76,7 +76,7 @@ function Cars(props) {
 					</button>
 				</Filter>
 				<Available>
-					<h2>Car Available</h2>
+					<h2>Voitures disponibles</h2>
 					{/*TODO: Boucler pour afficher les voitures */}
 				</Available>
 			</Content>
@@ -139,6 +139,7 @@ const Price = styled.div`
 		/* border: solid red 1px; */
 		display: flex;
 		align-items: center;
+		justify-content:center;
 		margin: 10px 0;
 		width: 100%;
 		span {

@@ -10,7 +10,6 @@ function Connreg() {
 			<Header />
 			<Content>
 				<Connexion />
-				<Register />
 			</Content>
 		</Container>
 	);
