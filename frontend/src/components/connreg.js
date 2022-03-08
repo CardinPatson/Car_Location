@@ -4,12 +4,16 @@ import styled from "styled-components";
 import Connexion from "./connexion";
 import Register from "./register";
 
+const swapPage = () => {
+	return <Register/>
+}
+
 function Connreg() {
 	return (
 		<Container>
 			<Header />
 			<Content>
-				<Connexion />
+				<Connexion change={swapPage}/>
 			</Content>
 		</Container>
 	);
