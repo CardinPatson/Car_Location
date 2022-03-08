@@ -117,5 +117,9 @@ const Confirm = styled.div`
 	justify-content: center;
 	margin: 2vh;
 `;
+const NoAccount = styled.label`
+	display: flex;
+	margin: 1vh 1vh 2vh 2vh;
+`;
 
 export default Register;

@@ -15,36 +15,70 @@ function Connreg() {
 		<Container>
 			<Header />
 			<Content>
-				<Banner>
-					{!connexion
-						? "Créer un nouveau compte"
-						: "Connectez-vous à votre compte"}
-				</Banner>
-				<Form>
-					{!connexion && (
-						<Login>
-							<Ajust>
-								<p>Nom</p>
+				{!connexion ? (
+					<>
+						<Banner>Créer un nouveau compte</Banner>
+						<Form>
+							<Login>
+								<Ajust>
+									<p>Nom</p>
+									<input type="text" />
+								</Ajust>
+								<Ajust>
+									<p>Prénom</p>
+									<input type="text" />
+								</Ajust>
+							</Login>
+
+							<Email>
+								<p>Email</p>
 								<input type="text" />
-							</Ajust>
-							<Ajust>
-								<p>Prénom</p>
+							</Email>
+							<Password>
+								<p>Mot de passe</p>
 								<input type="text" />
-							</Ajust>
-						</Login>
-					)}
-					<Email>
-						<p>Email</p>
-						<input type="text" />
-					</Email>
-					<Password>
-						<p>Mot de passe</p>
-						<input type="text" />
-					</Password>
-					<Confirm>
-						<button onClick={() => {}}>S'inscrire</button>
-					</Confirm>
-				</Form>
+							</Password>
+							<Confirm>
+								<button onClick={() => {}}>S'inscrire</button>
+							</Confirm>
+							<NoAccount>
+								<button
+									onClick={() => {
+										setConnexion(true);
+									}}
+								>
+									connexion
+								</button>
+							</NoAccount>
+						</Form>
+					</>
+				) : (
+					<>
+						<Banner>Connectez-vous à votre compte</Banner>
+						<Form>
+							<Email>
+								<p>Email</p>
+								<input type="text" />
+							</Email>
+							<Password>
+								<p>Mot de passe</p>
+								<input type="text" />
+							</Password>
+							<Confirm>
+								<button onClick={() => {}}>Connexion</button>
+							</Confirm>
+							<NoAccount>
+								<button
+									onClick={() => {
+										setConnexion(false);
+									}}
+								>
+									Creer un compte
+								</button>
+							</NoAccount>
+						</Form>
+					</>
+				)}
 			</Content>
 		</Container>
 	);
@@ -140,5 +174,9 @@ const Confirm = styled.div`
 	display: flex;
 	justify-content: center;
 	margin: 2vh;
+`;
+const NoAccount = styled.label`
+	display: flex;
+	margin: 1vh 1vh 2vh 2vh;
 `;
 export default Connreg;
