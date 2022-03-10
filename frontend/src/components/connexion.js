@@ -9,8 +9,8 @@ function Connexion(props) {
             <Banner>Connectez-vous à votre compte</Banner>
             <Form>
                 <Login>
-                    <p>Nom d'utilisateur ou email</p>
-                    <input type="text" />
+                    <p>Email</p>
+                    <input type="email" />
                 </Login>
                 <Password>
                     <p>Mot de passe</p>
