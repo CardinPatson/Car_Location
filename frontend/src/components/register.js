@@ -19,11 +19,14 @@ function Register(props) {
 					</Login>
 					<Email>
 						<p>Email</p>
-						<input type="text" />
+						<input type="email" />
 					</Email>
 					<Password>
 						<p>Mot de passe</p>
-						<input type="text" />
+						<input type="password" />
+						<br></br>
+						<p>Répéter le mot de passe</p>
+						<input type="password" />
 					</Password>
 					<Confirm>
 						<button onClick={() => {}}>S'inscrire</button>
@@ -74,9 +77,9 @@ const Form = styled.div`
     }
     button {
         font-size: 3vh;
-        color: white;
+        color: #333333;
         background-color: #00A9FF;
-        border: 2px solid #00486D;
+        border: 1.5px solid #00486D;
         border-radius: 1vh;
         width 40%;
         padding: 1vh;
@@ -84,8 +87,12 @@ const Form = styled.div`
         cursor: pointer;
     }
     button:hover{
-        background-color: #00486D;
-        border: 2px solid #00A9FF;
+		color: white;
+        background-color: #0078B5;
+        border: 1.5px solid #00A9FF;
+    }
+	button:active {
+        transform: scale(0.95);
     }
 `;
 const Login = styled.div`

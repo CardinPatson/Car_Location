@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 
 function Connexion(props) {
-    return(
+    return (
         <Container>
             <Banner>Connectez-vous à votre compte</Banner>
             <Form>
@@ -28,7 +28,7 @@ function Connexion(props) {
                 </Confirm>
                 <Options>
                     <Forgotpassword>
-                        <Link to="./" style={{ color: "#00A9FF" }}>Mot de passe oublié ?</Link> 
+                        <Link to="/forgotPassword" style={{ color: "#00A9FF" }}>Mot de passe oublié ?</Link> 
                     </Forgotpassword>
                     <NoAccount>
                         <span onClick={props.onSwap} style={{ color: "#00A9FF" }}>Créer un compte</span> 
@@ -75,9 +75,9 @@ const Form = styled.form`
     }
     button {
         font-size: 3vh;
-        color: white;
+        color: #333333;
         background-color: #00A9FF;
-        border: 2px solid #00486D;
+        border: 1.5px solid #00486D;
         border-radius: 1vh;
         width 40%;
         padding: 1vh;
@@ -85,8 +85,12 @@ const Form = styled.form`
         cursor: pointer;
     }
     button:hover{
-        background-color: #00486D;
-        border: 2px solid #00A9FF;
+        color: white;
+        background-color: #0078B5;
+        border: 1.5px solid #00A9FF;
+    }
+    button:active {
+        transform: scale(0.95);
     }
 `;
 

@@ -4,6 +4,7 @@ import Home from "./components/home";
 import Cars from "./components/cars";
 import AddCars from "./components/admin/addCars";
 import Connreg from "./components/connreg";
+import ForgotPassword from "./components/forgotPassword";
 
 function App() {
 	return (
@@ -13,6 +14,7 @@ function App() {
 				<Route path="/cars" element={<Cars name="mercedes" />} />
 				<Route path="/add-cars" element={<AddCars />} />
 				<Route path="/connreg" element={<Connreg />}/>
+				<Route path="/forgotPassword" element={<ForgotPassword />}/>
 			</Routes>
 		</Router>
 	);
