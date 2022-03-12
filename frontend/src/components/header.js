@@ -51,6 +51,7 @@ const Container = styled.div`
 `;
 const Content = styled.div`
 	/* border: solid black 1px; */
+	box-shadow: 0 0 1px black;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
