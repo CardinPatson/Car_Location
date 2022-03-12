@@ -139,7 +139,7 @@ const Price = styled.div`
 		/* border: solid red 1px; */
 		display: flex;
 		align-items: center;
-		justify-content:center;
+		justify-content: center;
 		margin: 10px 0;
 		width: 100%;
 		span {
