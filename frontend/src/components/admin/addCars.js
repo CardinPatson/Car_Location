@@ -88,7 +88,12 @@ function AddCars() {
 					</div>
 					<div className="add__detail__cars">
 						<span>Energie</span>
-						<select>
+						<select
+							value={energy}
+							onChange={(e) => {
+								setEnergy(e.target.value);
+							}}
+						>
 							<option value="true" selected>
 								Essence
 							</option>
@@ -156,9 +161,9 @@ function AddCars() {
 						<span>Description</span>
 						<textarea
 							placeholder="Déscription de la voiture..."
-							value={price}
+							value={description}
 							onChange={(e) => {
-								setPrice(e.target.value);
+								setDescription(e.target.value);
 							}}
 						></textarea>
 					</div>
