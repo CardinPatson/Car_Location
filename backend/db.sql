@@ -3,7 +3,7 @@ CREATE TABLE "customers" (
   "first_name" varchar NOT NULL,
   "last_name" varchar NOT NULL,
   "password" varchar NOT NULL,
-  "created_at" datetime DEFAULT 'now()',
+  "created_at" timestamp DEFAULT 'now()',
   "birth_date" date,
   "birth_place" varchar,
   "birth_country" varchar,
@@ -37,11 +37,11 @@ CREATE TABLE "images" (
 
 CREATE TABLE "orders" (
   "id" SERIAL PRIMARY KEY,
-  "id_car" int,
-  "id_customer" int,
+  "id_car" int DEFAULT -1,
+  "id_customer" int DEFAULT NULL,
   "date_order" varchar,
-  "date_departure" datetime,
-  "return_date" datetime,
+  "date_departure" timestamp,
+  "return_date" timestamp,
   "total_price" float
 );
 
@@ -50,7 +50,7 @@ CREATE TABLE "admins" (
 );
 
 CREATE TABLE "cars_brands" (
-  "id_brand" SERIAL PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "brand" varchar NOT NULL,
   "model" varchar NOT NULL
 );

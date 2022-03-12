@@ -32,6 +32,7 @@ const addCar = (request, response) => {
   const {
     name,
     price,
+    id_brand,
     brand,
     model,
     color,
@@ -46,10 +47,11 @@ const addCar = (request, response) => {
   } = request.body;
 
   client.query(
-    "INSERT INTO cars(name, price, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
+    "INSERT INTO cars(name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",
     [
       name,
       price,
+      id_brand,
       color,
       doors,
       boot_size,
