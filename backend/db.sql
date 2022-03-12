@@ -57,10 +57,10 @@ CREATE TABLE "cars_brands" (
 
 ALTER TABLE "admins" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id");
 
-ALTER TABLE "orders" ADD FOREIGN KEY ("id_car") REFERENCES "cars" ("id");
+ALTER TABLE "orders" ADD FOREIGN KEY ("id_car") REFERENCES "cars" ("id") ON DELETE SET NULL;
 
 ALTER TABLE "orders" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id");
 
-ALTER TABLE "images" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id");
+ALTER TABLE "images" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id") ON DELETE CASCADE;
 
-ALTER TABLE "cars" ADD FOREIGN KEY ("id_brand") REFERENCES "cars_brands" ("id_brand");
+ALTER TABLE "cars" ADD FOREIGN KEY ("id_brand") REFERENCES "cars_brands" ("id_brand") ON DELETE CASCADE;
