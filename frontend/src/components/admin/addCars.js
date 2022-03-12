@@ -105,7 +105,7 @@ function AddCars() {
 							type="number"
 							placeholder="4"
 							value={passengers}
-							onChange={setPassenger(e.target.value)}
+							onChange={ (e) => {setPassenger(e.target.value)}}
 						/>
 					</div>
 					<div className="add__detail__cars">
@@ -120,7 +120,7 @@ function AddCars() {
 					</div>
 					<div className="add__detail__cars">
 						<span>Automatique</span>
-						<select value={automatic} onChange={setAutomatic(e.target.value)}>
+						<select value={automatic} onChange={(e) => {setAutomatic(e.target.value)}}>
 							<option value="true" selected>
 								Vrai
 							</option>
