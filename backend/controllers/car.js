@@ -3,7 +3,7 @@ client.connect();
 
 const getCars = (request, response) => {
   client.query(
-    "SELECT * FROM cars c FULL OUTER JOIN images i ON c.id = i.id ORDER BY c.id ASC",
+    "SELECT * FROM cars c FULL OUTER JOIN cars_brands cb ON c.id = cb.id",
     (error, results) => {
       if (error) {
         throw error;
@@ -17,7 +17,7 @@ const getCarById = (request, response) => {
   const id = parseInt(request.params.id);
 
   client.query(
-    "SELECT * FROM cars c FULL OUTER JOIN images i ON c.id = i.id WHERE c.id = $1",
+    "SELECT * FROM cars c FULL OUTER JOIN cars_brands cb ON c.id = cb.id WHERE c.id = $1",
     [id],
     (error, results) => {
       if (error) {
@@ -42,15 +42,14 @@ const addCar = (request, response) => {
     is_automatic,
     passengers,
     air_conditioning,
+    description,
   } = request.body;
 
   client.query(
-    "INSERT INTO cars(name, price, brand, model, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",
+    "INSERT INTO cars(name, price, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
     [
       name,
       price,
-      brand,
-      model,
       color,
       doors,
       boot_size,
@@ -59,12 +58,34 @@ const addCar = (request, response) => {
       is_automatic,
       passengers,
       air_conditioning,
+      description,
     ],
     (error, results) => {
       if (error) {
         throw error;
       }
-      response.status(201).send(`Cars added with ID: ${result.insertId}`);
+      client.query(
+        "SELECT currval(pg_get_serial_sequence('cars','id'))",
+        (error, results) => {
+          if (error) {
+            throw error;
+          }
+          const last_id_for_brand = results.rows[0].currval;
+
+          //Insert into brand
+          client.query(
+            "INSERT INTO cars_brands(id, brand, model) VALUES($1,$2,$3)",
+            [last_id_for_brand, brand, model],
+            (error, results) => {
+              if (error) {
+                throw error;
+              }
+              console.log(results);
+            }
+          );
+          response.status(201).send(`Cars added with ID: ${last_id_for_brand}`);
+        }
+      );
     }
   );
 };

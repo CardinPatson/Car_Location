@@ -20,6 +20,7 @@ CREATE TABLE "admins" (
 
 CREATE TABLE "cars" (
   "id" SERIAL PRIMARY KEY,
+  "id_car_brand" int NOT NULL,
   "name" varchar NOT NULL,
   "price" float,
   "color" varchar,
@@ -34,7 +35,7 @@ CREATE TABLE "cars" (
 );
 
 CREATE TABLE "cars_brands" (
-  "id" SERIAL PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY ON DELETE RESTRICT,
   "brand" varchar NOT NULL,
   "model" varchar NOT NULL
 );
@@ -63,3 +64,5 @@ ALTER TABLE "images" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id");
 ALTER TABLE "admins" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id");
 
 ALTER TABLE "cars_brands" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id");
+
+ALTER TABLE "cars_brands" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id_car_brand");

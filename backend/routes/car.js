@@ -4,10 +4,10 @@ const router = express.Router();
 const carCtrl = require("../controllers/car");
 
 //API RESTFULL
-router.post("/", carCtrl.getCars);
-router.post("/:id", carCtrl.getCarById);
+router.get("/", carCtrl.getCars);
+router.get("/:id", carCtrl.getCarById);
 router.post("/addCar", carCtrl.addCar);
-router.post("/:id", carCtrl.updateCar);
-router.post("/:id", carCtrl.deleteCar);
+router.put("/:id", carCtrl.updateCar);
+router.delete("/:id", carCtrl.deleteCar);
 
 module.exports = router;
