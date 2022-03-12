@@ -54,11 +54,11 @@ CREATE TABLE "orders" (
   "total_price" float
 );
 
-ALTER TABLE "cars" ADD FOREIGN KEY ("id") REFERENCES "orders" ("id_car");
+ALTER TABLE "orders" ADD FOREIGN KEY ("id_car") REFERENCES "cars" ("id");
 
-ALTER TABLE "customers" ADD FOREIGN KEY ("id") REFERENCES "orders" ("id_customer");
+ALTER TABLE "orders" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id");
 
-ALTER TABLE "cars" ADD FOREIGN KEY ("id") REFERENCES "images" ("id");
+ALTER TABLE "images" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id");
 
 ALTER TABLE "admins" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id");
 

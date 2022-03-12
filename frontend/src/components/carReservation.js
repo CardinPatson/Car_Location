@@ -3,7 +3,7 @@ import Header from './header'
 import styled from "styled-components";
 
 
-function Car_detail(){
+function Car_reservation(){
   return (
     <Container>
         <Header/>
@@ -111,4 +111,4 @@ const Specs = styled.div`
     }
 `;
 
-export default Car_detail
+export default Car_reservation
