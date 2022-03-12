@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const carRoute = require("./routes/car");
+const client = require("./db");
 
 //Configuration pour les variables d'environnement
 dotenv.config();
