@@ -88,12 +88,7 @@ function AddCars() {
 					</div>
 					<div className="add__detail__cars">
 						<span>Energie</span>
-						<select
-							value={energy}
-							onChange={(e) => {
-								setEnergy(e.target.value);
-							}}
-						>
+						<select>
 							<option value="true" selected>
 								Essence
 							</option>
@@ -110,7 +105,7 @@ function AddCars() {
 							type="number"
 							placeholder="4"
 							value={passengers}
-							onChange={setPassenger(e.target.value)}
+							onChange={ (e) => {setPassenger(e.target.value)}}
 						/>
 					</div>
 					<div className="add__detail__cars">
@@ -125,7 +120,7 @@ function AddCars() {
 					</div>
 					<div className="add__detail__cars">
 						<span>Automatique</span>
-						<select value={automatic} onChange={setAutomatic(e.target.value)}>
+						<select value={automatic} onChange={(e) => {setAutomatic(e.target.value)}}>
 							<option value="true" selected>
 								Vrai
 							</option>
@@ -161,9 +156,9 @@ function AddCars() {
 						<span>Description</span>
 						<textarea
 							placeholder="Déscription de la voiture..."
-							value={description}
+							value={price}
 							onChange={(e) => {
-								setDescription(e.target.value);
+								setPrice(e.target.value);
 							}}
 						></textarea>
 					</div>

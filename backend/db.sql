@@ -3,25 +3,22 @@ CREATE TABLE "customers" (
   "first_name" varchar NOT NULL,
   "last_name" varchar NOT NULL,
   "password" varchar NOT NULL,
-  "created_at" timestamp DEFAULT 'now()',
+  "created_at" datetime DEFAULT 'now()',
   "birth_date" date,
   "birth_place" varchar,
   "birth_country" varchar,
   "address" varchar,
   "telephone" bigint,
-  "mail" varchar NOT NULL UNIQUE,
+  "mail" varchar NOT NULL,
   "driving_licence_path" varchar,
-  "id_card_path" varchar
-);
-
-CREATE TABLE "admins" (
-  "id_customer" int NOT NULL
+  "ide_card_path" varchar
 );
 
 CREATE TABLE "cars" (
   "id" SERIAL PRIMARY KEY,
   "name" varchar NOT NULL,
   "price" float,
+  "id_brand" int NOT NULL,
   "color" varchar,
   "doors" int NOT NULL,
   "boot_size" int,
@@ -33,33 +30,37 @@ CREATE TABLE "cars" (
   "description" varchar
 );
 
-CREATE TABLE "cars_brands" (
-  "id" SERIAL PRIMARY KEY,
-  "brand" varchar NOT NULL,
-  "model" varchar NOT NULL
-);
-
 CREATE TABLE "images" (
   "id" int NOT NULL,
-  "names" TEXT [] UNIQUE
+  "pic_name" varchar UNIQUE
 );
 
 CREATE TABLE "orders" (
   "id" SERIAL PRIMARY KEY,
-  "id_car" int DEFAULT -1,
-  "id_customer" int DEFAULT NULL,
+  "id_car" int,
+  "id_customer" int,
   "date_order" varchar,
-  "date_departure" timestamp,
-  "return_date" timestamp,
+  "date_departure" datetime,
+  "return_date" datetime,
   "total_price" float
 );
 
-ALTER TABLE "orders" ADD FOREIGN KEY ("id_car") REFERENCES "cars" ("id");
+CREATE TABLE "admins" (
+  "id_customer" int UNIQUE
+);
 
-ALTER TABLE "orders" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id");
+CREATE TABLE "cars_brands" (
+  "id_brand" SERIAL PRIMARY KEY,
+  "brand" varchar NOT NULL,
+  "model" varchar NOT NULL
+);
 
-ALTER TABLE "images" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id");
+ALTER TABLE "customers" ADD FOREIGN KEY ("id") REFERENCES "admins" ("id_customer");
 
-ALTER TABLE "admins" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id");
+ALTER TABLE "cars" ADD FOREIGN KEY ("id") REFERENCES "orders" ("id_car");
 
-ALTER TABLE "cars_brands" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id");
+ALTER TABLE "customers" ADD FOREIGN KEY ("id") REFERENCES "orders" ("id_customer");
+
+ALTER TABLE "cars" ADD FOREIGN KEY ("id") REFERENCES "images" ("id");
+
+ALTER TABLE "cars" ADD FOREIGN KEY ("id_brand") REFERENCES "cars_brands" ("id_brand");
