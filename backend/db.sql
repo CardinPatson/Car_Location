@@ -50,7 +50,7 @@ CREATE TABLE "admins" (
 );
 
 CREATE TABLE "cars_brands" (
-  "id_brand" SERIAL PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "brand" varchar NOT NULL,
   "model" varchar NOT NULL
 );
@@ -63,4 +63,4 @@ ALTER TABLE "orders" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id
 
 ALTER TABLE "images" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id") ON DELETE CASCADE;
 
-ALTER TABLE "cars" ADD FOREIGN KEY ("id_brand") REFERENCES "cars_brands" ("id_brand") ON DELETE CASCADE;
+ALTER TABLE "cars" ADD FOREIGN KEY ("id_brand") REFERENCES "cars_brands" ("id") ON DELETE CASCADE;
