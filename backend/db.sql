@@ -61,6 +61,6 @@ ALTER TABLE "cars" ADD FOREIGN KEY ("id") REFERENCES "orders" ("id_car");
 
 ALTER TABLE "customers" ADD FOREIGN KEY ("id") REFERENCES "orders" ("id_customer");
 
-ALTER TABLE "cars" ADD FOREIGN KEY ("id") REFERENCES "images" ("id");
+ALTER TABLE "images" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id");
 
 ALTER TABLE "cars" ADD FOREIGN KEY ("id_brand") REFERENCES "cars_brands" ("id_brand");
