@@ -75,6 +75,8 @@ const addCar = (request, response) => {
         //response.status(201).json(results.rows[0].id);
       }
 
+      //console.log(id_brand);
+
       client.query(
         "INSERT INTO cars(name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",
         [

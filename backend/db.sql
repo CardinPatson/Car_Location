@@ -3,6 +3,7 @@ CREATE TABLE "customers" (
   "first_name" varchar NOT NULL,
   "last_name" varchar NOT NULL,
   "password" varchar NOT NULL,
+  "is_active" boolean DEFAULT false,
   "created_at" timestamp DEFAULT 'now()',
   "birth_date" date,
   "birth_place" varchar,
@@ -15,7 +16,7 @@ CREATE TABLE "customers" (
 );
 
 CREATE TABLE "cars" (
-  "id" SERIAL PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY NOT NULL,
   "name" varchar NOT NULL,
   "price" float,
   "id_brand" int NOT NULL,
@@ -27,12 +28,12 @@ CREATE TABLE "cars" (
   "is_automatic" boolean NOT NULL,
   "passengers" int NOT NULL,
   "air_conditioning" boolean NOT NULL,
-  "description" varchar
+  "description" Text
 );
 
 CREATE TABLE "images" (
   "id" int NOT NULL,
-  "pic_name" varchar UNIQUE
+  "pic_name" varchar
 );
 
 CREATE TABLE "orders" (
@@ -46,7 +47,7 @@ CREATE TABLE "orders" (
 );
 
 CREATE TABLE "admins" (
-  "id_customer" int UNIQUE
+  "id_customer" int
 );
 
 CREATE TABLE "cars_brands" (
@@ -55,13 +56,31 @@ CREATE TABLE "cars_brands" (
   "model" varchar NOT NULL
 );
 
-ALTER TABLE "orders" ADD FOREIGN KEY ("id_car") REFERENCES "cars" ("id") ON DELETE SET NULL;
+ALTER TABLE "admins" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE "orders" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id");
+ALTER TABLE "orders" ADD FOREIGN KEY ("id_car") REFERENCES "cars" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE "images" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id") ON DELETE CASCADE;
+ALTER TABLE "orders" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE "admins" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id");
+ALTER TABLE "cars" ADD FOREIGN KEY ("id_brand") REFERENCES "cars_brands" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "images" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+
+
+
+
+--ALTER TABLE "orders" ADD FOREIGN KEY ("id_car") REFERENCES "cars" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+--ALTER TABLE "orders" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+--ALTER TABLE "images" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+--ALTER TABLE "admins" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+
 
 -- PROBLEME AVEC CEUX LA !!!
 
