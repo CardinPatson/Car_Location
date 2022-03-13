@@ -3,7 +3,7 @@ import { addCarsProperty } from "../../action/carAction";
 import { connect } from "react-redux";
 import Header from "../header";
 import styled from "styled-components";
-function AddCars() {
+const AddCars = (props) => {
 	const [name, setName] = useState("");
 	const [image, setImage] = useState([]);
 	const [brand, setBrand] = useState("");
@@ -261,7 +261,7 @@ function AddCars() {
 			</Content>
 		</Container>
 	);
-}
+};
 const Container = styled.div`
 	max-width: 1300px;
 	margin: 0 auto;

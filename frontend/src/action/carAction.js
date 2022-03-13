@@ -1,5 +1,5 @@
 import { ADD_CARS } from "./actionTypes";
-import { createAction, createAsyncAction } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "axios";
 
 export const addCarsInfo = createAction(
@@ -43,7 +43,7 @@ export const addCarsInfo = createAction(
 
 //INSERER LA VOITURE DANS LA BASE DE DONNEES
 
-export const addCarsProperty = createAsyncAction(
+export const addCarsProperty = createAsyncThunk(
 	ADD_CARS,
 	async (arg, thunkAPI) => {
 		Axios.post("http://localhost:3001/api/cars/addCars", {
