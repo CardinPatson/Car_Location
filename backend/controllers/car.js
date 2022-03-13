@@ -28,11 +28,10 @@ const getCarById = (request, response) => {
   );
 };
 
-const addCar = (request, response) => {
+const isExistCar = (request, response) => {
   const {
     name,
     price,
-    id_brand,
     brand,
     model,
     color,
@@ -47,49 +46,62 @@ const addCar = (request, response) => {
   } = request.body;
 
   client.query(
-    "INSERT INTO cars(name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",
-    [
-      name,
-      price,
-      id_brand,
-      color,
-      doors,
-      boot_size,
-      type,
-      energy,
-      is_automatic,
-      passengers,
-      air_conditioning,
-      description,
-    ],
+    "select * from cars_brands where brand=$1 and model=$2",
+    [brand, model],
     (error, results) => {
       if (error) {
         throw error;
       }
+
+      let id_brand;
+
+      // si la Marque n'existe pas
+      if (results.rows.length == 0) {
+        //Insert into brand
+        client.query(
+          "INSERT INTO cars_brands(brand, model) VALUES($1,$2) RETURNING id",
+          [brand, model],
+          (error, results) => {
+            if (error) {
+              throw error;
+            }
+
+            id_brand = results.rows[0].id;
+            //response.status(201).json(results.rows[0].id);
+          }
+        );
+      } else {
+        id_brand = results.rows[0].id;
+        //response.status(201).json(results.rows[0].id);
+      }
+
       client.query(
-        "SELECT currval(pg_get_serial_sequence('cars','id'))",
+        "INSERT INTO cars(name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",
+        [
+          name,
+          price,
+          id_brand,
+          color,
+          doors,
+          boot_size,
+          type,
+          energy,
+          is_automatic,
+          passengers,
+          air_conditioning,
+          description,
+        ],
         (error, results) => {
           if (error) {
             throw error;
           }
-          const last_id_for_brand = results.rows[0].currval;
-
-          //Insert into brand
-          client.query(
-            "INSERT INTO cars_brands(id, brand, model) VALUES($1,$2,$3)",
-            [last_id_for_brand, brand, model],
-            (error, results) => {
-              if (error) {
-                throw error;
-              }
-              console.log(results);
-            }
-          );
-          response.status(201).send(`Cars added with ID: ${last_id_for_brand}`);
+          response.status(201).json(results);
         }
       );
     }
   );
+
+  client.end;
 };
 
 const updateCar = (request, response) => {

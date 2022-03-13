@@ -9,5 +9,6 @@ router.get("/getCar/:id", carCtrl.getCarById);
 router.post("/addCar", carCtrl.addCar);
 router.put("/updateCar/:id", carCtrl.updateCar);
 router.delete("/deleteCar/:id", carCtrl.deleteCar);
+router.post("/isExistCar/", carCtrl.isExistCar);
 
 module.exports = router;
