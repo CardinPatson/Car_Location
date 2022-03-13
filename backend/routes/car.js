@@ -21,6 +21,7 @@ router.post(
 
 //PUT
 router.put("/updateCar/:id", carCtrl.updateCar);
+router.put("/updateCar/:id", carCtrl.updateCar);
 
 //DELETE
 router.delete("/deleteCar/:id", carCtrl.deleteCar);

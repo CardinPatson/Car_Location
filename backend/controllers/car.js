@@ -28,7 +28,7 @@ const getCarById = (request, response) => {
   );
 };
 
-const isExistCar = (request, response) => {
+const addCar = (request, response) => {
   const {
     name,
     price,
@@ -119,16 +119,15 @@ const updateCar = (request, response) => {
     is_automatic,
     passengers,
     air_conditioning,
+    description,
   } = request.body;
 
   client.query(
-    "UPDATE cars SET name=$2, price=$3, brand=$4, model=$5, color=$6, doors=$7, boot_size=$8, type=$9, energy=$10, is_automatic=$11, passengers=$12, air_conditioning=$13 WHERE id = $1",
+    "UPDATE cars SET name=$2, price=$3, color=$4, doors=$5, boot_size=$6, type=$7, energy=$8, is_automatic=$9, passengers=$10, air_conditioning=$11, description=$12 WHERE id=$1",
     [
       id,
       name,
       price,
-      brand,
-      model,
       color,
       doors,
       boot_size,
@@ -137,12 +136,23 @@ const updateCar = (request, response) => {
       is_automatic,
       passengers,
       air_conditioning,
+      description,
     ],
-    (error, results) => {
+    (error, results1) => {
       if (error) {
         throw error;
       }
-      response.status(200).send(`Cars modified with ID: ${id}`);
+
+      client.query(
+        "UPDATE cars_brands SET brand=$2, model=$3 WHERE id=$1",
+        [id, brand, model],
+        (error, results2) => {
+          if (error) {
+            throw error;
+          }
+          response.status(200).json();
+        }
+      );
     }
   );
 };
@@ -154,7 +164,7 @@ const deleteCar = (request, response) => {
     if (error) {
       throw error;
     }
-    response.status(200).send(`Cars deleted with ID: ${id}`);
+    response.status(200).json(results);
   });
   client.end;
 };
