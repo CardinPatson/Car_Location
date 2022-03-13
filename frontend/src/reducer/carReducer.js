@@ -1,17 +1,40 @@
+//action import
+import { addCarsInfo } from "../action/carAction";
 import { createReducer } from "@reduxjs/toolkit";
 
 const initialState = {
-	price: 0,
+	name: "",
+	description: "",
 	brand: "",
 	model: "",
 	color: "",
 	doors: 0,
 	boot_size: 0,
-	type: "", //sport ou suv
-	energy: 0,
-	is_automatic: false, //
+	energy: "",
 	passengers: 0,
+	type: "", //sport ou suv
+	price: 0,
 	air_condition: false,
+	is_automatic: false,
+	images: [],
 };
 
-export const carReducer = createReducer(initialState, (builder, state) => {});
+//L'action addCars ne renvoie rien mais déclenchera une rafraichissement pour prendre en compte le nouveau véhicule rajouté
+
+//CE REDUCER SERA UTILISE DANS LE CAS DUNE RECUPERATION DE VOITURE POUR LA SAUVEGARDE DE LETAT DES VOITURES EN LOCALE
+export const carReducer = createReducer(initialState, (builder, state) => {
+	builder.addCase(addCarsInfo, (state, action) => {
+		state.name = action.payload.name;
+		state.description = action.payload.description;
+		state.brand = action.payload.brand;
+		state.model = action.payload.model;
+		state.price = action.payload.price;
+		state.doors = action.payload.doors;
+		state.boot_size = action.payload.boot_size;
+		state.type = action.payload.type;
+		state.energy = action.paylad.energy;
+	});
+});
+
+//Reducer pour la recupération des voitures
+//L'etat

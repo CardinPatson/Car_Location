@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { addCarsProperty } from "../../action/carAction";
+import { connect } from "react-redux";
 import Header from "../header";
 import styled from "styled-components";
 function AddCars() {
-	const [photo, setPhoto] = useState([]);
+	const [name, setName] = useState("");
+	const [image, setImage] = useState([]);
 	const [brand, setBrand] = useState("");
-	const [modal, setModal] = useState("");
+	const [model, setModel] = useState("");
 	const [color, setColor] = useState("");
 	const [door, setDoor] = useState(0);
 	const [bootSize, setBootSize] = useState(0);
@@ -15,22 +18,59 @@ function AddCars() {
 	const [description, setDescription] = useState("");
 	const [airCondition, setAirCondition] = useState(true);
 	const [automatic, setAutomatic] = useState(true);
-
-	const removePhoto = (e) => {};
-	const handlePhoto = (e) => {
+	const [urlImage, setUrlImage] = useState([]);
+	const removeImage = (e) => {};
+	const handleImage = (e) => {
 		const url = e.target.files[0];
 		console.log(url);
-		if (!photo) return;
-		setPhoto([...photo, URL.createObjectURL(url)]);
-		console.log(photo);
+		if (!image) return;
+		setImage([...image, URL.createObjectURL(url)]);
+		setUrlImage([...urlImage, url]);
+		console.log(image);
+		console.log(urlImage);
 	};
 	console.log(color);
+	const handeSubmit = (e) => {
+		//TODO Les verifications des champ du formulaire doivent être faite avant insertion
+		e.preventDefault();
+		const carProperty = {
+			name,
+			description,
+			brand,
+			model,
+			color,
+			door,
+			bootSize,
+			energy,
+			passengers,
+			type,
+			price,
+			airCondition,
+			automatic,
+			image: urlImage,
+		};
+		console.log(carProperty);
+		props.addCars(carProperty);
+	};
+	//INSERTION DE VOITURE DANS LA BASE DE DONNEES
+
 	return (
 		<Container>
 			<Header />
 			<Content>
 				<Form>
 					<legend>Ajouter une voiture</legend>
+					<div className="add__detail__cars">
+						<span>nom</span>
+
+						<input
+							type="text"
+							value={name}
+							onChange={(e) => {
+								setName(e.target.value);
+							}}
+						/>
+					</div>
 					<div className="add__detail__cars">
 						<span>Marque</span>
 
@@ -47,9 +87,9 @@ function AddCars() {
 
 						<input
 							type="text"
-							value={modal}
+							value={model}
 							onChange={(e) => {
-								setModal(e.target.value);
+								setModel(e.target.value);
 							}}
 						/>
 					</div>
@@ -88,7 +128,12 @@ function AddCars() {
 					</div>
 					<div className="add__detail__cars">
 						<span>Energie</span>
-						<select>
+						<select
+							value={energy}
+							onChange={(e) => {
+								setEnergy(e.target.value);
+							}}
+						>
 							<option value="true" selected>
 								Essence
 							</option>
@@ -105,7 +150,9 @@ function AddCars() {
 							type="number"
 							placeholder="4"
 							value={passengers}
-							onChange={ (e) => {setPassenger(e.target.value)}}
+							onChange={(e) => {
+								setPassenger(e.target.value);
+							}}
 						/>
 					</div>
 					<div className="add__detail__cars">
@@ -120,7 +167,12 @@ function AddCars() {
 					</div>
 					<div className="add__detail__cars">
 						<span>Automatique</span>
-						<select value={automatic} onChange={(e) => {setAutomatic(e.target.value)}}>
+						<select
+							value={automatic}
+							onChange={(e) => {
+								setAutomatic(e.target.value);
+							}}
+						>
 							<option value="true" selected>
 								Vrai
 							</option>
@@ -156,29 +208,29 @@ function AddCars() {
 						<span>Description</span>
 						<textarea
 							placeholder="Déscription de la voiture..."
-							value={price}
+							value={description}
 							onChange={(e) => {
-								setPrice(e.target.value);
+								setDescription(e.target.targetvalue);
 							}}
-						></textarea>
+						/>
 					</div>
 					<div className="add__detail__cars">
-						<span>Photo</span>
+						<span>Image</span>
 						<div className="add__photo__cars">
 							<input
 								type="file"
 								accept="image/gif , image/png , image/jpeg"
 								name="image"
 								id="file"
-								onChange={handlePhoto}
+								onChange={handleImage}
 							/>
 							<label htmlFor="file">
-								<span>Ajouter des Photos</span>
+								<span>Ajouter des Images</span>
 							</label>
 						</div>
 					</div>
 					<div className="photo__cars">
-						{photo.map((x) => {
+						{image.map((x) => {
 							// console.log(<img className="cars__photo" alt="cars" src={x} />);
 							return (
 								<div key={x} className="container__photo">
@@ -186,7 +238,7 @@ function AddCars() {
 									<button
 										className="remove__photo__cars"
 										onClick={() => {
-											removePhoto(x);
+											removeImage(x);
 										}}
 										value={x}
 									>
@@ -197,7 +249,13 @@ function AddCars() {
 						})}
 					</div>
 					<div className="submit__detail__cars">
-						<button>Envoyer</button>
+						<button
+							onClick={(e) => {
+								handeSubmit(e);
+							}}
+						>
+							Envoyer
+						</button>
 					</div>
 				</Form>
 			</Content>
@@ -317,4 +375,16 @@ const Form = styled.form`
 		}
 	}
 `;
-export default AddCars;
+const mapStateToProps = (state) => {
+	return {
+		//recuperation des propriétés nécessaires
+	};
+};
+const mapStateToDispatch = (dispatch) => {
+	return {
+		//property est un objet contenant les propriétés du véhicule
+		addCars: (property) => dispatch(addCarsProperty(property)),
+	};
+};
+const connector = connect(mapStateToProps, mapStateToDispatch);
+export default connector(AddCars);
