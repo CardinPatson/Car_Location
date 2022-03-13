@@ -9,19 +9,16 @@ CREATE TABLE "customers" (
   "birth_country" varchar,
   "address" varchar,
   "telephone" bigint,
-  "mail" varchar NOT NULL UNIQUE,
+  "mail" varchar NOT NULL,
   "driving_licence_path" varchar,
-  "id_card_path" varchar
-);
-
-CREATE TABLE "admins" (
-  "id_customer" int NOT NULL
+  "ide_card_path" varchar
 );
 
 CREATE TABLE "cars" (
   "id" SERIAL PRIMARY KEY,
   "name" varchar NOT NULL,
   "price" float,
+  "id_brand" int NOT NULL,
   "color" varchar,
   "doors" int NOT NULL,
   "boot_size" int,
@@ -33,15 +30,9 @@ CREATE TABLE "cars" (
   "description" varchar
 );
 
-CREATE TABLE "cars_brands" (
-  "id" SERIAL PRIMARY KEY,
-  "brand" varchar NOT NULL,
-  "model" varchar NOT NULL
-);
-
 CREATE TABLE "images" (
   "id" int NOT NULL,
-  "names" TEXT [] UNIQUE
+  "pic_name" varchar UNIQUE
 );
 
 CREATE TABLE "orders" (
@@ -54,12 +45,30 @@ CREATE TABLE "orders" (
   "total_price" float
 );
 
-ALTER TABLE "orders" ADD FOREIGN KEY ("id_car") REFERENCES "cars" ("id");
+CREATE TABLE "admins" (
+  "id_customer" int UNIQUE
+);
+
+CREATE TABLE "cars_brands" (
+  "id" SERIAL PRIMARY KEY,
+  "brand" varchar NOT NULL,
+  "model" varchar NOT NULL
+);
+
+ALTER TABLE "orders" ADD FOREIGN KEY ("id_car") REFERENCES "cars" ("id") ON DELETE SET NULL;
 
 ALTER TABLE "orders" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id");
 
-ALTER TABLE "images" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id");
+ALTER TABLE "images" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id") ON DELETE CASCADE;
 
 ALTER TABLE "admins" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id");
 
-ALTER TABLE "cars_brands" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id");
+-- PROBLEME AVEC CEUX LA !!!
+
+--ALTER TABLE "cars_brands" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id");
+
+--ALTER TABLE "cars_brands" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id_car_brand");
+
+
+
+--ALTER TABLE "cars" ADD FOREIGN KEY ("id_brand") REFERENCES "cars_brands" ("id") ON DELETE CASCADE;

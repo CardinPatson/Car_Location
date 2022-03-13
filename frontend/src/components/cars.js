@@ -43,11 +43,11 @@ function Cars(props) {
 								<span className="foo triangle-right"></span>
 							</span>
 							<select>
-								<option value="Modal" selected>
+								<option value="Model" selected>
 									Modèle 1
 								</option>
-								<option value="Modal 2">Modèle 2</option>
-								<option value="Modal 3">Modèle 3</option>
+								<option value="Model 2">Modèle 2</option>
+								<option value="Model 3">Modèle 3</option>
 							</select>
 						</div>
 					</Brand>
@@ -139,7 +139,7 @@ const Price = styled.div`
 		/* border: solid red 1px; */
 		display: flex;
 		align-items: center;
-		justify-content:center;
+		justify-content: center;
 		margin: 10px 0;
 		width: 100%;
 		span {
