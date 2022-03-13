@@ -28,7 +28,7 @@ const getCarById = (request, response) => {
   );
 };
 
-const isExistCar = (request, response) => {
+const addCar = (request, response) => {
   const {
     name,
     price,
