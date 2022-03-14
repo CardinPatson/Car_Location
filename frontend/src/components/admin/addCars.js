@@ -9,7 +9,7 @@ const AddCars = (props) => {
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
   const [color, setColor] = useState("");
-  const [door, setDoor] = useState(0);
+  const [doors, setDoors] = useState(0);
   const [bootSize, setBootSize] = useState(0);
   const [energy, setEnergy] = useState("");
   const [passengers, setPassenger] = useState(0);
@@ -17,7 +17,7 @@ const AddCars = (props) => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [airCondition, setAirCondition] = useState(true);
-  const [automatic, setAutomatic] = useState(true);
+  const [isAutomatic, setIsAutomatic] = useState(true);
   const [urlImage, setUrlImage] = useState([]);
   const removeImage = (e) => {};
   const handleImage = (e) => {
@@ -39,14 +39,14 @@ const AddCars = (props) => {
       brand,
       model,
       color,
-      door,
+      doors,
       bootSize,
       energy,
       passengers,
       type,
       price,
       airCondition,
-      automatic,
+      isAutomatic,
       image: urlImage,
     };
     console.log(carProperty);
@@ -109,9 +109,9 @@ const AddCars = (props) => {
             <input
               type="number"
               placeholder="5"
-              value={door}
+              value={doors}
               onChange={(e) => {
-                setDoor(e.target.value);
+                setDoors(e.target.value);
               }}
             />
           </div>
@@ -168,9 +168,9 @@ const AddCars = (props) => {
           <div className="add__detail__cars">
             <span>Automatique</span>
             <select
-              value={automatic}
+              value={isAutomatic}
               onChange={(e) => {
-                setAutomatic(e.target.value);
+                setIsAutomatic(e.target.value);
               }}
             >
               <option value="true" selected>
@@ -184,7 +184,7 @@ const AddCars = (props) => {
             <select
               value={airCondition}
               onChange={(e) => {
-                setAirCondition(e.target.targetvalue);
+                setAirCondition(e.target.value);
               }}
             >
               <option value="true" selected>
@@ -210,7 +210,7 @@ const AddCars = (props) => {
               placeholder="Déscription de la voiture..."
               value={description}
               onChange={(e) => {
-                setDescription(e.target.targetvalue);
+                setDescription(e.target.value);
               }}
             />
           </div>
