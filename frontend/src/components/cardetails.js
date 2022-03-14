@@ -7,62 +7,74 @@ function Car_detail() {
     <Container>
       <Header />
       <Content>
-        <Title>
+        <Test>
+          <Banner>
           <span>Caractéristiques</span>
-        </Title>
-        <Name>
-          <div>Nom de la voiture</div>
-          <Line_right>
-            <div>
-              <p>Berline</p>
-            </div>
-          </Line_right>
-        </Name>
-        <Detail>
-          <Specs_left>
-            <div>Nombre de portes</div>
-            <p>4</p>
-            <div>Taille du coffre</div>
-            <p>Il est très grand</p>
-            <div>Energie</div>
-            <p>Diesel</p>
-          </Specs_left>
-          <Ligne>
-            <div></div>
-          </Ligne>
-          <Specs_right>
-            <div>Transmission</div>
-            <p>Manuelle</p>
-            <div>Nombre de places</div>
-            <p>5</p>
-            <div>Aire conditionnée</div>
-            <p>Non</p>
-          </Specs_right>
-          <Photo>
-            <img src="./images/car_3.jpg" />
-            <Price>
-              <p>Prix€</p>
-              <div id>/jour</div>
-            </Price>
-            <Louer>
-              <div>
-                <button>Louer</button>
-              </div>
-            </Louer>
-          </Photo>
-        </Detail>
+          </Banner>
+          <Detail>
+            <Info>
+              <Name>
+                <div>Ayamar</div>
+                <Line_right>
+                  <div>
+                    <p>Etu. 2</p>
+                  </div>
+                </Line_right>
+              </Name>
+              <DetailTable>
+                <Specs_left>
+                  <div>Nombre de portes</div>
+                  <p>4</p>
+                  <div>Taille du coffre</div>
+                  <p>Il est très grand</p>
+                  <div>Energie</div>
+                  <p>Diesel</p>
+                </Specs_left>
+                <Ligne>
+                  <div></div>
+                </Ligne>
+                <Specs_right>
+                  <div>Transmission</div>
+                  <p>Manuelle</p>
+                  <div>Nombre de places</div>
+                  <p>5</p>
+                  <div>Aire conditionnée</div>
+                  <p>Non</p>
+                </Specs_right>
+              </DetailTable>
+            </Info>
+            <Photo>
+                <img src="./images/unknown.png" />
+                <Price>
+                  <p>1450€</p>
+                  <div id>/jour</div>
+                </Price>
+                <Louer>
+                    <button>Louer</button>
+                  
+                </Louer>
+            </Photo>
+          </Detail>
+        </Test>
+
       </Content>
     </Container>
   );
 }
 
 const Louer = styled.div`
+  margin-top : 5px ; 
   font-weight: bold;
   button {
-    font-size: 40px;
-    color: #00a9f5;
-    padding: 10px;
-    margin: 10px;
+    font-size: 1.3em;
+    cursor: pointer;
+    background-color: #00a9ff;
+    color: black;
+    padding: 7px 35px;
+    border-radius : 5px ;
+    border-color :  #00a9ff;
+    outline : none ; 
+    margin: 5px;
   }
 `;
 
@@ -71,17 +83,21 @@ const Container = styled.div`
   margin: auto;
 `;
 const Content = styled.div`
-  max-width: 800px;
   margin-top: 20vh;
   display: flex;
+  align-items: center;
   flex-direction: column;
-  border: solid black 1px;
   padding-bottom: 30px;
-  background-size: 3.2em;
-
   top: 7vh;
 `;
-const Title = styled.div`
+
+const Test = styled.div`
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Banner = styled.div`
   font: bold;
   font-size: 1.6em;
   text-align: left;
@@ -89,9 +105,33 @@ const Title = styled.div`
   border: 1px black;
   padding: 6px;
 `;
+
+const Detail = styled.div`
+  display: flex;
+  flex-direction: row;
+  /* //flex-grow: 1; */
+  /* width: 100%; */
+  /*border-radius: 1vh; */
+  /* box-shadow: 0 0 1px black; */
+  margin: 1vh 1vh 1vh 5vh;
+`;
+
+const Info = styled.div`
+  /* flex : 0.6; */
+  /* border : solid red 1px;  */
+
+`;
+
+const DetailTable = styled.div`
+  display: flex;
+  border: 1px solid black;
+  flex-direction: row;
+`;
+
 const Name = styled.div`
   display: flex;
   margin: 30px;
+  margin-left: 0px;
   color: #333333;
   font-size: 30px;
   text-align: left;
@@ -148,17 +188,6 @@ const Specs_right = styled.div`
   }
 `;
 
-const Detail = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-  border: 1px solid black;
-  width: 70vh;
-  /*border-radius: 1vh; */
-  /* box-shadow: 0 0 1px black; */
-  margin: 1vh 1vh 1vh 5vh;
-`;
-
 const Ligne = styled.div`
   display: flex;
   padding: 1vh;
@@ -167,17 +196,13 @@ const Ligne = styled.div`
   }
 `;
 const Photo = styled.div`
-  margin-top: 20vh;
   display: flex;
   flex-direction: column;
+  align-items : center;
   object-fit: content;
-  position: absolute;
-  right: 460px;
-  top: 60px;
   img {
-    float: right;
     width: 38vh;
-    height: 28vh;
+    height: 38vh;
     margin: 3vh;
     margin-top: 0%;
   }
@@ -185,7 +210,6 @@ const Photo = styled.div`
 
 const Price = styled.div`
   display: flex;
-  flex-direction: row;
   p {
     font-weight: bold;
     font-size: 40px;

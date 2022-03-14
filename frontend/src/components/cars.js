@@ -1,6 +1,8 @@
 import React from "react";
 import Header from "./header";
 import styled from "styled-components";
+import CarSlot from "./carSlot";
+
 function Cars(props) {
 	return (
 		<Container>
@@ -77,7 +79,10 @@ function Cars(props) {
 				</Filter>
 				<Available>
 					<h2>Voitures disponibles</h2>
-					{/*TODO: Boucler pour afficher les voitures */}
+					{
+						/*TODO: Boucler pour afficher les voitures */
+						<CarSlot />
+					}
 				</Available>
 			</Content>
 		</Container>

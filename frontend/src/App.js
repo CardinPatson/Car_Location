@@ -5,8 +5,8 @@ import Cars from "./components/cars";
 import AddCars from "./components/admin/addCars";
 import Connreg from "./components/connreg";
 import ForgotPassword from "./components/forgotPassword";
-import Car_reservation from "./components/carReservation";
-import Car_Details from "./components/cardetails";
+import CarReservation from "./components/carReservation";
+import Car_Details from "./components/carDetails";
 
 function App() {
   return (
@@ -17,8 +17,8 @@ function App() {
         <Route path="/add-cars" element={<AddCars />} />
         <Route path="/connreg" element={<Connreg />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
-        <Route path="/CarReservation" element={<Car_reservation />} />
-        <Route path="/cardetails" element={<Car_Details />} />
+        <Route path="/CarReservation" element={<CarReservation />} />
+        <Route path="/carDetails" element={<Car_Details />} />
       </Routes>
     </Router>
   );

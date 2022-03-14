@@ -3,7 +3,7 @@ import Header from './header'
 import styled from "styled-components";
 
 
-function Car_reservation(){
+function CarReservation(){
   return (
     <Container>
         <Header/>
@@ -318,4 +318,4 @@ const Check = styled.label`
     }
 `;
 
-export default Car_reservation
+export default CarReservation
