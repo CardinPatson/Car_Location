@@ -20,4 +20,7 @@ router.put("/updateCar/:id", carCtrl.updateCar);
 //DELETE
 router.delete("/deleteCar/:id", carCtrl.deleteCar);
 
+//TEST
+router.post("/isExist", carCtrl.isExist);
+
 module.exports = router;
