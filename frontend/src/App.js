@@ -6,7 +6,7 @@ import AddCars from "./components/admin/addCars";
 import Connreg from "./components/connreg";
 import ForgotPassword from "./components/forgotPassword";
 import CarReservation from "./components/carReservation";
-import Car_Details from "./components/carDetails";
+import CarDetails from "./components/carDetails";
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
         <Route path="/connreg" element={<Connreg />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/CarReservation" element={<CarReservation />} />
-        <Route path="/carDetails" element={<Car_Details />} />
+        <Route path="/carDetails" element={<CarDetails />} />
       </Routes>
     </Router>
   );
