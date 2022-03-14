@@ -12,7 +12,11 @@ router.get("/getCar/:id", carCtrl.getCarById);
 
 //POST
 router.post("/addCar", carCtrl.addCar);
-//router.post( "/addCarsImages", multerMiddleware.single("image"), carCtrl.addCarsImages );
+router.post(
+	"/addCarImages",
+	multerMiddleware.single("image"),
+	carCtrl.addCarImages
+);
 
 //PUT
 router.put("/updateCar/:id", carCtrl.updateCar);

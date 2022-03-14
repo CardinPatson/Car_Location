@@ -51,7 +51,7 @@ CREATE TABLE "admins" (
 );
 
 CREATE TABLE "cars_brands" (
-  "id" SERIAL PRIMARY KEY,
+  "id" SERIAL UNIQUE,
   "brand" varchar NOT NULL,
   "model" varchar NOT NULL
 );
