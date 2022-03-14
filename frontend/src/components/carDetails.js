@@ -250,4 +250,4 @@ const Type = styled.div`
 //   }
 // `;
 
-export default Car_detail;
+export default CarDetail;
