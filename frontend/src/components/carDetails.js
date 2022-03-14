@@ -2,7 +2,7 @@ import React from "react";
 import Header from "./header";
 import styled from "styled-components";
 
-function Car_detail() {
+function CarDetail() {
   return (
     <Container>
       <Header />
