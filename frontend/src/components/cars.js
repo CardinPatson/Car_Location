@@ -79,10 +79,14 @@ function Cars(props) {
 				</Filter>
 				<Available>
 					<h2>Voitures disponibles</h2>
-					{
-						/*TODO: Boucler pour afficher les voitures */
+
+					{/* /*TODO: Boucler pour afficher les voitures */}
+					<CarsPannel>
 						<CarSlot />
-					}
+						<CarSlot />
+						<CarSlot />
+						<CarSlot />
+					</CarsPannel>
 				</Available>
 			</Content>
 		</Container>
@@ -97,6 +101,7 @@ const Content = styled.div`
 	/* border: solid black 1px; */
 	margin-top: 85px;
 	display: flex;
+	/* position : fixed ;  */
 	flex-direction: row;
 	justify-content: center;
 	position: relative;
@@ -104,12 +109,16 @@ const Content = styled.div`
 const Filter = styled.div`
 	border: solid #00a9ff 1px;
 	/* PENSER A BLOQUER LE FILTRE LORS DU SCROLL */
+	/* display: flex;
+	flex-direction: column; */
 	/* position: fixed;
 	left: 20%; */
 	flex: 0.45;
 	overflow-y: hidden;
 	margin-right: 15px;
 	border-radius: 5px;
+	/* position: fixed; */
+	height: 70vh;
 	h2,
 	button {
 		/* border: solid red 1px; */
@@ -236,7 +245,7 @@ const Slot = styled(Brand)`
 
 const Available = styled.div`
 	/* border: solid red 1px; */
-	flex: 1;
+	flex: 0.6;
 	border: solid #00a9ff 1px;
 	border-radius: 5px;
 	h2,
@@ -247,5 +256,14 @@ const Available = styled.div`
 		padding: 5px;
 		background-color: #00a9ff;
 	}
+`;
+
+const CarsPannel = styled.div`
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	overflow-y: auto;
+	scroll-behavior: smooth;
+	overflow-x: hidden;
 `;
 export default Cars;
