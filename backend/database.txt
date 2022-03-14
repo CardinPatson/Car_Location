@@ -1,0 +1,197 @@
+-- Table: public.admins
+
+-- DROP TABLE IF EXISTS public.admins;
+
+CREATE TABLE IF NOT EXISTS public.admins
+(
+    id_customer integer NOT NULL,
+    CONSTRAINT admins_pk PRIMARY KEY (id_customer),
+    CONSTRAINT admins_fk FOREIGN KEY (id_customer)
+        REFERENCES public.customers (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.admins
+    OWNER to postgres;
+
+
+
+
+-- Table: public.cars
+
+-- DROP TABLE IF EXISTS public.cars;
+
+CREATE TABLE IF NOT EXISTS public.cars
+(
+    id integer NOT NULL DEFAULT nextval('"Voiture_id_seq"'::regclass),
+    price double precision,
+    color character varying COLLATE pg_catalog."default",
+    doors integer NOT NULL,
+    boot_size integer,
+    type character varying COLLATE pg_catalog."default",
+    energy character varying COLLATE pg_catalog."default" NOT NULL,
+    is_automatic boolean NOT NULL,
+    passengers integer NOT NULL,
+    air_conditioning boolean NOT NULL,
+    id_brand integer,
+    name character varying COLLATE pg_catalog."default",
+    description text COLLATE pg_catalog."default",
+    CONSTRAINT "Voiture_pkey" PRIMARY KEY (id),
+    CONSTRAINT cars_fk FOREIGN KEY (id_brand)
+        REFERENCES public.cars_brands (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.cars
+    OWNER to postgres;
+
+
+
+
+-- Table: public.cars_brands
+
+-- DROP TABLE IF EXISTS public.cars_brands;
+
+CREATE TABLE IF NOT EXISTS public.cars_brands
+(
+    id integer,
+    brand character varying COLLATE pg_catalog."default" NOT NULL,
+    model character varying COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT cars_brands_un UNIQUE (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.cars_brands
+    OWNER to postgres;
+-- Index: cars_brands_id_idx
+
+-- DROP INDEX IF EXISTS public.cars_brands_id_idx;
+
+CREATE UNIQUE INDEX IF NOT EXISTS cars_brands_id_idx
+    ON public.cars_brands USING btree
+    (id ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+
+
+
+
+-- Table: public.customers
+
+-- DROP TABLE IF EXISTS public.customers;
+
+CREATE TABLE IF NOT EXISTS public.customers
+(
+    id integer NOT NULL DEFAULT nextval('"Client_id_seq"'::regclass),
+    first_name character varying COLLATE pg_catalog."default" NOT NULL,
+    last_name character varying COLLATE pg_catalog."default" NOT NULL,
+    password character varying COLLATE pg_catalog."default" NOT NULL,
+    created_at timestamp without time zone DEFAULT '2022-03-01 15:58:50.479677'::timestamp without time zone,
+    birth_date date,
+    birth_place character varying COLLATE pg_catalog."default",
+    birth_country character varying COLLATE pg_catalog."default",
+    address character varying COLLATE pg_catalog."default",
+    telephone bigint,
+    mail character varying COLLATE pg_catalog."default" NOT NULL,
+    driving_licence_path character varying COLLATE pg_catalog."default",
+    id_card_path character varying COLLATE pg_catalog."default",
+    CONSTRAINT "Client_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.customers
+    OWNER to postgres;
+-- Index: customers_driving_licence_path_idx
+
+-- DROP INDEX IF EXISTS public.customers_driving_licence_path_idx;
+
+CREATE UNIQUE INDEX IF NOT EXISTS customers_driving_licence_path_idx
+    ON public.customers USING btree
+    (driving_licence_path COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
+-- Index: customers_id_card_path_idx
+
+-- DROP INDEX IF EXISTS public.customers_id_card_path_idx;
+
+CREATE UNIQUE INDEX IF NOT EXISTS customers_id_card_path_idx
+    ON public.customers USING btree
+    (id_card_path COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+
+
+
+
+
+-- Table: public.images
+
+-- DROP TABLE IF EXISTS public.images;
+
+CREATE TABLE IF NOT EXISTS public.images
+(
+    id integer NOT NULL,
+    name character varying COLLATE pg_catalog."default",
+    CONSTRAINT "Images_pic_name_key" UNIQUE (name),
+    CONSTRAINT id_cars FOREIGN KEY (id)
+        REFERENCES public.cars (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.images
+    OWNER to postgres;
+
+-- Table: public.orders
+
+-- DROP TABLE IF EXISTS public.orders;
+
+CREATE TABLE IF NOT EXISTS public.orders
+(
+    id integer NOT NULL DEFAULT nextval('"Commands_id_seq"'::regclass),
+    id_car integer DEFAULT '-1'::integer,
+    id_customer integer,
+    date_order character varying COLLATE pg_catalog."default",
+    date_departure timestamp without time zone,
+    return_date timestamp without time zone,
+    total_price double precision,
+    CONSTRAINT orders_pkey PRIMARY KEY (id),
+    CONSTRAINT id_cars FOREIGN KEY (id_car)
+        REFERENCES public.cars (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE SET DEFAULT,
+    CONSTRAINT id_client FOREIGN KEY (id_customer)
+        REFERENCES public.customers (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE SET NULL
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.orders
+    OWNER to postgres;
+-- Index: fki_id_cars
+
+-- DROP INDEX IF EXISTS public.fki_id_cars;
+
+CREATE INDEX IF NOT EXISTS fki_id_cars
+    ON public.orders USING btree
+    (id_car ASC NULLS LAST)
+    TABLESPACE pg_default;
+-- Index: fki_id_client
+
+-- DROP INDEX IF EXISTS public.fki_id_client;
+
+CREATE INDEX IF NOT EXISTS fki_id_client
+    ON public.orders USING btree
+    (id_customer ASC NULLS LAST)
+    TABLESPACE pg_default;
