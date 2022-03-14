@@ -33,7 +33,7 @@ CREATE TABLE "cars" (
 
 CREATE TABLE "images" (
   "id" int NOT NULL,
-  "pic_name" varchar
+  "pic_name" varchar UNIQUE
 );
 
 CREATE TABLE "orders" (
@@ -47,7 +47,7 @@ CREATE TABLE "orders" (
 );
 
 CREATE TABLE "admins" (
-  "id_customer" int
+  "id_customer" int UNIQUE
 );
 
 CREATE TABLE "cars_brands" (
