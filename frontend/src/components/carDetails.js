@@ -2,7 +2,7 @@ import React from "react";
 import Header from "./header";
 import styled from "styled-components";
 
-function CarDetail() {
+function CarDetails() {
   return (
     <Container>
       <Header />
@@ -250,4 +250,4 @@ const Type = styled.div`
 //   }
 // `;
 
-export default CarDetail;
+export default CarDetails;
