@@ -9,15 +9,15 @@ function CarDetails() {
       <Content>
         <Test>
           <Banner>
-          <span>Caractéristiques</span>
+            <span>Caractéristiques</span>
           </Banner>
           <Detail>
             <Info>
               <Name>
-                <div>Ayamar</div>
+                <div>Nom de la voiture</div>
                 <Line_right>
                   <div>
-                    <p>Etu. 2</p>
+                    <p>Berline</p>
                   </div>
                 </Line_right>
               </Name>
@@ -44,26 +44,24 @@ function CarDetails() {
               </DetailTable>
             </Info>
             <Photo>
-                <img src="./images/unknown.png" />
-                <Price>
-                  <p>1450€</p>
-                  <div id>/jour</div>
-                </Price>
-                <Louer>
-                    <button>Louer</button>
-                  
-                </Louer>
+              <img src="./images/car_3.jpg" />
+              <Price>
+                <p>Prix€</p>
+                <div>/jour</div>
+              </Price>
+              <Louer>
+                <button>Louer</button>
+              </Louer>
             </Photo>
           </Detail>
         </Test>
-
       </Content>
     </Container>
   );
 }
 
 const Louer = styled.div`
-  margin-top : 5px ; 
+  margin-top: 5px;
   font-weight: bold;
   button {
     font-size: 1.3em;
@@ -71,9 +69,9 @@ const Louer = styled.div`
     background-color: #00a9ff;
     color: black;
     padding: 7px 35px;
-    border-radius : 5px ;
-    border-color :  #00a9ff;
-    outline : none ; 
+    border-radius: 5px;
+    border-color: #00a9ff;
+    outline: none;
     margin: 5px;
   }
 `;
@@ -119,7 +117,6 @@ const Detail = styled.div`
 const Info = styled.div`
   /* flex : 0.6; */
   /* border : solid red 1px;  */
-
 `;
 
 const DetailTable = styled.div`
@@ -198,7 +195,7 @@ const Ligne = styled.div`
 const Photo = styled.div`
   display: flex;
   flex-direction: column;
-  align-items : center;
+  align-items: center;
   object-fit: content;
   img {
     width: 38vh;
@@ -216,7 +213,10 @@ const Price = styled.div`
     color: #00a9f5;
     text-align: bottom;
   }
+
   div {
+    display: flex;
+    align-items: flex-end;
     font-weight: bold;
   }
 `;
