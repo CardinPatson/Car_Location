@@ -99,7 +99,7 @@ const Container = styled.div`
 `;
 const Content = styled.div`
 	/* border: solid black 1px; */
-	margin-top: 85px;
+	margin-top: 70px;
 	display: flex;
 	/* position : fixed ;  */
 	flex-direction: row;
@@ -118,7 +118,7 @@ const Filter = styled.div`
 	margin-right: 15px;
 	border-radius: 5px;
 	/* position: fixed; */
-	height: 70vh;
+
 	h2,
 	button {
 		/* border: solid red 1px; */
@@ -261,9 +261,23 @@ const Available = styled.div`
 const CarsPannel = styled.div`
 	display: flex;
 	flex-direction: column;
-	height: 100vh;
+	height: 80vh;
 	overflow-y: auto;
 	scroll-behavior: smooth;
 	overflow-x: hidden;
+	::-webkit-scrollbar {
+  		width: 5px;
+	}
+	::-webkit-scrollbar-track {
+		box-shadow: inset 0 0 5px #bfbfbf; 
+		border-radius: 5px;
+	}
+	::-webkit-scrollbar-thumb {
+		background: #00A9FF; 
+		border-radius: 5px;
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background: #0078B5; 
+	}
 `;
 export default Cars;

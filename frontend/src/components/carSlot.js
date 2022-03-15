@@ -34,7 +34,7 @@ function CarSlot() {
 }
 
 const Container = styled.div`
-	margin: 5vh;
+	margin: 1vh;
 `;
 
 const Content = styled.div`
