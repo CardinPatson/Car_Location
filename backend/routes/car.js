@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const carCtrl = require("../controllers/car");
-//const imgCtrl = require("../controllers/image");
 const multerMiddleware = require("../middleware/image");
 
 //API RESTFULL
@@ -12,11 +11,7 @@ router.get("/getCar/:id", carCtrl.getCarById);
 
 //POST
 router.post("/addCar", carCtrl.addCar);
-router.post(
-	"/addCarImages",
-	multerMiddleware.single("image"),
-	carCtrl.addCarImages
-);
+router.post("/addCarImages", multerMiddleware , carCtrl.addCarImages);
 
 //PUT
 router.put("/updateCar/:id", carCtrl.updateCar);
