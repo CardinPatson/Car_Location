@@ -6,18 +6,18 @@ const multerMiddleware = require("../middleware/image");
 
 //API RESTFULL
 //GET
-router.get("/getCars", carCtrl.getCars);
-router.get("/getCar/:id", carCtrl.getCarById);
+router.get("/cars", carCtrl.getCars);
+router.get("/cars/:id", carCtrl.getCarById);
 
 //POST
-router.post("/addCar", carCtrl.addCar);
-router.post("/addCarImages", multerMiddleware , carCtrl.addCarImages);
+router.post("/car", carCtrl.addCar);
+router.post("/car-images", multerMiddleware , carCtrl.addCarImages);
 
 //PUT
-router.put("/updateCar/:id", carCtrl.updateCar);
+router.put("/car/:id", carCtrl.updateCar);
 
 //DELETE
-router.delete("/deleteCar/:id", carCtrl.deleteCar);
+router.delete("/car/:id", carCtrl.deleteCar);
 
 //TEST
 router.post("/isExist", carCtrl.isExist);
