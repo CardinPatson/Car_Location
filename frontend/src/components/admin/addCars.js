@@ -19,6 +19,8 @@ const AddCars = (props) => {
 	const [airCondition, setAirCondition] = useState(true);
 	const [isAutomatic, setIsAutomatic] = useState(true);
 	const [urlImage, setUrlImage] = useState([]);
+	const [uncompleted, setUncompleted] = useState(false);
+	const [uncompletedValue, setUncompletedValue] = useState("");
 	const removeImage = (e) => {};
 	const handleImage = (e) => {
 		const url = e.target.files[0];
@@ -32,8 +34,10 @@ const AddCars = (props) => {
 	console.log(energy);
 	const handeSubmit = (e) => {
 		//TODO Les verifications des champ du formulaire doivent être faite avant insertion
+		setUncompleted(false);
 		e.preventDefault();
 		console.log(energy);
+		console.log(e);
 		const carProperty = {
 			name,
 			description,
@@ -51,6 +55,19 @@ const AddCars = (props) => {
 			image: urlImage,
 		};
 		console.log(carProperty);
+		console.log(Object.keys(carProperty));
+		for(let i = 0; i<Object.keys(carProperty).length; i++){
+			if(carProperty[Object.keys(carProperty)[i]] !== ""){
+				console.log(Object.keys(carProperty)[i], carProperty[Object.keys(carProperty)[i]]);
+			}
+			else{
+				console.log(Object.keys(carProperty)[i], carProperty[Object.keys(carProperty)[i]]);
+				console.log("One of the value is not set.");
+				setUncompleted(true);
+				setUncompletedValue(Object.keys(carProperty)[i]);
+				return -1
+			}
+		};
 		props.addCars(carProperty);
 	};
 	//INSERTION DE VOITURE DANS LA BASE DE DONNEES
@@ -254,6 +271,12 @@ const AddCars = (props) => {
 							Envoyer
 						</button>
 					</div>
+					{uncompleted
+							? <div className="submit__value__uncompleted">
+								<p>Le champ {uncompletedValue} n'est pas complété !</p>
+							</div>
+							: ""
+					}
 				</Form>
 			</Content>
 		</Container>
@@ -371,7 +394,20 @@ const Form = styled.form`
 			background-color: #00a9ff;
 		}
 	}
+	.submit__value__uncompleted {
+		display: flex;
+		margin: 1vh 2vh 2vh 2vh;
+		justify-content: center;
+		p {
+			text-align: center;
+			font-weight: bold;
+			color: red;
+			border-bottom: 1px solid red;
+		}
+	}
 `;
+
+
 const mapStateToProps = (state) => {
 	return {
 		//recuperation des propriétés nécessaires
