@@ -44,7 +44,7 @@ function CarDetail() {
               </DetailTable>
             </Info>
             <Photo>
-                <img src="./images/unknown.png" />
+                <img src="./images/car_3.jpg" />
                 <Price>
                   <p>1450€</p>
                   <div id>/jour</div>
@@ -56,7 +56,6 @@ function CarDetail() {
             </Photo>
           </Detail>
         </Test>
-
       </Content>
     </Container>
   );
@@ -217,6 +216,8 @@ const Price = styled.div`
     text-align: bottom;
   }
   div {
+    display: flex;
+    align-items: flex-end;
     font-weight: bold;
   }
 `;
