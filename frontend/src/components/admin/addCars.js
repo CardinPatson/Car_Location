@@ -19,8 +19,6 @@ const AddCars = (props) => {
 	const [airCondition, setAirCondition] = useState(true);
 	const [isAutomatic, setIsAutomatic] = useState(true);
 	const [urlImage, setUrlImage] = useState([]);
-	const [uncompleted, setUncompleted] = useState(false);
-	const [uncompletedValue, setUncompletedValue] = useState("");
 	const removeImage = (e) => {};
 	const handleImage = (e) => {
 		const url = e.target.files[0];
@@ -34,7 +32,6 @@ const AddCars = (props) => {
 	console.log(energy);
 	const handeSubmit = (e) => {
 		//TODO Les verifications des champ du formulaire doivent être faite avant insertion
-		setUncompleted(false);
 		e.preventDefault();
 		console.log(energy);
 		console.log(e);
@@ -55,16 +52,14 @@ const AddCars = (props) => {
 			image: urlImage,
 		};
 		console.log(carProperty);
-		console.log(Object.keys(carProperty));
-		for(let i = 0; i<Object.keys(carProperty).length; i++){
-			if(carProperty[Object.keys(carProperty)[i]] !== ""){
-				console.log(Object.keys(carProperty)[i], carProperty[Object.keys(carProperty)[i]]);
+		for(let i = 0; i<document.getElementsByClassName("add__detail__cars").length; i++){
+			let div = document.getElementsByClassName("add__detail__cars")[i];
+			if(div.childNodes[1].value && div.childNodes[1].value != 0){
+				div.childNodes[2].innerHTML = "";
 			}
 			else{
-				console.log(Object.keys(carProperty)[i], carProperty[Object.keys(carProperty)[i]]);
+				div.childNodes[2].innerHTML = "Veuillez compléter ce champ";
 				console.log("One of the value is not set.");
-				setUncompleted(true);
-				setUncompletedValue(Object.keys(carProperty)[i]);
 				return -1
 			}
 		};
@@ -80,7 +75,7 @@ const AddCars = (props) => {
 					<legend>Ajouter une voiture</legend>
 					<div className="add__detail__cars">
 						<span>Nom</span>
-
+	
 						<input
 							type="text"
 							value={name}
@@ -88,6 +83,7 @@ const AddCars = (props) => {
 								setName(e.target.value);
 							}}
 						/>
+						<p></p>
 					</div>
 					<div className="add__detail__cars">
 						<span>Marque</span>
@@ -99,6 +95,7 @@ const AddCars = (props) => {
 								setBrand(e.target.value);
 							}}
 						/>
+						<p></p>
 					</div>
 					<div className="add__detail__cars">
 						<span>Modèle</span>
@@ -110,6 +107,7 @@ const AddCars = (props) => {
 								setModel(e.target.value);
 							}}
 						/>
+						<p></p>
 					</div>
 					<div className="add__detail__cars">
 						<span>Couleur</span>
@@ -121,6 +119,7 @@ const AddCars = (props) => {
 								setColor(e.target.value);
 							}}
 						/>
+						<p></p>
 					</div>
 					<div className="add__detail__cars">
 						<span>Nombre de porte </span>
@@ -132,6 +131,7 @@ const AddCars = (props) => {
 								setDoors(e.target.value);
 							}}
 						/>
+						<p></p>
 					</div>
 					<div className="add__detail__cars">
 						<span>Taille du coffre (L)</span>
@@ -144,6 +144,7 @@ const AddCars = (props) => {
 								setBootSize(e.target.value);
 							}}
 						/>
+						<p></p>
 					</div>
 					<div className="add__detail__cars">
 						<span>Energie</span>
@@ -160,6 +161,7 @@ const AddCars = (props) => {
 							<option value="LPG">LPG</option>
 							<option value="CNG">CNG</option>
 						</select>
+						<p></p>
 					</div>
 					<div className="add__detail__cars">
 						<span>Nombre de place</span>
@@ -171,6 +173,7 @@ const AddCars = (props) => {
 								setPassenger(e.target.value);
 							}}
 						/>
+						<p></p>
 					</div>
 					<div className="add__detail__cars">
 						<span>Type</span>
@@ -181,6 +184,7 @@ const AddCars = (props) => {
 								setType(e.target.value);
 							}}
 						/>
+						<p></p>
 					</div>
 					<div className="add__detail__cars">
 						<span>Automatique</span>
@@ -193,6 +197,7 @@ const AddCars = (props) => {
 							<option value="true">Vrai</option>
 							<option>Faux</option>
 						</select>
+						<p></p>
 					</div>
 					<div className="add__detail__cars">
 						<span>Air Conditionné</span>
@@ -205,6 +210,7 @@ const AddCars = (props) => {
 							<option value="true">Vrai</option>
 							<option>Faux</option>
 						</select>
+						<p></p>
 					</div>
 					<div className="add__detail__cars">
 						<span>Prix</span>
@@ -216,6 +222,7 @@ const AddCars = (props) => {
 								setPrice(e.target.value);
 							}}
 						/>
+						<p></p>
 					</div>
 					<div className="add__detail__cars">
 						<span>Description</span>
@@ -226,6 +233,7 @@ const AddCars = (props) => {
 								setDescription(e.target.value);
 							}}
 						/>
+						<p></p>
 					</div>
 					<div className="add__detail__cars">
 						<span>Image</span>
@@ -242,6 +250,7 @@ const AddCars = (props) => {
 								<span>Ajouter des Images</span>
 							</label>
 						</div>
+						<p></p>
 					</div>
 					<div className="photo__cars">
 						{image.map((x) => {
@@ -271,12 +280,6 @@ const AddCars = (props) => {
 							Envoyer
 						</button>
 					</div>
-					{uncompleted
-							? <div className="submit__value__uncompleted">
-								<p>Le champ {uncompletedValue} n'est pas complété !</p>
-							</div>
-							: ""
-					}
 				</Form>
 			</Content>
 		</Container>
@@ -340,6 +343,10 @@ const Form = styled.form`
 			&:focus {
 				box-shadow: 2px 2px 12px #00a9ff;
 			}
+		}
+		p {
+			color: red;
+			font-weight: bold;
 		}
 	}
 	.photo__cars {
