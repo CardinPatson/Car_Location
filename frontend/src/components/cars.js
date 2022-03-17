@@ -24,7 +24,7 @@ function Cars(props) {
 								min="200"
 								max="400"
 								// value="300"
-								class="slider"
+								className="slider"
 							/>
 							<span>Prix Max</span>
 						</div>
@@ -34,9 +34,7 @@ function Cars(props) {
 						<h5>Marque et modèle</h5>
 						<div>
 							<select>
-								<option value="Brand1" selected>
-									Marque 1
-								</option>
+								<option value="Brand1">Marque 1</option>
 								<option value="Brand2">Marque 2</option>
 								<option value="Brand3">Marque 3</option>
 							</select>
@@ -45,9 +43,7 @@ function Cars(props) {
 								<span className="foo triangle-right"></span>
 							</span>
 							<select>
-								<option value="Model" selected>
-									Modèle 1
-								</option>
+								<option value="Model">Modèle 1</option>
 								<option value="Model 2">Modèle 2</option>
 								<option value="Model 3">Modèle 3</option>
 							</select>
@@ -266,18 +262,18 @@ const CarsPannel = styled.div`
 	scroll-behavior: smooth;
 	overflow-x: hidden;
 	::-webkit-scrollbar {
-  		width: 5px;
+		width: 5px;
 	}
 	::-webkit-scrollbar-track {
-		box-shadow: inset 0 0 5px #bfbfbf; 
+		box-shadow: inset 0 0 5px #bfbfbf;
 		border-radius: 5px;
 	}
 	::-webkit-scrollbar-thumb {
-		background: #00A9FF; 
+		background: #00a9ff;
 		border-radius: 5px;
 	}
 	::-webkit-scrollbar-thumb:hover {
-		background: #0078B5; 
+		background: #0078b5;
 	}
 `;
 export default Cars;

@@ -63,18 +63,19 @@ export const addCarsProperty = createAsyncThunk(
 		})
 			.then((rep) => {
 				//TODO recuperer l'id du véhicule et faire un insertion dans la table des images
-				Axios.post(
-					"http://localhost:3001/api/cars/addCarImages",
-					{
-						idCars: rep.id,
-						tabImage: arg.image,
+				console.log("rep de la premiere requete -->", rep.data.rows[0].id);
+				console.log("Id de la voiture inserer précédemment -->", rep.id);
+				console.log("tableau de voiture", arg.image);
+				let formData = new FormData();
+				formData.append("id", rep.data.rows[0].id);
+				Object.values(arg.image).forEach((file) => {
+					formData.append("image", file);
+				});
+				Axios.post("http://localhost:3001/api/cars/addCarImages", formData, {
+					headers: {
+						"Content-Type": "multipart/form-data",
 					},
-					{
-						headers: {
-							"Content-Type": "application/json",
-						},
-					}
-				)
+				})
 					.then((rep) => {
 						console.log(rep);
 					})

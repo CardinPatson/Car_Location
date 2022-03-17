@@ -218,6 +218,7 @@ const AddCars = (props) => {
 								accept="image/gif , image/png , image/jpeg"
 								name="image"
 								id="file"
+								multiple
 								onChange={handleImage}
 							/>
 							<label htmlFor="file">

@@ -336,3 +336,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+#Ignore .github folder now 
+.github/

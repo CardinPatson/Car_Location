@@ -1,3 +1,5 @@
+const multerMiddleware = require("../middleware/image");
+const format = require("pg-format");
 const client = require("../db");
 client.connect();
 
@@ -47,7 +49,6 @@ const addCar = async (request, response) => {
 		description,
 	} = request.body;
 
-	console.log(bootSize, energy, description);
 	let id_brand = 0;
 	client.query(
 		"select id from cars_brands where brand=$1 and model=$2",
@@ -58,7 +59,6 @@ const addCar = async (request, response) => {
 			if (error) {
 				console.log("not connect to the database");
 			}
-			console.log("result -->", results);
 			if (results.rows.length == 0) {
 				//Insert into brand
 				client.query(
@@ -68,10 +68,7 @@ const addCar = async (request, response) => {
 						if (error) {
 							throw error;
 						}
-
-						console.log("result --- ", results);
 						id_brand = results.rows[0].id;
-						console.log("id_brand", id_brand);
 						client.query(
 							"INSERT INTO cars(name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING id",
 							[
@@ -92,22 +89,13 @@ const addCar = async (request, response) => {
 								if (error) {
 									throw error;
 								}
-								//renvoyer l'id de la voiture
-								console.log("resultat de linsertion : ", results);
 								response.status(201).json(results);
 							}
 						);
-						//response.status(201).json(results.rows[0].id);
 					}
 				);
 			} else {
-				console.log("result.row---", results.rows);
-				console.log(results);
 				id_brand = await results.rows[0].id;
-				console.log("id_brand---", id_brand);
-				//response.status(201).json(results.rows[0].id);
-
-				console.log(id_brand);
 
 				client.query(
 					"INSERT INTO cars(name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING id",
@@ -129,7 +117,6 @@ const addCar = async (request, response) => {
 						if (error) {
 							throw error;
 						}
-						console.log("seconde insertion -- ", results);
 						response.status(201).json(results);
 					}
 				);
@@ -141,8 +128,28 @@ const addCar = async (request, response) => {
 };
 
 const addCarImages = (req, res, next) => {
-	console.log(req.params.id);
-	next();
+	try {
+		const idCars = req.body.id;
+
+		//RETRIEVE THE PATH OF THE IMAGES
+		const url_prev = `${req.protocol}://${req.get("host")}`;
+
+		//MAKE A TABLE WITH IDCARS AND IMAGES PATH
+		const values = req.files.map((x) => {
+			return [idCars, `${url_prev}/images/${x.filename}`];
+		});
+
+		//FORMAT THE QUERY TO MAKE INSERTION
+		const query = format(`INSERT INTO images(id , pic_name) VALUES %L`, values);
+		client.query(query, (error, result) => {
+			if (error) {
+				res.status(400).json({ error });
+			}
+			res.status(200);
+		});
+	} catch (err) {
+		console.error(err);
+	}
 };
 //UPDATE
 const updateCar = (request, response) => {

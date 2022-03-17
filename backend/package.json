@@ -8,7 +8,9 @@
     "nodemon": "^2.0.15",
     "path": "^0.12.7",
     "pg": "^8.7.3",
-    "pg-promise": "^10.11.1"
+    "pg-format": "^1.0.4",
+    "pg-promise": "^10.11.1",
+    "util": "^0.12.4"
   },
   "scripts": {
     "start": "nodemon app.js"
