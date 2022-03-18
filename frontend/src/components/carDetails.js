@@ -220,6 +220,7 @@ const Price = styled.div`
     font-weight: bold;
   }
 `;
+
 /* const Border = styled.div``;
 // const Name = styled.div`
 //   font-size: 4vh;

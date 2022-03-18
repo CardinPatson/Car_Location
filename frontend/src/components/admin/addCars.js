@@ -390,6 +390,11 @@ const Form = styled.form`
 				font-weight: bold;
 			}
 		}
+		span {
+			width: 24vh;
+			text-align: left;
+			padding-left: 10px;
+		}
 	}
 	.photo__cars {
 		/* border: solid red 1px; */
