@@ -2,27 +2,17 @@ import React from "react";
 import styled from "styled-components";
 
 const CarSlot = (props) => {
-	// air_conditioning: true;
-	// boot_size: 1500;
-	// brand: "Mercedes";
-	// color: "Rouge";
-	// description: "Belle petite voiture";
-	// doors: 4;
-	// energy: "Essence";
-	// id: 8;
-	// id_brand: 8;
-	// is_automatic: true;
-	// model: "Classe A";
-	// name: "Berline";
-	// passengers: 5;
-	// price: 1500;
-	// type: "SUV";
-
+	
+	console.log(props.images);
 	return (
 		<Container>
 			<Content>
 				<Pic>
-					<img src="./images/car_3.jpg" />
+					{props.images?.length ? (
+						<img src={props.images[0]} />
+					) : (
+						<img src="./images/car_3.jpg" />
+					)}
 				</Pic>
 				<Info>
 					<Name>{props.car.name}</Name>

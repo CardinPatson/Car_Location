@@ -3,13 +3,25 @@ import { connect } from "react-redux";
 import Header from "./header";
 import styled from "styled-components";
 import CarSlot from "./carSlot";
-import { getCarsProperty } from "../action/carAction";
-import localForage from "localforage";
+import { getCarsProperty, getCarsImages } from "../action/carAction";
+
 function Cars(props) {
 	useEffect(() => {
 		props.getCars();
-		console.log(props.cars);
+		props.getCarsImages();
 	}, []);
+	let carsImages = {};
+	console.log(props.images);
+	for (let image of props.images) {
+		console.log(image);
+		if (image.id in carsImages) {
+			carsImages[image.id].push(image.pic_name); //= [...carsImages[image.id], image.pic_name];
+			continue;
+		}
+		carsImages[image.id] = [image.pic_name];
+	}
+	console.log(carsImages);
+	console.log(props.cars);
 	return (
 		<Container>
 			<Content>
@@ -82,18 +94,12 @@ function Cars(props) {
 				<Available>
 					<h2>Voitures disponibles</h2>
 
-					{/* /*TODO: Boucler pour afficher les voitures */}
 					<CarsPannel>
 						{props.cars.map((car) => {
-							return <CarSlot key={car.id} car={car} />;
+							return (
+								<CarSlot key={car.id} car={car} images={carsImages[car.id]} />
+							);
 						})}
-
-						{/* <CarSlot cars={props.cars} />
-						<CarSlot cars={props.cars} />
-						<CarSlot cars={props.cars} /> */}
-						{/* <CarSlot />
-						<CarSlot />
-						<CarSlot /> */}
 					</CarsPannel>
 				</Available>
 			</Content>
@@ -291,11 +297,13 @@ const CarsPannel = styled.div`
 const mapStateToProps = (state) => {
 	return {
 		cars: state.carState.cars,
+		images: state.carState.images,
 	};
 };
 const mapStateToDispatch = (dispatch) => {
 	return {
 		getCars: () => dispatch(getCarsProperty()),
+		getCarsImages: () => dispatch(getCarsImages()),
 	};
 };
 const connector = connect(mapStateToProps, mapStateToDispatch);
