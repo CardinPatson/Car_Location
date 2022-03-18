@@ -5,8 +5,9 @@ client.connect();
 
 //GET
 const getCars = (request, response) => {
+	//RECUPERER LES INFOS DE LA VOITURE PUIS LES IMAGES DE LA VOITURE
 	client.query(
-		"SELECT * FROM cars c FULL OUTER JOIN cars_brands cb ON c.id = cb.id",
+		"SELECT * FROM cars c FULL OUTER JOIN cars_brands cb ON c.id_brand = cb.id",
 		(error, results) => {
 			if (error) {
 				throw error;
