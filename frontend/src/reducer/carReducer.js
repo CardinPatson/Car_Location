@@ -1,5 +1,5 @@
 //action import
-import { addCarsInfo } from "../action/carAction";
+import { addCarsInfo, addCarsImagesInfo } from "../action/carAction";
 import { createReducer } from "@reduxjs/toolkit";
 
 //FAIRE DU STATE INITIALE UN TABLEAU VIDE
@@ -20,7 +20,7 @@ import { createReducer } from "@reduxjs/toolkit";
 //   isAutomatic: false,
 //   images: [],
 // };
-const initialState = { cars: [] };
+const initialState = { cars: [], images: [] };
 
 //L'action addCars ne renvoie rien mais déclenchera une rafraichissement pour prendre en compte le nouveau véhicule rajouté
 
@@ -31,7 +31,9 @@ export const carReducer = createReducer(initialState, (builder) => {
 			// state.push(action.payload);
 			// state = [...state.slice(0, state.length)];
 			state.cars = action.payload;
-			
+		})
+		.addCase(addCarsImagesInfo, (state, action) => {
+			state.images = action.payload
 		})
 		.addDefaultCase((state, action) => {
 			return state;

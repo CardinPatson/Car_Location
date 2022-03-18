@@ -1,4 +1,4 @@
-import { ADD_CARS, GET_CARS } from "./actionTypes";
+import { ADD_CARS, GET_CARS, GET_CARS_IMAGES } from "./actionTypes";
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "axios";
 
@@ -8,6 +8,14 @@ export const addCarsInfo = createAction(ADD_CARS, function prepare(cars) {
 	};
 });
 
+export const addCarsImagesInfo = createAction(
+	GET_CARS_IMAGES,
+	function prepare(images) {
+		return {
+			payload: images,
+		};
+	}
+);
 //INSERER LA VOITURE DANS LA BASE DE DONNEES
 
 export const addCarsProperty = createAsyncThunk(
@@ -68,6 +76,18 @@ export const getCarsProperty = createAsyncThunk(
 	}
 );
 
+export const getCarsImages = createAsyncThunk(
+	GET_CARS_IMAGES,
+	async (arg, thunkAPI) => {
+		const carsImages = await Axios.get(
+			"http://localhost:3001/api/cars-images"
+		).catch((err) => {
+			console.error(err);
+		});
+		console.log(carsImages.data);
+		thunkAPI.dispatch(addCarsImagesInfo(carsImages.data));
+	}
+);
 // data: Array(1)
 // 0:
 // air_conditioning: true
