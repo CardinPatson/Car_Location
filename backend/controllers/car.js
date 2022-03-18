@@ -7,7 +7,7 @@ client.connect();
 const getCars = (request, response) => {
 	//RECUPERER LES INFOS DE LA VOITURE PUIS LES IMAGES DE LA VOITURE
 	client.query(
-		"SELECT * FROM cars c FULL OUTER JOIN cars_brands cb ON c.id_brand = cb.id",
+		"SELECT c.id, name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description,brand, model FROM cars c FULL OUTER JOIN cars_brands cb ON c.id_brand = cb.id",
 		(error, results) => {
 			if (error) {
 				throw error;
@@ -15,6 +15,13 @@ const getCars = (request, response) => {
 			response.status(200).json(results.rows);
 		}
 	);
+};
+
+const getCarsImages = (request, response) => {
+	client.query("SELECT * FROM images", (error, results) => {
+		if (error) throw error;
+		response.status(200).json(results.rows);
+	});
 };
 
 const getCarById = (request, response) => {
@@ -239,6 +246,7 @@ const isExist = (request, response) => {
 
 module.exports = {
 	getCars,
+	getCarsImages,
 	getCarById,
 	addCar,
 	addCarImages,

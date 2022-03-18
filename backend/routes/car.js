@@ -8,10 +8,11 @@ const multerMiddleware = require("../middleware/image");
 //GET
 router.get("/cars", carCtrl.getCars);
 router.get("/cars/:id", carCtrl.getCarById);
+router.get("/cars-images", carCtrl.getCarsImages);
 
 //POST
 router.post("/car", carCtrl.addCar);
-router.post("/car-images", multerMiddleware , carCtrl.addCarImages);
+router.post("/car-images", multerMiddleware, carCtrl.addCarImages);
 
 //PUT
 router.put("/car/:id", carCtrl.updateCar);
