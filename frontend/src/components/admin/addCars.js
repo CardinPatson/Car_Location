@@ -6,33 +6,43 @@ import styled from "styled-components";
 const AddCars = (props) => {
 	const [name, setName] = useState("");
 	const [image, setImage] = useState([]);
-	const [brand, setBrand] = useState("");
-	const [model, setModel] = useState("");
-	const [color, setColor] = useState("");
+	const [brand, setBrand] = useState("Mercedes");
+	const [model, setModel] = useState("Classe A");
+	const [color, setColor] = useState("Rouge");
 	const [doors, setDoors] = useState(0);
 	const [bootSize, setBootSize] = useState(0);
 	const [energy, setEnergy] = useState("Essence");
 	const [passengers, setPassenger] = useState(0);
-	const [type, setType] = useState("");
-	const [price, setPrice] = useState("");
+	const [type, setType] = useState("SUV");
+	const [price, setPrice] = useState(0);
 	const [description, setDescription] = useState("");
 	const [airCondition, setAirCondition] = useState(true);
 	const [isAutomatic, setIsAutomatic] = useState(true);
 	const [urlImage, setUrlImage] = useState([]);
 	const removeImage = (e) => {};
+
 	const handleImage = (e) => {
 		const url = e.target.files[0];
 		console.log(url);
 		if (!image) return;
 		setImage([...image, URL.createObjectURL(url)]);
 		setUrlImage([...urlImage, url]);
-		console.log(image);
-		console.log(urlImage);
 	};
-	console.log(energy);
+
 	const handeSubmit = (e) => {
 		//TODO Les verifications des champ du formulaire doivent être faite avant insertion
 		e.preventDefault();
+
+		//supprime tous les messages d'erreur précédent
+		for (
+			let i = 0;
+			i < document.getElementsByClassName("add__detail__cars").length;
+			i++
+		) {
+			let div = document.getElementsByClassName("add__detail__cars")[i];
+			let input_div = div.childNodes[1].childNodes;
+			if (input_div[0].innerHTML) input_div[0].innerHTML = "";
+		}
 		console.log(energy);
 		console.log(e);
 		const carProperty = {
@@ -51,18 +61,21 @@ const AddCars = (props) => {
 			isAutomatic,
 			image: urlImage,
 		};
-		console.log(carProperty);
-		for(let i = 0; i<document.getElementsByClassName("add__detail__cars").length; i++){
+		// console.log(carProperty);
+		for (
+			let i = 0;
+			i < document.getElementsByClassName("add__detail__cars").length;
+			i++
+		) {
 			let div = document.getElementsByClassName("add__detail__cars")[i];
-			if(div.childNodes[1].value && div.childNodes[1].value != 0){
-				div.childNodes[2].innerHTML = "";
+			let input_div = div.childNodes[1].childNodes;
+
+			//Plus besoin de input_div != 0 car si la valeur est égale à 0 cela ne respecte pas la condition
+			if (!input_div[1].value || input_div[1].value === "0") {
+				input_div[0].innerHTML = "Veuillez compléter ce champ";
+				return;
 			}
-			else{
-				div.childNodes[2].innerHTML = "Veuillez compléter ce champ";
-				console.log("One of the value is not set.");
-				return -1
-			}
-		};
+		}
 		props.addCars(carProperty);
 	};
 	//INSERTION DE VOITURE DANS LA BASE DE DONNEES
@@ -75,169 +88,190 @@ const AddCars = (props) => {
 					<legend>Ajouter une voiture</legend>
 					<div className="add__detail__cars">
 						<span>Nom</span>
-	
-						<input
-							type="text"
-							value={name}
-							onChange={(e) => {
-								setName(e.target.value);
-							}}
-						/>
-						<p></p>
+						<div>
+							<p></p>
+							<input
+								type="text"
+								value={name}
+								onChange={(e) => {
+									setName(e.target.value);
+								}}
+							/>
+						</div>
 					</div>
 					<div className="add__detail__cars">
 						<span>Marque</span>
-
-						<input
-							type="text"
-							value={brand}
-							onChange={(e) => {
-								setBrand(e.target.value);
-							}}
-						/>
-						<p></p>
+						<div>
+							<p></p>
+							<input
+								type="text"
+								value={brand}
+								onChange={(e) => {
+									setBrand(e.target.value);
+								}}
+							/>
+						</div>
 					</div>
 					<div className="add__detail__cars">
 						<span>Modèle</span>
-
-						<input
-							type="text"
-							value={model}
-							onChange={(e) => {
-								setModel(e.target.value);
-							}}
-						/>
-						<p></p>
+						<div>
+							<p></p>
+							<input
+								type="text"
+								value={model}
+								onChange={(e) => {
+									setModel(e.target.value);
+								}}
+							/>
+						</div>
 					</div>
 					<div className="add__detail__cars">
 						<span>Couleur</span>
-						<input
-							type="text"
-							placeholder="rouge"
-							value={color}
-							onChange={(e) => {
-								setColor(e.target.value);
-							}}
-						/>
-						<p></p>
+						<div>
+							<p></p>
+							<input
+								type="text"
+								value={color}
+								onChange={(e) => {
+									setColor(e.target.value);
+								}}
+							/>
+						</div>
 					</div>
 					<div className="add__detail__cars">
 						<span>Nombre de porte </span>
-						<input
-							type="number"
-							placeholder="5"
-							value={doors}
-							onChange={(e) => {
-								setDoors(e.target.value);
-							}}
-						/>
-						<p></p>
+						<div>
+							<p></p>
+							<input
+								type="number"
+								value={doors}
+								onChange={(e) => {
+									setDoors(e.target.value);
+								}}
+							/>
+						</div>
 					</div>
 					<div className="add__detail__cars">
 						<span>Taille du coffre (L)</span>
-						<input
-							type="number"
-							// placeholder="120L"
-							value={bootSize}
-							onChange={(e) => {
-								console.log(e.target.value);
-								setBootSize(e.target.value);
-							}}
-						/>
-						<p></p>
+						<div>
+							<p></p>
+							<input
+								type="number"
+								value={bootSize}
+								onChange={(e) => {
+									console.log(e.target.value);
+									setBootSize(e.target.value);
+								}}
+							/>
+						</div>
 					</div>
 					<div className="add__detail__cars">
 						<span>Energie</span>
-						<select
-							value={energy}
-							onChange={(e) => {
-								setEnergy(e.target.value);
-							}}
-						>
-							<option value="Essence">Essence</option>
-							<option value="Diesel">Diesel</option>
-							<option value="Electrique">Électrique</option>
-							<option value="Hybride">Hybride</option>
-							<option value="LPG">LPG</option>
-							<option value="CNG">CNG</option>
-						</select>
-						<p></p>
+						<div>
+							<p></p>
+							<select
+								value={energy}
+								onChange={(e) => {
+									setEnergy(e.target.value);
+								}}
+							>
+								<option value="Essence">Essence</option>
+								<option value="Diesel">Diesel</option>
+								<option value="Electrique">Électrique</option>
+								<option value="Hybride">Hybride</option>
+								<option value="LPG">LPG</option>
+								<option value="CNG">CNG</option>
+							</select>
+						</div>
 					</div>
 					<div className="add__detail__cars">
 						<span>Nombre de place</span>
-						<input
-							type="number"
-							placeholder="4"
-							value={passengers}
-							onChange={(e) => {
-								setPassenger(e.target.value);
-							}}
-						/>
-						<p></p>
+						<div>
+							<p></p>
+							<input
+								type="number"
+								placeholder="4"
+								value={passengers}
+								onChange={(e) => {
+									setPassenger(e.target.value);
+								}}
+							/>
+						</div>
 					</div>
 					<div className="add__detail__cars">
 						<span>Type</span>
-						<input
-							type="text"
-							value={type}
-							onChange={(e) => {
-								setType(e.target.value);
-							}}
-						/>
-						<p></p>
+						<div>
+							<p></p>
+							<input
+								type="text"
+								value={type}
+								onChange={(e) => {
+									setType(e.target.value);
+								}}
+							/>
+						</div>
 					</div>
 					<div className="add__detail__cars">
 						<span>Automatique</span>
-						<select
-							value={isAutomatic}
-							onChange={(e) => {
-								setIsAutomatic(e.target.value);
-							}}
-						>
-							<option value="true">Vrai</option>
-							<option>Faux</option>
-						</select>
-						<p></p>
+						<div>
+							<p></p>
+							<select
+								value={isAutomatic}
+								onChange={(e) => {
+									setIsAutomatic(e.target.value);
+								}}
+							>
+								<option value="true">Vrai</option>
+								<option>Faux</option>
+							</select>
+						</div>
 					</div>
 					<div className="add__detail__cars">
 						<span>Air Conditionné</span>
-						<select
-							value={airCondition}
-							onChange={(e) => {
-								setAirCondition(e.target.value);
-							}}
-						>
-							<option value="true">Vrai</option>
-							<option>Faux</option>
-						</select>
-						<p></p>
+						<div>
+							<p></p>
+							<select
+								value={airCondition}
+								onChange={(e) => {
+									setAirCondition(e.target.value);
+								}}
+							>
+								<option value="true">Vrai</option>
+								<option>Faux</option>
+							</select>
+						</div>
 					</div>
 					<div className="add__detail__cars">
 						<span>Prix</span>
-						<input
-							type="number"
-							placeholder="500€"
-							value={price}
-							onChange={(e) => {
-								setPrice(e.target.value);
-							}}
-						/>
-						<p></p>
+						<div>
+							<p></p>
+							<input
+								type="number"
+								placeholder="500€"
+								value={price}
+								onChange={(e) => {
+									setPrice(e.target.value);
+								}}
+							/>
+						</div>
 					</div>
 					<div className="add__detail__cars">
 						<span>Description</span>
-						<textarea
-							placeholder="Déscription de la voiture..."
-							value={description}
-							onChange={(e) => {
-								setDescription(e.target.value);
-							}}
-						/>
-						<p></p>
+						<div>
+							<p></p>
+							<textarea
+								placeholder="Déscription de la voiture..."
+								value={description}
+								onChange={(e) => {
+									setDescription(e.target.value);
+								}}
+							/>
+						</div>
 					</div>
 					<div className="add__detail__cars">
 						<span>Image</span>
 						<div className="add__photo__cars">
+							<p></p>
 							<input
 								type="file"
 								accept="image/gif , image/png , image/jpeg"
@@ -250,7 +284,6 @@ const AddCars = (props) => {
 								<span>Ajouter des Images</span>
 							</label>
 						</div>
-						<p></p>
 					</div>
 					<div className="photo__cars">
 						{image.map((x) => {
@@ -311,6 +344,7 @@ const Form = styled.form`
 		align-items: center;
 		margin: 20px 0;
 		padding: 0 10px;
+		/* border: solid blue 1px; */
 		/* select {
 			width: 76.8%;
 		} */
@@ -318,7 +352,7 @@ const Form = styled.form`
 			display: none;
 		}
 		.add__photo__cars {
-			width: 100%;
+			width: 90%;
 			span {
 				padding: 10px;
 				border-radius: 3px;
@@ -326,27 +360,34 @@ const Form = styled.form`
 				background-color: #00a9ff;
 			}
 		}
-		input,
-		select,
-		textarea {
-			-ms-box-sizing: content-box;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			width: 75%;
-			padding: 8px;
-			border: solid #00a9ff 1px;
-			border-radius: 5px;
-			outline: none;
-			font-size: 15px;
-			font-family: "Roboto";
-			&:focus {
-				box-shadow: 2px 2px 12px #00a9ff;
+		div {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			width: 80%;
+			/* border: solid red 1px; */
+			input,
+			select,
+			textarea {
+				-ms-box-sizing: content-box;
+				-moz-box-sizing: content-box;
+				-webkit-box-sizing: content-box;
+				box-sizing: content-box;
+				width: 90%;
+				padding: 8px;
+				border: solid #00a9ff 1px;
+				border-radius: 5px;
+				outline: none;
+				font-size: 15px;
+				font-family: "Roboto";
+				&:focus {
+					box-shadow: 2px 2px 12px #00a9ff;
+				}
 			}
-		}
-		p {
-			color: red;
-			font-weight: bold;
+			p {
+				color: red;
+				font-weight: bold;
+			}
 		}
 		span {
 			width: 24vh;
@@ -418,7 +459,6 @@ const Form = styled.form`
 		}
 	}
 `;
-
 
 const mapStateToProps = (state) => {
 	return {
