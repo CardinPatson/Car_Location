@@ -77,6 +77,7 @@ const AddCars = (props) => {
 			}
 		}
 		props.addCars(carProperty);
+		window.location.reload();
 	};
 	//INSERTION DE VOITURE DANS LA BASE DE DONNEES
 

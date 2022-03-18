@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import Header from "./header";
 import styled from "styled-components";
 import CarSlot from "./carSlot";
-
+import { getCarsProperty } from "../action/carAction";
+import localForage from "localforage";
 function Cars(props) {
+	useEffect(() => {
+		props.getCars();
+		console.log(props.cars);
+	}, []);
 	return (
 		<Container>
 			<Content>
@@ -78,10 +84,16 @@ function Cars(props) {
 
 					{/* /*TODO: Boucler pour afficher les voitures */}
 					<CarsPannel>
+						{props.cars.map((car) => {
+							return <CarSlot key={car.id} car={car} />;
+						})}
+
+						{/* <CarSlot cars={props.cars} />
+						<CarSlot cars={props.cars} />
+						<CarSlot cars={props.cars} /> */}
+						{/* <CarSlot />
 						<CarSlot />
-						<CarSlot />
-						<CarSlot />
-						<CarSlot />
+						<CarSlot /> */}
 					</CarsPannel>
 				</Available>
 			</Content>
@@ -276,4 +288,15 @@ const CarsPannel = styled.div`
 		background: #0078b5;
 	}
 `;
-export default Cars;
+const mapStateToProps = (state) => {
+	return {
+		cars: state.carState.cars,
+	};
+};
+const mapStateToDispatch = (dispatch) => {
+	return {
+		getCars: () => dispatch(getCarsProperty()),
+	};
+};
+const connector = connect(mapStateToProps, mapStateToDispatch);
+export default connector(Cars);

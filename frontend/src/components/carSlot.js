@@ -1,7 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 
-function CarSlot() {
+const CarSlot = (props) => {
+	// air_conditioning: true;
+	// boot_size: 1500;
+	// brand: "Mercedes";
+	// color: "Rouge";
+	// description: "Belle petite voiture";
+	// doors: 4;
+	// energy: "Essence";
+	// id: 8;
+	// id_brand: 8;
+	// is_automatic: true;
+	// model: "Classe A";
+	// name: "Berline";
+	// passengers: 5;
+	// price: 1500;
+	// type: "SUV";
+
 	return (
 		<Container>
 			<Content>
@@ -9,21 +25,20 @@ function CarSlot() {
 					<img src="./images/car_3.jpg" />
 				</Pic>
 				<Info>
-					<Name>Audi A4</Name>
+					<Name>{props.car.name}</Name>
 					<Specs>
 						<div>Type</div>
-						<p>Sportive</p>
-						<div>Énergie</div>
+						<p>{props.car.type}</p>
+						<div>{props.car.energy}</div>
 						<p>Électrique</p>
 						<div>Places</div>
-						<p>4</p>
-						<div>Automatique</div>
-						<p>Oui</p>
+						<p>{props.car.passengers}</p>
+						<div>{props.car.is_automatic ? "Automatique" : "Manuelle"}</div>
 					</Specs>
 				</Info>
 				<Price>
 					<Amount>
-						<p>1500€</p>
+						<p>{props.car.price}€</p>
 						<div>/jour</div>
 					</Amount>
 					<button>Détails</button>
@@ -31,7 +46,7 @@ function CarSlot() {
 			</Content>
 		</Container>
 	);
-}
+};
 
 const Container = styled.div`
 	margin: 1vh;
