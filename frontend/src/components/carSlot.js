@@ -19,8 +19,8 @@ const CarSlot = (props) => {
 					<Specs>
 						<div>Type</div>
 						<p>{props.car.type}</p>
-						<div>{props.car.energy}</div>
-						<p>Électrique</p>
+						<div>Énergie</div>
+						<p>{props.car.energy}</p>
 						<div>Places</div>
 						<p>{props.car.passengers}</p>
 						<div>{props.car.is_automatic ? "Automatique" : "Manuelle"}</div>

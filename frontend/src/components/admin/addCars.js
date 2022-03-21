@@ -3,6 +3,9 @@ import { addCarsProperty } from "../../action/carAction";
 import { connect } from "react-redux";
 import Header from "../header";
 import styled from "styled-components";
+
+
+
 const AddCars = (props) => {
 	const [name, setName] = useState("");
 	const [image, setImage] = useState([]);
@@ -19,7 +22,11 @@ const AddCars = (props) => {
 	const [airCondition, setAirCondition] = useState(true);
 	const [isAutomatic, setIsAutomatic] = useState(true);
 	const [urlImage, setUrlImage] = useState([]);
-	const removeImage = (e) => {};
+	const removeImage = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+  		e.nativeEvent.stopImmediatePropagation();
+	};
 
 	const handleImage = (e) => {
 		const url = e.target.files[0];

@@ -127,10 +127,11 @@ const Filter = styled.div`
 	flex-direction: column; */
 	/* position: fixed;
 	left: 20%; */
-	flex: 0.45;
+	flex: 0.3;
 	overflow-y: hidden;
 	margin-right: 15px;
 	border-radius: 5px;
+	box-shadow: 0 0 1px black;
 	/* position: fixed; */
 
 	h2,
@@ -262,6 +263,7 @@ const Available = styled.div`
 	flex: 0.6;
 	border: solid #00a9ff 1px;
 	border-radius: 5px;
+	box-shadow: 0 0 1px black;
 	h2,
 	button {
 		/* border: solid red 1px; */
