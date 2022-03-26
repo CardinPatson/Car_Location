@@ -31,6 +31,7 @@ function Home() {
 							<p>
 								Pour louer une voiture, rien de plus simple ! Une fois votre voiture choisie, 
 								il vous suffit de fournir votre carte d'identité et votre permit de conduire.
+								Un mail vous sera alors envoyé pour confirmer la location.
 							</p>
 						</div>
 						
@@ -70,19 +71,20 @@ const Part = styled.div`
 	margin: 15px;
 	margin-top: 15%;
 	display: flex;
+	flex-direction: column;
 	border: 0.5px solid grey;
-	border-radius: 1%;
+	border-radius: 0.5%;
 	max-width: 30%;
 	max-height: 20%;
 	height: 20%;
 	overflow: hidden;
-	flex-direction: column;
 	background: white;
     background: rgba(255,255,255,0.3);
 	backdrop-filter: blur(6px);
 	p {
 		text-align: left;
 		padding: 10px;
+		padding-top: 15px;
 		font-size: 100%;
 	}
 	span {

@@ -22,7 +22,7 @@ const AddCars = (props) => {
 	const [airCondition, setAirCondition] = useState(true);
 	const [isAutomatic, setIsAutomatic] = useState(true);
 	const [urlImage, setUrlImage] = useState([]);
-	const [popUp, setPopUP] = useState(true);
+	const [popUp, setPopUP] = useState(false);
 	const removeImage = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
@@ -84,6 +84,7 @@ const AddCars = (props) => {
 				return;
 			}
 		}
+		
 		props.addCars(carProperty);
 		window.location.reload();
 		setPopUP(true);

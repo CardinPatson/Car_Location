@@ -7,7 +7,9 @@ function Header() {
 		<Container>
 			<Content>
 				<Logo>
-					<div>Car Rental</div>
+					<a href="/">
+						<img src="./images/logo.svg"/>
+					</a>		
 				</Logo>
 				<Nav>
 					<Link to="/" style={{ textDecoration: "none" }}>
@@ -66,14 +68,16 @@ const Logo = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: #00a9ff;
-	div {
-		/* border: solid blue 1px; */
-		color: white;
-		font-size: 25px;
-		text-align: center;
-		transform: rotate(8deg);
-		margin: 8px;
+	margin-left: 2.5%;
+	background: #f5f5f5;
+	a {
+		height: 100%;
+		width: auto;
+	}
+	img {
+		margin-top: -2%;
+		height: 170%;
+		width: auto;
 	}
 `;
 
