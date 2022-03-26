@@ -44,7 +44,7 @@ const Container = styled.div`
 `;
 const Content = styled.div`
 	box-shadow: 0 0 1px black;
-	border: solid #777777 1px;
+	border: solid 1px rgba(0, 0, 0, 0.08);
 	display: flex;
 	flex-direction: column;
 	position: relative;

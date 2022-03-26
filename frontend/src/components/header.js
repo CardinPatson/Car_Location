@@ -42,10 +42,11 @@ function Header() {
 
 const Container = styled.div`
 	border: solid 1px rgba(0, 0, 0, 0.08);
-	max-width: 1300px;
+	max-width: 100%;
 	margin: auto;
 	position: fixed;
 	top: 0;
+	left: 0;
 	width: 100vw;
 	z-index: 100;
 `;
@@ -91,11 +92,16 @@ const Nav = styled.div`
 		text-decoration: none;
 		margin: 0 auto;
 		padding: 5px;
-		padding-right: 25px;
+		padding-right: 12.5px;
+		padding-left: 12.5px;
 		font-size: 1.15em;
 		&:hover {
 			color: #00a9ff;
 			cursor: pointer;
+			padding-right: 11.25px;
+			padding-left: 11.25px;
+			font-size: 1.2em;
+			border-bottom: 1px solid #00a9ff;
 		}
 	}
 	@media (max-width: 768px) {

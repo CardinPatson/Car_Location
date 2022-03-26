@@ -22,6 +22,7 @@ const AddCars = (props) => {
 	const [airCondition, setAirCondition] = useState(true);
 	const [isAutomatic, setIsAutomatic] = useState(true);
 	const [urlImage, setUrlImage] = useState([]);
+	const [popUp, setPopUP] = useState(true);
 	const removeImage = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
@@ -85,6 +86,7 @@ const AddCars = (props) => {
 		}
 		props.addCars(carProperty);
 		window.location.reload();
+		setPopUP(true);
 	};
 	//INSERTION DE VOITURE DANS LA BASE DE DONNEES
 
@@ -323,6 +325,20 @@ const AddCars = (props) => {
 					</div>
 				</Form>
 			</Content>
+			{popUp ?
+				<Popup>
+					<Message>
+						<div>
+							Les données de la nouvelle voiture on été envoyées à la DB
+						</div>
+						<img src="./images/validation.png"/>
+						<button onClick={() => setPopUP(false)}>
+							OK
+						</button>
+					</Message>
+				</Popup>
+				:  ""
+			}
 		</Container>
 	);
 };
@@ -466,6 +482,62 @@ const Form = styled.form`
 			border-bottom: 1px solid red;
 		}
 	}
+`;
+
+const Popup = styled.div`
+	position: absolute;
+	min-width: 100%;
+	min-height: 150%;
+	top: 0%;
+	left: 0%;
+	z-index: 101;
+	background-color: rgb(189, 189, 189, 0.5);
+	display: flex;
+	justify-content: center;
+`;
+
+const Message = styled.div`
+	margin: 20vh;
+	z-index: 102;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-content: center;
+	align-items: center;
+	width: 80vh;
+	height: 50vh;
+	border: 1px solid blue;
+	border-radius: 10px;
+	background-color: white;
+	div {
+		padding: 5vh;
+		font-size: 18px;
+	}
+	img {
+		object-fit: content;
+		opacity: 0.8;
+		width: 20%;
+		height: 30%;
+	}
+	button {
+        font-size: 3vh;
+        color: #333333;
+        background-color: #00A9FF;
+        border: 1.5px solid #00486D;
+        border-radius: 1vh;
+        width 40%;
+        padding: 1vh;
+        margin: 8vh 1vh 2vh 1vh;
+        cursor: pointer;
+    }
+    button:hover{
+        color: white;
+        background-color: #0078B5;
+        border: 1.5px solid #00A9FF;
+    }
+    button:active {
+        transform: scale(0.95);
+    }
 `;
 
 const mapStateToProps = (state) => {

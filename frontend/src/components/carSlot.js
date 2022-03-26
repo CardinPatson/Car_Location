@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const CarSlot = (props) => {
 	
@@ -31,7 +32,18 @@ const CarSlot = (props) => {
 						<p>{props.car.price}€</p>
 						<div>/jour</div>
 					</Amount>
-					<button>Détails</button>
+					<Details>
+						<Link to="/carDetails">
+							<button class="details__button">
+								Détails
+							</button>
+						</Link>
+						<Link to="/">
+							<button  class="modify__button">
+								Modifier
+							</button>
+						</Link>
+					</Details>
 				</Price>
 			</Content>
 		</Container>
@@ -91,24 +103,16 @@ const Price = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10%;
-    align-content: center;
     align-items: center;
     flex-grow: 2;
     button {
         font-size: 1.25em;
-        color: #333333;
-        background-color: #00A9FF;
-        border: 1.5px solid #00486D;
         border-radius: 10px;
-        width 100%;
+        width 80%;
         padding: 0.75vh;
-        margin: 2vh 1vh 2vh 1vh;
+        margin: 1vh 0vh 1vh 0vh;
         cursor: pointer;
         box-shadow: 0 0 1px black;
-    }
-    button:hover{
-        color: white;
-        border: 1.5px solid #00A9FF;
     }
     button:active {
         transform: scale(0.95);
@@ -130,5 +134,32 @@ const Amount = styled.div`
 		font-weight: bold;
 	}
 `;
+
+const Details = styled.div`
+	margin 1vh;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 0px;
+	.details__button {
+		color: #333333;
+        background-color: #00A9FF;
+        border: 1.5px solid #00486D;
+	}
+	.details__button:hover {
+		color: white;
+		border: 1.5px solid #00A9FF;
+    }
+	.modify__button {
+		color: #333333;
+        background-color: #c4c4c4;
+        border: 1.5px solid #00486D;
+	}
+	.modify__button:hover {
+		color: white;
+		border: 1.5px solid white;
+    }
+}
+`
 
 export default CarSlot;

@@ -17,7 +17,7 @@ function App() {
         <Route path="/add-cars" element={<AddCars />} />
         <Route path="/connreg" element={<Connreg />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
-        <Route path="/CarReservation" element={<CarReservation />} />
+        <Route path="/carReservation" element={<CarReservation />} />
         <Route path="/carDetails" element={<CarDetails />} />
       </Routes>
     </Router>
