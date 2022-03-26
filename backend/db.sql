@@ -25,6 +25,7 @@ CREATE TABLE "cars" (
   "boot_size" int,
   "type" varchar,
   "energy" varchar NOT NULL,
+  "is_available" boolean, -- NOT NULL
   "is_automatic" boolean NOT NULL,
   "passengers" int NOT NULL,
   "air_conditioning" boolean NOT NULL,
