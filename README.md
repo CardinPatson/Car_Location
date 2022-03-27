@@ -1,5 +1,15 @@
-# Car_Location
+# Car Rental
+
 Application Web de location de voiture développée dans le cadre du cours "Développement informatique III" du bachelier Technologie de l'informatique à l'EPHEC.
+
+Ce projet utilise le framework React pour le Frontend et l'environnement d'exécution Node JS pour le Backend.
+
+## Auteurs
+
+- **Abderrachid BELLAALI** [@Rachiid007](https://github.com/Rachiid007)
+- **Aymar HAKIZIMANA** [@HaAymar](https://github.com/HaAymar)
+- **Michaël POURBAIX** [@Pourbaix](https://github.com/Pourbaix)
+- **Patson TIAKO** [@CardinPatson ](https://github.com/CardinPatson)
 
 ### Type of commit
 
