@@ -11,17 +11,16 @@ function Cars(props) {
 		props.getCarsImages();
 	}, []);
 	let carsImages = {};
-	console.log(props.images);
-	for (let image of props.images) {
-		console.log(image);
-		if (image.id in carsImages) {
-			carsImages[image.id].push(image.pic_name); //= [...carsImages[image.id], image.pic_name];
-			continue;
+	if (props.images && props.images.length){
+		for (let image of props.images) {
+			console.log(image);
+			if (image.id in carsImages) {
+				carsImages[image.id].push(image.pic_name); //= [...carsImages[image.id], image.pic_name];
+				continue;
+			}
+			carsImages[image.id] = [image.pic_name];
 		}
-		carsImages[image.id] = [image.pic_name];
 	}
-	console.log(carsImages);
-	console.log(props.cars);
 	return (
 		<Container>
 			<Content>
@@ -108,6 +107,7 @@ function Cars(props) {
 }
 
 const Container = styled.div`
+	/* border: solid red 1px; */
 	max-width: 1300px;
 	margin: auto;
 `;

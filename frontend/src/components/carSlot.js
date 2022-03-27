@@ -3,13 +3,12 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const CarSlot = (props) => {
-	
-	console.log(props.images);
+
 	return (
 		<Container>
 			<Content>
 				<Pic>
-					{props.images?.length ? (
+					{props.images && props.images.length ? (
 						<img src={props.images[0]} />
 					) : (
 						<img src="./images/car_3.jpg" />
