@@ -1,5 +1,5 @@
 const multerMiddleware = require("../middleware/image");
-//const { body, validationResult } = require("express-validator");
+const { validationResult } = require("express-validator");
 const format = require("pg-format");
 const client = require("../db");
 client.connect();
