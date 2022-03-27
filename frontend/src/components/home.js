@@ -73,15 +73,15 @@ const Part = styled.div`
 	display: flex;
 	flex-direction: column;
 	border: 0.5px solid grey;
-	border-radius: 0.5%;
+	border-radius: 1%;
 	max-width: 30%;
 	max-height: 20%;
-	height: 20%;
 	overflow: hidden;
 	background: white;
-    background: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.5);
 	backdrop-filter: blur(6px);
 	p {
+		line-height: 1.5;
 		text-align: left;
 		padding: 10px;
 		padding-top: 15px;
