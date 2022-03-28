@@ -20,12 +20,12 @@ const AddCars = (props) => {
 	const [airCondition, setAirCondition] = useState(true);
 	const [isAutomatic, setIsAutomatic] = useState(true);
 	const [urlImage, setUrlImage] = useState([]);
-	const [popUp, setPopUP] = (localStorage.getItem("popup"));
+	const [popUp, setPopUp] = useState(true);
+	// const [popUp, setPopUp] = useState(localStorage.getItem("popup" , true) === "true");
 
-	useEffect(()=>{
-		localStorage.setItem("popup" , false);
-		// setPopUP(localStorage.getItem("popup")):
-	} , [])
+	// useEffect(()=>{
+	// 	console.log(localStorage.getItem("popup" , true) === "true");
+	// } , [])
 
 	const removeImage = (e) => {
 		e.preventDefault();
@@ -88,10 +88,9 @@ const AddCars = (props) => {
 				return;
 			}
 		}
-
+		localStorage.setItem('popup', !popUp);
 		props.addCars(carProperty);
 		window.location.reload();
-		localStorage.setItem('popup', !popUp);
 	};
 	//INSERTION DE VOITURE DANS LA BASE DE DONNEES
 
@@ -337,7 +336,7 @@ const AddCars = (props) => {
 							Les données de la nouvelle voiture on été envoyées à la DB
 						</div>
 						<img src="./images/validation.png" />
-						<button onClick={() => {localStorage.setItem("popup", false) ; setPopUP(localStorage.getItem("popup"))}}>OK</button>
+						<button onClick={() => {localStorage.setItem("popup", false); setPopUp(false);}}>OK</button>
 					</Message>
 				</Popup>
 			) : (
@@ -511,34 +510,36 @@ const Message = styled.div`
 	margin: 20vh;
 	z-index: 102;
 	display: flex;
+	position: fixed;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-content: center;
 	align-items: center;
-	width: 80vh;
-	height: 50vh;
-	border: 1px solid blue;
-	border-radius: 10px;
-	background-color: white;
+	width: 70vh;
+	height: 41vh;
+	border: 1px solid #00A9FF;
+	border-radius: 5px;
+	background-color: rgb(255, 255, 255, 0.9);
 	div {
 		padding: 5vh;
 		font-size: 18px;
 	}
 	img {
 		object-fit: content;
-		opacity: 0.8;
-		width: 20%;
+		opacity: 1;
+		width: auto;
 		height: 30%;
+		object-fit: content;
 	}
 	button {
         font-size: 3vh;
         color: #333333;
-        background-color: #00A9FF;
+        background-color: rgb(0, 169, 255, 0.9);
         border: 1.5px solid #00486D;
-        border-radius: 1vh;
-        width 40%;
+        border-radius: 5px;
+        width: 25%;
         padding: 1vh;
-        margin: 8vh 1vh 2vh 1vh;
+        margin: 4vh 1vh 2vh 1vh;
         cursor: pointer;
     }
     button:hover{
