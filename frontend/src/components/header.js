@@ -44,8 +44,8 @@ function Header() {
 
 const Container = styled.div`
 	border: solid 1px rgba(0, 0, 0, 0.08);
-	max-width: 1500px;
-	margin: auto;
+	max-width: 1600px;
+	margin: 0 auto;
 	position: fixed;
 	top: 0;
 	width: 100vw;

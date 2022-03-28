@@ -43,7 +43,9 @@ const Container = styled.div`
 	/* border: solid red 1px; */
 	/* width: 100%; */
 	margin: 0 auto;
-	max-width: 1500px;
+	max-width: 1600px;
+	display: flex;
+	justify-content: center;
 `;
 
 const Content = styled.div`
