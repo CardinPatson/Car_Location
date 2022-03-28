@@ -143,6 +143,7 @@ const Content = styled.div`
 	flex-direction: column;
 	margin: 0 auto;
 	width: 100%;
+	padding-right: 5px;
 `;
 const Head = styled.div`
 	/* border: solid black 1px; */
