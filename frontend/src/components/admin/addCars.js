@@ -4,20 +4,18 @@ import { connect } from "react-redux";
 import Header from "../header";
 import styled from "styled-components";
 
-
-
 const AddCars = (props) => {
-	const [name, setName] = useState("");
+	const [name, setName] = useState("RS3_Gris-Nardo");
 	const [image, setImage] = useState([]);
-	const [brand, setBrand] = useState("Mercedes");
-	const [model, setModel] = useState("Classe A");
-	const [color, setColor] = useState("Rouge");
-	const [doors, setDoors] = useState(0);
-	const [bootSize, setBootSize] = useState(0);
+	const [brand, setBrand] = useState("Audi");
+	const [model, setModel] = useState("RS 3");
+	const [color, setColor] = useState("Gris Nardo");
+	const [doors, setDoors] = useState(5);
+	const [bootSize, setBootSize] = useState(143);
 	const [energy, setEnergy] = useState("Essence");
-	const [passengers, setPassenger] = useState(0);
-	const [type, setType] = useState("SUV");
-	const [price, setPrice] = useState(0);
+	const [passengers, setPassenger] = useState(5);
+	const [type, setType] = useState("Sportif");
+	const [price, setPrice] = useState(290);
 	const [description, setDescription] = useState("");
 	const [airCondition, setAirCondition] = useState(true);
 	const [isAutomatic, setIsAutomatic] = useState(true);
@@ -26,7 +24,7 @@ const AddCars = (props) => {
 	const removeImage = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
-  		e.nativeEvent.stopImmediatePropagation();
+		e.nativeEvent.stopImmediatePropagation();
 	};
 
 	const handleImage = (e) => {
@@ -84,7 +82,7 @@ const AddCars = (props) => {
 				return;
 			}
 		}
-		
+
 		props.addCars(carProperty);
 		window.location.reload();
 		setPopUP(true);
@@ -232,8 +230,8 @@ const AddCars = (props) => {
 									setIsAutomatic(e.target.value);
 								}}
 							>
-								<option value="true">Vrai</option>
-								<option>Faux</option>
+								<option value="true">Oui</option>
+								<option value="false">Non</option>
 							</select>
 						</div>
 					</div>
@@ -247,8 +245,8 @@ const AddCars = (props) => {
 									setAirCondition(e.target.value);
 								}}
 							>
-								<option value="true">Vrai</option>
-								<option>Faux</option>
+								<option value="true">Oui</option>
+								<option value="false">Non</option>
 							</select>
 						</div>
 					</div>
@@ -326,31 +324,31 @@ const AddCars = (props) => {
 					</div>
 				</Form>
 			</Content>
-			{popUp ?
+			{popUp ? (
 				<Popup>
 					<Message>
 						<div>
 							Les données de la nouvelle voiture on été envoyées à la DB
 						</div>
-						<img src="./images/validation.png"/>
-						<button onClick={() => setPopUP(false)}>
-							OK
-						</button>
+						<img src="./images/validation.png" />
+						<button onClick={() => setPopUP(false)}>OK</button>
 					</Message>
 				</Popup>
-				:  ""
-			}
+			) : (
+				""
+			)}
 		</Container>
 	);
 };
 const Container = styled.div`
-	max-width: 1300px;
+	max-width: 1500px;
 	margin: 0 auto;
 `;
 const Content = styled.div`
-	max-width: 1000px;
+	max-width: 1200px;
 	margin: 0 auto;
-	margin-top: 85px;
+	margin-top: 100px;
+	padding: 5px;
 `;
 const Form = styled.form`
 	border: solid #00a9ff 1px;

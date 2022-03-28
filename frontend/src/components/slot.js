@@ -1,19 +1,60 @@
 import React, { useState } from "react";
-
+import "react-dates/initialize";
+import { SingleDatePicker } from "react-dates";
+import moment from "moment";
 // import "rsuite/dist/rsuite.min.css";
 // import { Calendar } from "rsuite";
 import styled from "styled-components";
+import "react-dates/lib/css/_datepicker.css";
 
-function Slot() {
-	const [startDate, setStartDate] = useState("");
+function Slot(props) {
+	const [focusedStart, setFocusedStart] = useState(false);
+	const [focusedEnd, setFocusedEnd] = useState(false);
+	const [startDate, setStartDate] = useState(moment());
 	const [startTime, setStartTime] = useState("");
-	const [endDate, setEndDate] = useState("");
+	const [endDate, setEndDate] = useState(moment());
 	const [endTime, setEndTime] = useState("");
+	const [error, setError] = useState(
+		"Veuillez entrez une plage horaire valide !"
+	);
+	// console.log(moment().format("LT"));
+
+	// console.log(moment().format("dddd, Do MMMM YYYY, h:mm:ss a"));
+	// console.log(typeof moment().format("dddd, Do MMMM YYYY, h:mm:ss a"));
 
 	const handleClick = (e) => {
 		e.preventDefault();
-		//TODO verifier les informations du formulaire
-		//TODO rechercher comment bloquer les anciennes date du calendrier
+		//date actuelle
+		let currentDate = moment().format("D MMMM YYYY");
+		let currentDay = new window.Date(currentDate);
+
+		//date de début et de fin de location
+		let startDateFormat = startDate.format("D MMMM YYYY");
+		let startDay = new window.Date(startDateFormat);
+		let endDateFormat = endDate.format("D MMMM YYYY");
+		let endDay = new window.Date(endDateFormat);
+
+		//heure actuelle
+		let currentHour = parseInt(startDate.format("LT").substring(0, 2));
+
+		//heure de début et fin de location
+		let startHour = parseInt(startTime.substring(0, 2));
+		let endHour = parseInt(endTime.substring(0, 2));
+
+		//si pas heure de début ou de fin erreur
+		if (!endTime || !startTime) console.log("Premiere erreur", error);
+
+		//si la date est aujourdhui l'heure de début ou de fin doit être supérieur à l'heure actuelle
+		if (startDay.getTime() === currentDay.getTime() && startHour <= currentHour)
+			console.log("seconde erreur", error);
+		if (endDay.getTime() === currentDay.getTime() && endHour <= currentHour)
+			console.log("troisième erreur ", error);
+
+		//si la date de début et de fin est aujourdhui , l'heure de fin de location doit être supérieur à celle de début
+		if (startDay.getTime() === endDay.getTime() && startHour >= endHour)
+			console.log("quatrième erreur", error);
+
+		//TODO Envoyer dans la db la date , l'heure de début et de fin de location
 	};
 	return (
 		<Container>
@@ -21,19 +62,57 @@ function Slot() {
 				<Head>Louer</Head>
 				<Form>
 					<legend>Choisissez une date</legend>
-					<StartDate>
+					<div className="date">
 						<p>Du</p>
-						<input type="date" onChange={(e) => {}} />
-						<input type="time" onChange={(e) => {}} />
-					</StartDate>
-					<EndDate>
+
+						<StyledDatePickerWrapper>
+							<SingleDatePicker
+								numberOfMonths={1}
+								onDateChange={(date) => {
+									console.log(date._d);
+									setStartDate(date);
+								}}
+								onFocusChange={(focus) => {
+									setFocusedStart(focus.focused);
+								}}
+								focused={focusedStart}
+								date={startDate}
+							/>
+						</StyledDatePickerWrapper>
+
+						<input
+							type="time"
+							onChange={(e) => {
+								setStartTime(e.target.value);
+							}}
+						/>
+					</div>
+
+					<div className="date">
 						<p>Au </p>
-						<input type="date" onChange={(e) => {}} />
-						<input type="time" onChange={(e) => {}} />
-					</EndDate>
+						<StyledDatePickerWrapper>
+							<SingleDatePicker
+								numberOfMonths={1}
+								onDateChange={(date) => {
+									setEndDate(date);
+								}}
+								onFocusChange={(focus) => {
+									setFocusedEnd(focus.focused);
+								}}
+								focused={focusedEnd}
+								date={endDate}
+							/>
+						</StyledDatePickerWrapper>
+						<input
+							type="time"
+							onChange={(e) => {
+								setEndTime(e.target.value);
+							}}
+						/>
+					</div>
 					<button
-						onClick={() => {
-							/**Verifier les données du formulaire */
+						onClick={(e) => {
+							handleClick(e);
 						}}
 					>
 						Valider
@@ -64,6 +143,7 @@ const Content = styled.div`
 	flex-direction: column;
 	margin: 0 auto;
 	width: 100%;
+	padding-right: 5px;
 `;
 const Head = styled.div`
 	/* border: solid black 1px; */
@@ -111,28 +191,68 @@ const Form = styled.form`
 			background-color: #00a9ff;
 		}
 	}
-`;
-const StartDate = styled.div`
-	/* border: solid black 1px; */
-	display: flex;
-	align-items: center;
-	text-align: center;
-	margin-left: 20px;
-	@media (max-width: 1000px) {
-		flex-direction: column;
+	.date {
+		/* border: solid red 1px; */
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-left: 10px;
+		@media (max-width: 1000px) {
+			flex-direction: column;
+			input {
+				margin-top: 5px;
+			}
+		}
+		p {
+			/* border : solid red 1px ; */
+			padding-right: 10px;
+		}
 	}
 `;
-const EndDate = styled(StartDate)`
-	/* border: solid red 1px; */
-	padding: 5px;
-`;
-const Date = styled.div`
-	/* border: solid black 1px; */
-	/* display: inline-block; */
-	position: absolute;
-	width: 280px;
-	display: none;
-	/* height : 2; */
+const StyledDatePickerWrapper = styled.div`
+	& .SingleDatePicker,
+	.SingleDatePickerInput {
+		.DateInput {
+			width: 100%;
+			height: 40px;
+			display: flex;
+			/* border: solid blue 1px; */
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			.DateInput_input {
+				font-size: 1rem;
+				border-bottom: 0;
+				padding: 12px 16px 14px;
+				/* border: solid blue 1px; */
+			}
+		}
+
+		.SingleDatePickerInput__withBorder {
+			border-radius: 4px;
+			overflow: hidden;
+			display: flex;
+
+			:hover,
+			.DateInput_input__focused {
+				/* border: 1px solid red; */
+			}
+
+			.CalendarDay__selected {
+				background: blue;
+				border: blueviolet;
+				/* border: solid blue 1px; */
+			}
+		}
+
+		.SingleDatePicker_picker.SingleDatePicker_picker {
+			top: 43px;
+			left: 2px;
+			/* border: solid red 1px; */
+			/* top: 43px !important;
+			left: 2px !important; */
+		}
+	}
 `;
 
 export default Slot;

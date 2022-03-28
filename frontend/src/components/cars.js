@@ -11,7 +11,7 @@ function Cars(props) {
 		props.getCarsImages();
 	}, []);
 	let carsImages = {};
-	if (props.images && props.images.length){
+	if (props.images && props.images.length) {
 		for (let image of props.images) {
 			console.log(image);
 			if (image.id in carsImages) {
@@ -108,12 +108,13 @@ function Cars(props) {
 
 const Container = styled.div`
 	/* border: solid red 1px; */
-	max-width: 1300px;
-	margin: auto;
+	max-width: 1500px;
+	margin: 0 auto;
 `;
 const Content = styled.div`
 	/* border: solid black 1px; */
-	margin-top: 70px;
+	width: 100%;
+	margin-top: 100px;
 	display: flex;
 	/* position : fixed ;  */
 	flex-direction: row;
@@ -260,7 +261,7 @@ const Slot = styled(Brand)`
 
 const Available = styled.div`
 	/* border: solid red 1px; */
-	flex: 0.6;
+	flex: 0.65;
 	border: solid #00a9ff 1px;
 	border-radius: 5px;
 	box-shadow: 0 0 1px black;
@@ -296,6 +297,7 @@ const CarsPannel = styled.div`
 		background: #0078b5;
 	}
 `;
+
 const mapStateToProps = (state) => {
 	return {
 		cars: state.carState.cars,

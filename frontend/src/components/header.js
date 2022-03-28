@@ -8,8 +8,8 @@ function Header() {
 			<Content>
 				<Logo>
 					<a href="/">
-						<img src="./images/logo.svg"/>
-					</a>		
+						<img src="./images/logo.svg" />
+					</a>
 				</Logo>
 				<Nav>
 					<Link to="/" style={{ textDecoration: "none" }}>
@@ -44,11 +44,10 @@ function Header() {
 
 const Container = styled.div`
 	border: solid 1px rgba(0, 0, 0, 0.08);
-	max-width: 100%;
+	max-width: 1500px;
 	margin: auto;
 	position: fixed;
 	top: 0;
-	left: 0;
 	width: 100vw;
 	z-index: 100;
 `;
