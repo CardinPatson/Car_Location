@@ -111,6 +111,8 @@ const Container = styled.div`
 	/* border: solid red 1px; */
 	max-width: 1500px;
 	margin: 0 auto;
+	display: flex;
+	justify-content: center;
 `;
 const Content = styled.div`
 	/* border: solid black 1px; */

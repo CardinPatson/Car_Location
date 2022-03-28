@@ -77,6 +77,8 @@ function CarReservation(){
 const Container = styled.div`
 	max-width: 1300px;
 	margin: auto;
+    display: flex;
+	justify-content: center;
 `;
 const Content = styled.div`
 	/* border: solid black 1px; */
@@ -98,6 +100,7 @@ const Detail = styled.div`
     border-radius: 1vh;
     box-shadow: 0 0 1px black;
     margin: 1vh 1vh 1vh 5vh;
+    width: 30%;
 `;
 
 const Photo = styled.div`

@@ -79,6 +79,8 @@ const Louer = styled.div`
 const Container = styled.div`
   max-width: 1300px;
   margin: auto;
+  display: flex;
+	justify-content: center;
 `;
 const Content = styled.div`
   margin-top: 20vh;

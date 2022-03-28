@@ -41,9 +41,12 @@ function ForgotPassword() {
 const Container = styled.div`
 	margin: 0 auto;
 	max-width: 1300px;
+    display: flex;
+	justify-content: center;
 `;
 
 const Content = styled.div`
+    margin-top: 10%;
     display: flex;
     justify-content: center;
 `

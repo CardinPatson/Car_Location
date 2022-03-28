@@ -48,7 +48,7 @@ const Content = styled.div`
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	margin: 25% 0% 0% 0%;
+	margin: 8% 0% 0% 0%;
 	width: 55vh;
 `;
 

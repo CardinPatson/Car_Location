@@ -343,9 +343,15 @@ const AddCars = (props) => {
 const Container = styled.div`
 	max-width: 1500px;
 	margin: 0 auto;
+	display: flex;
+	justify-content: center;
 `;
 const Content = styled.div`
-	max-width: 1200px;
+	/* border : solid red 1px ; */
+	width: 70%;
+	@media (max-width : 768px){
+		width : 85%;
+	}
 	margin: 0 auto;
 	margin-top: 100px;
 	padding: 5px;
