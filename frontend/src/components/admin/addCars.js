@@ -20,8 +20,7 @@ const AddCars = (props) => {
 	const [airCondition, setAirCondition] = useState(true);
 	const [isAutomatic, setIsAutomatic] = useState(true);
 	const [urlImage, setUrlImage] = useState([]);
-	const [popUp, setPopUp] = useState(true);
-	// const [popUp, setPopUp] = useState(localStorage.getItem("popup" , true) === "true");
+	const [popUp, setPopUp] = useState(localStorage.getItem("popup" , true) === "true");
 
 	// useEffect(()=>{
 	// 	console.log(localStorage.getItem("popup" , true) === "true");
@@ -333,9 +332,9 @@ const AddCars = (props) => {
 				<Popup>
 					<Message>
 						<div>
-							Les données de la nouvelle voiture on été envoyées à la DB
+							Les données de la nouvelle voiture on été envoyées à la DB.
 						</div>
-						<img src="./images/validation.png" />
+						<img src="./images/validation.svg" />
 						<button onClick={() => {localStorage.setItem("popup", false); setPopUp(false);}}>OK</button>
 					</Message>
 				</Popup>
@@ -507,7 +506,7 @@ const Popup = styled.div`
 `;
 
 const Message = styled.div`
-	margin: 20vh;
+	margin: 28vh;
 	z-index: 102;
 	display: flex;
 	position: fixed;
@@ -518,13 +517,14 @@ const Message = styled.div`
 	width: 70vh;
 	height: 41vh;
 	border: 1px solid #00A9FF;
-	border-radius: 5px;
+	border-radius: 3px;
 	background-color: rgb(255, 255, 255, 0.9);
 	div {
 		padding: 5vh;
 		font-size: 18px;
 	}
 	img {
+		transform: rotate(9deg);
 		object-fit: content;
 		opacity: 1;
 		width: auto;
@@ -534,10 +534,11 @@ const Message = styled.div`
 	button {
         font-size: 3vh;
         color: #333333;
-        background-color: rgb(0, 169, 255, 0.9);
-        border: 1.5px solid #00486D;
+        background-color: rgb(0, 169, 255, 0.8);
+        border: 1px solid #00486D;
         border-radius: 5px;
         width: 25%;
+		height: auto;
         padding: 1vh;
         margin: 4vh 1vh 2vh 1vh;
         cursor: pointer;
@@ -545,7 +546,7 @@ const Message = styled.div`
     button:hover{
         color: white;
         background-color: #0078B5;
-        border: 1.5px solid #00A9FF;
+        border: 1px solid #00A9FF;
     }
     button:active {
         transform: scale(0.95);
