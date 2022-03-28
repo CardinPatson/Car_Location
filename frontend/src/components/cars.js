@@ -296,6 +296,9 @@ const CarsPannel = styled.div`
 		background: #0078b5;
 	}
 `;
+
+
+
 const mapStateToProps = (state) => {
 	return {
 		cars: state.carState.cars,
