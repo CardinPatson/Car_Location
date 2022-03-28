@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { addCarsProperty } from "../../action/carAction";
 import { connect } from "react-redux";
 import Header from "../header";
@@ -20,7 +20,13 @@ const AddCars = (props) => {
 	const [airCondition, setAirCondition] = useState(true);
 	const [isAutomatic, setIsAutomatic] = useState(true);
 	const [urlImage, setUrlImage] = useState([]);
-	const [popUp, setPopUP] = useState(false);
+	const [popUp, setPopUP] = (localStorage.getItem("popup"));
+
+	useEffect(()=>{
+		localStorage.setItem("popup" , false);
+		// setPopUP(localStorage.getItem("popup")):
+	} , [])
+
 	const removeImage = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
@@ -85,7 +91,7 @@ const AddCars = (props) => {
 
 		props.addCars(carProperty);
 		window.location.reload();
-		setPopUP(true);
+		localStorage.setItem('popup', !popUp);
 	};
 	//INSERTION DE VOITURE DANS LA BASE DE DONNEES
 
@@ -331,7 +337,7 @@ const AddCars = (props) => {
 							Les données de la nouvelle voiture on été envoyées à la DB
 						</div>
 						<img src="./images/validation.png" />
-						<button onClick={() => setPopUP(false)}>OK</button>
+						<button onClick={() => {localStorage.setItem("popup", false) ; setPopUP(localStorage.getItem("popup"))}}>OK</button>
 					</Message>
 				</Popup>
 			) : (
