@@ -4,6 +4,7 @@ import Header from "./header";
 import styled from "styled-components";
 import CarSlot from "./carSlot";
 import { getCarsProperty, getCarsImages } from "../action/carAction";
+import localForage from "localforage";
 
 function Cars(props) {
 	useEffect(() => {
