@@ -11,9 +11,9 @@ const { addCarsSchema } = require("../validations/addCarsSchema");
 //API RESTFULL
 //GET
 router.get("/cars", carCtrl.getCars);
-//Crée une erreur lors de l'insertion sur /api/cars Apparement de respecte pas les conventions rest 😑😑!! 
+//Crée une erreur lors de l'insertion sur /api/cars Apparement ne respecte pas les conventions rest 😑😑!!
 //A faire lorsqu'on a un put ou delete ou quand le paramètre est obligatoire sur la route
-// router.get("/cars/:id", carCtrl.getCarById); 
+// router.get("/cars/:id", carCtrl.getCarById);
 router.get("/cars/images", carCtrl.getCarsImages);
 
 //POST
