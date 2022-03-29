@@ -138,16 +138,17 @@ const Container = styled.div`
 `;
 const Content = styled.div`
 	border: solid black 1px;
-	border-radius: 5px;
+	border-radius: 2.5px;
 	display: flex;
 	flex-direction: column;
 	margin: 0 auto;
 	width: 100%;
 	padding-right: 5px;
+	z-index: 20;
 `;
 const Head = styled.div`
 	/* border: solid black 1px; */
-	border-radius: 5px 0 5px 0;
+	border-radius: 2.5px 0 5px 0;
 	display: flex;
 	justify-content: center;
 	text-align: center;

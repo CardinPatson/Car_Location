@@ -109,20 +109,25 @@ function Cars(props) {
 
 const Container = styled.div`
 	/* border: solid red 1px; */
-	max-width: 1500px;
 	margin: 0 auto;
+	max-width: 1600px;
 	display: flex;
 	justify-content: center;
+	background-image: url("./images/car_4.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
 `;
 const Content = styled.div`
 	/* border: solid black 1px; */
 	width: 100%;
-	margin-top: 100px;
+	margin-top: 75px;
 	display: flex;
 	/* position : fixed ;  */
 	flex-direction: row;
 	justify-content: center;
 	position: relative;
+	margin-bottom: 9px;
 `;
 const Filter = styled.div`
 	border: solid #00a9ff 1px;
@@ -136,6 +141,7 @@ const Filter = styled.div`
 	margin-right: 15px;
 	border-radius: 5px;
 	box-shadow: 0 0 1px black;
+	background-color: rgb(255, 255, 255, 0.95);
 	/* position: fixed; */
 
 	h2,
@@ -165,7 +171,7 @@ const Price = styled.div`
 		padding: 15px 10px 15px 10px;
 		font-size: 1.15em;
 		font-weight: normal;
-		background: #f3f3f3;
+		background-color: rgb(243, 243, 243, 0.95);
 		margin-bottom: 30px;
 	}
 	div {
@@ -268,6 +274,7 @@ const Available = styled.div`
 	border: solid #00a9ff 1px;
 	border-radius: 5px;
 	box-shadow: 0 0 1px black;
+	background-color: rgb(255, 255, 255, 0.95);
 	h2,
 	button {
 		/* border: solid red 1px; */

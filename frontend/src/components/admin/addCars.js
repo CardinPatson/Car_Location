@@ -182,7 +182,7 @@ const AddCars = (props) => {
 						<span>Energie</span>
 						<div>
 							<p></p>
-							<select
+							<select className="add__detail__cars__select"
 								value={energy}
 								onChange={(e) => {
 									setEnergy(e.target.value);
@@ -228,7 +228,7 @@ const AddCars = (props) => {
 						<span>Automatique</span>
 						<div>
 							<p></p>
-							<select
+							<select className="add__detail__cars__select"
 								value={isAutomatic}
 								onChange={(e) => {
 									setIsAutomatic(e.target.value);
@@ -243,7 +243,7 @@ const AddCars = (props) => {
 						<span>Air Conditionné</span>
 						<div>
 							<p></p>
-							<select
+							<select className="add__detail__cars__select"
 								value={airCondition}
 								onChange={(e) => {
 									setAirCondition(e.target.value);
@@ -345,10 +345,14 @@ const AddCars = (props) => {
 	);
 };
 const Container = styled.div`
-	max-width: 1500px;
+	max-width: 1600px;
 	margin: 0 auto;
 	display: flex;
 	justify-content: center;
+	background-image: url("./images/car_2.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
 `;
 const Content = styled.div`
 	/* border : solid red 1px ; */
@@ -361,8 +365,9 @@ const Content = styled.div`
 	padding: 5px;
 `;
 const Form = styled.form`
+
 	border: solid #00a9ff 1px;
-	background-color: #f5f5f5;
+	background-color: rgb(245, 245, 245, 0.95);
 	/* height: 100vh; */
 	border-radius: 3px 3px 0 0;
 	legend {
@@ -400,7 +405,6 @@ const Form = styled.form`
 			width: 80%;
 			/* border: solid red 1px; */
 			input,
-			select,
 			textarea {
 				-ms-box-sizing: content-box;
 				-moz-box-sizing: content-box;
@@ -420,6 +424,29 @@ const Form = styled.form`
 			p {
 				color: red;
 				font-weight: bold;
+			}
+		}
+		.add__detail__cars__select{
+			appearance: none;
+			-ms-box-sizing: content-box;
+			-moz-box-sizing: content-box;
+			-webkit-box-sizing: content-box;
+			box-sizing: content-box;
+			width: 90%;
+			padding: 8px;
+			border: solid #00a9ff 1px;
+			border-radius: 5px;
+			outline: none;
+			font-size: 15px;
+			font-family: "Roboto";
+			background-image: url("./images/arrow.svg");
+			background-repeat: no-repeat;
+			background-position: 98.5%;
+			background-size: 1.8%;
+			cursor: pointer;
+			&:focus {
+				box-shadow: 2px 2px 12px #00a9ff;
+				border-radius: 5px 5px 0px 0px;
 			}
 		}
 		span {
@@ -496,7 +523,7 @@ const Form = styled.form`
 const Popup = styled.div`
 	position: absolute;
 	min-width: 100%;
-	min-height: 150%;
+	min-height: 138%;
 	top: 0%;
 	left: 0%;
 	z-index: 101;
@@ -515,12 +542,12 @@ const Message = styled.div`
 	align-content: center;
 	align-items: center;
 	width: 70vh;
-	height: 41vh;
+	height: 35vh;
 	border: 1px solid #00A9FF;
 	border-radius: 3px;
 	background-color: rgb(255, 255, 255, 0.9);
 	div {
-		padding: 5vh;
+		padding: 3vh 2vh 2vh 2vh ;
 		font-size: 18px;
 	}
 	img {
@@ -528,7 +555,7 @@ const Message = styled.div`
 		object-fit: content;
 		opacity: 1;
 		width: auto;
-		height: 30%;
+		height: 32%;
 		object-fit: content;
 	}
 	button {
@@ -540,7 +567,7 @@ const Message = styled.div`
         width: 25%;
 		height: auto;
         padding: 1vh;
-        margin: 4vh 1vh 2vh 1vh;
+        margin: 5vh 1vh 1vh 1vh;
         cursor: pointer;
     }
     button:hover{
