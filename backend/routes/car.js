@@ -11,20 +11,22 @@ const { addCarsSchema } = require("../validations/addCarsSchema");
 //API RESTFULL
 //GET
 router.get("/cars", carCtrl.getCars);
-router.get("/cars/:id", carCtrl.getCarById);
-router.get("/cars-images", carCtrl.getCarsImages);
+//Crée une erreur lors de l'insertion sur /api/cars Apparement de respecte pas les conventions rest 😑😑!! 
+//A faire lorsqu'on a un put ou delete ou quand le paramètre est obligatoire sur la route
+// router.get("/cars/:id", carCtrl.getCarById); 
+router.get("/cars/images", carCtrl.getCarsImages);
 
 //POST
-router.post("/car", carCtrl.addCar);
+router.post("/cars", carCtrl.addCar);
 //router.post("/car", checkSchema(addCarsSchema), carCtrl.addCar);
 
-router.post("/car-images", multerMiddleware, carCtrl.addCarImages);
+router.post("/cars/:id/images", multerMiddleware, carCtrl.addCarImages);
 
 //PUT
-router.put("/car/:id", carCtrl.updateCar);
+router.put("/cars/:id", carCtrl.updateCar);
 
 //DELETE
-router.delete("/car/:id", carCtrl.deleteCar);
+router.delete("/cars/:id", carCtrl.deleteCar);
 
 //TEST
 router.post("/isExist", carCtrl.isExist);

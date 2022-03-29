@@ -7,6 +7,7 @@ client.connect();
 //GET
 const getCars = (req, res) => {
 	//RECUPERER LES INFOS DE LA VOITURE PUIS LES IMAGES DE LA VOITURE
+	console.log(req.query);
 	client.query(
 		"SELECT c.id, name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description,brand, model FROM cars c JOIN cars_brands cb ON c.id_brand = cb.id",
 		(error, results) => {
@@ -26,18 +27,20 @@ const getCarsImages = (req, res) => {
 };
 
 const getCarById = (req, res) => {
-	const id = parseInt(req.params.id);
+	if (req.params) {
+		const id = parseInt(req.params.id);
 
-	client.query(
-		"SELECT * FROM cars c FULL OUTER JOIN cars_brands cb ON c.id = cb.id WHERE c.id = $1",
-		[id],
-		(error, results) => {
-			if (error) {
-				throw error;
+		client.query(
+			"SELECT * FROM cars c FULL OUTER JOIN cars_brands cb ON c.id = cb.id WHERE c.id = $1",
+			[id],
+			(error, results) => {
+				if (error) {
+					throw error;
+				}
+				res.status(200).json(results.rows);
 			}
-			res.status(200).json(results.rows);
-		}
-	);
+		);
+	}
 };
 
 //POST
@@ -138,7 +141,9 @@ const addCar = async (req, res) => {
 
 const addCarImages = (req, res, next) => {
 	try {
-		const idCars = req.body.id;
+		console.log(req.params);
+		const idCars = req.params.id;
+		console.log(idCars);
 
 		//RETRIEVE THE PATH OF THE IMAGES
 		const url_prev = `${req.protocol}://${req.get("host")}`;
