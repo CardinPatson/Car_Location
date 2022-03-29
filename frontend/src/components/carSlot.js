@@ -59,6 +59,7 @@ const Content = styled.div`
 	flex-direction: row;
 	border-radius: 10px;
 	box-shadow: 0 0 1px black;
+	background-color: white;
 `;
 
 const Pic = styled.div`
@@ -76,6 +77,7 @@ const Info = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding: 2vh;
+	min-width: 25%;
 `;
 
 const Name = styled.div`
