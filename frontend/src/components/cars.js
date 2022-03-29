@@ -141,7 +141,7 @@ const Filter = styled.div`
 	margin-right: 15px;
 	border-radius: 5px;
 	box-shadow: 0 0 1px black;
-	background-color: rgb(255, 255, 255, 0.95);
+	background-color: rgb(255, 255, 255, 0.9);
 	/* position: fixed; */
 
 	h2,
@@ -171,7 +171,7 @@ const Price = styled.div`
 		padding: 15px 10px 15px 10px;
 		font-size: 1.15em;
 		font-weight: normal;
-		background-color: rgb(243, 243, 243, 0.95);
+		background-color: rgb(243, 243, 243, 0.9);
 		margin-bottom: 30px;
 	}
 	div {
@@ -274,7 +274,7 @@ const Available = styled.div`
 	border: solid #00a9ff 1px;
 	border-radius: 5px;
 	box-shadow: 0 0 1px black;
-	background-color: rgb(255, 255, 255, 0.95);
+	background-color: rgb(255, 255, 255, 0.9);
 	h2,
 	button {
 		/* border: solid red 1px; */
