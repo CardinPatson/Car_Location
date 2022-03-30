@@ -4,9 +4,9 @@ const router = express.Router();
 const carCtrl = require("../controllers/car");
 const multerMiddleware = require("../middleware/image");
 
-const { checkSchema } = require("express-validator");
+const { body, checkSchema, validationResult } = require("express-validator");
 
-const { addCarsSchema } = require("../validations/addCarsSchema");
+const { addCarsSchema, validate } = require("../validations/addCarsSchema");
 
 //API RESTFULL
 //GET
@@ -18,8 +18,17 @@ router.get("/cars/images", carCtrl.getCarsImages);
 router.get("/cars/orders", carCtrl.getCarsOrders);
 
 //POST
-router.post("/cars", carCtrl.addCar);
-//router.post("/car", checkSchema(addCarsSchema), carCtrl.addCar);
+//router.post("/cars", carCtrl.addCar);
+
+// router.post("/car", validate(checkSchema(addCarsSchema)), (req, res) => {
+//   // Process data
+//   res.status(200).json({
+//     success: true,
+//     message: "add car successful",
+//   });
+// });
+
+router.post("/car", validate(checkSchema(addCarsSchema)), carCtrl.addCar);
 
 router.post("/cars/:id/images", multerMiddleware, carCtrl.addCarImages);
 
