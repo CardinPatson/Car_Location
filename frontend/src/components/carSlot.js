@@ -1,9 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import CarDetails from "./carDetails"
 
 const CarSlot = (props) => {
+	const handleDetail = ()=>{
 
+	}
 	return (
 		<Container>
 			<Content>
@@ -32,16 +35,18 @@ const CarSlot = (props) => {
 						<div>/jour</div>
 					</Amount>
 					<Details>
-						<Link to="/carDetails">
-							<button class="details__button">
-								Détails
-							</button>
-						</Link>
+						<div>
+
+							<button class="details__button" onClick={(e)=>{handleDetail()}}>Détails</button>
+
+						</div>
+						
 						<Link to="/">
-							<button  class="modify__button">
-								Modifier
-							</button>
+							<button class="modify__button">Modifier</button>
 						</Link>
+						<div className="car__detail" style={{display : "none"}}>
+							<CarDetails/>
+						</div>
 					</Details>
 				</Price>
 			</Content>
@@ -59,6 +64,7 @@ const Content = styled.div`
 	flex-direction: row;
 	border-radius: 10px;
 	box-shadow: 0 0 1px black;
+	background-color: white;
 `;
 
 const Pic = styled.div`
@@ -69,6 +75,12 @@ const Pic = styled.div`
 	img {
 		width: 42vh;
 		height: 25vh;
+		object-fit: content;
+	}
+	@media(max-width : 1200px){
+		img{
+			width : 27vh
+		}
 	}
 `;
 
@@ -76,6 +88,7 @@ const Info = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding: 2vh;
+	min-width: 25%;
 `;
 
 const Name = styled.div`
@@ -108,8 +121,8 @@ const Price = styled.div`
         font-size: 1.25em;
         border-radius: 10px;
         width 80%;
-        padding: 0.75vh;
-        margin: 1vh 0vh 1vh 0vh;
+        padding: 6px;
+        margin: 5px 0 5px 0;
         cursor: pointer;
         box-shadow: 0 0 1px black;
     }
@@ -158,7 +171,18 @@ const Details = styled.div`
 		color: white;
 		border: 1.5px solid white;
     }
+	.car__detail{
+		position: absolute;
+		min-width: 100%;
+		min-height: 138%;
+		top: 0;
+		left: 0;
+		z-index: 101;
+		background-color: rgb(189, 189, 189, 0.5);
+		/* display: flex;
+		justify-content: center; */
+	}
 }
-`
+`;
 
 export default CarSlot;

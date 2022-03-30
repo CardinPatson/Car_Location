@@ -43,11 +43,14 @@ function Connexion(props) {
 const Container = styled.div`
     box-shadow: 0 0 1px black;
     border: solid 1px rgba(0, 0, 0, 0.08);
+    border-radius: 3px;
 	display: flex;
     flex-direction: column;
 	position: relative;
     margin: 8% 0% 0% 0%;
 	width: 55vh;
+    background-color: rgb(255, 255, 255, 0.9);
+    height: 300px;
 `;
 
 const Banner = styled.div`

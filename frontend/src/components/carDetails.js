@@ -2,10 +2,9 @@ import React from "react";
 import Header from "./header";
 import styled from "styled-components";
 
-function CarDetails() {
+function CarDetails(props) {
   return (
     <Container>
-      <Header />
       <Content>
         <Test>
           <Banner>
@@ -79,7 +78,9 @@ const Louer = styled.div`
 const Container = styled.div`
   max-width: 1300px;
   margin: auto;
-`;
+  display: flex;
+	justify-content: center;
+  `;
 const Content = styled.div`
   margin-top: 20vh;
   display: flex;
@@ -87,10 +88,11 @@ const Content = styled.div`
   flex-direction: column;
   padding-bottom: 30px;
   top: 7vh;
-`;
+  `;
 
 const Test = styled.div`
   border: 1px solid black;
+  background : white;
   display: flex;
   flex-direction: column;
 `;

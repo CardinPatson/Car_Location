@@ -33,11 +33,8 @@ function CarReservation(){
                     </Specs>
             </Detail>
             <Reservation>
-                <Banner>Réservation de la voiture</Banner>
+                <Banner>Résumé de la réservation</Banner>
                 <Information>
-                    <Title>
-                        <div>Résumé de la réservation</div>
-                    </Title>
                     <Date>
                         <p>La voiture sera réservée pendant la période suivante:</p>
                         <div>
@@ -65,6 +62,7 @@ function CarReservation(){
                             <span></span>
                         </Check>
                         <button>Confirmer la location</button>
+                        <img src="./images/logo.svg"/>
                     </Confirm>
                 </Information>
             </Reservation>
@@ -75,18 +73,27 @@ function CarReservation(){
 }
 
 const Container = styled.div`
-	max-width: 1300px;
-	margin: auto;
+    top: 0;
+	margin: 0 auto;
+	max-width: 1600px;
+    height: 723px;
+	display: flex;
+	justify-content: center;
+    background-image: url("./images/car_8.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
 `;
 const Content = styled.div`
 	/* border: solid black 1px; */
-	margin-top: 5vh;
+    width: auto;
+    height: 85%;
+	margin-top: 80px;
 	display: flex;
 	flex-direction: row;
     gap: 5vh;
 	justify-content: flex-start;
 	position: relative;
-    top: 7vh;
 `;
 
 const Detail = styled.div`
@@ -95,17 +102,21 @@ const Detail = styled.div`
     align-items: center;
     flex-direction: column;
     border: 1px solid #00a9ff;
-    border-radius: 1vh;
+    border-radius: 5px;
     box-shadow: 0 0 1px black;
     margin: 1vh 1vh 1vh 5vh;
+    width: 30%;
+    background-color: rgb(255, 255, 255, 0.95);
 `;
 
 const Photo = styled.div`
-    object-fit: content;
+    width: 100%;
+    height: 20%;
+    margin: 0vh 0vh 3vh 0vh;
     img {
-        width: 32vh;
-        height: 20vh;
-        margin: 3vh;
+        object-fit: contain;
+        width: auto;
+        height: 100%;
     }
 `;
 
@@ -150,8 +161,10 @@ const Specs = styled.div`
 `;
 
 const Reservation = styled.div`
+    background-color: rgb(255, 255, 255, 0.95);
     display: flex;
     border: 1px solid #00a9ff;
+    border-radius: 5px;
     flex-direction: column;
     margin: 1vh 1vh 1vh 1vh;
     box-shadow: 0 0 1px black;
@@ -172,30 +185,21 @@ const Information = styled.div`
     flex-direction: column;
 `;
 
-const Title = styled.div`
-    display: flex;
-    margin: 2vh;
-    padding: 0.5vh;
-    justify-content: center;
-    div {
-        font-size: 2.8vh;
-        text-align: center;
-        border-bottom: 1px solid black;
-    }
-`;
-
 const Date = styled.div`
     display: flex;
     flex-direction: column;
     font-size: 2vh;
     margin: 2vh; 
+    margin-top: 3vh;
+    padding-bottom: 15px;
+    border-bottom: 1px solid black;
     p {
         text-align: left;
     }
     div {
         display: flex;
         gap: 2vh;
-        margin: 1.5vh 1vh 1vh 2.5vh;
+        margin: 2vh 1vh 1vh 2.5vh;
         align-items: center;
         font-size: 1.8vh;
         span {
@@ -214,9 +218,12 @@ const Price = styled.div`
     flex-direction: column;
     font-size: 2vh;
     margin: 2vh; 
-    margin-top: 1vh;
+    margin-top: 2vh;
+    padding-bottom: 20px;
+    border-bottom: 1px solid black;
     p {
         text-align: left;
+        margin-bottom: 5px;
     }
     div {
         display: flex;
@@ -225,9 +232,12 @@ const Price = styled.div`
         align-items: center;
         font-size: 1.8vh;
         span {
+            text-align: center;
             border-bottom: 1px solid black;
         }
         p {
+            margin: 0;
+            text-align: center;
             font-weight: bold;
         }
     }
@@ -236,6 +246,7 @@ const Price = styled.div`
 const Confirm = styled.div`
     display: flex;
     margin: 4vh;
+    margin-bottom: 0;
     flex-direction: column;
     align-items: center;
     button {
@@ -243,7 +254,7 @@ const Confirm = styled.div`
         color: #333333;
         background-color: #00A9FF;
         border: 1.5px solid #00486D;
-        border-radius: 1vh;
+        border-radius: 15px;
         width 40%;
         padding: 1vh;
         margin: 2vh 1vh 2vh 1vh;
@@ -257,6 +268,10 @@ const Confirm = styled.div`
     }
     button:active {
         transform: scale(0.95);
+    }
+    img {
+        height: auto;
+        width: 25%;
     }
 `
 
@@ -283,13 +298,16 @@ const Check = styled.label`
     }
     span {
         position: absolute;
-        top: 0px;
-        left: 5px;
+        top: -2.5px;
+        left: 0px;
         height: 20px;
         width: 20px;
         background-color: white;
         border: 1px solid grey;
         border-radius: 15px;
+    }
+    &:hover {
+        text-decoration: underline;
     }
     &:hover input ~ span {
         background-color: #eee;
