@@ -1,10 +1,10 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { addCarsProperty } from "../../action/carAction";
 import { connect } from "react-redux";
 import Header from "../header";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Checkbox from '@mui/material/Checkbox';
+import Checkbox from "@mui/material/Checkbox";
 
 const AddCars = (props) => {
 	const [name, setName] = useState("RS3_Gris-Nardo");
@@ -22,7 +22,9 @@ const AddCars = (props) => {
 	const [airCondition, setAirCondition] = useState(true);
 	const [isAutomatic, setIsAutomatic] = useState(true);
 	const [urlImage, setUrlImage] = useState([]);
-	const [popUp, setPopUp] = useState(localStorage.getItem("popup" , true) === "true");
+	const [popUp, setPopUp] = useState(
+		localStorage.getItem("popup", true) === "true"
+	);
 
 	// useEffect(()=>{
 	// 	console.log(localStorage.getItem("popup" , true) === "true");
@@ -75,6 +77,7 @@ const AddCars = (props) => {
 			image: urlImage,
 		};
 		// console.log(carProperty);
+
 		for (
 			let i = 0;
 			i < document.getElementsByClassName("add__detail__cars").length;
@@ -89,7 +92,8 @@ const AddCars = (props) => {
 				return;
 			}
 		}
-		localStorage.setItem('popup', !popUp);
+		console.log("pass");
+		localStorage.setItem("popup", !popUp);
 		props.addCars(carProperty);
 		window.location.reload();
 	};
@@ -184,7 +188,8 @@ const AddCars = (props) => {
 						<span>Energie</span>
 						<div>
 							<p></p>
-							<select className="add__detail__cars__select"
+							<select
+								className="add__detail__cars__select"
 								value={energy}
 								onChange={(e) => {
 									setEnergy(e.target.value);
@@ -226,36 +231,35 @@ const AddCars = (props) => {
 							/>
 						</div>
 					</div>
-					<div className="add__detail__cars">
+					<div className="add__detail__cars__">
 						<span>Automatique</span>
 						<div className="add__detail__cars__checkbox">
-							<p></p>
-							{/* <select className="add__detail__cars__select"
-								value={isAutomatic}
-								onChange={(e) => {
-									setIsAutomatic(e.target.value);
-								}}
-							>
-								<option value="true">Oui</option>
-								<option value="false">Non</option>
-							</select> */}
-							<div><Checkbox checked={airCondition} onChange={() => {setAirCondition(!airCondition)}} disableRipple={true} sx={{ '& .MuiSvgIcon-root': { fontSize: 25 } }}/></div>
+							<div>
+								<Checkbox
+									checked={isAutomatic}
+									onChange={() => {
+										setIsAutomatic(!isAutomatic);
+									}}
+									disableRipple={true}
+									sx={{ "& .MuiSvgIcon-root": { fontSize: 25 } }}
+								/>
+							</div>
 						</div>
 					</div>
-					<div className="add__detail__cars">
+					<div className="add__detail__cars__">
 						<span>Air Conditionné</span>
+
 						<div className="add__detail__cars__checkbox">
-							<p></p>
-							{/* <select className="add__detail__cars__select"
-								value={airCondition}
-								onChange={(e) => {
-									setAirCondition(e.target.value);
-								}}
-							>
-								<option value="true">Oui</option>
-								<option value="false">Non</option>
-							</select> */}
-							<div><Checkbox checked={isAutomatic} onChange={() => {setIsAutomatic(!isAutomatic)}} disableRipple={true} sx={{ '& .MuiSvgIcon-root': { fontSize: 25 } }}/></div>
+							<div>
+								<Checkbox
+									checked={airCondition}
+									onChange={() => {
+										setAirCondition(!airCondition);
+									}}
+									disableRipple={true}
+									sx={{ "& .MuiSvgIcon-root": { fontSize: 25 } }}
+								/>
+							</div>
 						</div>
 					</div>
 					<div className="add__detail__cars">
@@ -339,8 +343,16 @@ const AddCars = (props) => {
 							Les données de la nouvelle voiture on été envoyées à la DB.
 						</div>
 						<img src="./images/validation.svg" />
-						<Link to='/cars' className="__button">
-							<button onClick={() => {localStorage.setItem("popup", false); setPopUp(false);}} to='/cars'>OK</button>
+						<Link to="/cars" className="__button">
+							<button
+								onClick={() => {
+									localStorage.setItem("popup", false);
+									setPopUp(false);
+								}}
+								to="/cars"
+							>
+								OK
+							</button>
 						</Link>
 					</Message>
 				</Popup>
@@ -363,15 +375,14 @@ const Container = styled.div`
 const Content = styled.div`
 	/* border : solid red 1px ; */
 	width: 70%;
-	@media (max-width : 768px){
-		width : 85%;
+	@media (max-width: 768px) {
+		width: 85%;
 	}
 	margin: 0 auto;
 	margin-top: 100px;
 	padding: 5px;
 `;
 const Form = styled.form`
-
 	border: solid #00a9ff 1px;
 	background-color: rgb(245, 245, 245, 0.95);
 	/* height: 100vh; */
@@ -382,7 +393,8 @@ const Form = styled.form`
 		padding: 5px;
 		background-color: #00a9ff;
 	}
-	.add__detail__cars {
+	.add__detail__cars,
+	.add__detail__cars__ {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -433,6 +445,7 @@ const Form = styled.form`
 			}
 		}
 		.add__detail__cars__checkbox {
+			/* border: solid red 1px; */
 			display: flex;
 			flex-direction: column;
 			align-items: flex-start;
@@ -445,7 +458,7 @@ const Form = styled.form`
 				width: 10%;
 			}
 		}
-		.add__detail__cars__select{
+		.add__detail__cars__select {
 			appearance: none;
 			-ms-box-sizing: content-box;
 			-moz-box-sizing: content-box;
@@ -562,11 +575,11 @@ const Message = styled.div`
 	align-items: center;
 	width: 70vh;
 	height: 35vh;
-	border: 1px solid #00A9FF;
+	border: 1px solid #00a9ff;
 	border-radius: 3px;
 	background-color: rgb(255, 255, 255, 0.9);
 	div {
-		padding: 3vh 2vh 2vh 2vh ;
+		padding: 3vh 2vh 2vh 2vh;
 		font-size: 18px;
 	}
 	img {
@@ -577,31 +590,31 @@ const Message = styled.div`
 		height: 32%;
 		object-fit: content;
 	}
-	.__button{
+	.__button {
 		display: flex;
 		text-decoration: none;
 		width: 20%;
 	}
 	button {
-        font-size: 3vh;
-        color: #333333;
-        background-color: rgb(0, 169, 255, 0.8);
-        border: 1px solid #00486D;
-        border-radius: 5px;
-        width: 100%;
+		font-size: 3vh;
+		color: #333333;
+		background-color: rgb(0, 169, 255, 0.8);
+		border: 1px solid #00486d;
+		border-radius: 5px;
+		width: 100%;
 		height: auto;
-        padding: 1vh;
-        margin: 5vh 1vh 1vh 1vh;
-        cursor: pointer;
-    }
-    button:hover{
-        color: white;
-        background-color: #0078B5;
-        border: 1px solid #00A9FF;
-    }
-    button:active {
-        transform: scale(0.95);
-    }
+		padding: 1vh;
+		margin: 5vh 1vh 1vh 1vh;
+		cursor: pointer;
+	}
+	button:hover {
+		color: white;
+		background-color: #0078b5;
+		border: 1px solid #00a9ff;
+	}
+	button:active {
+		transform: scale(0.95);
+	}
 `;
 
 const mapStateToProps = (state) => {
