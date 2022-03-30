@@ -5,18 +5,27 @@ const client = require("../db");
 client.connect();
 
 //GET
-const getCars = (req, res) => {
+const getCars = (req, res, next) => {
 	//RECUPERER LES INFOS DE LA VOITURE PUIS LES IMAGES DE LA VOITURE
-	console.log(req.query);
-	client.query(
-		"SELECT c.id, name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description,brand, model FROM cars c JOIN cars_brands cb ON c.id_brand = cb.id",
-		(error, results) => {
-			if (error) {
-				throw error;
+	if (!req.query) {
+		client.query(
+			"SELECT c.id, name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description,brand, model FROM cars c JOIN cars_brands cb ON c.id_brand = cb.id where is_available != false",
+			(error, results) => {
+				if (error) {
+					throw error;
+				}
+				res.status(200).json(results.rows);
 			}
-			res.status(200).json(results.rows);
-		}
-	);
+		);
+	}
+	//TODO : Effectuer une vérification sur les paramètres pour allez chercher les véhicules
+	//TODO : Récupérer toutes l'id des voitures qui sont déjà louer dans cette plage horaire dans la table orders
+	//TODO : supprimer tous ces id de l'objet stocké en local ⚠️ ne plus recupérer toutes les voitures lors du chargement de la page cars
+	if (startDate in req.query && endDate in req.query) {
+		//TODO Cette option sera implémenté Lorsque la fonctionnalité qui permet à l'utilisateur de passer une commande sera implémenté
+		console.log(req.query);
+		next();
+	}
 };
 
 const getCarsImages = (req, res) => {

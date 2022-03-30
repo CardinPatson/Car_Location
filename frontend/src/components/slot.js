@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { getCarsSlot } from "../action/carAction";
 import "react-dates/initialize";
 import { SingleDatePicker } from "react-dates";
 import moment from "moment";
-// import "rsuite/dist/rsuite.min.css";
-// import { Calendar } from "rsuite";
 import styled from "styled-components";
 import "react-dates/lib/css/_datepicker.css";
 
@@ -14,9 +14,7 @@ function Slot(props) {
 	const [startTime, setStartTime] = useState("");
 	const [endDate, setEndDate] = useState(moment());
 	const [endTime, setEndTime] = useState("");
-	const [error, setError] = useState(
-		"Veuillez entrez une plage horaire valide !"
-	);
+	const [error, setError] = useState("");
 	// console.log(moment().format("LT"));
 
 	// console.log(moment().format("dddd, Do MMMM YYYY, h:mm:ss a"));
@@ -41,25 +39,53 @@ function Slot(props) {
 		let startHour = parseInt(startTime.substring(0, 2));
 		let endHour = parseInt(endTime.substring(0, 2));
 
+		//CONDITION DE SOUMISSION
 		//si pas heure de début ou de fin erreur
-		if (!endTime || !startTime) console.log("Premiere erreur", error);
+		if (!endTime || !startTime) {
+			setError("Veuillez entrez une plage horaire valide !");
+			return;
+		}
 
 		//si la date est aujourdhui l'heure de début ou de fin doit être supérieur à l'heure actuelle
-		if (startDay.getTime() === currentDay.getTime() && startHour <= currentHour)
-			console.log("seconde erreur", error);
-		if (endDay.getTime() === currentDay.getTime() && endHour <= currentHour)
-			console.log("troisième erreur ", error);
+		if (
+			startDay.getTime() === currentDay.getTime() &&
+			startHour <= currentHour
+		) {
+			setError("Veuillez entrez une plage horaire valide !");
+			return;
+		}
+		if (endDay.getTime() === currentDay.getTime() && endHour <= currentHour) {
+			setError("Veuillez entrez une plage horaire valide !");
+			return;
+		}
 
 		//si la date de début et de fin est aujourdhui , l'heure de fin de location doit être supérieur à celle de début
-		if (startDay.getTime() === endDay.getTime() && startHour >= endHour)
-			console.log("quatrième erreur", error);
+		if (startDay.getTime() === endDay.getTime() && startHour >= endHour) {
+			setError("Veuillez entrez une plage horaire valide !");
+			return;
+		}
+		//Heure d'ouverture du magazin
+		if (startHour < 8 || startHour > 19 || endHour < 8 || endHour > 19) {
+			setError("L'heure d'ouverture du magazin est de 8:00 a 19:00 !!");
+			return;
+		}
 
-		//TODO Envoyer dans la db la date , l'heure de début et de fin de location
+		const filterInfo = {
+			startDate: startDateFormat,
+			endDate: endDateFormat,
+			startTime: startTime,
+			endTime: endTime,
+		};
+		//requête vers l'api
+		props.getSlot(filterInfo);
+
+		//si requête ok redirection vers la page /cars
 	};
 	return (
 		<Container>
 			<Content>
 				<Head>Louer</Head>
+				{error ? <p style={{ color: "red" }}>{error}</p> : <></>}
 				<Form>
 					<legend>Choisissez une date</legend>
 					<div className="date">
@@ -69,7 +95,7 @@ function Slot(props) {
 							<SingleDatePicker
 								numberOfMonths={1}
 								onDateChange={(date) => {
-									console.log(date._d);
+									setError("");
 									setStartDate(date);
 								}}
 								onFocusChange={(focus) => {
@@ -83,6 +109,7 @@ function Slot(props) {
 						<input
 							type="time"
 							onChange={(e) => {
+								setError("");
 								setStartTime(e.target.value);
 							}}
 						/>
@@ -94,6 +121,7 @@ function Slot(props) {
 							<SingleDatePicker
 								numberOfMonths={1}
 								onDateChange={(date) => {
+									setError("");
 									setEndDate(date);
 								}}
 								onFocusChange={(focus) => {
@@ -106,6 +134,7 @@ function Slot(props) {
 						<input
 							type="time"
 							onChange={(e) => {
+								setError("");
 								setEndTime(e.target.value);
 							}}
 						/>
@@ -256,4 +285,15 @@ const StyledDatePickerWrapper = styled.div`
 	}
 `;
 
-export default Slot;
+const mapStateToProps = (state) => {
+	return {};
+};
+const mapStateToDispatch = (dispatch) => {
+	return {
+		getSlot: (payload) => {
+			dispatch(getCarsSlot(payload));
+		},
+	};
+};
+const connector = connect(mapStateToProps, mapStateToDispatch);
+export default connector(Slot);

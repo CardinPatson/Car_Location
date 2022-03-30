@@ -93,14 +93,19 @@ export const getCarsImages = createAsyncThunk(
 export const getCarsSlot = createAsyncThunk(
 	"GET_CARS_SLOT",
 	async (arg, thunkAPI) => {
-		const request = await Axios.post(`http://localhost:3001/api/cars`, {
+		console.log(arg);
+
+		const request = await Axios.get(`http://localhost:3001/api/cars`, {
 			params: {
 				startDate: arg.startDate,
-				startHours: arg.startHours,
+				startTime: arg.startTime,
 				endDate: arg.endDate,
-				endHours: arg.endHours,
+				endTime: arg.endTime,
 			},
+		}).catch((err) => {
+			console.error(err);
 		});
+		console.log(request);
 	}
 );
 

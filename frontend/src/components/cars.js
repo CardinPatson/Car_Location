@@ -8,6 +8,7 @@ import localForage from "localforage";
 
 function Cars(props) {
 	useEffect(() => {
+		localForage.clear();
 		props.getCars();
 		props.getCarsImages();
 	}, []);
@@ -113,10 +114,6 @@ const Container = styled.div`
 	max-width: 1600px;
 	display: flex;
 	justify-content: center;
-	background-image: url("./images/car_4.jpg");
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
 `;
 const Content = styled.div`
 	/* border: solid black 1px; */
@@ -128,6 +125,11 @@ const Content = styled.div`
 	justify-content: center;
 	position: relative;
 	margin-bottom: 9px;
+	background-image: url("./images/car_4.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	padding: 10px 0 15px 0;
 `;
 const Filter = styled.div`
 	border: solid #00a9ff 1px;
