@@ -37,12 +37,12 @@ const CarSlot = (props) => {
 					<Details>
 						<div>
 
-							<button class="details__button" onClick={(e)=>{handleDetail()}}>Détails</button>
+							<button className="details__button" onClick={(e)=>{handleDetail()}}>Détails</button>
 
 						</div>
 						
 						<Link to="/">
-							<button class="modify__button">Modifier</button>
+							<button className="modify__button">Modifier</button>
 						</Link>
 						<div className="car__detail" style={{display : "none"}}>
 							<CarDetails/>

@@ -3,6 +3,8 @@ import { addCarsProperty } from "../../action/carAction";
 import { connect } from "react-redux";
 import Header from "../header";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import Checkbox from '@mui/material/Checkbox';
 
 const AddCars = (props) => {
 	const [name, setName] = useState("RS3_Gris-Nardo");
@@ -226,9 +228,9 @@ const AddCars = (props) => {
 					</div>
 					<div className="add__detail__cars">
 						<span>Automatique</span>
-						<div>
+						<div className="add__detail__cars__checkbox">
 							<p></p>
-							<select className="add__detail__cars__select"
+							{/* <select className="add__detail__cars__select"
 								value={isAutomatic}
 								onChange={(e) => {
 									setIsAutomatic(e.target.value);
@@ -236,14 +238,15 @@ const AddCars = (props) => {
 							>
 								<option value="true">Oui</option>
 								<option value="false">Non</option>
-							</select>
+							</select> */}
+							<div><Checkbox checked={airCondition} onChange={() => {setAirCondition(!airCondition)}} disableRipple={true} sx={{ '& .MuiSvgIcon-root': { fontSize: 25 } }}/></div>
 						</div>
 					</div>
 					<div className="add__detail__cars">
 						<span>Air Conditionné</span>
-						<div>
+						<div className="add__detail__cars__checkbox">
 							<p></p>
-							<select className="add__detail__cars__select"
+							{/* <select className="add__detail__cars__select"
 								value={airCondition}
 								onChange={(e) => {
 									setAirCondition(e.target.value);
@@ -251,7 +254,8 @@ const AddCars = (props) => {
 							>
 								<option value="true">Oui</option>
 								<option value="false">Non</option>
-							</select>
+							</select> */}
+							<div><Checkbox checked={isAutomatic} onChange={() => {setIsAutomatic(!isAutomatic)}} disableRipple={true} sx={{ '& .MuiSvgIcon-root': { fontSize: 25 } }}/></div>
 						</div>
 					</div>
 					<div className="add__detail__cars">
@@ -335,7 +339,9 @@ const AddCars = (props) => {
 							Les données de la nouvelle voiture on été envoyées à la DB.
 						</div>
 						<img src="./images/validation.svg" />
-						<button onClick={() => {localStorage.setItem("popup", false); setPopUp(false);}}>OK</button>
+						<Link to='/cars' className="__button">
+							<button onClick={() => {localStorage.setItem("popup", false); setPopUp(false);}} to='/cars'>OK</button>
+						</Link>
 					</Message>
 				</Popup>
 			) : (
@@ -424,6 +430,19 @@ const Form = styled.form`
 			p {
 				color: red;
 				font-weight: bold;
+			}
+		}
+		.add__detail__cars__checkbox {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			width: 80%;
+			p {
+				color: red;
+				font-weight: bold;
+			}
+			div {
+				width: 10%;
 			}
 		}
 		.add__detail__cars__select{
@@ -558,13 +577,18 @@ const Message = styled.div`
 		height: 32%;
 		object-fit: content;
 	}
+	.__button{
+		display: flex;
+		text-decoration: none;
+		width: 20%;
+	}
 	button {
         font-size: 3vh;
         color: #333333;
         background-color: rgb(0, 169, 255, 0.8);
         border: 1px solid #00486D;
         border-radius: 5px;
-        width: 25%;
+        width: 100%;
 		height: auto;
         padding: 1vh;
         margin: 5vh 1vh 1vh 1vh;
