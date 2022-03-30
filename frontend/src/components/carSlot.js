@@ -33,12 +33,12 @@ const CarSlot = (props) => {
 					</Amount>
 					<Details>
 						<Link to="/carDetails">
-							<button class="details__button">
+							<button className="details__button">
 								Détails
 							</button>
 						</Link>
 						<Link to="/">
-							<button  class="modify__button">
+							<button  className="modify__button">
 								Modifier
 							</button>
 						</Link>

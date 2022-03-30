@@ -4,6 +4,7 @@ import Slot from "./slot";
 import styled from "styled-components";
 import Carousel from "react-material-ui-carousel";
 import { useState } from "react";
+import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
 
 function Home() {
 
@@ -61,31 +62,45 @@ function Home() {
 		<Container>
 			<Header />
 			<Content>
-				<Slot />
+				<Slot className="slot"/>
 				<Info>
 					<Questions>
 						<Part>
-							<span>Qu'est ce que Car Rental ?</span>
-							<div>
-								<p>
+							<Accordion>
+								<AccordionSummary>
+									Qu'est ce que Car Rental ?
+        						</AccordionSummary>
+								<AccordionDetails>
 									Pro-CarRental est un site de location de voiture dont
 									l'entreprise est basée à Bruxelles. Ce site vous propose une
 									large variétée de véhicules pour toutes les gammes de prix. De
 									la sportive à la citadine, il y en pour tous les goûts et
 									budgets !
-								</p>
-							</div>
+        						</AccordionDetails>
+							</Accordion>
 						</Part>
 						<Part>
-							<span>Comment louer ?</span>
-							<div>
-								<p>
+							<Accordion>
+								<AccordionSummary>
+									Comment louer ?
+        						</AccordionSummary>
+								<AccordionDetails>
 									Pour louer une voiture, rien de plus simple ! Une fois votre
 									voiture choisie, il vous suffit de fournir votre carte
 									d'identité et votre permit de conduire. Un mail vous sera alors
 									envoyé pour confirmer la location.
-								</p>
-							</div>
+        						</AccordionDetails>
+							</Accordion>
+						</Part>
+						<Part>
+							<Accordion>
+								<AccordionSummary>
+									Oû récupérer ma voiture ?
+        						</AccordionSummary>
+								<AccordionDetails>
+									Pour récupérer votre voiture, allez voir Aymar au garage.
+        						</AccordionDetails>
+							</Accordion>
 						</Part>
 					</Questions>
 					<Carousel
@@ -155,20 +170,17 @@ const Questions = styled.div`
 	display: flex;
 	justify-content: center;
 	height: 100%;
-	width: 100%;
+	width: 80%;
 	position: absolute;
 	z-index: 10;
 `;
 
 const Part = styled.div`
 	margin: 15px;
-	margin-top: 25%;
+	margin-top: 30%;
 	display: flex;
 	flex-direction: column;
-	border: 0.5px solid grey;
-	border-radius: 1%;
-	width: 30%;
-	height: 30%;
+	width: 35%;
 	z-index: 10;
 	@media (max-width: 1300px) {
 		height: 30%;
@@ -179,11 +191,7 @@ const Part = styled.div`
 	}
 	/* word-break: break-all; */
 	white-space: normal;
-
 	overflow: hidden;
-	background: white;
-	background: rgba(255, 255, 255, 0.75);
-	backdrop-filter: blur(6px);
 	p {
 		line-height: 1.5;
 		text-align: left;
@@ -198,6 +206,35 @@ const Part = styled.div`
 		color: #00a9ff;
 		font-size: 150%;
 		border-bottom: 1px solid black;
+	}
+	.MuiAccordionSummary-content {
+		display: flex;
+		justify-content: center;
+		color: #00a9ff;
+		text-align: center;
+		font-size: 22px;
+		padding: 14px;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+	}
+	.MuiAccordionDetails-root {
+		background: rgba(255, 255, 255, 0.7);
+		justify-content: flex-start;
+		text-align: left;
+		border-radius: 0px 0px 5px 5px;
+		/* régler la taille de l'accordéon quand il est déroulé */
+		/* height: 120px; */
+	}
+	.MuiButtonBase-root {
+		height: 20px;
+		overflow: hidden;
+		background: rgba(255, 255, 255, 0.7);
+		border-radius: 5px 5px 0px 0px;
+	}
+	.MuiAccordion-root {
+		border: 0.5px solid grey;
+		border-radius: 20px;
+		box-shadow: none;
+		background: rgba(255, 255, 255, 0.7);
 	}
 `;
 
