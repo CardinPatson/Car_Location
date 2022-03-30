@@ -15,6 +15,7 @@ router.get("/cars", carCtrl.getCars);
 //A faire lorsqu'on a un put ou delete ou quand le paramètre est obligatoire sur la route
 // router.get("/cars/:id", carCtrl.getCarById);
 router.get("/cars/images", carCtrl.getCarsImages);
+router.get("/cars/orders", carCtrl.getCarsOrders);
 
 //POST
 router.post("/cars", carCtrl.addCar);

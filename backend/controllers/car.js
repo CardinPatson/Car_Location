@@ -12,19 +12,30 @@ const getCars = (req, res, next) => {
 			"SELECT c.id, name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description,brand, model FROM cars c JOIN cars_brands cb ON c.id_brand = cb.id where is_available != false",
 			(error, results) => {
 				if (error) {
+					res.status(500).json({ error });
 					throw error;
 				}
 				res.status(200).json(results.rows);
 			}
 		);
 	}
-	//TODO : Effectuer une vérification sur les paramètres pour allez chercher les véhicules
-	//TODO : Récupérer toutes l'id des voitures qui sont déjà louer dans cette plage horaire dans la table orders
-	//TODO : supprimer tous ces id de l'objet stocké en local ⚠️ ne plus recupérer toutes les voitures lors du chargement de la page cars
-	if (startDate in req.query && endDate in req.query) {
-		//TODO Cette option sera implémenté Lorsque la fonctionnalité qui permet à l'utilisateur de passer une commande sera implémenté
-		console.log(req.query);
-		next();
+
+	//TODO : ⚠️ RECUPERER TOUTES LES VOITURES MISE A PART CELLE QUI SE TROUVE DANS LE PARAMETRE
+	if (req.query) {
+		//RECUPERER UN TABLEAU D'ID AVEC REQ.QUERY
+		tabId = Objet.values(req.query);
+		//TODO Cette option sera implémenté Lorsque la foncetionnalité qui permet à l'utilisateur de passer une commande sera implémenté
+		client.query(
+			"SELECT * FROM cars WHERE id not in $1",
+			[tabId],
+			(error, result) => {
+				if (error) {
+					res.status(500).json({ error });
+				}
+				console.log(results.rows);
+				res.status(200).json(result.rows);
+			}
+		);
 	}
 };
 
@@ -33,6 +44,22 @@ const getCarsImages = (req, res) => {
 		if (error) throw error;
 		res.status(200).json(results.rows);
 	});
+};
+
+const getCarsOrders = (req, res) => {
+	const { startDate, endDate, startTime, endTime } = req.query;
+	//TODO : Effectuer une vérification sur les paramètres pour allez chercher les véhicules
+	//TODO : Récupérer tous les id des voitures qui sont déjà louer dans cette plage horaire dans la table orders
+	client.query(
+		"SELECT id FROM orders WHERE date_departure >= $1 and end date_return <= $2",
+		[startDate, endDate],
+		(error, results) => {
+			if (error) {
+				throw error;
+			}
+			console.log(results.rows);
+		}
+	);
 };
 
 const getCarById = (req, res) => {
@@ -262,6 +289,7 @@ const isExist = (req, res) => {
 module.exports = {
 	getCars,
 	getCarsImages,
+	getCarsOrders,
 	getCarById,
 	addCar,
 	addCarImages,
