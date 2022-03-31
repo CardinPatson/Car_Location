@@ -1,4 +1,4 @@
-const { body, checkSchema } = require("express-validator");
+const { checkSchema } = require("express-validator");
 
 const addCarsValidateSchema = checkSchema({
   name: {

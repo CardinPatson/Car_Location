@@ -25,7 +25,7 @@ CREATE TABLE "cars" (
   "boot_size" int,
   "type" varchar,
   "energy" varchar NOT NULL,
-  "is_available" boolean, -- NOT NULL
+  "is_available" boolean, -- NOT NULL -> APRES quand l'agenda est fait !
   "is_automatic" boolean NOT NULL,
   "passengers" int NOT NULL,
   "air_conditioning" boolean NOT NULL,
@@ -66,29 +66,3 @@ ALTER TABLE "orders" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id
 ALTER TABLE "cars" ADD FOREIGN KEY ("id_brand") REFERENCES "cars_brands" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE "images" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
-
-
-
-
-
---ALTER TABLE "orders" ADD FOREIGN KEY ("id_car") REFERENCES "cars" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
---ALTER TABLE "orders" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
---ALTER TABLE "images" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
---ALTER TABLE "admins" ADD FOREIGN KEY ("id_customer") REFERENCES "customers" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
-
-
-
--- PROBLEME AVEC CEUX LA !!!
-
---ALTER TABLE "cars_brands" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id");
-
---ALTER TABLE "cars_brands" ADD FOREIGN KEY ("id") REFERENCES "cars" ("id_car_brand");
-
-
-
---ALTER TABLE "cars" ADD FOREIGN KEY ("id_brand") REFERENCES "cars_brands" ("id") ON DELETE CASCADE;
