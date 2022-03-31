@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+const { validationResult } = require("express-validator");
 
 const addCarsValidateSchema = {
   name: {
@@ -10,7 +10,7 @@ const addCarsValidateSchema = {
 
   price: {
     toFloat: true,
-    isFloat: { options: { min: 5.0, max: 1000.0 } },
+    isFloat: { options: { min: 5.00, max: 1000.00 } },
     errorMessage: "Prix doit etre un nombre entre 5.0 et 1000.0",
   },
 

@@ -4,7 +4,7 @@ const router = express.Router();
 const carCtrl = require("../controllers/car");
 const multerMiddleware = require("../middleware/image");
 
-const { body, checkSchema, validationResult } = require("express-validator");
+const { checkSchema } = require("express-validator");
 
 const { addCarsSchema, validate } = require("../validations/addCarsSchema");
 
