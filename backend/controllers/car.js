@@ -7,18 +7,18 @@ client.connect();
 //GET
 const getCars = (req, res, next) => {
 	//RECUPERER LES INFOS DE LA VOITURE PUIS LES IMAGES DE LA VOITURE
-	if (!req.query) {
-		client.query(
-			"SELECT c.id, name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description,brand, model FROM cars c JOIN cars_brands cb ON c.id_brand = cb.id where is_available != false",
-			(error, results) => {
-				if (error) {
-					res.status(500).json({ error });
-					throw error;
-				}
-				res.status(200).json(results.rows);
+	// if (!req.query) {
+	client.query(
+		"SELECT c.id, name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description,brand, model FROM cars c JOIN cars_brands cb ON c.id_brand = cb.id where is_available != false",
+		(error, results) => {
+			if (error) {
+				res.status(500).json({ error });
+				throw error;
 			}
-		);
-	}
+			res.status(200).json(results.rows);
+		}
+	);
+	// }
 
 	//TODO : ⚠️ RECUPERER TOUTES LES VOITURES MISE A PART CELLE QUI SE TROUVE DANS LE PARAMETRE
 	// if (req.query) {
@@ -98,6 +98,7 @@ const addCar = async (req, res) => {
 	} = req.body;
 
 	let id_brand = 0;
+	let is_available = true;
 	client.query(
 		"select id from cars_brands where brand=$1 and model=$2",
 		[brand, model],
@@ -117,8 +118,9 @@ const addCar = async (req, res) => {
 							throw error;
 						}
 						id_brand = results.rows[0].id;
+
 						client.query(
-							"INSERT INTO cars(name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING id",
+							"INSERT INTO cars(name, price, id_brand, color, doors, boot_size, type, energy,is_available, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING id",
 							[
 								name,
 								price,
@@ -128,6 +130,7 @@ const addCar = async (req, res) => {
 								bootSize,
 								type,
 								energy,
+								is_available,
 								isAutomatic,
 								passengers,
 								airCondition,
@@ -146,7 +149,7 @@ const addCar = async (req, res) => {
 				id_brand = await results.rows[0].id;
 
 				client.query(
-					"INSERT INTO cars(name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING id",
+					"INSERT INTO cars(name, price, id_brand, color, doors, boot_size, type, energy,is_available, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING id",
 					[
 						name,
 						price,
@@ -156,6 +159,7 @@ const addCar = async (req, res) => {
 						bootSize,
 						type,
 						energy,
+						is_available,
 						isAutomatic,
 						passengers,
 						airCondition,
