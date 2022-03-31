@@ -235,7 +235,7 @@ const Part = styled.div`
 		border: 0.5px solid grey;
 		border-radius: 20px;
 		box-shadow: none;
-		background: rgba(255, 255, 255, 0.7);
+		background: rgba(255, 255, 255, 0.8);
 	}
 `;
 

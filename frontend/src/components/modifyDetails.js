@@ -64,12 +64,14 @@ import Header from './header';
                 </Info>
                 <Photo>
                   <img src="./images/car_3.jpg" />
-                  <Louer>
-                    <button>Valider</button>
-                  </Louer>
                 </Photo>
               </Detail>
             </Test>
+            <Buttons>
+              <button className="__button__green">Sauvegarder les changements</button>
+              <button className="__button__red">Annuler les changements</button>
+              <button className="__button__blue">Modifier les images</button>
+            </Buttons>
           </Content>
         </Container>
       );
@@ -88,48 +90,34 @@ import Header from './header';
 
     `;
     
-    const Louer = styled.div`
-      margin-top: 5px;
-      font-weight: bold;
-      button {
-        font-size: 1.3em;
-        cursor: pointer;
-        background-color: #00a9ff;
-        color: black;
-        padding: 7px 35px;
-        border-radius: 5px;
-        border-color: #00a9ff;
-        outline: none;
-        margin: 5px;
-      }
-    `;
-    
     const Container = styled.div`
       top: 0;
-      max-width: 1300px;
+      max-width: 1600px;
+      height: 550px;
       margin: auto;
       display: flex;
       justify-content: center;
     `;
     const Content = styled.div`
-      margin-top: 20vh;
+      margin-top: 15vh;
       display: flex;
       align-items: center;
-      flex-direction: column;
+      justify-content: center;
+      flex-direction: row;
       padding-bottom: 30px;
-      top: 5vh;
-      width: 90%;
-      height: 80%;
-      `;
+      width: 100%;
+      height: 100%;
+    `; 
     
     const Test = styled.div`
       border: 1px solid black;
       background : white;
       display: flex;
       flex-direction: column;
-      width: 100%;
+      width: 70%;
       height: 100%;
-    `;
+      margin-left: 50px;
+    `; 
     
     const Banner = styled.div`
       font: bold;
@@ -185,16 +173,16 @@ import Header from './header';
         border-left: 1px solid black;
       }
       input[type='text'], [type='number'] {
-	background: none;
-    border: none;
-	border-bottom: solid 1px #00a9ff;
-	font-size: 1.000em;
-    font-weight: 400;
-    letter-spacing: 1px;
-	margin: 0em 0.8em 0.875em 0;
-	padding: 0 0 0 0;
-	width: 100%;	 
-   }   
+        background: none;
+        border: none;
+        border-bottom: solid 1px #00a9ff;
+        font-size: 1.000em;
+        font-weight: 400;
+        letter-spacing: 1px;
+        margin: 0em 0.8em 0.875em 0;
+        padding: 0 0 0 0;
+        width: 100%;	 
+       }   
     `;
     
     const Specs_left = styled.div`
@@ -209,22 +197,22 @@ import Header from './header';
          
       }
       p {
-         text-align: left;
-         padding: 6px;
-         margin: 1vh;
+        text-align: left;
+        padding: 6px;
+        margin: 1vh;
         color: grey;
       }
       input[type='text'], [type='number'] {
-	background: none;
-    border: none;
-	border-bottom: solid 1px #00a9ff;
-	font-size: 1.000em;
-    font-weight: 400;
-    letter-spacing: 1px;
-	margin: 0em 0 0.875em 0;
-	padding: 0 0 0 0;
-	width: 100%;	 
-}
+        background: none;
+        border: none;
+        border-bottom: solid 1px #00a9ff;
+        font-size: 1.000em;
+        font-weight: 400;
+        letter-spacing: 1px;
+        margin: 0em 0 0.875em 0;
+        padding: 0 0 0 0;
+        width: 100%;	 
+      }
 `;
     
     const Specs_right = styled.div`
@@ -243,14 +231,15 @@ import Header from './header';
       input[type='text'], [type='number'] {
         background: none;
         border: none;
-	    border-bottom: solid 1px #00a9ff;
-	    font-size: 1.000em;
+	      border-bottom: solid 1px #00a9ff;
+	      font-size: 1.000em;
         font-weight: 400;
         letter-spacing: 1px;
-	    margin: 0em 0 0.875em 0;
-	    padding: 0 0 0 0;
-	    width: 100%; 
-    }`;
+	      margin: 0em 0 0.875em 0;
+	      padding: 0 0 0 0;
+	      width: 100%; 
+      }
+    `;
     
     const Ligne = styled.div`
       display: flex;
@@ -265,10 +254,8 @@ import Header from './header';
       align-items: center;
       object-fit: content;
       img {
-        width: 38vh;
-        height: 38vh;
-        margin: 3vh;
-        margin-top: 0%;
+        height: auto;
+        width: 100%;
       }
     `;
     
@@ -285,6 +272,73 @@ import Header from './header';
         display: flex;
         align-items: flex-end;
         font-weight: bold;
+      }
+    `;
+
+    const Buttons = styled.div`
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10px;
+      height: 100%;
+      width: 30%;
+      align-items: center;
+      .__button__blue {
+        font-size: 3vh;
+        color: #333333;
+        background-color: #00A9FF;
+        border: 2px solid #00486D;
+        border-radius: 1vh;
+        width: 80%;
+        padding: 1vh;
+        margin: 2vh 1vh 2vh 1vh;
+        cursor: pointer;
+      }
+      .__button__blue:hover {
+        color: white;
+        background-color: #0078B5;
+        border: 2px solid #00A9FF;
+      }
+      .__button__blue:active {
+        transform: scale(0.95);
+      }
+      .__button__red {
+        background-color: #ff0f0f;
+        border: 2px solid #820909;
+        font-size: 3vh;
+        color: #333333;
+        border-radius: 1vh;
+        width: 80%;
+        padding: 1vh;
+        margin: 2vh 1vh 2vh 1vh;
+        cursor: pointer;
+      }
+      .__button__red:hover {
+        color: white;
+        background-color: #850101;
+        border: 2px solid #ff0f0f;
+      }
+      .__button__red:active {
+        transform: scale(0.95);
+      }
+      .__button__green {
+        background-color: #0db520;
+        border: 2px solid #0a7d17;
+        font-size: 3vh;
+        color: #333333;
+        border-radius: 1vh;
+        width: 80%;
+        padding: 1vh;
+        margin: 2vh 1vh 2vh 1vh;
+        cursor: pointer;
+      }
+      .__button__green:hover {
+        color: white;
+        background-color: #0a7d17;
+        border: 2px solid #0db520;
+      }
+      .__button__green:active {
+        transform: scale(0.95);
       }
     `;
     
