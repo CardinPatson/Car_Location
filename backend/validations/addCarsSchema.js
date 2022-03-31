@@ -10,7 +10,7 @@ const addCarsValidateSchema = {
 
   price: {
     toFloat: true,
-    isFloat: { options: { min: 5.00, max: 1000.00 } },
+    isFloat: { options: { min: 5.0, max: 1000.0 } },
     errorMessage: "Prix doit etre un nombre entre 5.0 et 1000.0",
   },
 
@@ -96,6 +96,7 @@ const addCarsValidateSchema = {
 
 const validate = (validations) => {
   return async (req, res, next) => {
+    console.log(validations);
     await Promise.all(validations.map((validation) => validation.run(req)));
 
     const errors = validationResult(req);

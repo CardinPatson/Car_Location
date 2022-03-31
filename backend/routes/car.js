@@ -6,7 +6,10 @@ const multerMiddleware = require("../middleware/image");
 
 const { checkSchema } = require("express-validator");
 
-const { addCarsSchema, validate } = require("../validations/addCarsSchema");
+const {
+	addCarsValidateSchema,
+	validate,
+} = require("../validations/addCarsSchema");
 
 //API RESTFULL
 //GET
@@ -28,7 +31,11 @@ router.get("/cars/orders", carCtrl.getCarsOrders);
 //   });
 // });
 
-router.post("/car", validate(checkSchema(addCarsSchema)), carCtrl.addCar);
+router.post(
+	"/cars",
+	validate(checkSchema(addCarsValidateSchema)),
+	carCtrl.addCar
+);
 
 router.post("/cars/:id/images", multerMiddleware, carCtrl.addCarImages);
 
