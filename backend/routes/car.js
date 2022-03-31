@@ -2,11 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 const carCtrl = require("../controllers/car");
+
 const multerMiddleware = require("../middleware/image");
 
-const { checkSchema } = require("express-validator");
-
-const { addCarsSchema } = require("../validations/addCarsSchema");
+const { addCarsValidateSchema } = require("../validations/addCarsSchema");
 
 //API RESTFULL
 //GET
@@ -15,10 +14,20 @@ router.get("/cars", carCtrl.getCars);
 //A faire lorsqu'on a un put ou delete ou quand le paramètre est obligatoire sur la route
 // router.get("/cars/:id", carCtrl.getCarById);
 router.get("/cars/images", carCtrl.getCarsImages);
+router.get("/cars/orders", carCtrl.getCarsOrders);
 
 //POST
-router.post("/cars", carCtrl.addCar);
-//router.post("/car", checkSchema(addCarsSchema), carCtrl.addCar);
+//router.post("/cars", carCtrl.addCar);
+
+// router.post("/car", validate(checkSchema(addCarsSchema)), (req, res) => {
+//   // Process data
+//   res.status(200).json({
+//     success: true,
+//     message: "add car successful",
+//   });
+// });
+
+router.post("/cars", addCarsValidateSchema, carCtrl.addCar);
 
 router.post("/cars/:id/images", multerMiddleware, carCtrl.addCarImages);
 

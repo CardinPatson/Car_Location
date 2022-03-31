@@ -7,25 +7,36 @@ client.connect();
 //GET
 const getCars = (req, res, next) => {
 	//RECUPERER LES INFOS DE LA VOITURE PUIS LES IMAGES DE LA VOITURE
-	if (!req.query) {
-		client.query(
-			"SELECT c.id, name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description,brand, model FROM cars c JOIN cars_brands cb ON c.id_brand = cb.id where is_available != false",
-			(error, results) => {
-				if (error) {
-					throw error;
-				}
-				res.status(200).json(results.rows);
+	// if (!req.query) {
+	client.query(
+		"SELECT c.id, name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description,brand, model FROM cars c JOIN cars_brands cb ON c.id_brand = cb.id where is_available != false",
+		(error, results) => {
+			if (error) {
+				res.status(500).json({ error });
+				throw error;
 			}
-		);
-	}
-	//TODO : Effectuer une vérification sur les paramètres pour allez chercher les véhicules
-	//TODO : Récupérer toutes l'id des voitures qui sont déjà louer dans cette plage horaire dans la table orders
-	//TODO : supprimer tous ces id de l'objet stocké en local ⚠️ ne plus recupérer toutes les voitures lors du chargement de la page cars
-	if (startDate in req.query && endDate in req.query) {
-		//TODO Cette option sera implémenté Lorsque la fonctionnalité qui permet à l'utilisateur de passer une commande sera implémenté
-		console.log(req.query);
-		next();
-	}
+			res.status(200).json(results.rows);
+		}
+	);
+	// }
+
+	//TODO : ⚠️ RECUPERER TOUTES LES VOITURES MISE A PART CELLE QUI SE TROUVE DANS LE PARAMETRE
+	// if (req.query) {
+	// 	//RECUPERER UN TABLEAU D'ID AVEC REQ.QUERY
+	// 	tabId = Objet.values(req.query);
+	// 	//TODO Cette option sera implémenté Lorsque la foncetionnalité qui permet à l'utilisateur de passer une commande sera implémenté
+	// 	client.query(
+	// 		"SELECT * FROM cars WHERE id not in $1",
+	// 		[tabId],
+	// 		(error, result) => {
+	// 			if (error) {
+	// 				res.status(500).json({ error });
+	// 			}
+	// 			console.log(results.rows);
+	// 			res.status(200).json(result.rows);
+	// 		}
+	// 	);
+	// }
 };
 
 const getCarsImages = (req, res) => {
@@ -33,6 +44,22 @@ const getCarsImages = (req, res) => {
 		if (error) throw error;
 		res.status(200).json(results.rows);
 	});
+};
+
+const getCarsOrders = (req, res) => {
+	const { startDate, endDate, startTime, endTime } = req.query;
+	//TODO : Effectuer une vérification sur les paramètres pour allez chercher les véhicules
+	//TODO : Récupérer tous les id des voitures qui sont déjà louer dans cette plage horaire dans la table orders
+	client.query(
+		"SELECT id FROM orders WHERE date_departure >= $1 and end date_return <= $2",
+		[startDate, endDate],
+		(error, results) => {
+			if (error) {
+				throw error;
+			}
+			console.log(results.rows);
+		}
+	);
 };
 
 const getCarById = (req, res) => {
@@ -71,6 +98,7 @@ const addCar = async (req, res) => {
 	} = req.body;
 
 	let id_brand = 0;
+	let is_available = true;
 	client.query(
 		"select id from cars_brands where brand=$1 and model=$2",
 		[brand, model],
@@ -90,8 +118,9 @@ const addCar = async (req, res) => {
 							throw error;
 						}
 						id_brand = results.rows[0].id;
+
 						client.query(
-							"INSERT INTO cars(name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING id",
+							"INSERT INTO cars(name, price, id_brand, color, doors, boot_size, type, energy,is_available, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING id",
 							[
 								name,
 								price,
@@ -101,6 +130,7 @@ const addCar = async (req, res) => {
 								bootSize,
 								type,
 								energy,
+								is_available,
 								isAutomatic,
 								passengers,
 								airCondition,
@@ -119,7 +149,7 @@ const addCar = async (req, res) => {
 				id_brand = await results.rows[0].id;
 
 				client.query(
-					"INSERT INTO cars(name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING id",
+					"INSERT INTO cars(name, price, id_brand, color, doors, boot_size, type, energy,is_available, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING id",
 					[
 						name,
 						price,
@@ -129,6 +159,7 @@ const addCar = async (req, res) => {
 						bootSize,
 						type,
 						energy,
+						is_available,
 						isAutomatic,
 						passengers,
 						airCondition,
@@ -262,6 +293,7 @@ const isExist = (req, res) => {
 module.exports = {
 	getCars,
 	getCarsImages,
+	getCarsOrders,
 	getCarById,
 	addCar,
 	addCarImages,
