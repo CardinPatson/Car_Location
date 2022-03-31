@@ -7,6 +7,7 @@ import Connreg from "./components/connreg";
 import ForgotPassword from "./components/forgotPassword";
 import CarReservation from "./components/carReservation";
 import CarDetails from "./components/carDetails";
+import ModifyDetails from './components/modifyDetails';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/carReservation" element={<CarReservation />} />
         <Route path="/carDetails" element={<CarDetails />} />
+        <Route path="/modifyDetails" element ={<ModifyDetails/>} /> 
       </Routes>
     </Router>
   );
