@@ -12,6 +12,7 @@ function Cars(props) {
 		props.getCars();
 		props.getCarsImages();
 	}, []);
+	console.log(props.cars);
 	let carsImages = {};
 	if (props.images && props.images.length) {
 		for (let image of props.images) {

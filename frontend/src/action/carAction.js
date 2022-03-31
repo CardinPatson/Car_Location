@@ -70,7 +70,6 @@ export const getCarsProperty = createAsyncThunk(
 				console.error(err);
 			}
 		);
-		console.log(cars.data);
 		thunkAPI.dispatch(addCarsInfo(cars.data));
 	}
 );
@@ -83,7 +82,6 @@ export const getCarsImages = createAsyncThunk(
 		).catch((err) => {
 			console.error(err);
 		});
-		console.log(carsImages.data);
 		thunkAPI.dispatch(addCarsImagesInfo(carsImages.data));
 	}
 );
