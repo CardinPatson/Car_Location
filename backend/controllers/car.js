@@ -21,22 +21,22 @@ const getCars = (req, res, next) => {
 	}
 
 	//TODO : ⚠️ RECUPERER TOUTES LES VOITURES MISE A PART CELLE QUI SE TROUVE DANS LE PARAMETRE
-	if (req.query) {
-		//RECUPERER UN TABLEAU D'ID AVEC REQ.QUERY
-		tabId = Objet.values(req.query);
-		//TODO Cette option sera implémenté Lorsque la foncetionnalité qui permet à l'utilisateur de passer une commande sera implémenté
-		client.query(
-			"SELECT * FROM cars WHERE id not in $1",
-			[tabId],
-			(error, result) => {
-				if (error) {
-					res.status(500).json({ error });
-				}
-				console.log(results.rows);
-				res.status(200).json(result.rows);
-			}
-		);
-	}
+	// if (req.query) {
+	// 	//RECUPERER UN TABLEAU D'ID AVEC REQ.QUERY
+	// 	tabId = Objet.values(req.query);
+	// 	//TODO Cette option sera implémenté Lorsque la foncetionnalité qui permet à l'utilisateur de passer une commande sera implémenté
+	// 	client.query(
+	// 		"SELECT * FROM cars WHERE id not in $1",
+	// 		[tabId],
+	// 		(error, result) => {
+	// 			if (error) {
+	// 				res.status(500).json({ error });
+	// 			}
+	// 			console.log(results.rows);
+	// 			res.status(200).json(result.rows);
+	// 		}
+	// 	);
+	// }
 };
 
 const getCarsImages = (req, res) => {
