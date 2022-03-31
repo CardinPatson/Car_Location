@@ -2,10 +2,12 @@ import { StylesContext } from '@material-ui/styles';
 import { style } from '@mui/system';
 import React from 'react'
 import styled from 'styled-components';
+import Header from './header';
  
  function ModifyDetails(props){
     return (
         <Container>
+          <Header/>
           <Content>
             <Test>
               <Banner>
@@ -103,18 +105,21 @@ import styled from 'styled-components';
     `;
     
     const Container = styled.div`
+      top: 0;
       max-width: 1300px;
       margin: auto;
       display: flex;
-        justify-content: center;
-      `;
+      justify-content: center;
+    `;
     const Content = styled.div`
       margin-top: 20vh;
       display: flex;
       align-items: center;
       flex-direction: column;
       padding-bottom: 30px;
-      top: 7vh;
+      top: 5vh;
+      width: 90%;
+      height: 80%;
       `;
     
     const Test = styled.div`
@@ -122,6 +127,8 @@ import styled from 'styled-components';
       background : white;
       display: flex;
       flex-direction: column;
+      width: 100%;
+      height: 100%;
     `;
     
     const Banner = styled.div`

@@ -362,6 +362,7 @@ const AddCars = (props) => {
 const Container = styled.div`
 	max-width: 1600px;
 	margin: 0 auto;
+	top: 0;
 	display: flex;
 	justify-content: center;
 	background-image: url("./images/car_2.jpg");

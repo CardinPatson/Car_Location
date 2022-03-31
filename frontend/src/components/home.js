@@ -181,12 +181,12 @@ const Part = styled.div`
 	flex-direction: column;
 	width: 35%;
 	z-index: 10;
-	@media (max-width: 1300px) {
+	/* @media (max-width: 1300px) {
 		height: 30%;
-	}
+	} */
 	@media (max-width: 900px) {
 		width: 40%;
-		height: 40%;
+		/* height: 40%; */
 	}
 	/* word-break: break-all; */
 	white-space: normal;
@@ -213,20 +213,22 @@ const Part = styled.div`
 		text-align: center;
 		font-size: 22px;
 		padding: 14px;
-		border-bottom: 1px solid rgba(0, 0, 0, 0.8);
 	}
 	.MuiAccordionDetails-root {
-		background: rgba(255, 255, 255, 0.7);
 		justify-content: flex-start;
 		text-align: left;
 		border-radius: 0px 0px 5px 5px;
+		border-top: 1px solid rgba(0, 0, 0, 0.8);
+		padding: 0;
+		padding-top: 10px; 
+		margin: 10px;
+		margin-top: 0;
 		/* régler la taille de l'accordéon quand il est déroulé */
-		/* height: 120px; */
+		/* height: 120px;  */
 	}
 	.MuiButtonBase-root {
 		height: 20px;
 		overflow: hidden;
-		background: rgba(255, 255, 255, 0.7);
 		border-radius: 5px 5px 0px 0px;
 	}
 	.MuiAccordion-root {
