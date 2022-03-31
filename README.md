@@ -7,9 +7,9 @@ Ce projet utilise le framework React pour le Frontend et l'environnement d'exéc
 ## Auteurs
 
 - **Abderrachid BELLAALI** [@Rachiid007](https://github.com/Rachiid007)
-- **Aymar HAKIZIMANA** [@HaAymar](https://github.com/HaAymar)
+- **Aymar Davy HAKIZIMANA** [@HaAymar](https://github.com/HaAymar)
 - **Michaël POURBAIX** [@Pourbaix](https://github.com/Pourbaix)
-- **Patson TIAKO** [@CardinPatson ](https://github.com/CardinPatson)
+- **Patson Cardin TIAKO NGOUADJE** [@CardinPatson ](https://github.com/CardinPatson)
 
 ### Type of commit
 

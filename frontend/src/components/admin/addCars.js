@@ -38,7 +38,7 @@ const AddCars = (props) => {
 
 	const handleImage = (e) => {
 		const url = e.target.files[0];
-		console.log(url);
+		// console.log(url);
 		if (!image) return;
 		setImage([...image, URL.createObjectURL(url)]);
 		setUrlImage([...urlImage, url]);
@@ -58,8 +58,6 @@ const AddCars = (props) => {
 			let input_div = div.childNodes[1].childNodes;
 			if (input_div[0].innerHTML) input_div[0].innerHTML = "";
 		}
-		console.log(energy);
-		console.log(e);
 		const carProperty = {
 			name,
 			description,
@@ -92,7 +90,6 @@ const AddCars = (props) => {
 				return;
 			}
 		}
-		console.log("pass");
 		localStorage.setItem("popup", !popUp);
 		props.addCars(carProperty);
 		window.location.reload();
