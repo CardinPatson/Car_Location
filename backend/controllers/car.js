@@ -8,17 +8,34 @@ client.connect();
 const getCars = (req, res, next) => {
 	//RECUPERER LES INFOS DE LA VOITURE PUIS LES IMAGES DE LA VOITURE
 	// if (!req.query) {
-	client.query(
-		"SELECT c.id, name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description,brand, model FROM cars c JOIN cars_brands cb ON c.id_brand = cb.id where is_available != false",
-		(error, results) => {
-			if (error) {
-				res.status(500).json({ error });
-				throw error;
-			}
-			res.status(200).json(results.rows);
-		}
-	);
-	// }
+	
+	const select_all_cars = `SELECT c.id, c.name, c.price, c.color, c.doors, c.boot_size, c.type, c.energy, c.is_automatic, c.passengers, c.air_conditioning, c.description, cb.brand, cb.model
+							FROM cars c
+							INNER JOIN cars_brands cb
+							ON c.id = cb.id;`
+	// async/await
+	try {
+	const res = await client.query(select_all_cars)
+		res.status(200).json(res.rows);
+	} catch (err) {
+		res.status(500).json({ err });
+        throw err;
+	}
+	};
+
+// 	client.query(
+// 		`SELECT c.id, name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description,brand, model
+// 		FROM cars c
+// 		JOIN cars_brands cb ON c.id_brand = cb.id
+// 		WHERE is_available != false`,
+//     (error, results) => {
+//       if (error) {
+//         res.status(500).json({ error });
+//         throw error;
+//       }
+//       res.status(200).json(results.rows);
+//     },
+//   );
 
 	//TODO : ⚠️ RECUPERER TOUTES LES VOITURES MISE A PART CELLE QUI SE TROUVE DANS LE PARAMETRE
 	// if (req.query) {
@@ -37,7 +54,6 @@ const getCars = (req, res, next) => {
 	// 		}
 	// 	);
 	// }
-};
 
 const getCarsImages = (req, res) => {
 	client.query("SELECT * FROM images", (error, results) => {
