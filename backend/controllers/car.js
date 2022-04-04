@@ -4,13 +4,38 @@ const format = require("pg-format");
 const client = require("../db");
 client.connect();
 
+// async/await
+const getCars = async (req, res, next) => {
+  try {
+    let minPrice = req.params.minPrice; //either a value or undefined
+    let maxPrice = req.params.maxPrice;
+    let brand = req.params.brand;
+    let model = req.params.model;
+    let startDate = req.params.startDate;
+    let endDate = req.params.endDate;
+
+    const data = await client.query(
+      `SELECT c.id, c.name, c.price, c.color, c.doors, c.boot_size, c.type, c.energy, c.is_automatic, c.passengers, c.air_conditioning, c.description, cb.brand, cb.model
+      FROM cars c
+      INNER JOIN cars_brands cb
+      ON c.id_brand = cb.id;`,
+    );
+    res.status(200).json(data.rows);
+  } catch (err) {
+    console.log(err.stack);
+    res.status(500).json({ err });
+  }
+};
+
 //GET
-const getCars = (req, res, next) => {
+const getCars2 = (req, res, next) => {
   //RECUPERER LES INFOS DE LA VOITURE PUIS LES IMAGES DE LA VOITURE
   // if (!req.query) {
   client.query(
-    `SELECT c.id, name, price, id_brand, color, doors, boot_size, type, energy, is_automatic, passengers, air_conditioning, description,brand, model
-		FROM cars c JOIN cars_brands cb ON c.id_brand = cb.id`,
+    `SELECT c.id, c.name, c.price, c.color, c.doors, c.boot_size, c.type, c.energy, c.is_automatic, c.passengers, c.air_conditioning, c.description, cb.brand, cb.model
+    FROM cars c
+    INNER JOIN cars_brands cb
+    ON c.id_brand = cb.id;`,
     (error, results) => {
       if (error) {
         res.status(500).json({ error });
