@@ -41,20 +41,18 @@ function Register(props) {
 }
 
 const Container = styled.div`
-	margin: 0 auto;
 	display: flex;
+    flex-direction: column;
+	position: relative;
 `;
 const Content = styled.div`
-	box-shadow: 0 0 1px black;
-	border: solid 1px rgba(0, 0, 0, 0.08);
-	border-radius: 3px;
-	background-color: rgb(255, 255, 255, 0.9);
-	display: flex;
-	flex-direction: column;
-	position: relative;
-	margin: 8% 0% 0% 0%;
-	width: 55vh;
-	height: 480px;
+	margin-top: 30%;
+    display: flex;
+    flex-direction: column;
+    border: solid 1px rgba(0, 0, 0, 0.08);
+    border-radius: 3px;
+    background-color: rgb(255, 255, 255, 0.9);
+    box-shadow: 0 0 1px black;
 `;
 
 const Banner = styled.div`
@@ -78,7 +76,7 @@ const Form = styled.div`
         border-radius:0.5vh;
         height: 4vh;
         font-size: 2.5vh;
-        width: 40vh;
+        width: 80%;
     }
     button {
         font-size: 3vh;
@@ -86,7 +84,7 @@ const Form = styled.div`
         background-color: #00A9FF;
         border: 1.5px solid #00486D;
         border-radius: 1vh;
-        width 40%;
+        width: 40%;
         padding: 1vh;
         margin: 2vh 1vh 2vh 1vh;
         cursor: pointer;
@@ -130,12 +128,14 @@ const Confirm = styled.div`
 	display: flex;
 	justify-content: center;
 	margin: 2vh;
+	margin-bottom: 1vh;
 `;
 const Account = styled.label`
 	display: flex;
-	margin: 1vh 1vh 2vh 2vh;
+	margin: 0vh 1vh 2vh 2vh;
 	cursor: pointer;
 	text-decoration: underline #00A9FF;
+	font-size: 2.25vh;
 `;
 
 export default Register;

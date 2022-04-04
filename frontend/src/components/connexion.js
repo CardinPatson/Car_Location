@@ -6,51 +6,56 @@ import styled from "styled-components";
 function Connexion(props) {
     return (
         <Container>
-            <Banner>Connectez-vous à votre compte</Banner>
-            <Form>
-                <Login>
-                    <p>Email</p>
-                    <input type="email" />
-                </Login>
-                <Password>
-                    <p>Mot de passe</p>
-                    <input type="text" />
-                </Password>
-                <Confirm>
-                    <button onClick={() => {}}>
-                        Se connecter
-                    </button>
-                    <Remember>
-                        Se souvenir de moi 
-                        <input type="checkbox"/>
-                        <span></span>
-                    </Remember>
-                </Confirm>
-                <Options>
-                    <Forgotpassword>
-                        <Link to="/forgotPassword" style={{ color: "#00A9FF" }}>Mot de passe oublié ?</Link> 
-                    </Forgotpassword>
-                    <NoAccount>
-                        <span onClick={props.onSwap} style={{ color: "#00A9FF" }}>Créer un compte</span> 
-                    </NoAccount>
-                </Options>
-            </Form>
+            <Content>
+                <Banner>Connectez-vous à votre compte</Banner>
+                <Form>
+                    <Login>
+                        <p>Email</p>
+                        <input type="email" />
+                    </Login>
+                    <Password>
+                        <p>Mot de passe</p>
+                        <input type="text" />
+                    </Password>
+                    <Confirm>
+                        <button onClick={() => {}}>
+                            Se connecter
+                        </button>
+                        <Remember>
+                            Se souvenir de moi 
+                            <input type="checkbox"/>
+                            <span></span>
+                        </Remember>
+                    </Confirm>
+                    <Options>
+                        <Forgotpassword>
+                            <Link to="/forgotPassword" style={{ color: "#00A9FF" }}>Mot de passe oublié ?</Link> 
+                        </Forgotpassword>
+                        <NoAccount>
+                            <span onClick={props.onSwap} style={{ color: "#00A9FF" }}>Créer un compte</span> 
+                        </NoAccount>
+                    </Options>
+                </Form>
+            </Content>
         </Container>
     );
 }
 
 
 const Container = styled.div`
-    box-shadow: 0 0 1px black;
-    border: solid 1px rgba(0, 0, 0, 0.08);
-    border-radius: 3px;
 	display: flex;
     flex-direction: column;
 	position: relative;
-    margin: 8% 0% 0% 0%;
-	width: 55vh;
+`;
+
+const Content = styled.div`
+    margin-top: 30%;
+    display: flex;
+    flex-direction: column;
+    border: solid 1px rgba(0, 0, 0, 0.08);
+    border-radius: 3px;
     background-color: rgb(255, 255, 255, 0.9);
-    height: 300px;
+    box-shadow: 0 0 1px black;
 `;
 
 const Banner = styled.div`
@@ -182,7 +187,8 @@ const Options = styled.label`
 const Forgotpassword = styled.div`
     display: flex;
     margin: 1vh 1vh 2vh 2vh;
-    textDecoration: "none"
+    text-decoration: none;
+    font-size: 2.25vh;
 `;
 
 const NoAccount = styled.label`
@@ -190,6 +196,7 @@ const NoAccount = styled.label`
 	margin: 1vh 1vh 2vh 2vh;
 	cursor: pointer;
 	text-decoration: underline #00A9FF;
+    font-size: 2.25vh;
 `
 
 export default Connexion;

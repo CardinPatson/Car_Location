@@ -18,7 +18,7 @@ const CarSlot = (props) => {
 					)}
 				</Pic>
 				<Info>
-					<Name>{props.car.name}</Name>
+					<Name>{props.car.brand}{" "}{props.car.model}</Name>
 					<Specs>
 						<div>Type</div>
 						<p>{props.car.type}</p>

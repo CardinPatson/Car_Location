@@ -97,7 +97,7 @@ const addCar = async (req, res) => {
     airCondition,
     description,
   } = req.body;
-
+  
   let id_brand = 0;
   let is_available = true;
   client.query(

@@ -103,7 +103,6 @@ function Home() {
 						</Part>
 					</Questions>
 					<Carousel
-						arrows={false}
 						index={index}
 						onChange={handleChange}
 						interval={4000}
@@ -121,6 +120,7 @@ function Home() {
 		</Container>
 	);
 }
+
 
 const Container = styled.div`
 	/* border: solid red 1px; */

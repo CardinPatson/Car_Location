@@ -25,21 +25,22 @@ function Connreg() {
 const Container = styled.div`
 	margin: 0 auto;
 	max-width: 1600px;
-	display: flex;
-	height: 723px;
 	top: 0;
+	display: flex;
+    flex-direction: column;
+	position: relative;
+	height: 100vh;
+`;
+
+const Content = styled.div`
+	width: 100%;
+	display: flex;
 	justify-content: center;
+	height: 100%;
 	background-image: url("./images/car_7.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
-`;
-
-const Content = styled.div`
-	margin-top: 5%;
-	width: 100%;
-	display: flex;
-	justify-content: center;
 `;
 
 export default Connreg;

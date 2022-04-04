@@ -6,6 +6,7 @@ function CarDetails(props) {
   return (
     <Container>
       <Content>
+        <Header/>
         <Test>
           <Banner>
             <span>Caractéristiques</span>
@@ -22,12 +23,9 @@ function CarDetails(props) {
               </Name>
               <DetailTable>
                 <Specs_left>
-                  <div>Nombre de portes</div>
-                  <p>4</p>
-                  <div>Taille du coffre</div>
-                  <p>Il est très grand</p>
-                  <div>Energie</div>
-                  <p>Diesel</p>
+                  <div><img src="./images/icons/door.svg"/>4</div>
+                  <div><img src="./images/icons/suitcase.svg"/>800L</div>
+                  <div><img src="./images/icons/lightning.svg"/>Diesel</div>
                 </Specs_left>
                 <Ligne>
                   <div></div>
@@ -59,46 +57,29 @@ function CarDetails(props) {
   );
 }
 
-const Louer = styled.div`
-  margin-top: 5px;
-  font-weight: bold;
-  button {
-    font-size: 1.3em;
-    cursor: pointer;
-    background-color: #00a9ff;
-    color: black;
-    padding: 7px 35px;
-    border-radius: 5px;
-    border-color: #00a9ff;
-    outline: none;
-    margin: 5px;
-  }
+const Container = styled.div`
+  top: 0;
+  max-width: 1600px;
+  margin: auto;
 `;
 
-const Container = styled.div`
-  max-width: 1300px;
-  margin: auto;
-  display: flex;
-	justify-content: center;
-  `;
 const Content = styled.div`
-  margin-top: 20vh;
   display: flex;
   align-items: center;
-  flex-direction: column;
-  padding-bottom: 30px;
-  top: 7vh;
-  `;
-
+  justify-content: center;
+  flex-direction: row;
+  height: 100%;
+  margin-top: 100px;
+`; 
+    
 const Test = styled.div`
   border: 1px solid black;
   background : white;
   display: flex;
   flex-direction: column;
-`;
+`; 
 
 const Banner = styled.div`
-  font: bold;
   font-size: 1.6em;
   text-align: left;
   background: #00a9f5;
@@ -109,26 +90,28 @@ const Banner = styled.div`
 const Detail = styled.div`
   display: flex;
   flex-direction: row;
+  gap: 8%;
   /* //flex-grow: 1; */
-  /* width: 100%; */
   /*border-radius: 1vh; */
   /* box-shadow: 0 0 1px black; */
   margin: 1vh 1vh 1vh 5vh;
 `;
 
 const Info = styled.div`
+  display: flex;
+  flex-direction: column;
   /* flex : 0.6; */
   /* border : solid red 1px;  */
 `;
 
 const DetailTable = styled.div`
   display: flex;
-  border: 1px solid black;
   flex-direction: row;
 `;
 
 const Name = styled.div`
   display: flex;
+  align-items: center;
   margin: 30px;
   margin-left: 0px;
   color: #333333;
@@ -144,10 +127,12 @@ const Name = styled.div`
 const Line_right = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1vh;
-  font-size: 3vh;
+  align-items: center;
+  font-size: 30px;
   div {
     border-left: 1px solid black;
+    margin-left: 10px;
+    padding-left: 5px;
   }
 `;
 
@@ -155,18 +140,21 @@ const Specs_left = styled.div`
   text-align: left;
    /* margin: auto; */
   background-size: 2.2em;
+  width: 100%;
   div {
+    display: flex;
+    align-items: center;
     text-align: left;
     margin: 1vh;
-    width: 32vh;
+    margin-left: 0;
     font-weight: bold;
-     
+    img {
+      padding: 5px;
+      padding-right: 10px;
+      height: auto;
+      width: 8%;
+    }
   }
-  p {
-     text-align: left;
-     padding: 6px;
-     margin: 1vh;
-    color: grey;
 `;
 
 const Specs_right = styled.div`
@@ -176,7 +164,7 @@ const Specs_right = styled.div`
   div {
     text-align: left;
     margin: 1vh;
-    width: 32vh;
+    width: 100%;
     font-weight: bold;
   }
   p {
@@ -195,15 +183,16 @@ const Ligne = styled.div`
   }
 `;
 const Photo = styled.div`
+  border-left: 1px solid red;
+  border-right: 1px solid blue;
   display: flex;
   flex-direction: column;
   align-items: center;
   object-fit: content;
+  width: 50%;
   img {
-    width: 38vh;
-    height: 38vh;
-    margin: 3vh;
-    margin-top: 0%;
+    height: auto;
+    width: 100%;
   }
 `;
 
@@ -223,34 +212,20 @@ const Price = styled.div`
   }
 `;
 
-/* const Border = styled.div``;
-// const Name = styled.div`
-//   font-size: 4vh;
-//   margin: 0vh 1vh 0vh 1vh;
-// `; */
-
-const Type = styled.div`
-  font-size: 2vh;
-  margin: 1vh 1vh 1vh 1vh;
+const Louer = styled.div`
+  margin-top: 5px;
   font-weight: bold;
+  button {
+    font-size: 1.3em;
+    cursor: pointer;
+    background-color: #00a9ff;
+    color: black;
+    padding: 7px 35px;
+    border-radius: 5px;
+    border-color: #00a9ff;
+    outline: none;
+    margin: 5px;
+  }
 `;
-
-// const Specs = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   max-width: 80%;
-//   padding-left: 20%;
-//   padding-bottom: 2vh;
-//   div {
-//     text-align: left;
-//     padding: 1vh;
-//   }
-//   p {
-//     text-align: left;
-//     padding: 0vh 1vh 0vh 1vh;
-//     color: #00a9ff;
-//   }
-// `;
 
 export default CarDetails;

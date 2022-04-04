@@ -74,7 +74,7 @@ const AddCars = (props) => {
 			isAutomatic,
 			image: urlImage,
 		};
-		// console.log(carProperty);
+		console.log(carProperty);
 
 		for (
 			let i = 0;
