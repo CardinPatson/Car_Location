@@ -53,7 +53,8 @@ const Content = styled.div`
 
 const Box = styled.div`
 	box-shadow: 0 0 1px black;
-	border: solid #777777 1px;
+	border: solid #777777 0.5px;
+    border-radius: 3px;
 	display: flex;
     justify-content: center;
 	flex-direction: column;
@@ -62,6 +63,7 @@ const Box = styled.div`
 `;
 
 const Banner = styled.div`
+    border-radius: 3px 3px 0 0;
 	padding: 1vh 1vh 1vh 1vh;
 	border-bottom: solid #797979 1px;
 	background-color: #00a9ff;

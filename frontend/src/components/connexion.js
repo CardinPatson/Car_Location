@@ -52,13 +52,14 @@ const Content = styled.div`
     margin-top: 30%;
     display: flex;
     flex-direction: column;
-    border: solid 1px rgba(0, 0, 0, 0.08);
+    border: solid 0.5px rgba(0, 0, 0, 0.08);
     border-radius: 3px;
     background-color: rgb(255, 255, 255, 0.9);
     box-shadow: 0 0 1px black;
 `;
 
 const Banner = styled.div`
+    border-radius: 3px 3px 0 0;
     padding: 1vh 1vh 1vh 1vh;
     border-bottom: solid #797979 1px;
     background-color: #00A9FF;

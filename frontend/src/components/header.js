@@ -8,7 +8,7 @@ function Header() {
 			<Content>
 				<Logo>
 					<a href="/">
-						<img src="./images/logo.svg" />
+						<img src="./images/logo.svg" alt="Logo of car-rental's site"/>
 					</a>
 				</Logo>
 				<Nav>
@@ -34,7 +34,7 @@ function Header() {
 							//TODO AFFICHER LE MENU DE NAVIGATION
 						}}
 					>
-						<img src="./images/list.svg" />
+						<img src="./images/list.svg" alt="hamburger"/>
 					</div>
 				</Menu>
 			</Content>
@@ -44,6 +44,7 @@ function Header() {
 
 const Container = styled.div`
 	border: solid 1px rgba(0, 0, 0, 0.08);
+	border-top: solid 0px black;
 	max-width: 1600px;
 	margin: 0 auto;
 	position: fixed;

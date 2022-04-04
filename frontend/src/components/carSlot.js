@@ -12,9 +12,9 @@ const CarSlot = (props) => {
 			<Content>
 				<Pic>
 					{props.images && props.images.length ? (
-						<img src={props.images[0]} />
+						<img src={props.images[0]} alt="Voiture de la liste"/>
 					) : (
-						<img src="./images/car_3.jpg" />
+						<img src="./images/car_3.jpg" alt="Illustration de la voiture par défaut"/>
 					)}
 				</Pic>
 				<Info>
@@ -156,20 +156,20 @@ const Details = styled.div`
 	.details__button {
 		color: #333333;
         background-color: #00A9FF;
-        border: 1.5px solid #00486D;
+        border: 1px solid #00486D;
 	}
 	.details__button:hover {
 		color: white;
-		border: 1.5px solid #00A9FF;
+		background-color: #006699;
     }
 	.modify__button {
 		color: #333333;
         background-color: #c4c4c4;
-        border: 1.5px solid #00486D;
+        border: 1px solid #00486D;
 	}
 	.modify__button:hover {
 		color: white;
-		border: 1.5px solid white;
+		background-color: #919191;
     }
 	.car__detail{
 		position: absolute;

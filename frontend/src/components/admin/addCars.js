@@ -339,7 +339,7 @@ const AddCars = (props) => {
 						<div>
 							Les données de la nouvelle voiture on été envoyées à la DB.
 						</div>
-						<img src="./images/validation.svg" />
+						<img src="./images/validation.svg" alt="validé"/>
 						<Link to="/cars" className="__button">
 							<button
 								onClick={() => {
@@ -381,7 +381,7 @@ const Content = styled.div`
 	padding: 5px;
 `;
 const Form = styled.form`
-	border: solid #00a9ff 1px;
+	border: solid #00a9ff 0.5px;
 	background-color: rgb(245, 245, 245, 0.95);
 	/* height: 100vh; */
 	border-radius: 3px 3px 0 0;

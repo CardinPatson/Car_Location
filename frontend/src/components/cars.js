@@ -133,7 +133,7 @@ const Content = styled.div`
 	padding: 10px 0 15px 0;
 `;
 const Filter = styled.div`
-	border: solid #00a9ff 1px;
+	border: solid #00a9ff 0.5px;
 	/* PENSER A BLOQUER LE FILTRE LORS DU SCROLL */
 	/* display: flex;
 	flex-direction: column; */
@@ -274,7 +274,7 @@ const Slot = styled(Brand)`
 const Available = styled.div`
 	/* border: solid red 1px; */
 	flex: 0.65;
-	border: solid #00a9ff 1px;
+	border: solid #00a9ff 0.5px;
 	border-radius: 5px;
 	box-shadow: 0 0 1px black;
 	background-color: rgb(255, 255, 255, 0.9);
