@@ -111,7 +111,7 @@ import Header from './header';
     `; 
     
     const Test = styled.div`
-      border: 1px solid black;
+      border: 0.5px solid black;
       background : white;
       display: flex;
       flex-direction: column;

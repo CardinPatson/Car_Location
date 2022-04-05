@@ -1,9 +1,16 @@
 import React from 'react'
 import Header from './header'
 import styled from "styled-components";
-
+import { useLocation } from "react-router-dom";
 
 function CarReservation(){
+    const location = useLocation();
+
+	console.log(location);
+	const { data } = location.state;
+	console.log(data);
+    console.log(data.car.name);
+
   return (
     <Container>
         <Header/>
@@ -12,24 +19,24 @@ function CarReservation(){
                     <Photo>
                         <img src="./images/car_3.jpg" />
                     </Photo>
-                    <Name>Nom de la voiture</Name>
-                    <Type>Type</Type>
+                    <Name>{data.car.brand ? data.car.brand : "Marque voiture"}{" "}{data.car.model ? data.car.model : "Modèle voiture"}</Name>
+                    <Type>{data.car.type ? data.car.type : "Sportive"}</Type>
                     <Ligne>
                         <div></div>
                     </Ligne>
                     <Specs>
                         <div>Nombre de portes</div>
-                        <p id="">42</p>
+                        <p id="">{data.car.doors ? data.car.doors : "5"}</p>
                         <div>Taille du coffre</div>
-                        <p id="">57L</p>
+                        <p id="">{data.car.boot_size ? data.car.boot_size : "100"}L</p>
                         <div>Energie</div>
-                        <p id="">Eau</p>
+                        <p id="">{data.car.energy ? data.car.energy : "Électrique"}</p>
                         <div>Transmission</div>
-                        <p id="">pate</p>
+                        <p id="">{data.car.is_automatic  ? "Automatique" : "Manuelle"}</p>
                         <div>Nombre de places</div>
-                        <p id="">78</p>
+                        <p id="">{data.car.passengers ? data.car.passengers : "3"}</p>
                         <div>Aire conditionnée</div>
-                        <p id="">Peut-être</p>
+                        <p id="">{data.car.air_conditioning ? "Oui" : "Non"}</p>
                     </Specs>
             </Detail>
             <Reservation>
@@ -52,7 +59,7 @@ function CarReservation(){
                         </div>
                         <div>
                             <p>Par jour:</p>
-                            <span>70€</span>
+                            <span>{data.car.price ? data.car.price : "100"}€</span>
                         </div>
                     </Price>
                     <Confirm>
@@ -86,7 +93,7 @@ const Container = styled.div`
 `;
 const Content = styled.div`
 	/* border: solid black 1px; */
-    width: auto;
+    width: 80%;
     height: 85%;
 	margin-top: 80px;
 	display: flex;
@@ -168,7 +175,7 @@ const Reservation = styled.div`
     flex-direction: column;
     margin: 1vh 1vh 1vh 1vh;
     box-shadow: 0 0 1px black;
-    width: 70%; 
+    width: 100%; 
 `;
 
 const Banner = styled.div`
@@ -271,7 +278,7 @@ const Confirm = styled.div`
     }
     img {
         height: auto;
-        width: 25%;
+        width: 20%;
     }
 `
 
