@@ -236,17 +236,20 @@ const addCarImages = (req, res, next) => {
             return [idCars, `${url_prev}/images/${x.filename}`];
         });
 
+        console.log(req.files);
+
         //FORMAT THE QUERY TO MAKE INSERTION
-        const query = format(
+
+        pool.query(
             `INSERT INTO images(id , pic_name) VALUES($1, $2)`,
-            [idCar, values],
+            [idCars, req.files],
+            (error, result) => {
+                if (error) {
+                    res.status(400).json({ error });
+                }
+                res.status(200);
+            },
         );
-        pool.query(query, (error, result) => {
-            if (error) {
-                res.status(400).json({ error });
-            }
-            res.status(200);
-        });
     } catch (err) {
         console.error(err);
     }
