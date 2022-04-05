@@ -35,6 +35,7 @@ export const addCarsProperty = createAsyncThunk(
 			price: arg.price,
 			airCondition: arg.airCondition,
 			isAutomatic: arg.isAutomatic,
+			isAvailable: arg.isAvailable
 		})
 			.then((rep) => {
 				//TODO recuperer l'id du véhicule et faire un insertion dans la table des images

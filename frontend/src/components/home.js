@@ -18,7 +18,7 @@ function Home() {
 	var items = [
 		{
 			pos: 0,
-			url: "./images/car_4.jpg",
+			url: "./images/car_10.jpg",
 		},
 		{
 			pos: 1,
@@ -47,6 +47,14 @@ function Home() {
 		{
 			pos: 7,
 			url: "./images/car_5.jpg",
+		},
+		{
+			pos: 8,
+			url: "./images/car_4.jpg",
+		},
+		{
+			pos: 9,
+			url: "./images/car_11.jpg",
 		},
 	];
 

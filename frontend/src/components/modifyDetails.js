@@ -93,17 +93,18 @@ import Header from './header';
     const Container = styled.div`
       top: 0;
       max-width: 1600px;
-      height: 550px;
+      height: 100vh;
       margin: auto;
       display: flex;
       justify-content: center;
     `;
+
     const Content = styled.div`
-      margin-top: 15vh;
+      margin-top: 2%;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-direction: row;
+      flex-direction: column;
       padding-bottom: 30px;
       width: 100%;
       height: 100%;
@@ -114,9 +115,8 @@ import Header from './header';
       background : white;
       display: flex;
       flex-direction: column;
-      width: 70%;
-      height: 100%;
-      margin-left: 50px;
+      width: 80%;
+      height: 60vh;
     `; 
     
     const Banner = styled.div`
@@ -277,11 +277,11 @@ import Header from './header';
 
     const Buttons = styled.div`
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       justify-content: center;
       padding: 10px;
-      height: 100%;
-      width: 30%;
+      height: 15vh;
+      width: 80%;
       align-items: center;
       .__button__blue {
         font-size: 3vh;

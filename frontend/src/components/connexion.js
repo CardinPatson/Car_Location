@@ -15,7 +15,7 @@ function Connexion(props) {
                     </Login>
                     <Password>
                         <p>Mot de passe</p>
-                        <input type="text" />
+                        <input type="password" />
                     </Password>
                     <Confirm>
                         <button onClick={() => {}}>

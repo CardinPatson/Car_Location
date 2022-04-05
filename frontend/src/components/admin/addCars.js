@@ -21,6 +21,7 @@ const AddCars = (props) => {
 	const [description, setDescription] = useState("");
 	const [airCondition, setAirCondition] = useState(true);
 	const [isAutomatic, setIsAutomatic] = useState(true);
+	const [isAvailable, setIsAvailable] = useState(true);
 	const [urlImage, setUrlImage] = useState([]);
 	const [popUp, setPopUp] = useState(
 		localStorage.getItem("popup", true) === "true"
@@ -72,6 +73,7 @@ const AddCars = (props) => {
 			price,
 			airCondition,
 			isAutomatic,
+			isAvailable,
 			image: urlImage,
 		};
 		console.log(carProperty);
@@ -252,6 +254,22 @@ const AddCars = (props) => {
 									checked={airCondition}
 									onChange={() => {
 										setAirCondition(!airCondition);
+									}}
+									disableRipple={true}
+									sx={{ "& .MuiSvgIcon-root": { fontSize: 25 } }}
+								/>
+							</div>
+						</div>
+					</div>
+					<div className="add__detail__cars__">
+						<span>Disponible</span>
+
+						<div className="add__detail__cars__checkbox">
+							<div>
+								<Checkbox
+									checked={isAvailable}
+									onChange={() => {
+										setIsAvailable(!isAvailable);
 									}}
 									disableRipple={true}
 									sx={{ "& .MuiSvgIcon-root": { fontSize: 25 } }}

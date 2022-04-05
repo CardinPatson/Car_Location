@@ -6,7 +6,10 @@ import Header from "./header";
 function ForgotPassword() {
 
     const [message, setMessage] = useState(false);
-    const toggleMessage = React.useCallback(() => setMessage(true));
+    const handleChanges = () => {
+        setMessage(!message);
+        document.getElementById("button").disabled = true;
+    };
 
     return (
 		<Container>
@@ -22,7 +25,7 @@ function ForgotPassword() {
                             <input type="email" placeholder="Votre mail"/>
 					    </Mail>
                         <Confirm>
-                            <button type ="button" onClick={toggleMessage}>
+                            <button type ="button" onClick={handleChanges} id="button">
                                 Réinitialiser
                             </button>
                         </Confirm>
@@ -40,24 +43,34 @@ function ForgotPassword() {
 
 const Container = styled.div`
 	margin: 0 auto;
-	max-width: 1300px;
-    display: flex;
-	justify-content: center;
+	max-width: 1600px;
+	top: 0;
+	display: flex;
+    flex-direction: column;
+	position: relative;
+	height: 100vh;
 `;
 
 const Content = styled.div`
-    margin-top: 10%;
-    display: flex;
-    justify-content: center;
+	width: 100%;
+	display: flex;
+    align-items: flex-start;
+	justify-content: center;
+	height: 100%;
+	background-image: url("./images/car_10.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
 `
 
 const Box = styled.div`
 	box-shadow: 0 0 1px black;
-	border: solid #777777 0.5px;
     border-radius: 3px;
 	display: flex;
     justify-content: center;
 	flex-direction: column;
+    border: solid 0.5px rgba(0, 0, 0, 0.08);
+    background-color: rgb(255, 255, 255, 0.9);
 	margin: 10% 0% 0% 0%;
 	width: 55vh;
 `;
@@ -75,7 +88,7 @@ const Banner = styled.div`
 const Form = styled.form`
     display: flex;
     flex-direction: column;
-    p{
+    p {
         text-align: left;
         font-size: 3vh;
     }
@@ -105,9 +118,16 @@ const Form = styled.form`
     button:active {
         transform: scale(0.95);
     }
+    button:disabled,
+    button[disabled]{
+        border: 1px solid #999999;
+        background-color: #cccccc;
+        color: #666666;
+        cursor: not-allowed;
+    }
 `;
 
-const Instruction = styled.form`
+const Instruction = styled.div`
     justify-content: center;
     text-align: center;
     margin: 2vh 1vh 2vh 1vh;
