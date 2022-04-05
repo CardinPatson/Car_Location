@@ -238,7 +238,7 @@ const addCarImages = (req, res, next) => {
 
         //FORMAT THE QUERY TO MAKE INSERTION
         const query = format(
-            `INSERT INTO images(id , pic_name) VALUES($1, ARRAY[($2)])`,
+            `INSERT INTO images(id , pic_name) VALUES($1, $2)`,
             [idCar, values],
         );
         pool.query(query, (error, result) => {
