@@ -86,7 +86,7 @@ function CarDetails(props) {
                 <Specs>
                   <div><img src="./images/icons/stick.svg" alt="stick_icon"/>Manuelle</div>
                   <div><img src="./images/icons/seat.svg" alt="seat_icon"/>5 places</div>
-                  <div><img src="./images/icons/air.svg" alt="air_icon"/>Oui</div>
+                  <div><img src="./images/icons/cool.svg" alt="air_icon"/>Oui</div>
                 </Specs>
               </DetailTable>
             </Info>

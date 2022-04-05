@@ -166,7 +166,7 @@ const Container = styled.div`
 	}
 `;
 const Content = styled.div`
-	border: solid black 1px;
+	border: solid black 0.5px;
 	border-radius: 2.5px;
 	display: flex;
 	flex-direction: column;

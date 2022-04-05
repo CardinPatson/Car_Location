@@ -168,7 +168,6 @@ const Info = styled.div`
 const Questions = styled.div`
 	display: flex;
 	justify-content: center;
-	height: 100%;
 	width: 80%;
 	position: absolute;
 	z-index: 10;
