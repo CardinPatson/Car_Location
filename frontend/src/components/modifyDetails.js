@@ -15,20 +15,20 @@ import Header from './header';
               </Banner>
               <Detail>
                 <Info>
-                  <Marque>
+                  <MarqueModel>
                     <div>Marque:</div>
                     <Line_right>
                         <input type="text"/>
                     </Line_right>
-                  </Marque>
-                  <Model>
+                  </MarqueModel>
+                  <MarqueModel>
                     <div>Modéle:</div>
                     <Line_right>
                         <input type="text"/>
                     </Line_right>
-                  </Model>
+                  </MarqueModel>
                   <DetailTable>
-                    <Specs_left>
+                    <Specs>
                         <from action="" method="post">
                         <div>
                            <img src="./images/icons/door.svg" alt="door_icon"/><label for="porte">Nombre de portes:</label>  
@@ -39,15 +39,15 @@ import Header from './header';
                           <input type="text"/> 
                         </div>
                         <div>
-                          <img src="./images/icons/lightning.svg" alt="lightning_icon"/><label for="energie">Energie:</label>  
+                          <img src="./images/icons/lightning.svg" alt="lightning_icon"/><label for="energie">Énergie:</label>  
                           <input type="text" id=""/> 
                         </div>
                         </from>
-                    </Specs_left>
+                    </Specs>
                     {/* <Ligne>
                       <div></div>
                     </Ligne> */}
-                    <Specs_right>
+                    <Specs>
                         <form action="" method='post'>
                             <div>
                               <img src="./images/icons/stick.svg" alt="stick_icon"/><label for="trans">Transmission:</label>
@@ -58,12 +58,11 @@ import Header from './header';
                               <input type="number" min={"5"} max={"12"}/>
                             </div>
                             <div>
-                              <img src="./images/icons/air.svg" alt="air_icon"/><label for="trans">Aire conditionnée:</label>
+                              <img src="./images/icons/cool.svg" alt="air_icon"/><label for="trans">Aire conditionnée:</label>
                               <input type="text"/>
                             </div>
                         </form>
-                       
-                    </Specs_right>
+                    </Specs>
                   </DetailTable>
                 </Info>
               </Detail>
@@ -77,19 +76,6 @@ import Header from './header';
         </Container>
       );
     }
-
-
-    const Portes = styled.div`
-
-    `;
-
-    const Energie = styled.div`
-
-    `;
-
-    const Coffre = styled.div`
-
-    `;
     
     const Container = styled.div`
       top: 0;
@@ -101,14 +87,13 @@ import Header from './header';
     `;
 
     const Content = styled.div`
-      margin-top: 2%;
+      margin-top: 5%;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       padding-bottom: 30px;
       width: 100%;
-      height: 100%;
     `; 
     
     const Test = styled.div`
@@ -117,7 +102,6 @@ import Header from './header';
       display: flex;
       flex-direction: column;
       width: 80%;
-      height: 60vh;
     `; 
     
     const Banner = styled.div`
@@ -146,36 +130,23 @@ import Header from './header';
     
     const DetailTable = styled.div`
       padding: 2%;
+      padding-left: 0;
       display: flex;
       flex-direction: row;
     `;
     
-    const Marque = styled.div`
+    const MarqueModel = styled.div`
       display: flex;
-      margin: 20px;
-      margin-left: 0px;
-      font-size: 20px;
+      align-content: center; 
+      margin: 20px 0 0 0;
+      font-size: 2vw;
       text-align: left;
     `;
-    const Model = styled.div`
-    display: flex;
-    margin: 30px;
-    margin-left: 0px;
-    color: #333333;
-    font-size: 20px;
-    text-align: left;
-    p {
-      font: bold;
-      color: grey;
-      margin: 1px;
-    }
-  `;
   
     const Line_right = styled.div`
       display: flex;
-      flex-direction: column;
-      padding: 1vh;
       font-size: 3vh;
+      margin-left: 5px;
       div {
         border-left: 1px solid black;
         border-width: 5em
@@ -185,102 +156,46 @@ import Header from './header';
         border: none;
         border-bottom: solid 1px #00a9ff;
         font-size: 1.000em;
-        font-weight: 400;
         letter-spacing: 1px;
         margin: 0em 0.8em 0.875em 0;
         padding: 0 0 0 0;
         width: 60%;
-        text-align : center;
+        text-align : left;
+        outline: none;
        }   
     `;
     
-    const Specs_left = styled.div`
-      /* text-align: left; */
-       /* margin: auto; */
-      /* background-size: 2.2em;
-      align-items: center;
-      margin: 0%;
+    const Specs = styled.div`
+      text-align: left;
+      /* margin: auto; */
+      width: 50%;
+      color: #00a9ff;
       div {
+        display: flex;
+        align-items: center;
         text-align: left;
         margin: 1vh;
-        width: 32vh;
-        font-weight: bold;  
-      }
-      p {
-        text-align: left;
-        padding: 6px;
-        margin: 1vh;
-        color: grey;
-      } */
-      text-align: left;
-      /* margin: auto; */
-      width: 50%;
-      color: #00a9ff;
-     div {
-      display: flex;
-      align-items: center;
-      text-align: left;
-      margin: 1vh;
-      margin-left: 0;
-      font-weight: bold;
-      font-size: 1.2vw;
-     img {
-      padding: 5px;
-      padding-right: 10px;
-      height: auto;
-      width: 15%;
-    }
-      input[type='text'], [type='number'] {
-        background: none;
-        border: none;
-        border-bottom: solid 1px #00a9ff;
-        font-size: 1.000em;
-        font-weight: 400;
-        letter-spacing: 1px;
-        margin: 0em 0 0.875em 0;
-        padding: 0 0 0 0;
-        width: 30%;	 
-      }
-`;
-    
-    const Specs_right = styled.div`
-    text-align: left;
-      /* margin: auto; */
-      width: 50%;
-      color: #00a9ff;
-     div {
-      display: flex;
-      align-items: center;
-      text-align: left;
-      margin: 1vh;
-      margin-left: 0;
-      font-weight: bold;
-      font-size: 1.2vw;
-     img {
-      padding: 5px;
-      padding-right: 10px;
-      height: auto;
-      width: 15%;
-    }
-
-      input[type='text'], [type='number'] {
-        background: none;
-        border: none;
-	      border-bottom: solid 1px #00a9ff;
-	      font-size: 1.000em;
-        font-weight: 400;
-        letter-spacing: 1px;
-	      margin: 0em 0 0.875em 0;
-	      padding: 0 0 0 0;
-	      width: 40%; 
+        margin-left: 0;
+        font-weight: bold;
+        font-size: 1.2vw;
       }
       img {
-      padding: 5px;
-      padding-right: 10px;
-      height: auto;
-      width: 15%;
-    }
-    `;
+        padding: 5px;
+        padding-right: 10px;
+        height: auto;
+        width: 10%;
+      }
+      input[type='text'], [type='number'] {
+        border: none;
+        border-bottom: solid 1px #00a9ff;
+        font-size: 20px;
+        letter-spacing: 1px;
+        margin: 0em 0 0em 5px;
+        padding: 0 0 0 0;
+        width: 30%;	 
+        outline: none;
+      }
+`;
     
     const Ligne = styled.div`
       display: flex;
@@ -312,6 +227,7 @@ import Header from './header';
         color: #333333;
         background-color: #00A9FF;
         border: 2px solid #00486D;
+        font-size: 1.5vw;
         border-radius: 1vh;
         width: 80%;
         padding: 1vh;
@@ -329,7 +245,7 @@ import Header from './header';
       .__button__red {
         background-color: #ff0f0f;
         border: 2px solid #820909;
-        font-size: 3vh;
+        font-size: 1.5vw;
         color: #333333;
         border-radius: 1vh;
         width: 80%;
@@ -348,7 +264,7 @@ import Header from './header';
       .__button__green {
         background-color: #0db520;
         border: 2px solid #0a7d17;
-        font-size: 3vh;
+        font-size: 1.5vw;
         color: #333333;
         border-radius: 1vh;
         width: 80%;
