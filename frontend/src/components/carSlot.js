@@ -1,24 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import CarDetails from "./carDetails"
+import CarDetails from "./carDetails";
 
 const CarSlot = (props) => {
-	const handleDetail = ()=>{
-
-	}
+	const handleDetail = () => {};
 	return (
 		<Container>
 			<Content>
 				<Pic>
 					{props.images && props.images.length ? (
-						<img src={props.images[0]} alt="Voiture de la liste"/>
+						<img src={props.images[0]} alt="Voiture de la liste" />
 					) : (
-						<img src="./images/car_3.jpg" alt="Illustration de la voiture par défaut"/>
+						<img
+							src="./images/car_3.jpg"
+							alt="Illustration de la voiture par défaut"
+						/>
 					)}
 				</Pic>
 				<Info>
-					<Name>{props.car.brand}{" "}{props.car.model}</Name>
+					<Name>
+						{props.car.brand} {props.car.model}
+					</Name>
 					<Specs>
 						<div>Type</div>
 						<p>{props.car.type}</p>
@@ -36,17 +39,24 @@ const CarSlot = (props) => {
 					</Amount>
 					<Details>
 						<div>
-
-							<button className="details__button" onClick={(e)=>{handleDetail()}}>Détails</button>
-
+							<Link to="/carDetails" state={{ from: props }}>
+								<button
+									className="details__button"
+									onClick={(e) => {
+										handleDetail();
+									}}
+								>
+									Détails
+								</button>
+							</Link>
 						</div>
-						
+
 						<Link to="/">
 							<button className="modify__button">Modifier</button>
 						</Link>
-						<div className="car__detail" style={{display : "none"}}>
-							<CarDetails/>
-						</div>
+						{/* <div className="car__detail" style={{ display: "none" }}>
+							<CarDetails props={props} />
+						</div> */}
 					</Details>
 				</Price>
 			</Content>
@@ -77,9 +87,9 @@ const Pic = styled.div`
 		height: 25vh;
 		object-fit: content;
 	}
-	@media(max-width : 1200px){
-		img{
-			width : 27vh
+	@media (max-width: 1200px) {
+		img {
+			width: 27vh;
 		}
 	}
 `;
