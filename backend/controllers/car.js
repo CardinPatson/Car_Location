@@ -1,8 +1,8 @@
 const multerMiddleware = require("../middleware/image");
 const { validationResult } = require("express-validator");
 const format = require("pg-format");
-const client = require("../db");
-client.connect();
+const pool = require("../db");
+pool.connect();
 
 // async/await
 const getCars = async (req, res, next) => {
@@ -14,11 +14,11 @@ const getCars = async (req, res, next) => {
         // let startDate = req.params.startDate;
         // let endDate = req.params.endDate;
 
-        const data = await client.query(
+        const data = await pool.query(
             `SELECT c.id, c.name, c.price, c.color, c.doors, c.boot_size, c.type, c.energy, c.is_automatic, c.passengers, c.air_conditioning, c.description, cb.brand, cb.model
-      FROM cars c
-      INNER JOIN cars_brands cb
-      ON c.id_brand = cb.id;`,
+              FROM cars c
+              INNER JOIN cars_brands cb
+              ON c.id_brand = cb.id;`,
         );
         res.status(200).json(data.rows);
     } catch (err) {
@@ -31,7 +31,7 @@ const getCars = async (req, res, next) => {
 const getCars2 = (req, res, next) => {
     //RECUPERER LES INFOS DE LA VOITURE PUIS LES IMAGES DE LA VOITURE
     // if (!req.query) {
-    client.query(
+    pool.query(
         `SELECT c.id, c.name, c.price, c.color, c.doors, c.boot_size, c.type, c.energy, c.is_automatic, c.passengers, c.air_conditioning, c.description, cb.brand, cb.model
     FROM cars c
     INNER JOIN cars_brands cb
@@ -51,7 +51,7 @@ const getCars2 = (req, res, next) => {
     // 	//RECUPERER UN TABLEAU D'ID AVEC REQ.QUERY
     // 	tabId = Objet.values(req.query);
     // 	//TODO Cette option sera implémenté Lorsque la foncetionnalité qui permet à l'utilisateur de passer une commande sera implémenté
-    // 	client.query(
+    // 	pool.query(
     // 		"SELECT * FROM cars WHERE id not in $1",
     // 		[tabId],
     // 		(error, result) => {
@@ -66,7 +66,7 @@ const getCars2 = (req, res, next) => {
 };
 
 const getCarsImages = (req, res) => {
-    client.query("SELECT * FROM images", (error, results) => {
+    pool.query("SELECT * FROM images", (error, results) => {
         if (error) throw error;
         res.status(200).json(results.rows);
     });
@@ -76,7 +76,7 @@ const getCarsOrders = (req, res) => {
     const { startDate, endDate, startTime, endTime } = req.query;
     //TODO : Effectuer une vérification sur les paramètres pour allez chercher les véhicules
     //TODO : Récupérer tous les id des voitures qui sont déjà louer dans cette plage horaire dans la table orders
-    client.query(
+    pool.query(
         "SELECT id FROM orders WHERE date_departure >= $1 and end date_return <= $2",
         [startDate, endDate],
         (error, results) => {
@@ -92,7 +92,7 @@ const getCarById = (req, res) => {
     if (req.params) {
         const id = parseInt(req.params.id);
 
-        client.query(
+        pool.query(
             "SELECT * FROM cars c FULL OUTER JOIN cars_brands cb ON c.id = cb.id WHERE c.id = $1",
             [id],
             (error, results) => {
@@ -125,7 +125,7 @@ const addCar = async (req, res) => {
 
     let id_brand = 0;
     let is_available = true;
-    client.query(
+    pool.query(
         "select id from cars_brands where brand=$1 and model=$2",
         [brand, model],
         async (error, results) => {
@@ -136,7 +136,7 @@ const addCar = async (req, res) => {
             }
             if (results.rows.length == 0) {
                 //Insert into brand
-                client.query(
+                pool.query(
                     "INSERT INTO cars_brands(brand, model) VALUES($1,$2) RETURNING id",
                     [brand, model],
                     (error, results) => {
@@ -145,7 +145,7 @@ const addCar = async (req, res) => {
                         }
                         id_brand = results.rows[0].id;
 
-                        client.query(
+                        pool.query(
                             "INSERT INTO cars(name, price, id_brand, color, doors, boot_size, type, energy,is_available, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING id",
                             [
                                 name,
@@ -174,7 +174,7 @@ const addCar = async (req, res) => {
             } else {
                 id_brand = await results.rows[0].id;
 
-                client.query(
+                pool.query(
                     "INSERT INTO cars(name, price, id_brand, color, doors, boot_size, type, energy,is_available, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING id",
                     [
                         name,
@@ -202,7 +202,7 @@ const addCar = async (req, res) => {
         },
     );
 
-    client.end;
+    pool.end;
 };
 
 const addCarImages = (req, res, next) => {
@@ -224,7 +224,7 @@ const addCarImages = (req, res, next) => {
             `INSERT INTO images(id , pic_name) VALUES %L`,
             values,
         );
-        client.query(query, (error, result) => {
+        pool.query(query, (error, result) => {
             if (error) {
                 res.status(400).json({ error });
             }
@@ -253,7 +253,7 @@ const updateCar = (req, res) => {
         description,
     } = req.body;
 
-    client.query(
+    pool.query(
         "UPDATE cars SET name=$2, price=$3, color=$4, doors=$5, boot_size=$6, type=$7, energy=$8, is_automatic=$9, passengers=$10, air_conditioning=$11, description=$12 WHERE id=$1",
         [
             id,
@@ -274,7 +274,7 @@ const updateCar = (req, res) => {
                 throw error;
             }
 
-            client.query(
+            pool.query(
                 "UPDATE cars_brands SET brand=$2, model=$3 WHERE id=$1",
                 [id, brand, model],
                 (error, results2) => {
@@ -292,13 +292,13 @@ const updateCar = (req, res) => {
 const deleteCar = (req, res) => {
     const id = parseInt(req.params.id);
 
-    client.query("DELETE FROM cars WHERE id = $1", [id], (error, results) => {
+    pool.query("DELETE FROM cars WHERE id = $1", [id], (error, results) => {
         if (error) {
             throw error;
         }
         res.status(200).json(results);
     });
-    client.end;
+    pool.end;
 };
 
 const isExist = (req, res) => {
@@ -306,7 +306,7 @@ const isExist = (req, res) => {
 
     let id_brand = 0;
 
-    client.query(
+    pool.query(
         "select id from cars_brands where brand=$1 and model=$2",
         [brand, model],
         (error, results) => {
@@ -316,7 +316,7 @@ const isExist = (req, res) => {
             res.status(200).json(results);
         },
     );
-    client.end;
+    pool.end;
 };
 
 module.exports = {
