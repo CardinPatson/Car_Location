@@ -12,6 +12,8 @@ const { addCarsValidateSchema } = require("../validations/addCarsSchema");
 // "/cars/:minPrice?/:maxPrice?/:brand?/:model?/:startDate?/:endDate?",
 router.get("/cars", carCtrl.getCars);
 
+router.get("/car/:name", carCtrl.getCarByName);
+
 //Crée une erreur lors de l'insertion sur /api/cars Apparement ne respecte pas les conventions rest 😑😑!!
 //A faire lorsqu'on a un put ou delete ou quand le paramètre est obligatoire sur la route
 // router.get("/cars/:id", carCtrl.getCarById);

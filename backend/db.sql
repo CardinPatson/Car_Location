@@ -25,7 +25,7 @@ CREATE TABLE "cars" (
   "boot_size" int,
   "type" varchar,
   "energy" varchar NOT NULL,
-  "is_available" boolean, -- NOT NULL -> APRES quand l'agenda est fait !
+  "is_available" boolean,
   "is_automatic" boolean NOT NULL,
   "passengers" int NOT NULL,
   "air_conditioning" boolean NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE "cars" (
 
 CREATE TABLE "images" (
   "id" int NOT NULL,
-  "pic_name" varchar UNIQUE
+  "pic_name" varchar[]
 );
 
 CREATE TABLE "orders" (
