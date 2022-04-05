@@ -54,7 +54,7 @@ function Home() {
 
 	const handleChange = (cur, prev) => {
 		setIndex(cur);
-		console.log(cur, prev);
+		// console.log(cur, prev);
 	};
 
 	return (

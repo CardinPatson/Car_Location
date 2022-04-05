@@ -1,12 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Header from "./header";
 import styled from "styled-components";
 import CarSlot from "./carSlot";
 import { getCarsProperty, getCarsImages } from "../action/carAction";
 import localForage from "localforage";
+import "react-dates/initialize";
+import { SingleDatePicker } from "react-dates";
+import moment from "moment";
+import "react-dates/lib/css/_datepicker.css";
 
 function Cars(props) {
+	const [focusedStart, setFocusedStart] = useState(false);
+	const [focusedEnd, setFocusedEnd] = useState(false);
+	const [startDate, setStartDate] = useState(moment());
+	const [startTime, setStartTime] = useState("");
+	const [endDate, setEndDate] = useState(moment());
+	const [endTime, setEndTime] = useState("");
+	const [error, setError] = useState("");
 	useEffect(() => {
 		localForage.clear();
 		props.getCars();
@@ -24,6 +35,67 @@ function Cars(props) {
 			carsImages[image.id] = [image.pic_name];
 		}
 	}
+	const handleClick = (e) => {
+		e.preventDefault();
+		//date actuelle
+		let currentDate = moment().format("D MMMM YYYY");
+		let currentDay = new window.Date(currentDate);
+
+		//date de début et de fin de location
+		let startDateFormat = startDate.format("D MMMM YYYY");
+		let startDay = new window.Date(startDateFormat);
+		let endDateFormat = endDate.format("D MMMM YYYY");
+		let endDay = new window.Date(endDateFormat);
+
+		//heure actuelle
+		let currentHour = parseInt(startDate.format("LT").substring(0, 2));
+
+		//heure de début et fin de location
+		let startHour = parseInt(startTime.substring(0, 2));
+		let endHour = parseInt(endTime.substring(0, 2));
+
+		//CONDITION DE SOUMISSION
+		//si pas heure de début ou de fin erreur
+		if (!endTime || !startTime) {
+			setError("Veuillez entrez une plage horaire valide !");
+			return;
+		}
+
+		//si la date est aujourdhui l'heure de début ou de fin doit être supérieur à l'heure actuelle
+		if (
+			startDay.getTime() === currentDay.getTime() &&
+			startHour <= currentHour
+		) {
+			setError("Veuillez entrez une plage horaire valide !");
+			return;
+		}
+		if (endDay.getTime() === currentDay.getTime() && endHour <= currentHour) {
+			setError("Veuillez entrez une plage horaire valide !");
+			return;
+		}
+
+		//si la date de début et de fin est aujourdhui , l'heure de fin de location doit être supérieur à celle de début
+		if (startDay.getTime() === endDay.getTime() && startHour >= endHour) {
+			setError("Veuillez entrez une plage horaire valide !");
+			return;
+		}
+		//Heure d'ouverture du magazin
+		if (startHour < 8 || startHour > 19 || endHour < 8 || endHour > 19) {
+			setError("L'heure d'ouverture du magazin est de 8:00 a 19:00 !!");
+			return;
+		}
+
+		const filterInfo = {
+			startDate: startDateFormat,
+			endDate: endDateFormat,
+			startTime: startTime,
+			endTime: endTime,
+		};
+		//requête vers l'api
+		props.getSlot(filterInfo);
+
+		//si requête ok redirection vers la page /cars
+	};
 	return (
 		<Container>
 			<Content>
@@ -74,13 +146,51 @@ function Cars(props) {
 						<div className="slot__range">
 							<div className="slot__time">
 								<p>Du</p>
-								<input type="date" onChange={(e) => {}} />
-								<input type="time" onChange={(e) => {}} />
+								<StyledDatePickerWrapper>
+									<SingleDatePicker
+										numberOfMonths={1}
+										onDateChange={(date) => {
+											setError("");
+											setStartDate(date);
+										}}
+										onFocusChange={(focus) => {
+											setFocusedStart(focus.focused);
+										}}
+										focused={focusedStart}
+										date={startDate}
+									/>
+								</StyledDatePickerWrapper>
+								<input
+									type="time"
+									onChange={(e) => {
+										setError("");
+										setStartTime(e.target.value);
+									}}
+								/>
 							</div>
 							<div className="slot__time">
 								<p>Au </p>
-								<input type="date" onChange={(e) => {}} />
-								<input type="time" onChange={(e) => {}} />
+								<StyledDatePickerWrapper>
+									<SingleDatePicker
+										numberOfMonths={1}
+										onDateChange={(date) => {
+											setError("");
+											setEndDate(date);
+										}}
+										onFocusChange={(focus) => {
+											setFocusedEnd(focus.focused);
+										}}
+										focused={focusedEnd}
+										date={endDate}
+									/>
+								</StyledDatePickerWrapper>{" "}
+								<input
+									type="time"
+									onChange={(e) => {
+										setError("");
+										setEndTime(e.target.value);
+									}}
+								/>
 							</div>
 						</div>
 					</Slot>
@@ -253,20 +363,35 @@ const Brand = styled(Price)`
 	}
 `;
 const Slot = styled(Brand)`
+	/* border: solid red 1px; */
+	display: flex;
+	flex-direction: column;
 	.slot__range {
 		padding: 0;
 	}
 	.slot__time {
 		display: flex;
+		align-items: center;
+		/* border: solid red 1px; */
 		flex-direction: column;
 		input {
-			background: #f3f3f3;
+			/* background: #f3f3f3; */
 			border: solid #00a9ff 1px;
-			font-family: "Roboto";
+			/*font-family: "Roboto";
 			padding: 5px;
-			margin-bottom: 5px;
 			width: 70%;
-			border-radius: 5px;
+			border-radius: 5px; */
+			margin-right: 5px;
+			font-family: "Roboto";
+			border: none;
+			padding: 5px;
+			/* font-size: 0.7em;
+			border: none;
+			/* background-color: #f3f3f3; */
+			/* padding: 5px; */
+			@media (min-width: 1000px) {
+				margin-left: 10px;
+			}
 		}
 	}
 `;
@@ -308,6 +433,52 @@ const CarsPannel = styled.div`
 	}
 	::-webkit-scrollbar-thumb:hover {
 		background: #0078b5;
+	}
+`;
+
+const StyledDatePickerWrapper = styled.div`
+	& .SingleDatePicker,
+	.SingleDatePickerInput {
+		.DateInput {
+			/* width: 50%: */
+			height: 20px;
+			display: flex;
+			/* border: solid blue 1px; */
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			.DateInput_input {
+				font-size: 1em;
+				border-bottom: 0;
+				padding: 5px 5px 5px;
+			}
+		}
+
+		.SingleDatePickerInput__withBorder {
+			/* border: solid blue 1px; */
+			border-radius: 4px;
+			overflow: hidden;
+			display: flex;
+
+			:hover,
+			.DateInput_input__focused {
+				/* border: 1px solid red; */
+			}
+
+			.CalendarDay__selected {
+				background: blue;
+				border: blueviolet;
+				border: solid blue 1px;
+			}
+		}
+
+		.SingleDatePicker_picker.SingleDatePicker_picker {
+			/* top: 43px;
+			left: 2px; */
+			border: solid red 1px;
+			/* top: 43px !important;
+			left: 2px !important; */
+		}
 	}
 `;
 
