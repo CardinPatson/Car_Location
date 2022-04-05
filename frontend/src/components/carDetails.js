@@ -9,10 +9,8 @@ function CarDetails(props) {
 	const location = useLocation();
 
 	console.log(location);
-	if (location) {
-		const { from } = location.state;
-		console.log(from);
-	}
+	const { from } = location.state;
+	console.log(from);
 
 	function Item(item) {
 		return (
@@ -63,7 +61,6 @@ function CarDetails(props) {
 		setIndex(cur);
 		console.log(cur, prev);
 	};
-
 	return (
 		<Container>
 			<Header />
@@ -75,49 +72,46 @@ function CarDetails(props) {
 					<Detail>
 						<Info>
 							<Name>
-								<div>Nom de la voiture</div>
+								<div>{from.car.brand ? from.car.brand : "Marque voiture"}{" "}{from.car.model ? from.car.model : "Modèle voiture"}</div>
 								<LineRight>
 									<div>
-										<p>Berline</p>
+										<p>{from.car.type ? from.car.type : "Sportive"}</p>
 									</div>
 								</LineRight>
 							</Name>
 							<DetailTable>
 								<Specs>
 									<div>
-										<img src="./images/icons/door.svg" alt="door_icon" />4
-										portes
+										<img src="./images/icons/door.svg" alt="door_icon" />
+                    {from.car.doors ? from.car.doors : "5"} portes
 									</div>
 									<div>
 										<img
 											src="./images/icons/suitcase.svg"
 											alt="suitcase icon"
 										/>
-										800L pour le coffre
+										{from.car.boot_size ? from.car.boot_size : "100"}L pour le coffre
 									</div>
 									<div>
 										<img
 											src="./images/icons/lightning.svg"
 											alt="lightning_icon"
 										/>
-										Diesel
+										{from.car.energy ? from.car.energy : "Électrique"}
 									</div>
 								</Specs>
-								<Ligne>
-                  <div></div>
-                </Ligne>
 								<Specs>
 									<div>
 										<img src="./images/icons/stick.svg" alt="stick_icon" />
-										Manuelle
+										{from.car.is_automatic  ? "Automatique" : "Manuelle"}
 									</div>
 									<div>
-										<img src="./images/icons/seat.svg" alt="seat_icon" />5
-										places
+										<img src="./images/icons/seat.svg" alt="seat_icon" />
+										{from.car.passengers ? from.car.passengers : "3"}
 									</div>
 									<div>
 										<img src="./images/icons/air.svg" alt="air_icon" />
-										Oui
+										{from.car.air_conditioning ? "Oui" : "Non"}
 									</div>
 								</Specs>
 							</DetailTable>
@@ -137,7 +131,7 @@ function CarDetails(props) {
 								))}
 							</Carousel>
 							<Price>
-								<p>Prix€</p>
+								<p>{from.car.price ? from.car.price : "100"}€</p>
 								<div>/jour</div>
 								<Link to="/carReservation" className="__button">
 									<button to="/carReservation">Louer</button>
