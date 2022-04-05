@@ -133,7 +133,7 @@ function CarDetails(props) {
 							<Price>
 								<p>{from.car.price ? from.car.price : "100"}€</p>
 								<div>/jour</div>
-								<Link to="/carReservation" className="__button">
+								<Link to="/carReservation" className="__button" state={{ data: from }}>
 									<button to="/carReservation">Louer</button>
 								</Link>
 							</Price>
