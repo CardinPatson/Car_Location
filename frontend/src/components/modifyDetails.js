@@ -15,46 +15,50 @@ import Header from './header';
               </Banner>
               <Detail>
                 <Info>
-                  <Name>
-                    <div>Nom de la voiture:</div>
+                  <Marque>
+                    <div>Marque:</div>
                     <Line_right>
-                      <div>
                         <input type="text"/>
-                      </div>
                     </Line_right>
-                  </Name>
+                  </Marque>
+                  <Model>
+                    <div>Modéle:</div>
+                    <Line_right>
+                        <input type="text"/>
+                    </Line_right>
+                  </Model>
                   <DetailTable>
                     <Specs_left>
                         <from action="" method="post">
-                        <Portes>
-                           <label for="porte">Nombre de portes :</label>  
+                        <div>
+                           <img src="./images/icons/door.svg" alt="door_icon"/><label for="porte">Nombre de portes:</label>  
                            <input type="number" min={"4"} max={"7"}/>
-                        </Portes>
-                        <Coffre>
-                          <label for="coffre">Taille du coffre :</label>  
+                        </div>
+                        <div>
+                          <img src="./images/icons/suitcase.svg" alt="suitcase icon"/><label for="coffre">Taille du coffre:</label>
                           <input type="text"/> 
-                        </Coffre>
-                        <Energie>
-                          <label for="energie">Energie :</label>  
+                        </div>
+                        <div>
+                          <img src="./images/icons/lightning.svg" alt="lightning_icon"/><label for="energie">Energie:</label>  
                           <input type="text" id=""/> 
-                        </Energie>
+                        </div>
                         </from>
                     </Specs_left>
-                    <Ligne>
+                    {/* <Ligne>
                       <div></div>
-                    </Ligne>
+                    </Ligne> */}
                     <Specs_right>
                         <form action="" method='post'>
                             <div>
-                              <label for="trans">Transmission :</label>
-                              <input type="text"/>
+                              <img src="./images/icons/stick.svg" alt="stick_icon"/><label for="trans">Transmission:</label>
+                              <input type="text" size={"30"}/>
                             </div>
                             <div>
-                              <label for="trans">Nombre de places :</label>
+                              <img src="./images/icons/seat.svg" alt="seat_icon"/><label for="trans">Nombre de places:</label>
                               <input type="number" min={"5"} max={"12"}/>
                             </div>
                             <div>
-                              <label for="trans">Aire conditionnée :</label>
+                              <img src="./images/icons/air.svg" alt="air_icon"/><label for="trans">Aire conditionnée:</label>
                               <input type="text"/>
                             </div>
                         </form>
@@ -62,13 +66,10 @@ import Header from './header';
                     </Specs_right>
                   </DetailTable>
                 </Info>
-                <Photo>
-                  <img src="./images/car_3.jpg" />
-                </Photo>
               </Detail>
             </Test>
             <Buttons>
-              <button className="__button__green">Sauvegarder les changements</button>
+              <button className="__button__green">Sauvegarder </button>
               <button className="__button__red">Annuler les changements</button>
               <button className="__button__blue">Modifier les images</button>
             </Buttons>
@@ -92,8 +93,8 @@ import Header from './header';
     
     const Container = styled.div`
       top: 0;
-      max-width: 1600px;
-      height: 550px;
+      max-width: 1000px;
+      height: 500px;
       margin: auto;
       display: flex;
       justify-content: center;
@@ -146,24 +147,30 @@ import Header from './header';
     const DetailTable = styled.div`
       padding: 2%;
       display: flex;
-      border: 1px solid black;
       flex-direction: row;
     `;
     
-    const Name = styled.div`
+    const Marque = styled.div`
       display: flex;
-      margin: 30px;
+      margin: 20px;
       margin-left: 0px;
-      color: #333333;
-      font-size: 30px;
+      font-size: 20px;
       text-align: left;
-      p {
-        font: bold;
-        color: grey;
-        margin: 1px;
-      }
     `;
-    
+    const Model = styled.div`
+    display: flex;
+    margin: 30px;
+    margin-left: 0px;
+    color: #333333;
+    font-size: 20px;
+    text-align: left;
+    p {
+      font: bold;
+      color: grey;
+      margin: 1px;
+    }
+  `;
+  
     const Line_right = styled.div`
       display: flex;
       flex-direction: column;
@@ -171,6 +178,7 @@ import Header from './header';
       font-size: 3vh;
       div {
         border-left: 1px solid black;
+        border-width: 5em
       }
       input[type='text'], [type='number'] {
         background: none;
@@ -181,27 +189,47 @@ import Header from './header';
         letter-spacing: 1px;
         margin: 0em 0.8em 0.875em 0;
         padding: 0 0 0 0;
-        width: 100%;	 
+        width: 60%;
+        text-align : center;
        }   
     `;
     
     const Specs_left = styled.div`
-      text-align: left;
+      /* text-align: left; */
        /* margin: auto; */
-      background-size: 2.2em;
+      /* background-size: 2.2em;
+      align-items: center;
+      margin: 0%;
       div {
         text-align: left;
         margin: 1vh;
         width: 32vh;
-        font-weight: bold;
-         
+        font-weight: bold;  
       }
       p {
         text-align: left;
         padding: 6px;
         margin: 1vh;
         color: grey;
-      }
+      } */
+      text-align: left;
+      /* margin: auto; */
+      width: 50%;
+      color: #00a9ff;
+     div {
+      display: flex;
+      align-items: center;
+      text-align: left;
+      margin: 1vh;
+      margin-left: 0;
+      font-weight: bold;
+      font-size: 1.2vw;
+     img {
+      padding: 5px;
+      padding-right: 10px;
+      height: auto;
+      width: 15%;
+    }
       input[type='text'], [type='number'] {
         background: none;
         border: none;
@@ -211,22 +239,29 @@ import Header from './header';
         letter-spacing: 1px;
         margin: 0em 0 0.875em 0;
         padding: 0 0 0 0;
-        width: 100%;	 
+        width: 30%;	 
       }
 `;
     
     const Specs_right = styled.div`
-      text-align: left;
+    text-align: left;
       /* margin: auto; */
-      background-size: 2.2em;
+      width: 50%;
+      color: #00a9ff;
+     div {
+      display: flex;
       align-items: center;
-
-      div {
-        text-align: left;
-        margin: 1vh;
-        width: 32vh;
-        font-weight: bold;
-      }
+      text-align: left;
+      margin: 1vh;
+      margin-left: 0;
+      font-weight: bold;
+      font-size: 1.2vw;
+     img {
+      padding: 5px;
+      padding-right: 10px;
+      height: auto;
+      width: 15%;
+    }
 
       input[type='text'], [type='number'] {
         background: none;
@@ -237,8 +272,14 @@ import Header from './header';
         letter-spacing: 1px;
 	      margin: 0em 0 0.875em 0;
 	      padding: 0 0 0 0;
-	      width: 100%; 
+	      width: 40%; 
       }
+      img {
+      padding: 5px;
+      padding-right: 10px;
+      height: auto;
+      width: 15%;
+    }
     `;
     
     const Ligne = styled.div`
@@ -255,26 +296,9 @@ import Header from './header';
       object-fit: content;
       img {
         height: auto;
-        width: 100%;
+        width: 70%;
       }
     `;
-    
-    const Price = styled.div`
-      display: flex;
-      p {
-        font-weight: bold;
-        font-size: 40px;
-        color: #00a9f5;
-        text-align: bottom;
-      }
-    
-      div {
-        display: flex;
-        align-items: flex-end;
-        font-weight: bold;
-      }
-    `;
-
     const Buttons = styled.div`
       display: flex;
       flex-direction: column;
