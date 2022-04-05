@@ -100,11 +100,11 @@ import Header from './header';
       justify-content: center;
     `;
     const Content = styled.div`
-      margin-top: 15vh;
+      margin-top: 10%;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-direction: row;
+      flex-direction: column;
       padding-bottom: 30px;
       width: 100%;
       height: 100%;
@@ -115,9 +115,8 @@ import Header from './header';
       background : white;
       display: flex;
       flex-direction: column;
-      width: 70%;
+      width: 80%;
       height: 100%;
-      margin-left: 50px;
     `; 
     
     const Banner = styled.div`
@@ -300,13 +299,13 @@ import Header from './header';
       }
     `;
     const Buttons = styled.div`
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 10px;
-      height: 100%;
-      width: 30%;
-      align-items: center;
+       display: flex; 
+        flex-direction: row; 
+        justify-content: center;
+        padding: 10px;
+        height: 100%;
+        width: 80%;
+        align-items: center;
       .__button__blue {
         font-size: 3vh;
         color: #333333;
