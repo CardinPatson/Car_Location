@@ -31,7 +31,7 @@ function ForgotPassword() {
                         </Confirm>
                         { message &&
                             <Message>
-                                Un mail à été envoyer à cette adresse pour réinitialiser le mot de passe
+                                Un mail à été envoyer à cette adresse pour réinitialiser le mot de passe.
                             </Message>
                         }
                     </Form>

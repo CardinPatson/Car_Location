@@ -416,7 +416,7 @@ const Available = styled.div`
 const CarsPannel = styled.div`
 	display: flex;
 	flex-direction: column;
-	height: 80vh;
+	height: 100vh;
 	overflow-y: auto;
 	scroll-behavior: smooth;
 	overflow-x: hidden;
