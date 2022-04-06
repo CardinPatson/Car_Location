@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-    class Images extends Model {
+    class images extends Model {
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
@@ -10,27 +10,27 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             // define association herebelongsTo
 
-            this.belongsTo(models.Cars, {
+            this.belongsTo(models.cars, {
                 as: "cars",
-                foreignKey: "id_car",
+                foreignKey: "car_id",
                 onDelete: "CASCADE",
                 onUpdate: "CASCADE"
             });
         }
     }
-    Images.init(
+    images.init(
         {
-            id_car: {
+            car_id: {
                 type: DataTypes.INTEGER
             },
-            pic_name: {
+            file_names: {
                 type: DataTypes.ARRAY(DataTypes.TEXT)
             }
         },
         {
             sequelize,
-            modelName: "Images"
+            modelName: "images"
         }
     );
-    return Images;
+    return images;
 };

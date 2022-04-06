@@ -9,7 +9,8 @@ module.exports = {
         host: DB_HOST,
         dialect: "postgres",
         define: {
-            freezeTableName: true
+            freezeTableName: true,
+            underscored: true
         }
     },
     test: {
@@ -17,13 +18,21 @@ module.exports = {
         password: DB_PASSWORD,
         database: DB_NAME,
         host: DB_HOST,
-        dialect: "postgres"
+        dialect: "postgres",
+        define: {
+            freezeTableName: true,
+            underscored: true
+        }
     },
     production: {
         username: DB_USERNAME,
         password: DB_PASSWORD,
         database: DB_NAME,
         host: DB_HOST,
-        dialect: "postgres"
+        dialect: "postgres",
+        define: {
+            freezeTableName: true,
+            underscored: true
+        }
     }
 };

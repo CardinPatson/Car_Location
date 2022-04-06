@@ -2,7 +2,15 @@
 module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable("images", {
-            id_car: {
+            id: {
+                allowNull: false,
+                autoIncrement: true,
+                primaryKey: true,
+                type: Sequelize.INTEGER
+            },
+            car_id: {
+                autoIncrement: false,
+                primaryKey: false,
                 allowNull: false,
                 type: Sequelize.INTEGER
             },
@@ -10,11 +18,11 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.ARRAY(Sequelize.TEXT)
             },
-            createdAt: {
+            created_at: {
                 allowNull: false,
                 type: Sequelize.DATE
             },
-            updatedAt: {
+            updated_at: {
                 allowNull: false,
                 type: Sequelize.DATE
             }

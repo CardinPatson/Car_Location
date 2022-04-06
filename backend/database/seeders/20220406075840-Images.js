@@ -6,10 +6,10 @@ module.exports = {
             "images",
             [
                 {
-                    id_car: 1,
+                    car_id: 1,
                     file_names: ["imagesblabla.jpg", "ramadan.jpg"],
-                    createdAt: new Date(),
-                    updatedAt: new Date()
+                    created_at: new Date(),
+                    updated_at: new Date()
                 }
             ],
             {}

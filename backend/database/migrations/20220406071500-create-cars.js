@@ -16,7 +16,7 @@ module.exports = {
                 allowNull: true,
                 type: Sequelize.INTEGER
             },
-            id_brand: {
+            brand_id: {
                 allowNull: false,
                 type: Sequelize.INTEGER
             },
@@ -60,11 +60,11 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.STRING(5000)
             },
-            createdAt: {
+            created_at: {
                 allowNull: false,
                 type: Sequelize.DATE
             },
-            updatedAt: {
+            updated_at: {
                 allowNull: false,
                 type: Sequelize.DATE
             }

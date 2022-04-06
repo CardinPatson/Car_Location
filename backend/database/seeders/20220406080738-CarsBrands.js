@@ -8,8 +8,8 @@ module.exports = {
                 {
                     brand: "Mercedes",
                     model: "Class A",
-                    createdAt: new Date(),
-                    updatedAt: new Date()
+                    created_at: new Date(),
+                    updated_at: new Date()
                 }
             ],
             {}
