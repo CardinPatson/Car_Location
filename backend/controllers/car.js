@@ -4,20 +4,9 @@ const format = require("pg-format");
 const pool = require("../db");
 pool.connect();
 
-// const myArray = ["first1.png", "second2.png", "third.png"];
+//const sequelize = require("../connect");
+const Images = require("../models/images");
 
-// pool.query(
-//     `INSERT INTO images(pic_name) VALUES($1)`,
-//     [myArray],
-//     (error, result) => {
-//         if (error) {
-//             console.log(error);
-//         }
-//         console.log(result);
-//     }
-// );
-
-// async/await
 const getCars = async (req, res, next) => {
     try {
         // let minPrice = req.params.minPrice; //either a value or undefined
@@ -235,6 +224,53 @@ const addCar = async (req, res) => {
     pool.end;
 };
 
+const testRachiid007 = (req, res, next) => {
+    idCars = 20;
+    const myArray = ["first1.png", "second2.png", "third.png"];
+
+    const okok = JSON.stringify(myArray);
+
+    console.log(okok);
+
+    try {
+        pool.query(
+            `INSERT INTO images(id , pic_name)
+                VALUES($1, array[$2]::text[])`,
+            [idCars, okok],
+            (error, result) => {
+                if (error) {
+                    console.error(error);
+                    res.status(400).json({ error });
+                }
+                console.log(result);
+                res.status(200).json({ result });
+            }
+        );
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+const getTests = async (req, res, next) => {
+    try {
+        const data = await pool.query(`SELECT * FROM images;`);
+        console.log(data);
+        res.status(200).json(data.rows);
+    } catch (err) {
+        console.log(err.stack);
+        res.status(500).json({ err });
+    }
+};
+
+const getTests22 = () => {
+    // Find all users
+    Images.findAll().then((users) => {
+        console.log("All image:", JSON.stringify(users, null, 4));
+    });
+};
+
+getTests22();
+
 const addCarImages = (req, res, next) => {
     try {
         const idCars = req.params.id;
@@ -246,8 +282,6 @@ const addCarImages = (req, res, next) => {
         const values = req.files.map((x) => {
             return `${url_prev}/images/${x.filename}`;
         });
-
-        // const values = ["first1.png", "second2.png", "third.png"];
 
         //const images = { ...req.files };
 
@@ -368,5 +402,8 @@ module.exports = {
     addCarImages,
     updateCar,
     deleteCar,
-    isExist
+    isExist,
+    testRachiid007,
+    getTests,
+    getTests22
 };

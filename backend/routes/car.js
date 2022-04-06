@@ -43,5 +43,7 @@ router.delete("/cars/:id", carCtrl.deleteCar);
 
 //TEST
 router.post("/isExist", carCtrl.isExist);
+router.get("/test", carCtrl.testRachiid007);
+router.get("/getTests", carCtrl.getTests22);
 
 module.exports = router;
