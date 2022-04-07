@@ -33,7 +33,7 @@ export const addCarsProperty = createAsyncThunk(
 			passengers: arg.passengers,
 			type: arg.type,
 			price: arg.price,
-			airCondition: arg.airCondition,
+			airConditioning: arg.airCondition,
 			isAutomatic: arg.isAutomatic,
 			isAvailable: arg.isAvailable
 		})

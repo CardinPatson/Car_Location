@@ -114,8 +114,7 @@ const addCar = async (req, res) => {
             air_conditioning: airConditioning,
             is_available: isAvailable,
             passengers: passengers,
-            description: description,
-            file_names: fileNames
+            description: description
         });
 
         return res.status(200).json({ message: true });
