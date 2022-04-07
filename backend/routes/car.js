@@ -13,7 +13,7 @@ router.get("/cars", carCtrl.getAllCars);
 
 router.get("/cars/images", carCtrl.getCarsImages);
 
-router.post("/cars", addCarsValidateSchema, carCtrl.addCar);
+router.post("/cars", carCtrl.addCar);
 
 router.post("/cars/:id/images", multerMiddleware, carCtrl.addCarImages);
 

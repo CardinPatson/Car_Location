@@ -3,111 +3,116 @@ import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "axios";
 
 export const addCarsInfo = createAction(ADD_CARS, function prepare(cars) {
-	return {
-		payload: cars,
-	};
+    return {
+        payload: cars
+    };
 });
 
 export const addCarsImagesInfo = createAction(
-	GET_CARS_IMAGES,
-	function prepare(images) {
-		return {
-			payload: images,
-		};
-	}
+    GET_CARS_IMAGES,
+    function prepare(images) {
+        return {
+            payload: images
+        };
+    }
 );
 //INSERER LA VOITURE DANS LA BASE DE DONNEES
 
 export const addCarsProperty = createAsyncThunk(
-	ADD_CARS,
-	async (arg, thunkAPI) => {
-		await Axios.post("http://localhost:3001/api/cars", {
-			name: arg.name,
-			description: arg.description,
-			brand: arg.brand,
-			model: arg.model,
-			color: arg.color,
-			doors: arg.doors,
-			bootSize: arg.bootSize,
-			energy: arg.energy,
-			passengers: arg.passengers,
-			type: arg.type,
-			price: arg.price,
-			airConditioning: arg.airCondition,
-			isAutomatic: arg.isAutomatic,
-			isAvailable: arg.isAvailable
-		})
-			.then((rep) => {
-				//TODO recuperer l'id du véhicule et faire un insertion dans la table des images
-				const id = rep.data.rows[0].id;
-				let formData = new FormData();
+    ADD_CARS,
+    async (arg, thunkAPI) => {
+        await Axios.post("http://localhost:3001/api/cars", {
+            name: arg.name,
+            description: arg.description,
+            brand: arg.brand,
+            model: arg.model,
+            color: arg.color,
+            doors: arg.doors,
+            bootSize: arg.bootSize,
+            energy: arg.energy,
+            passengers: arg.passengers,
+            type: arg.type,
+            price: arg.price,
+            airConditioning: arg.airCondition,
+            isAutomatic: arg.isAutomatic,
+            isAvailable: arg.isAvailable
+        })
+            .then((rep) => {
+                //TODO recuperer l'id du véhicule et faire un insertion dans la table des images
+                const id = rep.id;
+                console.log(id);
+                let formData = new FormData();
 
-				console.log(id, formData);
-				Object.values(arg.image).forEach((file) => {
-					formData.append("image", file);
-				});
-				Axios.post(`http://localhost:3001/api/cars/${id}/images`, formData, {
-					headers: {
-						"Content-Type": "multipart/form-data",
-					},
-				})
-					.then((rep) => {
-						console.log(rep);
-					})
-					.catch((err) => {
-						console.error(err);
-					});
-			})
-			.catch((err) => {
-				console.err(err);
-			});
-	}
+                console.log(id, formData);
+                Object.values(arg.image).forEach((file) => {
+                    formData.append("image", file);
+                });
+                Axios.post(
+                    `http://localhost:3001/api/cars/${id}/images`,
+                    formData,
+                    {
+                        headers: {
+                            "Content-Type": "multipart/form-data"
+                        }
+                    }
+                )
+                    .then((rep) => {
+                        console.log(rep);
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    });
+            })
+            .catch((err) => {
+                console.err(err);
+            });
+    }
 );
 
 //RECUPERATION DES VOITURES DANS LA BASE DE DONNEES
 export const getCarsProperty = createAsyncThunk(
-	GET_CARS,
-	async (arg, thunkAPI) => {
-		const cars = await Axios.get(`http://localhost:3001/api/cars`).catch(
-			(err) => {
-				console.error(err);
-			}
-		);
-		thunkAPI.dispatch(addCarsInfo(cars.data));
-	}
+    GET_CARS,
+    async (arg, thunkAPI) => {
+        const cars = await Axios.get(`http://localhost:3001/api/cars`).catch(
+            (err) => {
+                console.error(err);
+            }
+        );
+        thunkAPI.dispatch(addCarsInfo(cars.data));
+    }
 );
 
 export const getCarsImages = createAsyncThunk(
-	GET_CARS_IMAGES,
-	async (arg, thunkAPI) => {
-		const carsImages = await Axios.get(
-			"http://localhost:3001/api/cars/images"
-		).catch((err) => {
-			console.error(err);
-		});
-		thunkAPI.dispatch(addCarsImagesInfo(carsImages.data));
-	}
+    GET_CARS_IMAGES,
+    async (arg, thunkAPI) => {
+        const carsImages = await Axios.get(
+            "http://localhost:3001/api/cars/images"
+        ).catch((err) => {
+            console.error(err);
+        });
+        thunkAPI.dispatch(addCarsImagesInfo(carsImages.data));
+    }
 );
 
 // get slot cars images
 //dans le params on peut recupérer le contenu via le req.query
 export const getCarsSlot = createAsyncThunk(
-	"GET_CARS_SLOT",
-	async (arg, thunkAPI) => {
-		console.log(arg);
+    "GET_CARS_SLOT",
+    async (arg, thunkAPI) => {
+        console.log(arg);
 
-		const request = await Axios.get(`http://localhost:3001/api/cars`, {
-			params: {
-				startDate: arg.startDate,
-				startTime: arg.startTime,
-				endDate: arg.endDate,
-				endTime: arg.endTime,
-			},
-		}).catch((err) => {
-			console.error(err);
-		});
-		console.log(request);
-	}
+        const request = await Axios.get(`http://localhost:3001/api/cars`, {
+            params: {
+                startDate: arg.startDate,
+                startTime: arg.startTime,
+                endDate: arg.endDate,
+                endTime: arg.endTime
+            }
+        }).catch((err) => {
+            console.error(err);
+        });
+        console.log(request);
+    }
 );
 
 // data: Array(1)

@@ -119,7 +119,7 @@ const addCar = async (req, res) => {
             description: description
         });
 
-        return res.status(200).json({ message: true });
+        return res.status(200).json({ id: data2.dataValues.id });
     } catch (error) {
         return res.status(500).send(error.message);
     }
@@ -127,15 +127,14 @@ const addCar = async (req, res) => {
 
 const addCarImages = async (req, res, next) => {
     try {
-        const car_id = parseInt(req.params.id);
+        const idCars = req.params.id;
 
         //RETRIEVE THE PATH OF THE IMAGES
-        const url_prev = `${req.get("host")}`;
+        const url_prev = `${req.protocol}://${req.get("host")}`;
 
         //MAKE A TABLE WITH IDCARS AND IMAGES PATH
-
         const values = req.files.map((x) => {
-            return `${url_prev}/images/${x.filename}`;
+            return [idCars, `${url_prev}/images/${x.filename}`];
         });
 
         const data = await images.create({
@@ -243,8 +242,8 @@ const updateCar = async (req, res) => {
 
 const getCarsImages = async (req, res) => {
     try {
-            const data = await cars.findAll({});
-            return res.status(200).json({ data });
+        const data = await cars.findAll({});
+        return res.status(200).json({ data });
     } catch (error) {
         return res.status(500).send(error.message);
     }
