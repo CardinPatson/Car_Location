@@ -1,3 +1,5 @@
+const multerMiddleware = require("../middleware/image");
+
 const { images, cars, cars_brands } = require("../database/models");
 
 const getAllCars = async (req, res) => {
@@ -123,26 +125,25 @@ const addCar = async (req, res) => {
     }
 };
 
-const addCarImages = async (req, res) => {
+const addCarImages = async (req, res, next) => {
     try {
-        if (req.params.id) {
-            const car_id = parseInt(req.params.id);
+        const car_id = parseInt(req.params.id);
 
-            //RETRIEVE THE PATH OF THE IMAGES
-            const url_prev = `${req.protocol}://${req.get("host")}`;
+        //RETRIEVE THE PATH OF THE IMAGES
+        const url_prev = `${req.get("host")}`;
 
-            //MAKE A TABLE WITH IDCARS AND IMAGES PATH
-            const values = req.files.map((x) => {
-                return `${url_prev}/images/${x.filename}`;
-            });
+        //MAKE A TABLE WITH IDCARS AND IMAGES PATH
 
-            const data = await images.create({
-                car_id: car_id,
-                file_names: values
-            });
+        const values = req.files.map((x) => {
+            return `${url_prev}/images/${x.filename}`;
+        });
 
-            return res.status(201).json({ data });
-        }
+        const data = await images.create({
+            car_id: car_id,
+            file_names: values
+        });
+
+        return res.status(201).json({ data });
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
@@ -240,6 +241,15 @@ const updateCar = async (req, res) => {
 //     }
 // );
 
+const getCarsImages = async (req, res) => {
+    try {
+            const data = await cars.findAll({});
+            return res.status(200).json({ data });
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+};
+
 const deleteCar = async (req, res) => {
     try {
         if (req.params.id) {
@@ -261,5 +271,6 @@ module.exports = {
     addCar,
     updateCar,
     deleteCar,
-    addCarImages
+    addCarImages,
+    getCarsImages
 };
