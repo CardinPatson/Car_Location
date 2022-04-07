@@ -286,24 +286,6 @@ const deleteCar = (req, res) => {
     pool.end;
 };
 
-const isExist = (req, res) => {
-    const { brand, model } = req.body;
-
-    let id_brand = 0;
-
-    pool.query(
-        "select id from cars_brands where brand=$1 and model=$2",
-        [brand, model],
-        (error, results) => {
-            if (error) {
-                throw error;
-            }
-            res.status(200).json(results);
-        }
-    );
-    pool.end;
-};
-
 module.exports = {
     getCars,
     getCarsImages,
@@ -313,9 +295,5 @@ module.exports = {
     addCar,
     addCarImages,
     updateCar,
-    deleteCar,
-    isExist,
-    testRachiid007,
-    getTests,
-    getTests22
+    deleteCar
 };

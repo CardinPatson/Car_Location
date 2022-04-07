@@ -98,14 +98,14 @@ const addCar = async (req, res) => {
 
     try {
         const data = await cars_brands.findOrCreate({
-            where: { brand: brand, model: model }
+            where: { brand: brand, model: model },
+            attributes: ['id']
         });
-        const recupBrandId = JSON.stringify(data[0].id);
 
         const data2 = await cars.create({
             name: name,
             price: price,
-            brand_id: recupBrandId,
+            brand_id: data[0].id,
             color: color,
             doors: doors,
             boot_size: boot_size,
@@ -119,14 +119,12 @@ const addCar = async (req, res) => {
             file_names: file_names
         });
 
-        const recupCarId = JSON.stringify(data2.id);
-
         const data3 = await images.create({
-            car_id: recupCarId,
+            car_id: data[0].id,
             file_names: file_names
         });
 
-        return res.status(200).json({ data3 });
+        return res.status(200).json({ "message": true });
     } catch (error) {
         return res.status(500).send(error.message);
     }
@@ -134,64 +132,56 @@ const addCar = async (req, res) => {
 
 const updateCar = async (req, res) => {
     const {
-        name,
-        price,
-        brand,
-        model,
-        color,
-        doors,
-        boot_size,
-        type,
-        energy,
-        is_automatic,
-        is_available,
-        passengers,
-        air_conditioning,
-        description,
-        file_names
+        new_name,
+        new_price,
+        new_brand,
+        new_model,
+        new_color,
+        new_doors,
+        new_boot_size,
+        new_type,
+        new_energy,
+        new_is_automatic,
+        new_is_available,
+        new_passengers,
+        new_air_conditioning,
+        new_description,
+        new_file_names
     } = req.body;
 
     try {
         if (req.params.id) {
-            const idCar = parseInt(req.params.id);
-            const data = await cars_brands.findOrCreate({
-                where: { brand: brand, model: model }
+            const id = parseInt(req.params.id);
+
+            const reponse = await cars.findOne({
+                where: {id: id},
+                attributes: ['brand_id']
             });
-            const recupBrandId = JSON.stringify(data[0].id);
 
-            const data2 = await cars.update(
-                {
-                    where: { id: idCar },
-                    name: name,
-                    price: price,
-                    brand_id: recupBrandId,
-                    color: color,
-                    doors: doors,
-                    boot_size: boot_size,
-                    type: type,
-                    energy: energy,
-                    is_automatic: is_automatic,
-                    air_conditioning: air_conditioning,
-                    is_available: is_available,
-                    passengers: passengers,
-                    description: description,
-                    file_names: file_names,
+            const count = await cars_brands.count({
+                where: { id: reponse.brand_id }
+            });
 
-                    images: {
-                        car_id: recupCarId,
-                        file_names: file_names
+            // Si que 1 voiture a la marque/model -> UPDATE
+            if (count === 1) {
+                const changeCarsBrands = await cars_brands.update(
+                    {
+                        brand: new_brand,
+                        model: new_model
+                    },
+                    {
+                        where: { id: reponse.brand_id }
                     }
-                },
-                {
-                    include: [
-                        {
-                            model: images,
-                            as: "images"
-                        }
-                    ]
-                }
-            );
-            return res.status(200).json({ data2 });
+                );
+            } else {
+                const changeCarsBrands = await cars_brands.create({
+                    brand: new_brand,
+                    model: new_model
+                })
+            }
+
+
+            return res.status(200).json({ reponse });
         }
     } catch (error) {
         return res.status(500).send(error.message);
@@ -203,7 +193,7 @@ const deleteCar = async (req, res) => {
         if (req.params.id) {
             const id = parseInt(req.params.id);
             const data = await cars.destroy({
-                where: { name: id }
+                where: { id: id }
             });
             return res.status(200).json({ data });
         }
