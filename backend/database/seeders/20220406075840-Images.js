@@ -7,9 +7,7 @@ module.exports = {
             [
                 {
                     car_id: 1,
-                    file_names: ["imagesblabla.jpg", "ramadan.jpg"],
-                    created_at: new Date(),
-                    updated_at: new Date()
+                    file_names: ["imagesblabla.jpg", "ramadan.jpg"]
                 }
             ],
             {}

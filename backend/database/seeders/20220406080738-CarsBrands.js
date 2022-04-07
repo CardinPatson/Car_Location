@@ -7,9 +7,7 @@ module.exports = {
             [
                 {
                     brand: "Mercedes",
-                    model: "Class A",
-                    created_at: new Date(),
-                    updated_at: new Date()
+                    model: "Class A"
                 }
             ],
             {}

@@ -6,7 +6,7 @@ module.exports = {
             "cars",
             [
                 {
-                    name: "Mercedes Class A",
+                    name: "merco",
                     price: 150,
                     brand_id: 1,
                     color: "rouge",
@@ -18,9 +18,7 @@ module.exports = {
                     air_conditioning: true,
                     is_available: true,
                     passengers: 4,
-                    description: "belle voiture",
-                    created_at: new Date(),
-                    updated_at: new Date()
+                    description: "belle voiture"
                 }
             ],
             {}

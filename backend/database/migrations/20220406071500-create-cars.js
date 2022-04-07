@@ -59,14 +59,6 @@ module.exports = {
             description: {
                 allowNull: false,
                 type: Sequelize.STRING(5000)
-            },
-            created_at: {
-                allowNull: false,
-                type: Sequelize.DATE
-            },
-            updated_at: {
-                allowNull: false,
-                type: Sequelize.DATE
             }
         });
     },

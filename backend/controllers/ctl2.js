@@ -6,15 +6,6 @@ pool.connect();
 
 const models = require("../database/models");
 
-const getTests22 = async (req, res) => {
-    try {
-        const posts = await models.Images.findAll({});
-        return res.status(200).json({ posts });
-    } catch (error) {
-        return res.status(500).send(error.message);
-    }
-};
-
 const getCars = async (req, res, next) => {
     try {
         // let minPrice = req.params.minPrice; //either a value or undefined
@@ -35,44 +26,6 @@ const getCars = async (req, res, next) => {
         console.log(err.stack);
         res.status(500).json({ err });
     }
-};
-
-//GET
-const getCars2 = (req, res, next) => {
-    //RECUPERER LES INFOS DE LA VOITURE PUIS LES IMAGES DE LA VOITURE
-    // if (!req.query) {
-    pool.query(
-        `SELECT c.id, c.name, c.price, c.color, c.doors, c.boot_size, c.type, c.energy, c.is_automatic, c.passengers, c.air_conditioning, c.description, cb.brand, cb.model
-        FROM cars c
-        INNER JOIN cars_brands cb
-        ON c.id_brand = cb.id;`,
-        (error, results) => {
-            if (error) {
-                res.status(500).json({ error });
-                throw error;
-            }
-            res.status(200).json(results.rows);
-        }
-    );
-    // }
-
-    //TODO : ⚠️ RECUPERER TOUTES LES VOITURES MISE A PART CELLE QUI SE TROUVE DANS LE PARAMETRE
-    // if (req.query) {
-    // 	//RECUPERER UN TABLEAU D'ID AVEC REQ.QUERY
-    // 	tabId = Objet.values(req.query);
-    // 	//TODO Cette option sera implémenté Lorsque la foncetionnalité qui permet à l'utilisateur de passer une commande sera implémenté
-    // 	pool.query(
-    // 		"SELECT * FROM cars WHERE id not in $1",
-    // 		[tabId],
-    // 		(error, result) => {
-    // 			if (error) {
-    // 				res.status(500).json({ error });
-    // 			}
-    // 			console.log(results.rows);
-    // 			res.status(200).json(result.rows);
-    // 		}
-    // 	);
-    // }
 };
 
 const getCarsImages = (req, res) => {
@@ -117,11 +70,9 @@ const getCarById = (req, res) => {
 
 const getCarByName = (req, res) => {
     if (req.params) {
-        const name = parseInt(req.params.name);
-
         pool.query(
             "SELECT * FROM cars c INNER JOIN cars_brands cb ON c.id = cb.id WHERE c.name = $1",
-            [name],
+            [req.params.name],
             (error, results) => {
                 if (error) {
                     throw error;
@@ -231,53 +182,6 @@ const addCar = async (req, res) => {
 
     pool.end;
 };
-
-const testRachiid007 = (req, res, next) => {
-    idCars = 20;
-    const myArray = ["first1.png", "second2.png", "third.png"];
-
-    const okok = JSON.stringify(myArray);
-
-    console.log(okok);
-
-    try {
-        pool.query(
-            `INSERT INTO images(id , pic_name)
-                VALUES($1, array[$2]::text[])`,
-            [idCars, okok],
-            (error, result) => {
-                if (error) {
-                    console.error(error);
-                    res.status(400).json({ error });
-                }
-                console.log(result);
-                res.status(200).json({ result });
-            }
-        );
-    } catch (err) {
-        console.error(err);
-    }
-};
-
-const getTests = async (req, res, next) => {
-    try {
-        const data = await pool.query(`SELECT * FROM images;`);
-        console.log(data);
-        res.status(200).json(data.rows);
-    } catch (err) {
-        console.log(err.stack);
-        res.status(500).json({ err });
-    }
-};
-
-// const getTests22 = () => {
-//     // Find all users
-//     Images.findAll().then((users) => {
-//         console.log("All image:", JSON.stringify(users, null, 4));
-//     });
-// };
-
-getTests22();
 
 const addCarImages = (req, res, next) => {
     try {

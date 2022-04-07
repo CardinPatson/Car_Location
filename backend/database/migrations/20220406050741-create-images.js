@@ -17,14 +17,6 @@ module.exports = {
             file_names: {
                 allowNull: false,
                 type: Sequelize.ARRAY(Sequelize.TEXT)
-            },
-            created_at: {
-                allowNull: false,
-                type: Sequelize.DATE
-            },
-            updated_at: {
-                allowNull: false,
-                type: Sequelize.DATE
             }
         });
     },

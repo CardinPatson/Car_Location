@@ -10,7 +10,7 @@ module.exports = {
         dialect: "postgres",
         define: {
             freezeTableName: true,
-            underscored: true
+            timestamps: false
         }
     },
     test: {
@@ -21,7 +21,7 @@ module.exports = {
         dialect: "postgres",
         define: {
             freezeTableName: true,
-            underscored: true
+            timestamps: false
         }
     },
     production: {
@@ -32,7 +32,7 @@ module.exports = {
         dialect: "postgres",
         define: {
             freezeTableName: true,
-            underscored: true
+            timestamps: false
         }
     }
 };
