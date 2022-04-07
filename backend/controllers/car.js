@@ -85,21 +85,20 @@ const addCar = async (req, res) => {
         model,
         color,
         doors,
-        boot_size,
+        bootSize,
         type,
         energy,
-        is_automatic,
-        is_available,
+        isAutomatic,
+        isAvailable,
         passengers,
-        air_conditioning,
-        description,
-        file_names
+        airConditioning,
+        description
     } = req.body;
 
     try {
         const data = await cars_brands.findOrCreate({
             where: { brand: brand, model: model },
-            attributes: ['id']
+            attributes: ["id"]
         });
 
         const data2 = await cars.create({
@@ -108,85 +107,105 @@ const addCar = async (req, res) => {
             brand_id: data[0].id,
             color: color,
             doors: doors,
-            boot_size: boot_size,
+            boot_size: bootSize,
             type: type,
             energy: energy,
-            is_automatic: is_automatic,
-            air_conditioning: air_conditioning,
-            is_available: is_available,
+            is_automatic: isAutomatic,
+            air_conditioning: airConditioning,
+            is_available: isAvailable,
             passengers: passengers,
             description: description,
-            file_names: file_names
+            file_names: fileNames
         });
 
         const data3 = await images.create({
             car_id: data[0].id,
-            file_names: file_names
+            file_names: fileNames
         });
 
-        return res.status(200).json({ "message": true });
+        return res.status(200).json({ message: true });
     } catch (error) {
         return res.status(500).send(error.message);
     }
 };
 
-const updateCar = async (req, res) => {
-    const {
-        new_name,
-        new_price,
-        new_brand,
-        new_model,
-        new_color,
-        new_doors,
-        new_boot_size,
-        new_type,
-        new_energy,
-        new_is_automatic,
-        new_is_available,
-        new_passengers,
-        new_air_conditioning,
-        new_description,
-        new_file_names
-    } = req.body;
+// const updateCar = async (req, res) => {
+//     const {
+//         newName,
+//         newPrice,
+//         newBrand,
+//         newModel,
+//         newColor,
+//         newDoors,
+//         newBootSize,
+//         newType,
+//         newEnergy,
+//         newIsAutomatic,
+//         newIsAvailable,
+//         newPassengers,
+//         newAirConditioning,
+//         newDescription,
+//         newFileCnames
+//     } = req.body;
 
-    try {
-        if (req.params.id) {
-            const id = parseInt(req.params.id);
+//     try {
+//         if (req.params.id) {
+//             const id = parseInt(req.params.id);
 
-            const reponse = await cars.findOne({
-                where: {id: id},
-                attributes: ['brand_id']
-            });
+//             const reponse = await cars.findOne({
+//                 where: { id: id },
+//                 attributes: ["brand_id"]
+//             });
 
-            const count = await cars_brands.count({
-                where: { id: reponse.brand_id }
-            });
+//             const count = await cars_brands.count({
+//                 where: { id: reponse.brand_id }
+//             });
 
-            // Si que 1 voiture a la marque/model -> UPDATE
-            if (count === 1) {
-                const changeCarsBrands = await cars_brands.update(
-                    {
-                        brand: new_brand,
-                        model: new_model
-                    },
-                    {
-                        where: { id: reponse.brand_id }
-                    }
-                );
-            } else {
-                const changeCarsBrands = await cars_brands.create({
-                    brand: new_brand,
-                    model: new_model
-                })
-            }
+//             // Si que 1 voiture a la marque/model -> UPDATE
+//             if (count === 1) {
+//                 const changeCarsBrands = await cars_brands.update(
+//                     {
+//                         brand: newBrand,
+//                         model: newModel
+//                     },
+//                     {
+//                         where: { id: reponse.brand_id }
+//                     }
+//                 );
+//             } else {
+//                 const changeCarsBrands = await cars_brands.create({
+//                     brand: newBrand,
+//                     model: newModel
+//                 });
+//             }
 
+//             changeCarsBrands;
 
-            return res.status(200).json({ reponse });
-        }
-    } catch (error) {
-        return res.status(500).send(error.message);
-    }
-};
+//             return res.status(200).json({ reponse });
+//         }
+//     } catch (error) {
+//         return res.status(500).send(error.message);
+//     }
+// };
+
+// const upsert = async (values, condition) => {
+//     const obj = await Model.findOne({
+//         where: condition
+//     });
+//     if (obj) {
+//         return obj.update(values);
+//     }
+//     return Model.create(values);
+// };
+
+// await upsert(
+//     {
+//         first_name: "jane"
+//     },
+//     {
+//         id: 1234
+//     }
+// );
 
 const deleteCar = async (req, res) => {
     try {
@@ -202,11 +221,37 @@ const deleteCar = async (req, res) => {
     }
 };
 
+const addCarImages = async (req, res) => {
+    try {
+        if (req.params.id) {
+            const car_id = parseInt(req.params.id);
+
+            //RETRIEVE THE PATH OF THE IMAGES
+            const url_prev = `${req.protocol}://${req.get("host")}`;
+
+            //MAKE A TABLE WITH IDCARS AND IMAGES PATH
+            const values = req.files.map((x) => {
+                return `${url_prev}/images/${x.filename}`;
+            });
+
+            const data = await images.create({
+                car_id: car_id,
+                file_names: values
+            });
+
+            return res.status(201).json({ data });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
 module.exports = {
     getAllCars,
     getCarById,
     getCarByName,
     addCar,
-    updateCar,
-    deleteCar
+    // updateCar,
+    deleteCar,
+    addCarImages
 };

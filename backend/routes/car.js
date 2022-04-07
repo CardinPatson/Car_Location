@@ -26,11 +26,12 @@ router.post("/cars", carCtrl.addCar);
 // router.post("/cars/:id/images", multerMiddleware, carCtrl.addCarImages);
 
 // //PUT
-router.put("/cars/:id", carCtrl.updateCar);
+// router.put("/cars/:id", carCtrl.updateCar);
 
-// //DELETE
-// router.delete("/cars/:id", carCtrl.deleteCar);
+//DELETE
+router.delete("/cars/:id", carCtrl.deleteCar);
 
-// //TEST
+//TEST
+// router.get("/cars/testImage", carCtrl.testImage);
 
 module.exports = router;
