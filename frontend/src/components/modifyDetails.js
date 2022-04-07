@@ -1,5 +1,3 @@
-import { StylesContext } from '@material-ui/styles';
-import { style } from '@mui/system';
 import React from 'react'
 import styled from 'styled-components';
 import Header from './header';
@@ -196,24 +194,6 @@ import Header from './header';
         outline: none;
       }
 `;
-    
-    const Ligne = styled.div`
-      display: flex;
-      padding: 1vh;
-      div {
-        border-left: 1px solid black;
-      }
-    `;
-    const Photo = styled.div`
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      object-fit: content;
-      img {
-        height: auto;
-        width: 70%;
-      }
-    `;
     const Buttons = styled.div`
       display: flex;
       flex-direction: row;
