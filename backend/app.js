@@ -20,6 +20,6 @@ app.listen(process.env.APP_PORT, () => {
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 //RESTFULL API
-app.use("/api/api", carRoute);
+app.use("/api/cars", carRoute);
 
 module.exports = app;
