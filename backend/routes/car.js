@@ -23,7 +23,7 @@ router.post("/cars", carCtrl.addCar);
 
 // router.post("/cars", addCarsValidateSchema, carCtrl.addCar);
 
-// router.post("/cars/:id/images", multerMiddleware, carCtrl.addCarImages);
+router.post("/cars/:id/images", multerMiddleware, carCtrl.addCarImages);
 
 // //PUT
 // router.put("/cars/:id", carCtrl.updateCar);
