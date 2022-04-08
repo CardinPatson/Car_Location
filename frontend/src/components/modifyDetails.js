@@ -114,6 +114,7 @@ import Header from './header';
       background: #00a9f5;
       border: 1px black;
       padding: 6px;
+      border-radius: 5px 5px 0 0;
     `;
     
     const Detail = styled.div`
@@ -190,6 +191,7 @@ import Header from './header';
       }
       input[type='text'], [type='number'] {
         border: none;
+        background: none;
         border-bottom: solid 1px #00a9ff;
         font-size: 20px;
         letter-spacing: 1px;

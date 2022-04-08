@@ -11,7 +11,7 @@ const getAllCars = async (req, res) => {
                 },
                 {
                     model: images,
-                    required: true,
+                    required: false,
                     as: "images"
                 }
             ]

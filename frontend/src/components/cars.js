@@ -207,7 +207,7 @@ function Cars(props) {
 					<h2>Voitures disponibles</h2>
 
 					<CarsPannel>
-						{props.cars.map((car) => {
+						{props.cars["data"].map((car) => {
 							return (
 								<CarSlot key={car.id} car={car} images={carsImages[car.id]} />
 							);
