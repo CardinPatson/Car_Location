@@ -82,6 +82,10 @@ import Header from './header';
       margin: auto;
       display: flex;
       justify-content: center;
+      background-image: url("./images/car_9.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
     `;
 
     const Content = styled.div`
@@ -96,7 +100,8 @@ import Header from './header';
     
     const Test = styled.div`
       border: 0.5px solid black;
-      background : white;
+      border-radius: 5px;
+      background-color: rgb(245, 245, 245, 0.95);
       display: flex;
       flex-direction: column;
       width: 80%;
