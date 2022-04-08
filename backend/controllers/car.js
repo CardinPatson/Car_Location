@@ -2,9 +2,18 @@ const multerMiddleware = require("../middleware/image");
 
 const { images, cars, cars_brands } = require("../database/models");
 
+const isUniqueCarName = async (name) => {
+    const car = await cars.findOne({ where: { name } });
+    if (car) {
+        return false;
+    }
+    return true;
+};
+
 const getAllCars = async (req, res) => {
     try {
         const data = await cars.findAll({
+            where: { is_available: true },
             include: [
                 {
                     model: cars_brands,
@@ -121,7 +130,9 @@ const addCar = async (req, res) => {
 
         return res.status(200).json({ id: data2.dataValues.id });
     } catch (error) {
-        return res.status(500).send(error.message);
+        return res.status(500).json({
+            message: "Internal server error"
+        });
     }
 };
 
@@ -146,7 +157,9 @@ const addCarImages = async (req, res, next) => {
 
         return res.status(201).json({ data });
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        return res.status(500).json({
+            message: "Internal server error"
+        });
     }
 };
 
@@ -300,7 +313,9 @@ const updateCar = async (req, res) => {
             }
         }
     } catch (error) {
-        return res.status(500).send(error.message);
+        return res.status(500).json({
+            message: "Internal server error"
+        });
     }
 };
 
@@ -309,7 +324,9 @@ const getCarsImages = async (req, res) => {
         const data = await cars.findAll({});
         return res.status(200).json({ data });
     } catch (error) {
-        return res.status(500).send(error.message);
+        return res.status(500).json({
+            message: "Internal server error"
+        });
     }
 };
 
@@ -323,7 +340,9 @@ const deleteCar = async (req, res) => {
             return res.status(200).json({ data });
         }
     } catch (error) {
-        return res.status(500).send(error.message);
+        return res.status(500).json({
+            message: "Internal server error"
+        });
     }
 };
 

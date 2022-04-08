@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     }
     cars_brands.init(
         {
-            brand: DataTypes.TEXT,
-            model: DataTypes.TEXT
+            brand: DataTypes.STRING,
+            model: DataTypes.STRING
         },
         {
             sequelize,
