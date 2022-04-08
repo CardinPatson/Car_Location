@@ -137,7 +137,7 @@ const addCarImages = async (req, res, next) => {
             return `${url_prev}/images/${x.filename}`;
         });
 
-        // console.log(values);
+        console.log(values);
 
         const data = await images.create({
             car_id: car_id,
@@ -265,7 +265,7 @@ const updateCar = async (req, res) => {
                 values
             );
 
-            console.log(receive);
+            // console.log(receive);
 
             if (receive) {
                 const data = await cars.update(

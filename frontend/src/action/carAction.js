@@ -21,7 +21,7 @@ export const addCarsImagesInfo = createAction(
 export const addCarsProperty = createAsyncThunk(
     ADD_CARS,
     async (arg, thunkAPI) => {
-        await Axios.post("http://localhost:3001/api/cars", {
+        await Axios.post("localhost:3001/api/cars/", {
             name: arg.name,
             description: arg.description,
             brand: arg.brand,
@@ -39,7 +39,7 @@ export const addCarsProperty = createAsyncThunk(
         })
             .then((rep) => {
                 //TODO recuperer l'id du véhicule et faire un insertion dans la table des images
-                const id = rep.data.id;
+                const id = rep.id;
                 console.log(id);
 
                 let formData = new FormData();
