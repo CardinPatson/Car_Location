@@ -127,15 +127,17 @@ const addCar = async (req, res) => {
 
 const addCarImages = async (req, res, next) => {
     try {
-        const idCars = req.params.id;
+        const car_id = req.params.id;
 
         //RETRIEVE THE PATH OF THE IMAGES
         const url_prev = `${req.protocol}://${req.get("host")}`;
 
         //MAKE A TABLE WITH IDCARS AND IMAGES PATH
         const values = req.files.map((x) => {
-            return [idCars, `${url_prev}/images/${x.filename}`];
+            return `${url_prev}/images/${x.filename}`;
         });
+
+        console.log(values);
 
         const data = await images.create({
             car_id: car_id,
@@ -148,10 +150,10 @@ const addCarImages = async (req, res, next) => {
     }
 };
 
-const insertOrUpdateCarsBrands = async (values, condition) => {
+const insertOrUpdateCarsBrands = async (count, condition, values) => {
     // Si que 1 voiture a la marque/model -> UPDATE
     if (count === 1) {
-        return await cars_brands.update(values, condition);
+        return cars_brands.update(values, condition);
 
         // INSERT car risque de modifier une qui appartien a une autre...
     } else {
@@ -174,24 +176,38 @@ const updateCar = async (req, res) => {
         newIsAvailable,
         newPassengers,
         newAirConditioning,
-        newDescription,
-        newFileCnames
+        newDescription
     } = req.body;
 
     try {
         if (req.params.id) {
-            const id = parseInt(req.params.id);
+            const car_id = parseInt(req.params.id);
 
             const reponse = await cars.findOne({
-                where: { id: id },
+                where: { id: car_id },
                 attributes: ["brand_id"]
             });
+
+            const condition = {
+                where: { id: reponse.brand_id }
+            };
+
+            const values = {
+                brand: newBrand,
+                model: newModel
+            };
 
             const count = await cars_brands.count({
                 where: { id: reponse.brand_id }
             });
 
-            changeCarsBrands;
+            const receive = await insertOrUpdateCarsBrands(
+                count,
+                condition,
+                values
+            );
+
+            // puis je recup l'id j'UPDATE avec les New dataCars
 
             return res.status(200).json({ reponse });
         }
@@ -199,46 +215,6 @@ const updateCar = async (req, res) => {
         return res.status(500).send(error.message);
     }
 };
-
-// const upsert = async (values, condition) => {
-//     // Si que 1 voiture a la marque/model -> UPDATE
-//     if (count === 1) {
-//         const changeCarsBrands = await cars_brands.update(
-//             {
-//                 brand: newBrand,
-//                 model: newModel
-//             },
-//             {
-//                 where: { id: reponse.brand_id }
-//             }
-//         );
-//     } else {
-//         const changeCarsBrands = await cars_brands.create({
-//             brand: newBrand,
-//             model: newModel
-//         });
-//     }
-// };
-
-// const upsert = async (values, condition) => {
-//     const obj = await cars_brands.findOne({
-//         where: condition
-//     });
-//     if (obj) {
-//         return obj.update(values);
-//     }
-//     return cars_brands.create(values);
-// };
-
-// await upsert(
-//     {
-//         brand: newBrand,
-//         model: newModel
-//     },
-//     {
-//         where: { id: reponse.brand_id }
-//     }
-// );
 
 const getCarsImages = async (req, res) => {
     try {

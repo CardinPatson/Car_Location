@@ -39,8 +39,9 @@ export const addCarsProperty = createAsyncThunk(
         })
             .then((rep) => {
                 //TODO recuperer l'id du véhicule et faire un insertion dans la table des images
-                const id = rep.id;
+                const id = rep.data.id;
                 console.log(id);
+
                 let formData = new FormData();
 
                 console.log(id, formData);
