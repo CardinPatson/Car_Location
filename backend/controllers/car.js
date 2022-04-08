@@ -13,7 +13,7 @@ const getAllCars = async (req, res) => {
                 },
                 {
                     model: images,
-                    required: true,
+                    required: false,
                     as: "images"
                 }
             ]
@@ -38,7 +38,7 @@ const getCarById = async (req, res) => {
                     },
                     {
                         model: images,
-                        required: true,
+                        required: false,
                         as: "images"
                     }
                 ]
@@ -137,7 +137,7 @@ const addCarImages = async (req, res, next) => {
             return `${url_prev}/images/${x.filename}`;
         });
 
-        console.log(values);
+        // console.log(values);
 
         const data = await images.create({
             car_id: car_id,
@@ -147,17 +147,6 @@ const addCarImages = async (req, res, next) => {
         return res.status(201).json({ data });
     } catch (error) {
         return res.status(500).json({ error: error.message });
-    }
-};
-
-const insertOrUpdateCarsBrands = async (count, condition, values) => {
-    // Si que 1 voiture a la marque/model -> UPDATE
-    if (count === 1) {
-        return cars_brands.update(values, condition);
-
-        // INSERT car risque de modifier une qui appartien a une autre...
-    } else {
-        return await cars_brands.create(values);
     }
 };
 
@@ -183,10 +172,83 @@ const updateCar = async (req, res) => {
         if (req.params.id) {
             const car_id = parseInt(req.params.id);
 
-            const reponse = await cars.findOne({
-                where: { id: car_id },
-                attributes: ["brand_id"]
+            const reponse = await cars.findByPk(car_id, {
+                include: [
+                    {
+                        model: cars_brands,
+                        required: true,
+                        as: "cars_brands"
+                    },
+                    {
+                        model: images,
+                        required: false,
+                        as: "images"
+                    }
+                ]
             });
+
+            if (
+                (newName == reponse.name &&
+                    newPrice == reponse.price &&
+                    newBrand == reponse.cars_brands.brand &&
+                    newModel == reponse.cars_brands.model &&
+                    newColor == reponse.color &&
+                    newDoors == reponse.doors &&
+                    newBootSize == reponse.boot_size &&
+                    newType == reponse.type &&
+                    newEnergy == reponse.energy &&
+                    newIsAutomatic == reponse.is_automatic &&
+                    newIsAvailable == reponse.is_available &&
+                    newPassengers == reponse.passengers &&
+                    newAirConditioning == reponse.air_conditioning &&
+                    newDescription == reponse.description) ||
+                (newName == reponse.name &&
+                    newPrice == reponse.price &&
+                    newBrand == reponse.cars_brands.brand &&
+                    newModel == reponse.cars_brands.model &&
+                    newColor == reponse.color &&
+                    newDoors == reponse.doors &&
+                    newBootSize == reponse.boot_size &&
+                    newType == reponse.type &&
+                    newEnergy == reponse.energy &&
+                    newIsAutomatic == reponse.is_automatic &&
+                    newIsAvailable == reponse.is_available &&
+                    newPassengers == reponse.passengers &&
+                    newAirConditioning == reponse.air_conditioning &&
+                    newDescription == reponse.description)
+            ) {
+                return res.status(200).json({
+                    message: "No changes"
+                });
+            }
+
+            const count = await cars.count({
+                where: { brand_id: reponse.brand_id }
+            });
+
+            const insertOrUpdateCarsBrands = async (
+                count,
+                condition,
+                values
+            ) => {
+                // Si que 1 voiture a la marque/model + changement -> UPDATE
+                if (
+                    (count === 1 && newBrand != reponse.cars_brands.brand) ||
+                    newModel != reponse.cars_brands.model
+                ) {
+                    return await cars_brands.update(values, condition);
+                }
+
+                // INSERT car risque de modifier Marque/Modele qui appartien a une autre...
+                if (
+                    (count > 1 && newBrand != reponse.cars_brands.brand) ||
+                    newModel != reponse.cars_brands.model
+                ) {
+                    return await cars_brands.create(values);
+                } else {
+                    return true;
+                }
+            };
 
             const condition = {
                 where: { id: reponse.brand_id }
@@ -197,19 +259,45 @@ const updateCar = async (req, res) => {
                 model: newModel
             };
 
-            const count = await cars_brands.count({
-                where: { id: reponse.brand_id }
-            });
-
             const receive = await insertOrUpdateCarsBrands(
                 count,
                 condition,
                 values
             );
 
-            // puis je recup l'id j'UPDATE avec les New dataCars
+            console.log(receive);
 
-            return res.status(200).json({ reponse });
+            if (receive) {
+                const data = await cars.update(
+                    {
+                        name: newName,
+                        price: newPrice,
+                        brand_id: reponse.brand_id,
+                        color: newColor,
+                        doors: newDoors,
+                        boot_size: newBootSize,
+                        type: newType,
+                        energy: newEnergy,
+                        is_automatic: newIsAutomatic,
+                        air_conditioning: newAirConditioning,
+                        is_available: newIsAvailable,
+                        passengers: newPassengers,
+                        description: newDescription
+                    },
+                    {
+                        where: { id: car_id }
+                    }
+                );
+
+                return res.status(200).json({
+                    message: "Car updated",
+                    data
+                });
+            } else {
+                return res.status(500).json({
+                    message: "A verifier update Car !!!"
+                });
+            }
         }
     } catch (error) {
         return res.status(500).send(error.message);
