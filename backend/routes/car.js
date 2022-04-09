@@ -24,6 +24,12 @@ router.post("/:id/images", multerMiddleware, carCtrl.addCarImages);
 
 // PUT
 // router.put("/:id", carCtrl.updateCar);
+// router.post("/cars/:id/images", multerMiddleware, carCtrl.addCarImages);
+
+// //PUT
+// router.put("/cars/:id", carCtrl.updateCar);
+//PUT
+//router.put("/:id", carCtrl.updateCar);
 
 //DELETE
 router.delete("/:id", carCtrl.deleteCar);

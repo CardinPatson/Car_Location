@@ -14,7 +14,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.listen(process.env.APP_PORT, () => {
-    console.log("server running on port", process.env.APP_PORT);
+	console.log("server running on port", process.env.APP_PORT);
 });
 
 //middleware pour le stockage des images
