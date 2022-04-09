@@ -9,15 +9,14 @@ export const addCarsInfo = createAction(ADD_CARS, function prepare(cars) {
 });
 
 export const addCarsImagesInfo = createAction(
-
-	GET_CARS_IMAGES,
-	function prepare(images) {
-		console.log(images);
-		return {
-			payload: images
-		};
-	}
-)
+    GET_CARS_IMAGES,
+    function prepare(images) {
+        console.log(images);
+        return {
+            payload: images
+        };
+    }
+);
 
 //INSERER LA VOITURE DANS LA BASE DE DONNEES
 
