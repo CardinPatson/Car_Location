@@ -294,7 +294,7 @@ const Specs = styled.div`
             padding: 5px;
             padding-right: 10px;
             height: auto;
-            width: 15%;
+            width: 18%;
         }
     }
 `;

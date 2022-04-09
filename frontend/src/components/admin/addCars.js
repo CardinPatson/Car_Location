@@ -92,8 +92,10 @@ const AddCars = (props) => {
 				return;
 			}
 		}
-		localStorage.setItem("popup", !popUp);
+		// localStorage.setItem("popup", !popUp);
 		props.addCars(carProperty);
+		// window.location.reload();
+
 		setTimeout(()=>{
 			window.location.reload();
 

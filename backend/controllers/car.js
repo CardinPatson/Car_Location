@@ -1,141 +1,104 @@
 const multerMiddleware = require("../middleware/image");
-const { validationResult } = require("express-validator");
-const format = require("pg-format");
-const pool = require("../db");
-pool.connect();
 
-// const myArray = ["first1.png", "second2.png", "third.png"];
+const { images, cars, cars_brands } = require("../database/models");
 
-// pool.query(
-//     `INSERT INTO images(pic_name) VALUES($1)`,
-//     [myArray],
-//     (error, result) => {
-//         if (error) {
-//             console.log(error);
-//         }
-//         console.log(result);
-//     }
-// );
+const isUniqueCarName = async (name) => {
+	const car = await cars.findOne({ where: { name } });
+	if (car) {
+		return false;
+	}
+	return true;
+};
 
-// async/await
-const getCars = async (req, res, next) => {
+const getAllCars = async (req, res) => {
 	try {
-		// let minPrice = req.params.minPrice; //either a value or undefined
-		// let maxPrice = req.params.maxPrice;
-		// let brand = req.params.brand;
-		// let model = req.params.model;
-		// let startDate = req.params.startDate;
-		// let endDate = req.params.endDate;
+		const data = await cars.findAll({
+			where: { is_available: true },
+			include: [
+				{
+					model: cars_brands,
+					required: true,
+					as: "cars_brands",
+				},
+			],
+		});
 
-		const data = await pool.query(
-			`SELECT c.id, c.name, c.price, c.color, c.doors, c.boot_size, c.type, c.energy, c.is_automatic, c.passengers, c.air_conditioning, c.description, cb.brand, cb.model
-              FROM cars c
-              INNER JOIN cars_brands cb
-              ON c.id_brand = cb.id;`
-		);
-		res.status(200).json(data.rows);
-	} catch (err) {
-		console.log(err.stack);
-		res.status(500).json({ err });
+		return res.status(200).json(data);
+	} catch (error) {
+		return res.status(500).send(error.message);
 	}
 };
 
-//GET
-const getCars2 = (req, res, next) => {
-	//RECUPERER LES INFOS DE LA VOITURE PUIS LES IMAGES DE LA VOITURE
-	// if (!req.query) {
-	pool.query(
-		`SELECT c.id, c.name, c.price, c.color, c.doors, c.boot_size, c.type, c.energy, c.is_automatic, c.passengers, c.air_conditioning, c.description, cb.brand, cb.model
-        FROM cars c
-        INNER JOIN cars_brands cb
-        ON c.id_brand = cb.id;`,
-		(error, results) => {
-			if (error) {
-				res.status(500).json({ error });
-				throw error;
-			}
-			res.status(200).json(results.rows);
+const getCarById = async (req, res) => {
+	try {
+		if (req.params.id) {
+			const id = parseInt(req.params.id);
+
+			const data = await cars.findByPk(id, {
+				include: [
+					{
+						model: cars_brands,
+						required: true,
+						as: "cars_brands",
+					},
+					{
+						model: images,
+						required: false,
+						as: "images",
+					},
+				],
+			});
+			return res.status(200).json(data);
 		}
-	);
-	// }
-
-	//TODO : ⚠️ RECUPERER TOUTES LES VOITURES MISE A PART CELLE QUI SE TROUVE DANS LE PARAMETRE
-	// if (req.query) {
-	// 	//RECUPERER UN TABLEAU D'ID AVEC REQ.QUERY
-	// 	tabId = Objet.values(req.query);
-	// 	//TODO Cette option sera implémenté Lorsque la foncetionnalité qui permet à l'utilisateur de passer une commande sera implémenté
-	// 	pool.query(
-	// 		"SELECT * FROM cars WHERE id not in $1",
-	// 		[tabId],
-	// 		(error, result) => {
-	// 			if (error) {
-	// 				res.status(500).json({ error });
-	// 			}
-	// 			console.log(results.rows);
-	// 			res.status(200).json(result.rows);
-	// 		}
-	// 	);
-	// }
+	} catch (error) {
+		return res.status(500).send(error.message);
+	}
 };
 
-const getCarsImages = (req, res) => {
-	pool.query("SELECT * FROM images", (error, results) => {
-		if (error) throw error;
-		res.status(200).json(results.rows);
-	});
-};
+const getCarByName = async (req, res) => {
+	try {
+		if (typeof req.params.name === "string") {
+			const name = req.params.name;
 
-const getCarsOrders = (req, res) => {
-	const { startDate, endDate, startTime, endTime } = req.query;
-	//TODO : Effectuer une vérification sur les paramètres pour allez chercher les véhicules
-	//TODO : Récupérer tous les id des voitures qui sont déjà louer dans cette plage horaire dans la table orders
-	pool.query(
-		"SELECT id FROM orders WHERE date_departure >= $1 and end date_return <= $2",
-		[startDate, endDate],
-		(error, results) => {
-			if (error) {
-				throw error;
-			}
-			console.log(results.rows);
+			const data = await cars.findOne({
+				where: { name: name },
+				include: [
+					{
+						model: cars_brands,
+						required: true,
+						as: "cars_brands",
+					},
+					{
+						model: images,
+						required: true,
+						as: "images",
+					},
+				],
+			});
+			return res.status(200).json({ data });
 		}
-	);
-};
-
-const getCarById = (req, res) => {
-	if (req.params) {
-		const id = parseInt(req.params.id);
-
-		pool.query(
-			"SELECT * FROM cars c INNER JOIN cars_brands cb ON c.id = cb.id WHERE c.id = $1",
-			[id],
-			(error, results) => {
-				if (error) {
-					throw error;
-				}
-				res.status(200).json(results.rows);
-			}
-		);
+	} catch (error) {
+		return res.status(500).send(error.message);
 	}
 };
 
-const getCarByName = (req, res) => {
-	if (req.params) {
-		const name = parseInt(req.params.name);
-
-		pool.query(
-			"SELECT * FROM cars c INNER JOIN cars_brands cb ON c.id = cb.id WHERE c.name = $1",
-			[name],
-			(error, results) => {
-				if (error) {
-					throw error;
-				}
-				res.status(200).json(results.rows);
-			}
-		);
+const getCarsImages = async (req, res) => {
+	try {
+		const data = await images.findAll({
+			model: images,
+			required: false,
+			as: "images",
+		});
+		return res.status(200).json(data);
+	} catch (error) {
+		return res.status(500).json({
+			message: "Internal server error",
+		});
 	}
 };
 
-//POST
+// POST !!!
+
 const addCar = async (req, res) => {
 	const {
 		name,
@@ -150,211 +113,231 @@ const addCar = async (req, res) => {
 		isAutomatic,
 		isAvailable,
 		passengers,
-		airCondition,
+		airConditioning,
 		description,
 	} = req.body;
-
-	let idBrand = 0;
-	pool.query(
-		"select id from cars_brands where brand=$1 and model=$2",
-		[brand, model],
-		async (error, results) => {
-			// si la Marque n'existe pas
-
-			if (error) {
-				console.log("not connect to the database");
-			}
-			if (results.rows.length == 0) {
-				//Insert into brand
-				pool.query(
-					"INSERT INTO cars_brands(brand, model) VALUES($1,$2) RETURNING id",
-					[brand, model],
-					(error, results) => {
-						if (error) {
-							throw error;
-						}
-						idBrand = results.rows[0].id;
-
-						pool.query(
-							"INSERT INTO cars(name, price, id_brand, color, doors, boot_size, type, energy,is_available, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING id",
-							[
-								name,
-								price,
-								idBrand,
-								color,
-								doors,
-								bootSize,
-								type,
-								energy,
-								isAvailable,
-								isAutomatic,
-								passengers,
-								airCondition,
-								description,
-							],
-							(error, results) => {
-								if (error) {
-									throw error;
-								}
-								res.status(201).json(results);
-							}
-						);
-					}
-				);
-			} else {
-				idBrand = await results.rows[0].id;
-
-				pool.query(
-					"INSERT INTO cars(name, price, id_brand, color, doors, boot_size, type, energy,is_available, is_automatic, passengers, air_conditioning, description) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING id",
-					[
-						name,
-						price,
-						idBrand,
-						color,
-						doors,
-						bootSize,
-						type,
-						energy,
-						isAvailable,
-						isAutomatic,
-						passengers,
-						airCondition,
-						description,
-					],
-					(error, results) => {
-						if (error) {
-							throw error;
-						}
-						res.status(201).json(results);
-					}
-				);
-			}
-		}
-	);
-
-	pool.end;
+	try {
+		const data = await cars_brands.findOrCreate({
+			where: { brand: brand, model: model },
+			attributes: ["id"],
+		});
+		const data2 = await cars.create({
+			name: name,
+			price: price,
+			brand_id: data[0].id, // send for addCar !
+			color: color,
+			doors: doors,
+			boot_size: bootSize,
+			type: type,
+			energy: energy,
+			is_automatic: isAutomatic,
+			air_conditioning: airConditioning,
+			is_available: isAvailable,
+			passengers: passengers,
+			description: description,
+		});
+		return res.status(200).json({ id: data2.dataValues.id });
+	} catch (error) {
+		return res.status(500).json({
+			message: "Internal server error test",
+		});
+	}
 };
 
-const addCarImages = (req, res, next) => {
+const addCarImages = async (req, res, next) => {
 	try {
-		console.log(req.params);
-		const idCars = req.params.id;
-		console.log(idCars);
+		const car_id = req.params.id;
 
 		//RETRIEVE THE PATH OF THE IMAGES
 		const url_prev = `${req.protocol}://${req.get("host")}`;
 
 		//MAKE A TABLE WITH IDCARS AND IMAGES PATH
 		const values = req.files.map((x) => {
-			return [idCars, `${url_prev}/images/${x.filename}`];
+			return `${url_prev}/images/${x.filename}`;
 		});
 
-		//FORMAT THE QUERY TO MAKE INSERTION
-		const query = format(`INSERT INTO images(id , pic_name) VALUES %L`, values);
-		pool.query(query, (error, result) => {
-			if (error) {
-				res.status(400).json({ error });
-			}
-			res.status(200);
+		const data = await images.create({
+			car_id: car_id,
+			file_names: values,
 		});
-	} catch (err) {
-		console.error(err);
+
+		return res.status(201).json({ data });
+	} catch (error) {
+		return res.status(500).json({
+			message: "Internal server error",
+		});
 	}
 };
-//UPDATE
-const updateCar = (req, res) => {
-	const id = parseInt(req.params.id);
+
+const updateCar = async (req, res) => {
 	const {
-		name,
-		price,
-		brand,
-		model,
-		color,
-		doors,
-		bootSize,
-		type,
-		energy,
-		isAutomatic,
-		passengers,
-		airCondition,
-		description,
+		newName,
+		newPrice,
+		newBrand,
+		newModel,
+		newColor,
+		newDoors,
+		newBootSize,
+		newType,
+		newEnergy,
+		newIsAutomatic,
+		newIsAvailable,
+		newPassengers,
+		newAirConditioning,
+		newDescription,
 	} = req.body;
 
-	pool.query(
-		"UPDATE cars SET name=$2, price=$3, color=$4, doors=$5, boot_size=$6, type=$7, energy=$8, is_automatic=$9, passengers=$10, air_conditioning=$11, description=$12 WHERE id=$1",
-		[
-			id,
-			name,
-			price,
-			color,
-			doors,
-			bootSize,
-			type,
-			energy,
-			isAutomatic,
-			passengers,
-			airCondition,
-			description,
-		],
-		(error, results1) => {
-			if (error) {
-				throw error;
+	try {
+		if (req.params.id) {
+			const car_id = parseInt(req.params.id);
+
+			const reponse = await cars.findByPk(car_id, {
+				include: [
+					{
+						model: cars_brands,
+						required: true,
+						as: "cars_brands",
+					},
+					{
+						model: images,
+						required: false,
+						as: "images",
+					},
+				],
+			});
+
+			if (
+				(newName == reponse.name &&
+					newPrice == reponse.price &&
+					newBrand == reponse.cars_brands.brand &&
+					newModel == reponse.cars_brands.model &&
+					newColor == reponse.color &&
+					newDoors == reponse.doors &&
+					newBootSize == reponse.boot_size &&
+					newType == reponse.type &&
+					newEnergy == reponse.energy &&
+					newIsAutomatic == reponse.is_automatic &&
+					newIsAvailable == reponse.is_available &&
+					newPassengers == reponse.passengers &&
+					newAirConditioning == reponse.air_conditioning &&
+					newDescription == reponse.description) ||
+				(newName == reponse.name &&
+					newPrice == reponse.price &&
+					newBrand == reponse.cars_brands.brand &&
+					newModel == reponse.cars_brands.model &&
+					newColor == reponse.color &&
+					newDoors == reponse.doors &&
+					newBootSize == reponse.boot_size &&
+					newType == reponse.type &&
+					newEnergy == reponse.energy &&
+					newIsAutomatic == reponse.is_automatic &&
+					newIsAvailable == reponse.is_available &&
+					newPassengers == reponse.passengers &&
+					newAirConditioning == reponse.air_conditioning &&
+					newDescription == reponse.description)
+			) {
+				return res.status(200).json({
+					message: "No changes",
+				});
 			}
 
-			pool.query(
-				"UPDATE cars_brands SET brand=$2, model=$3 WHERE id=$1",
-				[id, brand, model],
-				(error, results2) => {
-					if (error) {
-						throw error;
-					}
-					res.status(200).json();
+			const count = await cars.count({
+				where: { brand_id: reponse.brand_id },
+			});
+
+			const insertOrUpdateCarsBrands = async (count, condition, values) => {
+				// Si que 1 voiture a la marque/model + changement -> UPDATE
+				if (
+					(count === 1 && newBrand != reponse.cars_brands.brand) ||
+					newModel != reponse.cars_brands.model
+				) {
+					return await cars_brands.update(values, condition);
 				}
-			);
-		}
-	);
-};
 
-//DELETE
-const deleteCar = (req, res) => {
-	const id = parseInt(req.params.id);
+				// INSERT car risque de modifier Marque/Modele qui appartien a une autre...
+				if (
+					(count > 1 && newBrand != reponse.cars_brands.brand) ||
+					newModel != reponse.cars_brands.model
+				) {
+					return await cars_brands.create(values);
+				} else {
+					return true;
+				}
+			};
 
-	pool.query("DELETE FROM cars WHERE id = $1", [id], (error, results) => {
-		if (error) {
-			throw error;
-		}
-		res.status(200).json(results);
-	});
-	pool.end;
-};
+			const condition = {
+				where: { id: reponse.brand_id },
+			};
 
-const isExist = (req, res) => {
-	const { brand, model } = req.body;
+			const values = {
+				brand: newBrand,
+				model: newModel,
+			};
 
-	let id_brand = 0;
+			const receive = await insertOrUpdateCarsBrands(count, condition, values);
 
-	pool.query(
-		"select id from cars_brands where brand=$1 and model=$2",
-		[brand, model],
-		(error, results) => {
-			if (error) {
-				throw error;
+			if (receive) {
+				const data = await cars.update(
+					{
+						name: newName,
+						price: newPrice,
+						brand_id: reponse.brand_id,
+						color: newColor,
+						doors: newDoors,
+						boot_size: newBootSize,
+						type: newType,
+						energy: newEnergy,
+						is_automatic: newIsAutomatic,
+						air_conditioning: newAirConditioning,
+						is_available: newIsAvailable,
+						passengers: newPassengers,
+						description: newDescription,
+					},
+					{
+						where: { id: car_id },
+					}
+				);
+
+				return res.status(200).json({
+					message: "Car updated",
+					data,
+				});
+			} else {
+				return res.status(500).json({
+					message: "A verifier update Car !!!",
+				});
 			}
-			res.status(200).json(results);
 		}
-	);
-	pool.end;
+	} catch (error) {
+		return res.status(500).json({
+			message: "Internal server error",
+		});
+	}
+};
+
+const deleteCar = async (req, res) => {
+	try {
+		if (req.params.id) {
+			const id = parseInt(req.params.id);
+			const data = await cars.destroy({
+				where: { id: id },
+			});
+			return res.status(200).json({ data });
+		}
+	} catch (error) {
+		return res.status(500).json({
+			message: "Internal server error",
+		});
+	}
 };
 
 module.exports = {
-	getCars,
-	getCarsImages,
-	getCarsOrders,
+	getAllCars,
 	getCarById,
 	getCarByName,
 	addCar,
-	addCarImages,
 	updateCar,
 	deleteCar,
-	isExist,
+	addCarImages,
+	getCarsImages,
 };

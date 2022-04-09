@@ -16,33 +16,41 @@ export const addCarsImagesInfo = createAction(
 		};
 	}
 );
+
 //INSERER LA VOITURE DANS LA BASE DE DONNEES
 
 export const addCarsProperty = createAsyncThunk(
 	ADD_CARS,
 	async (arg, thunkAPI) => {
-		await Axios.post("http://localhost:3001/api/cars", {
-			name: arg.name,
-			description: arg.description,
-			brand: arg.brand,
-			model: arg.model,
-			color: arg.color,
-			doors: arg.doors,
-			bootSize: arg.bootSize,
-			energy: arg.energy,
-			passengers: arg.passengers,
-			type: arg.type,
-			price: arg.price,
-			airCondition: arg.airCondition,
-			isAutomatic: arg.isAutomatic,
-			isAvailable: arg.isAvailable
-		})
+		await Axios.post(
+			"http://localhost:3001/api/cars/",
+			{
+				name: arg.name,
+				description: arg.description,
+				brand: arg.brand,
+				model: arg.model,
+				color: arg.color,
+				doors: arg.doors,
+				bootSize: arg.bootSize,
+				energy: arg.energy,
+				passengers: arg.passengers,
+				type: arg.type,
+				price: arg.price,
+				airConditioning: arg.airCondition,
+				isAutomatic: arg.isAutomatic,
+				isAvailable: arg.isAvailable,
+			},
+			{
+				headers: {
+					"Content-Type": "Application/json",
+				},
+			}
+		)
 			.then((rep) => {
 				//TODO recuperer l'id du véhicule et faire un insertion dans la table des images
-				const id = rep.data.rows[0].id;
+				const id = rep.data.id;
 				let formData = new FormData();
 
-				console.log(id, formData);
 				Object.values(arg.image).forEach((file) => {
 					formData.append("image", file);
 				});
@@ -94,8 +102,6 @@ export const getCarsImages = createAsyncThunk(
 export const getCarsSlot = createAsyncThunk(
 	"GET_CARS_SLOT",
 	async (arg, thunkAPI) => {
-		console.log(arg);
-
 		const request = await Axios.get(`http://localhost:3001/api/cars`, {
 			params: {
 				startDate: arg.startDate,
@@ -106,7 +112,6 @@ export const getCarsSlot = createAsyncThunk(
 		}).catch((err) => {
 			console.error(err);
 		});
-		console.log(request);
 	}
 );
 

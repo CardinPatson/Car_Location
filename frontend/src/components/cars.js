@@ -19,7 +19,14 @@ function Cars(props) {
 	const [endTime, setEndTime] = useState("");
 	const [error, setError] = useState("");
 	useEffect(() => {
-		localForage.clear();
+		localForage
+			.clear()
+			.then(() => {
+				console.log("clear");
+			})
+			.catch((e) => {
+				console.log(e);
+			});
 		props.getCars();
 		props.getCarsImages();
 	}, []);
@@ -27,12 +34,7 @@ function Cars(props) {
 	let carsImages = {};
 	if (props.images && props.images.length) {
 		for (let image of props.images) {
-			console.log(image);
-			if (image.id in carsImages) {
-				carsImages[image.id].push(image.pic_name); //= [...carsImages[image.id], image.pic_name];
-				continue;
-			}
-			carsImages[image.id] = [image.pic_name];
+			if (image.car_id) carsImages[image.car_id] = image.file_names;
 		}
 	}
 	const handleClick = (e) => {
@@ -207,11 +209,19 @@ function Cars(props) {
 					<h2>Voitures disponibles</h2>
 
 					<CarsPannel>
-						{props.cars.map((car) => {
-							return (
-								<CarSlot key={car.id} car={car} images={carsImages[car.id]} />
-							);
-						})}
+						{props.cars.length ? (
+							props.cars.map((car) => {
+								return (
+									<CarSlot
+										key={car.car_id}
+										car={car}
+										images={carsImages[car.id]}
+									/>
+								);
+							})
+						) : (
+							<></>
+						)}
 					</CarsPannel>
 				</Available>
 			</Content>

@@ -5,6 +5,7 @@ import CarDetails from "./carDetails";
 
 const CarSlot = (props) => {
 	const handleDetail = () => {};
+
 	return (
 		<Container>
 			<Content>
@@ -20,7 +21,7 @@ const CarSlot = (props) => {
 				</Pic>
 				<Info>
 					<Name>
-						{props.car.brand} {props.car.model}
+						{props.car.cars_brands.brand} {props.car.cars_brands.model}
 					</Name>
 					<Specs>
 						<div>Type</div>

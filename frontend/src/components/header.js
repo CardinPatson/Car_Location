@@ -99,6 +99,7 @@ const Nav = styled.div`
 		padding-right: 12.5px;
 		padding-left: 12.5px;
 		font-size: 1.15em;
+		transition: all 0.2s linear;
 		&:hover {
 			color: #00a9ff;
 			cursor: pointer;
@@ -119,6 +120,7 @@ const Login = styled.div`
 	font-size: 1.15em;
 	p {
 		color: rgba(0, 0, 0, 0.7);
+		transition: all 0.2s linear;
 		&:hover {
 			color: #00a9f5;
 			cursor: pointer;
