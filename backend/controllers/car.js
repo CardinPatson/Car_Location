@@ -5,7 +5,7 @@ const { images, cars, cars_brands } = require("../database/models");
 const isUniqueCarName = async (name) => {
     const car = await cars.findOne({ where: { name } });
     if (car) {
-        throw new Error("Car name already exists");
+        return false;
     }
     return true;
 };
@@ -28,13 +28,16 @@ const getAllCars = async (req, res) => {
             ]
         });
 
-        if (!data) {
-            return res.status(404).json({
+        if (data.length === 0) {
+            console.log("Array is empty!");
+            res.status(404).json({
                 message: "No cars found"
             });
+        } else {
+            return res.status(200).json({ data });
         }
-        return res.status(200).json({ data });
     } catch (error) {
+        console.log(error);
         return res.status(500).send(error.message);
     }
 };
@@ -61,6 +64,7 @@ const getCarById = async (req, res) => {
             return res.status(200).json({ data });
         }
     } catch (error) {
+        console.log(error);
         return res.status(500).send(error.message);
     }
 };
@@ -111,13 +115,13 @@ const addCar = async (req, res) => {
         airConditioning,
         description
     } = req.body;
-
+    console.log(req.body);
     try {
         const data = await cars_brands.findOrCreate({
             where: { brand: brand, model: model },
             attributes: ["id"]
         });
-
+        console.log("ICI");
         const data2 = await cars.create({
             name: name,
             price: price,
@@ -133,11 +137,12 @@ const addCar = async (req, res) => {
             passengers: passengers,
             description: description
         });
-
+        console.log(data2);
         return res.status(200).json({ id: data2.dataValues.id });
     } catch (error) {
+        console.log(error);
         return res.status(500).json({
-            message: "Internal server error"
+            message: "Internal server error test"
         });
     }
 };
@@ -163,6 +168,7 @@ const addCarImages = async (req, res, next) => {
 
         return res.status(201).json({ data });
     } catch (error) {
+        console.log(error);
         return res.status(500).json({
             message: "Internal server error"
         });
@@ -319,6 +325,7 @@ const updateCar = async (req, res) => {
             }
         }
     } catch (error) {
+        console.log(error);
         return res.status(500).json({
             message: "Internal server error"
         });
@@ -330,6 +337,7 @@ const getCarsImages = async (req, res) => {
         const data = await cars.findAll({});
         return res.status(200).json({ data });
     } catch (error) {
+        console.log(error);
         return res.status(500).json({
             message: "Internal server error"
         });

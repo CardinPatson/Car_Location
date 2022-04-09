@@ -10,19 +10,19 @@ module.exports = {
             },
             car_id: {
                 allowNull: false,
-                type: Sequelize.INTEGER,
-                references: {
-                    model: "cars",
-                    key: "id"
-                }
+                type: Sequelize.INTEGER
+                // references: {
+                //     model: "cars",
+                //     key: "id"
+                // }
             },
             customer_id: {
                 allowNull: false,
-                type: Sequelize.INTEGER,
-                references: {
-                    model: "customers",
-                    key: "id"
-                }
+                type: Sequelize.INTEGER
+                // references: {
+                //     model: "customers",
+                //     key: "id"
+                // }
             },
             date_order: {
                 allowNull: false,

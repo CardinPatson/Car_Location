@@ -12,13 +12,13 @@ module.exports = {
                 autoIncrement: false,
                 primaryKey: false,
                 allowNull: false,
-                type: Sequelize.INTEGER,
-                references: {
-                    model: "cars",
-                    key: "id"
-                },
-                onUpdate: "CASCADE",
-                onDelete: "CASCADE"
+                type: Sequelize.INTEGER
+                // references: {
+                //     model: "cars",
+                //     key: "id"
+                // },
+                // onUpdate: "CASCADE",
+                // onDelete: "CASCADE"
             },
             file_names: {
                 allowNull: false,

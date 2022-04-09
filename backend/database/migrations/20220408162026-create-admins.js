@@ -5,11 +5,11 @@ module.exports = {
             customer_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
-                unique: true,
-                references: {
-                    model: "customers",
-                    key: "id"
-                }
+                unique: true
+                // references: {
+                //     model: "customers",
+                //     key: "id"
+                // }
             }
         });
     },

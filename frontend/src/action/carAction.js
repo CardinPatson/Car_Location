@@ -23,35 +23,42 @@ export const addCarsImagesInfo = createAction(
 export const addCarsProperty = createAsyncThunk(
     ADD_CARS,
     async (arg, thunkAPI) => {
-        await Axios.post("localhost:3001/api/cars/", {
-            name: arg.name,
-            description: arg.description,
-            brand: arg.brand,
-            model: arg.model,
-            color: arg.color,
-            doors: arg.doors,
-            bootSize: arg.bootSize,
-            energy: arg.energy,
-            passengers: arg.passengers,
-            type: arg.type,
-            price: arg.price,
-            airConditioning: arg.airCondition,
-            isAutomatic: arg.isAutomatic,
-            isAvailable: arg.isAvailable
-        })
+        await Axios.post(
+            "http://localhost:3001/api/cars/",
+            {
+                name: arg.name,
+                description: arg.description,
+                brand: arg.brand,
+                model: arg.model,
+                color: arg.color,
+                doors: arg.doors,
+                bootSize: arg.bootSize,
+                energy: arg.energy,
+                passengers: arg.passengers,
+                type: arg.type,
+                price: arg.price,
+                airConditioning: arg.airCondition,
+                isAutomatic: arg.isAutomatic,
+                isAvailable: arg.isAvailable
+            },
+            {
+                headers: {
+                    "Content-Type": "Application/json"
+                }
+            }
+        )
             .then((rep) => {
                 //TODO recuperer l'id du véhicule et faire un insertion dans la table des images
-                const id = rep.id;
-                console.log(id);
+                const id = rep.data.id;
 
                 let formData = new FormData();
 
-                console.log(id, formData);
                 Object.values(arg.image).forEach((file) => {
                     formData.append("image", file);
                 });
                 Axios.post(
                     `http://localhost:3001/api/cars/${id}/images`,
+                    // `http://localhost:3001/api/cars/5/images`,
                     formData,
                     {
                         headers: {

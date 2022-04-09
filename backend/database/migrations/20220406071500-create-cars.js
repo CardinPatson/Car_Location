@@ -34,13 +34,13 @@ module.exports = {
             },
             brand_id: {
                 allowNull: false,
-                type: Sequelize.INTEGER,
-                references: {
-                    model: "brands",
-                    key: "id",
-                    onUpdate: "CASCADE",
-                    onDelete: "CASCADE"
-                }
+                type: Sequelize.INTEGER
+                // references: {
+                //     model: "brands",
+                //     key: "id",
+                //     onUpdate: "CASCADE",
+                //     onDelete: "CASCADE"
+                // }
             },
             color: {
                 allowNull: false,
