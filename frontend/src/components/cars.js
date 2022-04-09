@@ -30,6 +30,7 @@ function Cars(props) {
 		props.getCars();
 		props.getCarsImages();
 	}, []);
+	console.log(props.cars);
 	let carsImages = {};
 	if (props.images && props.images.length) {
 		for (let image of props.images) {
@@ -208,7 +209,7 @@ function Cars(props) {
 					<h2>Voitures disponibles</h2>
 
 					<CarsPannel>
-						{props.cars.length &&
+						{props.cars.length ? (
 							props.cars.map((car) => {
 								return (
 									<CarSlot
@@ -217,7 +218,10 @@ function Cars(props) {
 										images={carsImages[car.id]}
 									/>
 								);
-							})}
+							})
+						) : (
+							<></>
+						)}
 					</CarsPannel>
 				</Available>
 			</Content>

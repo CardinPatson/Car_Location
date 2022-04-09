@@ -23,14 +23,7 @@ const getAllCars = async (req, res) => {
 			],
 		});
 
-		if (data.length === 0) {
-			console.log("Array is empty!");
-			res.status(404).json({
-				message: "No cars found",
-			});
-		} else {
-			return res.status(200).json(data);
-		}
+		return res.status(200).json(data);
 	} catch (error) {
 		return res.status(500).send(error.message);
 	}
