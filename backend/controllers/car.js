@@ -5,7 +5,7 @@ const { images, cars, cars_brands } = require("../database/models");
 const isUniqueCarName = async (name) => {
     const car = await cars.findOne({ where: { name } });
     if (car) {
-        return false;
+        throw new Error("Car name already exists");
     }
     return true;
 };

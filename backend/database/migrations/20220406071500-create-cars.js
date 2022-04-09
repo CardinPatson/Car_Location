@@ -15,7 +15,8 @@ module.exports = {
                 validate: {
                     notEmpty: true,
                     len: [3, 50],
-                    is: ["^[a-zA-Z0-9]+$", "i"]
+                    isString: true,
+                    toString: true
                 }
             },
             price: {
@@ -23,7 +24,7 @@ module.exports = {
                 type: Sequelize.REAL,
                 validate: {
                     min: 0,
-                    max: 1000000,
+                    max: 1000,
                     isFloat: true,
                     isDecimal: true,
                     notEmpty: true,
@@ -76,7 +77,8 @@ module.exports = {
                 validate: {
                     notEmpty: true,
                     len: [3, 50],
-                    isString: true
+                    isString: true,
+                    toString: true
                 }
             },
             energy: {

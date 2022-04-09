@@ -1,20 +1,28 @@
-const { checkSchema } = require("express-validator");
-
-const addCarsValidateSchema = checkSchema({
+const addCarsSchema = {
     name: {
         exists: { errorMessage: "Le champ nom est requis" },
+        isString: {
+            errorMessage: "Le champ nom doit être une chaîne de caractères"
+        },
+        trim: true,
         isLength: {
             options: { min: 3, max: 30 },
             errorMessage:
-                "The name must be between 3 and 30 characters and no spaces."
-        }
+                "Le nom doit comporter entre 3 et 30 caractères et aucun espace."
+        },
+        escape: true,
+        errorMessage: "Le champ nom est invalide"
     },
 
     price: {
         exists: { errorMessage: "Le champ prix est requis" },
+        isFloat: { errorMessage: "Le champ prix doit être un nombre" },
+        trim: true,
         toFloat: true,
         isFloat: { options: { min: 5.0, max: 1000.0 } },
-        errorMessage: "The price must be a number between 5.0 and 1000.0"
+        errorMessage: "Le prix doit être un nombre compris entre 5,0 et 1000,0",
+        escape: true,
+        errorMessage: "Le champ prix est invalide"
     },
 
     brand: {
@@ -23,7 +31,9 @@ const addCarsValidateSchema = checkSchema({
             options: { min: 3, max: 30 },
             errorMessage:
                 "Marque doit avoir entre 3 et 30 caractères et pas d'espaces."
-        }
+        },
+        escape: true,
+        errorMessage: "Le champ marque est invalide"
     },
 
     model: {
@@ -32,7 +42,9 @@ const addCarsValidateSchema = checkSchema({
             errorMessage:
                 "Modèle doit avoir entre 3 et 30 caractères et pas d'espaces.",
             options: { min: 3, max: 30 }
-        }
+        },
+        escape: true,
+        errorMessage: "Le champ modele est invalide"
     },
 
     color: {
@@ -41,7 +53,9 @@ const addCarsValidateSchema = checkSchema({
         isLength: {
             errorMessage: "Couleur doit avoir entre 3 et 30 caractères.",
             options: { min: 3, max: 30 }
-        }
+        },
+        escape: true,
+        errorMessage: "Le champ couleur est invalide"
     },
 
     doors: {
@@ -50,7 +64,12 @@ const addCarsValidateSchema = checkSchema({
         isInt: {
             options: { min: 2, max: 7 },
             errorMessage: "Le nombre de porte doit etre un nombre"
-        }
+        },
+        escape: true,
+        trim: true,
+        toInt: true,
+        isInt: { options: { min: 2, max: 7 } },
+        errorMessage: "Le champ nombre de porte est invalide"
     },
 
     bootSize: {
@@ -60,16 +79,24 @@ const addCarsValidateSchema = checkSchema({
             options: { min: 2, max: 7 },
             errorMessage:
                 "La taille du coffre doit etre un nombre enntre 2 et 7"
-        }
+        },
+        escape: true,
+        trim: true,
+        toInt: true,
+        isInt: { options: { min: 2, max: 7 } },
+        errorMessage: "Le champ taille du coffre est invalide"
     },
 
     type: {
         exists: { errorMessage: "Le champ type est requis" },
         isLength: {
+            options: { min: 3, max: 30 },
             errorMessage:
-                "Le type doit avoir entre 3 et 30 caractères et pas d'espaces.",
-            options: { min: 3, max: 30 }
-        }
+                "Le type doit avoir entre 3 et 30 caractères et pas d'espaces."
+        },
+        escape: true,
+        toString: true,
+        errorMessage: "Le champ type est invalide"
     },
 
     energy: {
@@ -79,24 +106,40 @@ const addCarsValidateSchema = checkSchema({
                 ["Essence", "Diesel", "Electrique", "Hybride", "LPG", "CNG"]
             ],
             errorMessage: "The energy type is not recognized!"
-        }
+        },
+        escape: true,
+        errorMessage: "Le champ energie est invalide"
     },
 
     isAutomatic: {
-        isBoolean: { errorMessage: "Automatique ou non ?" }
+        isBoolean: { errorMessage: "Automatique ou non ?" },
+        exists: { errorMessage: "Le champ automatique est requis" },
+        escape: true,
+        trim: true,
+        toBoolean: true,
+        errorMessage: "Le champ automatique est invalide"
     },
 
     passengers: {
         exists: { errorMessage: "Le champ passager est requis" },
         toInt: true,
         isInt: {
-            errorMessage: "Passager doit etre entre 2 et 9",
-            options: { min: 2, max: 9 }
-        }
+            options: { min: 2, max: 9 },
+            errorMessage: "Passager doit etre entre 2 et 9"
+        },
+        escape: true,
+        trim: true,
+        toInt: true,
+        errorMessage: "Le champ passager est invalide"
     },
 
     airCondition: {
-        isBoolean: { errorMessage: "Air Cond ou non ?" }
+        isBoolean: { errorMessage: "Air Cond ou non ?" },
+        exists: { errorMessage: "Le champ air condition est requis" },
+        escape: true,
+        trim: true,
+        toBoolean: true,
+        errorMessage: "Le champ air condition est invalide"
     },
 
     description: {
@@ -105,26 +148,11 @@ const addCarsValidateSchema = checkSchema({
             options: { min: 3, max: 3000 },
             errorMessage:
                 "Le déscription doit avoir entre 3 et 3000 caractères et pas d'espaces."
-        }
+        },
+        escape: true,
+        trim: true,
+        errorMessage: "Le champ description est invalide"
     }
-});
-
-// const validate = (validations) => {
-// 	return async (req, res, next) => {
-// 		await Promise.all(validations.map((validation) => validation.run(req)));
-
-// 		const errors = validationResult(req);
-// 		if (errors.isEmpty()) {
-// 			return next();
-// 		}
-
-// 		res.status(400).json({
-// 			errors: errors.array(),
-// 		});
-// 	};
-// };
-
-module.exports = {
-    addCarsValidateSchema
-    // validate,
 };
+
+module.exports = addCarsSchema;

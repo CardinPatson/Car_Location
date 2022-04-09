@@ -14,7 +14,7 @@ router.get("/:id", ordersCtrl.getOrderById);
 router.post("/", ordersCtrl.addOrder);
 
 // PUT
-router.put("/:id", carCtrl.updateOrder);
+router.put("/:id", ordersCtrl.updateOrder);
 
 // WARNING : You cannot delete an order because you must keep its owner for at least 5 years.
 
