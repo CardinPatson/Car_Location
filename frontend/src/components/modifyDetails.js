@@ -1,8 +1,40 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components';
 import Header from './header';
+import { useLocation } from "react-router-dom";
  
  function ModifyDetails(props){
+    const location = useLocation();
+    const { from } = location.state;
+    console.log(from);
+
+    const [name, setName] = useState("RS3_Gris-Nardo");
+    //const [image, setImage] = useState([]);
+    const [brand, setBrand] = useState(from.car["cars_brands"].brand);
+    const [model, setModel] = useState(from.car["cars_brands"].model);
+    const [color, setColor] = useState("Gris Nardo");
+    const [doors, setDoors] = useState(from.car["doors"]);
+    const [bootSize, setBootSize] = useState(from.car["boot_size"]);
+    const [energy, setEnergy] = useState(from.car["energy"]);
+    const [passengers, setPassenger] = useState(from.car["passengers"]);
+    const [type, setType] = useState("Sportif");
+    const [price, setPrice] = useState(290);
+    const [description, setDescription] = useState("");
+    const [airCondition, setAirCondition] = useState(from.car["air_conditioning"]);
+    const [isAutomatic, setIsAutomatic] = useState(from.car["is_automatic"]);
+    const [isAvailable, setIsAvailable] = useState(true);
+
+    const cancelChanges = () => {
+      setBrand(from.car["cars_brands"].brand);
+      setModel(from.car["cars_brands"].model);
+      setDoors(from.car["doors"]);
+      setBootSize(from.car["boot_size"]);
+      setEnergy(from.car["energy"]);
+      setPassenger(from.car["passengers"]);
+      setAirCondition(from.car["air_conditioning"]);
+      setIsAutomatic(from.car["is_automatic"]);
+    }
+
     return (
         <Container>
           <Header/>
@@ -16,31 +48,31 @@ import Header from './header';
                   <MarqueModel>
                     <div>Marque:</div>
                     <Line_right>
-                        <input type="text"/>
+                        <input type="text" value={brand} onChange={(e) => setBrand(e.target.value)} />
                     </Line_right>
                   </MarqueModel>
                   <MarqueModel>
                     <div>Modéle:</div>
                     <Line_right>
-                        <input type="text"/>
+                        <input type="text" value={model} onChange={(e) => setModel(e.target.value)} />
                     </Line_right>
                   </MarqueModel>
                   <DetailTable>
                     <Specs>
-                        <from action="" method="post">
+                        <form action="" method="post">
                         <div>
-                           <img src="./images/icons/door.svg" alt="door_icon"/><label for="porte">Nombre de portes:</label>  
-                           <input type="number" min={"4"} max={"7"}/>
+                           <img src="./images/icons/door.svg" alt="door_icon"/><label>Nombre de portes:</label>  
+                           <input type="number" min={"4"} max={"7"} value={doors} onChange={(e) => setDoors(e.target.value)}/>
                         </div>
                         <div>
-                          <img src="./images/icons/suitcase.svg" alt="suitcase icon"/><label for="coffre">Taille du coffre:</label>
-                          <input type="text"/> 
+                          <img src="./images/icons/suitcase.svg" alt="suitcase icon"/><label>Taille du coffre:</label>
+                          <input type="text" value={bootSize} onChange={(e) => setBootSize(e.target.value)}/> 
                         </div>
                         <div>
-                          <img src="./images/icons/lightning.svg" alt="lightning_icon"/><label for="energie">Énergie:</label>  
-                          <input type="text" id=""/> 
+                          <img src="./images/icons/lightning.svg" alt="lightning_icon"/><label>Énergie:</label>  
+                          <input type="text" id="" value={energy} onChange={(e) => setEnergy(e.target.value)}/> 
                         </div>
-                        </from>
+                        </form>
                     </Specs>
                     {/* <Ligne>
                       <div></div>
@@ -48,16 +80,16 @@ import Header from './header';
                     <Specs>
                         <form action="" method='post'>
                             <div>
-                              <img src="./images/icons/stick.svg" alt="stick_icon"/><label for="trans">Transmission:</label>
-                              <input type="text" size={"30"}/>
+                              <img src="./images/icons/stick.svg" alt="stick_icon"/><label>Transmission:</label>
+                              <input type="text" size={"30"} value={isAutomatic} onChange={(e) => setIsAutomatic(e.target.value)}/>
                             </div>
                             <div>
-                              <img src="./images/icons/seat.svg" alt="seat_icon"/><label for="trans">Nombre de places:</label>
-                              <input type="number" min={"5"} max={"12"}/>
+                              <img src="./images/icons/seat.svg" alt="seat_icon"/><label>Nombre de places:</label>
+                              <input type="number" min={"5"} max={"12"} value={passengers} onChange={(e) => setPassenger(e.target.value)}/>
                             </div>
                             <div>
-                              <img src="./images/icons/cool.svg" alt="air_icon"/><label for="trans">Aire conditionnée:</label>
-                              <input type="text"/>
+                              <img src="./images/icons/cool.svg" alt="air_icon"/><label>Aire conditionnée:</label>
+                              <input type="text" value={airCondition} onChange={(e) => setAirCondition(e.target.value)}/>
                             </div>
                         </form>
                     </Specs>
@@ -67,7 +99,7 @@ import Header from './header';
             </Test>
             <Buttons>
               <button className="__button__green">Sauvegarder </button>
-              <button className="__button__red">Annuler les changements</button>
+              <button className="__button__red" onClick={cancelChanges} >Annuler les changements</button>
               <button className="__button__blue">Modifier les images</button>
             </Buttons>
           </Content>
@@ -82,6 +114,10 @@ import Header from './header';
       margin: auto;
       display: flex;
       justify-content: center;
+      background-image: url("./images/car_9.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
     `;
 
     const Content = styled.div`
@@ -96,7 +132,8 @@ import Header from './header';
     
     const Test = styled.div`
       border: 0.5px solid black;
-      background : white;
+      border-radius: 5px;
+      background-color: rgb(245, 245, 245, 0.95);
       display: flex;
       flex-direction: column;
       width: 80%;
@@ -109,6 +146,7 @@ import Header from './header';
       background: #00a9f5;
       border: 1px black;
       padding: 6px;
+      border-radius: 5px 5px 0 0;
     `;
     
     const Detail = styled.div`
@@ -185,6 +223,7 @@ import Header from './header';
       }
       input[type='text'], [type='number'] {
         border: none;
+        background: none;
         border-bottom: solid 1px #00a9ff;
         font-size: 20px;
         letter-spacing: 1px;

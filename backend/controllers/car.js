@@ -11,6 +11,7 @@ const isUniqueCarName = async (name) => {
 };
 
 const getAllCars = async (req, res) => {
+
 	try {
 		const data = await cars.findAll({
 			where: { is_available: true },
@@ -27,6 +28,7 @@ const getAllCars = async (req, res) => {
 	} catch (error) {
 		return res.status(500).send(error.message);
 	}
+
 };
 
 const getCarById = async (req, res) => {
