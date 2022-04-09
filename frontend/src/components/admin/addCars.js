@@ -95,6 +95,11 @@ const AddCars = (props) => {
 		// localStorage.setItem("popup", !popUp);
 		props.addCars(carProperty);
 		// window.location.reload();
+
+		setTimeout(()=>{
+			window.location.reload();
+
+		}, 3000)
 	};
 	//INSERTION DE VOITURE DANS LA BASE DE DONNEES
 
