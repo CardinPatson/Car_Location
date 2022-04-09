@@ -10,11 +10,23 @@ module.exports = {
             },
             brand: {
                 allowNull: false,
-                type: Sequelize.TEXT
+                type: Sequelize.TEXT,
+                validate: {
+                    notEmpty: true,
+                    isString: true,
+                    min: 3,
+                    max: 50
+                }
             },
             model: {
                 allowNull: false,
-                type: Sequelize.TEXT
+                type: Sequelize.TEXT,
+                validate: {
+                    notEmpty: true,
+                    isString: true,
+                    min: 3,
+                    max: 50
+                }
             }
         });
     },

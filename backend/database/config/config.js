@@ -8,6 +8,7 @@ module.exports = {
         database: DB_NAME,
         host: DB_HOST,
         dialect: "postgres",
+        logging: false,
         define: {
             freezeTableName: true,
             timestamps: false
@@ -19,6 +20,7 @@ module.exports = {
         database: DB_NAME,
         host: DB_HOST,
         dialect: "postgres",
+        logging: false,
         define: {
             freezeTableName: true,
             timestamps: false
@@ -30,6 +32,7 @@ module.exports = {
         database: DB_NAME,
         host: DB_HOST,
         dialect: "postgres",
+        logging: false,
         define: {
             freezeTableName: true,
             timestamps: false

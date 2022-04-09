@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     cars.init(
         {
             name: DataTypes.STRING,
-            price: DataTypes.INTEGER,
+            price: DataTypes.REAL,
             brand_id: DataTypes.INTEGER,
             color: DataTypes.STRING,
             doors: DataTypes.INTEGER,
@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
             air_conditioning: DataTypes.BOOLEAN,
             is_available: DataTypes.BOOLEAN,
             passengers: DataTypes.INTEGER,
-            description: DataTypes.STRING
+            description: DataTypes.TEXT
         },
         {
             sequelize,

@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const carRoute = require("./routes/car");
+const ordersRoute = require("./routes/orders");
 
 //Configuration pour les variables d'environnement
 dotenv.config();
@@ -20,6 +21,7 @@ app.listen(process.env.APP_PORT, () => {
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 //RESTFULL API
-app.use("/api", carRoute);
+app.use("/api/cars", carRoute);
+app.use("/api/orders", ordersRoute);
 
 module.exports = app;
