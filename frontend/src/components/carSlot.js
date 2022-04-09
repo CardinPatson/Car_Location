@@ -5,6 +5,7 @@ import CarDetails from "./carDetails";
 
 const CarSlot = (props) => {
 	const handleDetail = () => {};
+
 	return (
 		<Container>
 			<Content>
