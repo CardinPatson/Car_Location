@@ -1,4 +1,7 @@
 const { cars, orders, customers } = require("../database/models");
+require("dotenv").config();
+
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 function differenceBetweenDates(date1, date2) {
     const diff = Math.abs(date2.getTime() - date1.getTime());
@@ -222,10 +225,36 @@ const updateOrder = async (req, res) => {
     }
 };
 
+// front
+const YOUR_DOMAIN = "http://localhost:3000";
+
+const PRICE_ID = "price_1KmyUUAid8mWK1L4RVC47QQ8";
+const CLIENT_MAIL = "bellaalirachid@gmail.com";
+const QUANTITY = 1;
+
+const payement = async (req, res) => {
+    const session = await stripe.checkout.sessions.create({
+        customer_email: CLIENT_MAIL,
+        line_items: [
+            {
+                // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                price: PRICE_ID,
+                quantity: QUANTITY
+            }
+        ],
+        mode: "payment",
+        success_url: `${YOUR_DOMAIN}?success=true`,
+        cancel_url: `${YOUR_DOMAIN}?canceled=true`
+    });
+
+    res.redirect(303, session.url);
+};
+
 module.exports = {
     getAllOrders,
     getOrderById,
     addOrder,
     getPrice,
-    updateOrder
+    updateOrder,
+    payement
 };
