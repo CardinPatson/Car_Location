@@ -1,4 +1,4 @@
-const { admins, customers, orders } = require("../database/users");
+const { admins, users, orders } = require("../database/models");
 require("dotenv").config();
 
 const isUniqueMail = async (mail) => {
@@ -14,4 +14,37 @@ const isUniqueMail = async (mail) => {
     } catch (error) {
         return false;
     }
+};
+
+const getAllUsers = async (req, res) => {
+    return;
+};
+
+const getUserById = async (req, res) => {
+    return;
+};
+
+const getUserByName = async (req, res) => {
+    return;
+};
+
+const addUser = async (req, res) => {
+    return;
+};
+
+const updateUser = async (req, res) => {
+    return;
+};
+
+const deleteUser = async (req, res) => {
+    return;
+};
+
+module.exports = {
+    getAllUsers,
+    getUserById,
+    getUserByName,
+    addUser,
+    updateUser,
+    deleteUser
 };

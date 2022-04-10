@@ -1,4 +1,4 @@
-const { cars, orders, customers } = require("../database/models");
+const { cars, orders, users } = require("../database/models");
 require("dotenv").config();
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
@@ -19,8 +19,8 @@ const getAllOrders = async (req, res) => {
                     as: "car"
                 },
                 {
-                    model: customers,
-                    as: "customer"
+                    model: users,
+                    as: "user"
                 }
             ]
         });
@@ -47,8 +47,8 @@ const getOrderById = async (req, res) => {
                     as: "car"
                 },
                 {
-                    model: customers,
-                    as: "customer"
+                    model: users,
+                    as: "user"
                 }
             ]
         });
@@ -74,13 +74,13 @@ const getPrice = async (req, res) => {
     try {
         const carId = parseInt(req.params.car_id);
 
-        const { date_departure, date_return } = req.body;
+        const { departure_date, return_date } = req.body;
 
         const carData = await cars.findByPk(carId);
 
         if (carData) {
             const price =
-                differenceBetweenDates(date_departure, date_return) *
+                differenceBetweenDates(departure_date, return_date) *
                 carData.price;
 
             return res.status(200).json({
@@ -98,16 +98,16 @@ const getPrice = async (req, res) => {
     }
 };
 
-const isCustomerActive = async (id) => {
+const isUserActive = async (id) => {
     try {
-        const customerData = await customers.findByPk(id, {
+        const userData = await users.findByPk(id, {
             attributes: ["is_active"]
         });
 
-        if (customerData.is_active) {
-            return customerData.is_active;
+        if (userData.is_active) {
+            return userData.is_active;
         } else {
-            throw new Error("Customer is not active");
+            throw new Error("user is not active");
         }
     } catch (error) {
         throw new Error(error);
@@ -118,13 +118,13 @@ const addOrder = async (req, res) => {
     try {
         const carId = parseInt(req.params.car_id);
 
-        const { date_departure, date_return, customer_id } = req.body;
+        const { departure_date, return_date, user_id } = req.body;
 
-        const customerActive = await isCustomerActive(orderData.customer_id);
+        const userActive = await isUserActive(orderData.user_id);
 
-        if (!customerActive) {
+        if (!userActive) {
             return res.status(404).json({
-                message: "Customer not Active"
+                message: "user not Active"
             });
         }
 
@@ -136,15 +136,15 @@ const addOrder = async (req, res) => {
             });
         }
 
-        const nbrOfDays = differenceBetweenDates(date_departure, date_return);
+        const nbrOfDays = differenceBetweenDates(departure_date, return_date);
 
         const price = carData.price * nbrOfDays;
 
         const orderData = await orders.create({
             car_id: carId,
-            customer_id: customer_id,
-            date_departure: date_departure,
-            date_return: date_return,
+            user_id: user_id,
+            departure_date: departure_date,
+            return_date: return_date,
             total_price: price
         });
 
@@ -163,13 +163,8 @@ const updateOrder = async (req, res) => {
     try {
         const orderId = parseInt(req.params.order_id);
 
-        const {
-            car_id,
-            customer_id,
-            date_departure,
-            date_return,
-            total_price
-        } = req.body;
+        const { car_id, user_id, departure_date, return_date, total_price } =
+            req.body;
 
         const orderData = await orders.findByPk(orderId);
 
@@ -187,24 +182,24 @@ const updateOrder = async (req, res) => {
             });
         }
 
-        const customerData = await customers.findByPk(customer_id);
+        const userData = await users.findByPk(user_id);
 
-        if (!customerData) {
+        if (!userData) {
             return res.status(404).json({
-                message: "Customer not found"
+                message: "user not found"
             });
         }
 
-        const nbrOfDays = differenceBetweenDates(date_departure, date_return);
+        const nbrOfDays = differenceBetweenDates(departure_date, return_date);
 
         const price = carData.price * nbrOfDays;
 
         const updatedOrderData = await orders.update(
             {
                 car_id: car_id,
-                customer_id: customer_id,
-                date_departure: date_departure,
-                date_return: date_return,
+                user_id: user_id,
+                departure_date: departure_date,
+                return_date: return_date,
                 total_price: price
             },
             {
@@ -234,7 +229,7 @@ const QUANTITY = 1;
 
 const payement = async (req, res) => {
     const session = await stripe.checkout.sessions.create({
-        customer_email: CLIENT_MAIL,
+        user_email: CLIENT_MAIL,
         line_items: [
             {
                 // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
