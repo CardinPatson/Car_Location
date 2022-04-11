@@ -7,10 +7,6 @@ const CarSlot = (props) => {
 
 	const handleDetail = () => {};
 
-<<<<<<< HEAD:frontend/src/components/carSlot.js
-=======
-
->>>>>>> master:frontend/src/components/cars/carSlot.js
 	return (
 		<Container>
 			<Content>

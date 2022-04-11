@@ -222,10 +222,6 @@ function Cars(props) {
 						) : (
 							<></>
 						)}
-<<<<<<< HEAD:frontend/src/components/cars.js
-=======
-
->>>>>>> master:frontend/src/components/cars/cars.js
 					</CarsPannel>
 				</Available>
 			</Content>
