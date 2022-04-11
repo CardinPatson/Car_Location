@@ -3,7 +3,11 @@ import { connect } from "react-redux";
 import Header from "../header";
 import styled from "styled-components";
 import CarSlot from "./carSlot";
-import { getCarsProperty, getCarsImages } from "../../action/carAction";
+import {
+	getCarsProperty,
+	getCarsImages,
+	getCarsSlot,
+} from "../../action/carAction";
 import localForage from "localforage";
 import "react-dates/initialize";
 import { SingleDatePicker } from "react-dates";
@@ -94,7 +98,7 @@ function Cars(props) {
 			endTime: endTime,
 		};
 		//requête vers l'api
-		props.getSlot(filterInfo);
+		// props.getSlot(filterInfo);
 
 		//si requête ok redirection vers la page /cars
 	};
@@ -502,6 +506,7 @@ const mapStateToDispatch = (dispatch) => {
 	return {
 		getCars: () => dispatch(getCarsProperty()),
 		getCarsImages: () => dispatch(getCarsImages()),
+		getSlot: (payload) => dispatch(getCarsSlot(payload)),
 	};
 };
 const connector = connect(mapStateToProps, mapStateToDispatch);
