@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Header from "./header";
+import Header from "../header";
 import styled from "styled-components";
 import Connexion from "./connexion";
 import Register from "./register";

@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/home";
-import Cars from "./components/cars";
+import Cars from "./components/cars/cars";
 import AddCars from "./components/admin/addCars";
-import Connreg from "./components/connreg";
-import ForgotPassword from "./components/forgotPassword";
-import CarReservation from "./components/carReservation";
-import CarDetails from "./components/carDetails";
-import ModifyDetails from './components/modifyDetails';
+import Connreg from "./components/connection/connreg";
+import ForgotPassword from "./components/clients/forgotPassword";
+import CarReservation from "./components/cars/carReservation";
+import CarDetails from "./components/cars/carDetails";
+import ModifyDetails from './components/cars/modifyDetails';
 
 function App() {
   return (
