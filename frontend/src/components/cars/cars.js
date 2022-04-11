@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import Header from "./header";
+import Header from "../header";
 import styled from "styled-components";
 import CarSlot from "./carSlot";
-import { getCarsProperty, getCarsImages } from "../action/carAction";
+import { getCarsProperty, getCarsImages } from "../../action/carAction";
 import localForage from "localforage";
 import "react-dates/initialize";
 import { SingleDatePicker } from "react-dates";
@@ -222,6 +222,10 @@ function Cars(props) {
 						) : (
 							<></>
 						)}
+<<<<<<< HEAD:frontend/src/components/cars.js
+=======
+
+>>>>>>> master:frontend/src/components/cars/cars.js
 					</CarsPannel>
 				</Available>
 			</Content>

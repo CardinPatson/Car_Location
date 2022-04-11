@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 const express = require("express");
 const router = express.Router();
+=======
+const router = require("express").Router();
+>>>>>>> master
 const { checkSchema } = require("express-validator");
 
 const addCarsSchema = require("../validations/addCarsSchema");

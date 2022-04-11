@@ -4,8 +4,13 @@ import { Link } from "react-router-dom";
 import CarDetails from "./carDetails";
 
 const CarSlot = (props) => {
+
 	const handleDetail = () => {};
 
+<<<<<<< HEAD:frontend/src/components/carSlot.js
+=======
+
+>>>>>>> master:frontend/src/components/cars/carSlot.js
 	return (
 		<Container>
 			<Content>
@@ -43,16 +48,13 @@ const CarSlot = (props) => {
 							<Link to="/carDetails" state={{ from: props }}>
 								<button
 									className="details__button"
-									onClick={(e) => {
-										handleDetail();
-									}}
 								>
 									Détails
 								</button>
 							</Link>
 						</div>
 
-						<Link to="/">
+						<Link to="/modifyDetails" state={{ from: props }}>
 							<button className="modify__button">Modifier</button>
 						</Link>
 						{/* <div className="car__detail" style={{ display: "none" }}>

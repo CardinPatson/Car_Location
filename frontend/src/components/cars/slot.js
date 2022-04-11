@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { getCarsSlot } from "../action/carAction";
+import { getCarsSlot } from "../../action/carAction";
 import "react-dates/initialize";
 import { SingleDatePicker } from "react-dates";
 import moment from "moment";

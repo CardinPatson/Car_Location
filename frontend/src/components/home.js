@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "./header";
-import Slot from "./slot";
+import Slot from "./cars/slot";
 import styled from "styled-components";
 import Carousel from "react-material-ui-carousel";
 import { useState } from "react";

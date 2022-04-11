@@ -34,7 +34,12 @@ module.exports = {
             },
             brand_id: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
+                validate: {
+                    notEmpty: true,
+                    isInt: true,
+                    toInt: true
+                }
                 // references: {
                 //     model: "brands",
                 //     key: "id",
@@ -47,8 +52,9 @@ module.exports = {
                 type: Sequelize.STRING,
                 validate: {
                     notEmpty: true,
-                    len: [3, 50],
-                    is: ["^[a-zA-Z0-9]+$", "i"]
+                    len: [3, 30],
+                    isString: true,
+                    toString: true
                 }
             },
             doors: {
@@ -57,8 +63,9 @@ module.exports = {
                 validate: {
                     notEmpty: true,
                     isInt: true,
-                    min: 2,
-                    max: 5
+                    toInt: true,
+                    min: 3,
+                    max: 7
                 }
             },
             boot_size: {
@@ -67,8 +74,9 @@ module.exports = {
                 validate: {
                     notEmpty: true,
                     isInt: true,
-                    min: 2,
-                    max: 5
+                    toInt: true,
+                    min: 1,
+                    max: 500
                 }
             },
             type: {
@@ -127,11 +135,10 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.INTEGER,
                 validate: {
-                    notEmpty: true,
                     isInt: true,
                     toInt: true,
                     min: 2,
-                    max: 5
+                    max: 7
                 }
             },
             description: {
@@ -139,8 +146,40 @@ module.exports = {
                 type: Sequelize.STRING(5000),
                 validate: {
                     notEmpty: true,
-                    len: [3, 5000],
+                    len: [1, 5000],
+                    toString: true,
                     isString: true
+                }
+            },
+            number_plate: {
+                allowNull: true,
+                type: Sequelize.STRING,
+                validate: {
+                    len: [3, 30],
+                    isString: true,
+                    toString: true
+                },
+                unique: false
+            },
+            mileage: {
+                allowNull: true,
+                type: Sequelize.INTEGER,
+                validate: {
+                    isInt: true,
+                    toInt: true,
+                    min: 0,
+                    max: 1000000
+                }
+            },
+            year: {
+                allowNull: true,
+                type: Sequelize.INTEGER,
+                validate: {
+                    isInt: true,
+                    toInt: true,
+                    min: 2000,
+                    max: 2100,
+                    len: [4] // 4 digits
                 }
             }
         });
