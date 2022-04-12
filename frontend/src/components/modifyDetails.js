@@ -2,6 +2,9 @@ import React, {useState} from 'react'
 import styled from 'styled-components';
 import Header from './header';
 import { useLocation } from "react-router-dom";
+import { deleteCars } from "../action/carAction";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
  
  function ModifyDetails(props){
     const location = useLocation();
@@ -23,6 +26,7 @@ import { useLocation } from "react-router-dom";
     const [airCondition, setAirCondition] = useState(from.car["air_conditioning"]);
     const [isAutomatic, setIsAutomatic] = useState(from.car["is_automatic"]);
     const [isAvailable, setIsAvailable] = useState(true);
+    const [isEnableDelete, setIsEnableDelete] = useState(false);
 
     const cancelChanges = () => {
       setBrand(from.car["cars_brands"].brand);
@@ -34,6 +38,14 @@ import { useLocation } from "react-router-dom";
       setAirCondition(from.car["air_conditioning"]);
       setIsAutomatic(from.car["is_automatic"]);
     }
+
+    const deleteCar = () => {
+      setIsEnableDelete(false);
+      console.log(from.car["id"]);
+      props.deleteCars({"id": from.car["id"]});
+    };
+
+    console.log(from);
 
     return (
         <Container>
@@ -47,16 +59,20 @@ import { useLocation } from "react-router-dom";
                 <Info>
                   <MarqueModel>
                     <div>Marque:</div>
-                    <Line_right>
+                    <LineRight>
                         <input type="text" value={brand} onChange={(e) => setBrand(e.target.value)} />
-                    </Line_right>
+                    </LineRight>
                   </MarqueModel>
                   <MarqueModel>
                     <div>Modéle:</div>
-                    <Line_right>
+                    <LineRight>
                         <input type="text" value={model} onChange={(e) => setModel(e.target.value)} />
-                    </Line_right>
+                    </LineRight>
                   </MarqueModel>
+                  <Images onClick= {() => {}}>
+                    <img src="images/images.svg" alt="cross to delete car" />
+                    <p>Modifier les images</p>
+                  </Images>
                   <DetailTable>
                     <Specs>
                         <form action="" method="post">
@@ -99,10 +115,38 @@ import { useLocation } from "react-router-dom";
             </Test>
             <Buttons>
               <button className="__button__green">Sauvegarder </button>
-              <button className="__button__red" onClick={cancelChanges} >Annuler les changements</button>
-              <button className="__button__blue">Modifier les images</button>
+              <button className="__button__blue" onClick={cancelChanges} >Annuler les changements</button>
+              <button className="__button__red" onClick = {() => {setIsEnableDelete(true);}}>Supprimer la voiture</button>
             </Buttons>
           </Content>
+          {isEnableDelete ? (
+            <Popup>
+              <Message>
+                <div>
+                  Êtes-vous sûr de vouloir supprimer cette voiture ?
+                </div>
+                <Accept>
+                  <Link to="/cars" className="__redirect">
+                    <button 
+                      className=""
+                      onClick={deleteCar}
+                      to="/cars"
+                    >
+                      Oui
+                    </button>
+                  </Link>
+                    <button 
+                      className=""
+                      onClick={() => {setIsEnableDelete(false);}}
+                    >
+                      Anuller
+                    </button>
+                </Accept>
+              </Message>
+            </Popup>
+            ) : (
+              ""
+          )}
         </Container>
       );
     }
@@ -129,7 +173,58 @@ import { useLocation } from "react-router-dom";
       padding-bottom: 30px;
       width: 100%;
     `; 
-    
+    const Popup = styled.div`
+      position: absolute;
+      min-width: 100%;
+      min-height: 100vh;
+      top: 0%;
+      left: 0%;
+      z-index: 101;
+      background-color: rgb(189, 189, 189, 0.5);
+      display: flex;
+      justify-content: center;
+    `;
+  
+    const Message = styled.div`
+      margin: 18%;
+      z-index: 102;
+      display: flex;
+      position: fixed;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-content: center;
+      align-items: center;
+      width: 35vw;
+      height: 25vh;
+      border: 1px solid #ff0f0f;
+      border-radius: 3px;
+      background-color: rgb(255, 255, 255, 1);
+      div {
+        padding: 3vh 2vh 2vh 2vh;
+        font-size: 1.8vw;
+        display: flex;
+        width: 100%;
+        gap: 10px;
+      }
+    `;  
+
+    const Accept = styled.div`
+      display: flex;
+      justify-content: center;
+      button {
+        border: 2px solid #00486D;
+        font-size: 1.5vw;
+        border-radius: 1vh;
+        width: 80%;
+        padding: 1vh;
+        margin: 2vh 1vh 2vh 1vh;
+        cursor: pointer;
+      }
+      .__redirect {
+        width: 50%;
+      }
+    `;
+
     const Test = styled.div`
       border: 0.5px solid black;
       border-radius: 5px;
@@ -163,6 +258,36 @@ import { useLocation } from "react-router-dom";
       /* flex : 0.6; */
       /* border : solid red 1px;  */
     `;
+
+    const Images = styled.div`
+      position: relative;
+      bottom: 28%;
+      left: 81%;
+      width: 18%;
+      height: 14%;
+      margin: 0;
+      padding: 2px;
+      border: 2px solid #00A9FF;
+      border-radius: 2px;
+      p {
+        color: #00A9FF;
+        font-weight: bold;
+        font-size: 1.2vw;
+        margin-top: 5px;
+      }
+      &:hover {
+        cursor: pointer;
+        background-color: #dedede;
+      }
+      img {
+        height: auto;
+        width: 15%;
+        margin-top: 5px;
+      }
+      &:hover img {
+        transform: scale(1.1);
+      }
+    `;
     
     const DetailTable = styled.div`
       padding: 2%;
@@ -179,7 +304,7 @@ import { useLocation } from "react-router-dom";
       text-align: left;
     `;
   
-    const Line_right = styled.div`
+    const LineRight = styled.div`
       display: flex;
       font-size: 3vh;
       margin-left: 5px;
@@ -191,7 +316,7 @@ import { useLocation } from "react-router-dom";
         background: none;
         border: none;
         border-bottom: solid 1px #00a9ff;
-        font-size: 1.000em;
+        font-size: 1.5vw;
         letter-spacing: 1px;
         margin: 0em 0.8em 0.875em 0;
         padding: 0 0 0 0;
@@ -225,7 +350,7 @@ import { useLocation } from "react-router-dom";
         border: none;
         background: none;
         border-bottom: solid 1px #00a9ff;
-        font-size: 20px;
+        font-size: 1.5vw;
         letter-spacing: 1px;
         margin: 0em 0 0em 5px;
         padding: 0 0 0 0;
@@ -307,4 +432,16 @@ import { useLocation } from "react-router-dom";
     //   margin: 0vh 1vh 0vh 1vh;
     // `; */
     
- export default ModifyDetails;
+    const mapStateToProps = (state) => {
+      return {
+        //recuperation des propriétés nécessaires
+      };
+    };
+    const mapStateToDispatch = (dispatch) => {
+      return {
+        //property est un objet contenant les propriétés du véhicule
+        deleteCars: (property) => dispatch(deleteCars(property)),
+      };
+    };
+const connector = connect(mapStateToProps, mapStateToDispatch);
+export default connector(ModifyDetails);

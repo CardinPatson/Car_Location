@@ -10,7 +10,7 @@ function CarDetails(props) {
 
     console.log(location);
     const { from } = location.state;
-    console.log(from);
+    console.log(from.car);
 
     function Item(item) {
         return (
@@ -73,11 +73,11 @@ function CarDetails(props) {
                         <Info>
                             <Name>
                                 <div>
-                                    {from.car.brand
-                                        ? from.car.brand
+                                    {from.car["cars_brands"].brand
+                                        ? from.car["cars_brands"].brand
                                         : "Marque voiture"}{" "}
-                                    {from.car.model
-                                        ? from.car.model
+                                    {from.car["cars_brands"].model
+                                        ? from.car["cars_brands"].model
                                         : "Modèle voiture"}
                                 </div>
                                 <LineRight>
