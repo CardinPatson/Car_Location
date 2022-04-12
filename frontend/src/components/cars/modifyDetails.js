@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import styled from 'styled-components';
 import Header from '../header';
 import { useLocation } from "react-router-dom";
-import { deleteCars } from "../action/carAction";
+import { deleteCars } from "../../action/carAction";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
  
@@ -101,8 +101,13 @@ import { Link } from "react-router-dom";
                         <div>Disponible:</div>
                         <input type="checkbox" checked={isAvailable} onChange={(e) => setIsAvailable(e.target.checked)}/>
                       </OneSpec>
-                    </SpecsColumn>
+                    </SpecsColumn>                  
+                    <Images onClick= {() => {}}>
+                      <img src="images/images.svg" alt="cross to delete car" />
+                      <p>Modifier les images</p>
+                  </Images>
                   </TopInfo> 
+
                   <DetailTable>
                     <Specs>
                         <form action="" method="post">
@@ -294,12 +299,13 @@ import { Link } from "react-router-dom";
     `;
 
     const Images = styled.div`
-      position: relative;
-      bottom: 28%;
-      left: 81%;
-      width: 18%;
-      height: 14%;
-      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      flex-grow: 0;
+      width: 30%;
+      margin-left: 40px;
       padding: 2px;
       border: 2px solid #00A9FF;
       border-radius: 2px;
@@ -332,7 +338,8 @@ import { Link } from "react-router-dom";
     const TopInfo = styled.div`
       display: flex;
       flex-direction: row;
-      width: 75%;
+      width: 100%;
+      gap: 5px;
     `;
 
     const SpecsColumn = styled.div`
@@ -353,6 +360,7 @@ import { Link } from "react-router-dom";
       margin-left: 5px;
       div {
         margin-right: 5px;
+        font-size: 1.6vw;
       }
       input[type='text'], [type='number'] {
         background: none;
@@ -368,7 +376,9 @@ import { Link } from "react-router-dom";
        }
        input[type='checkbox']{
          padding: 8px;
+         margin-top: 3%;
          box-sizing: content-box;
+         
        }
     `;
     
