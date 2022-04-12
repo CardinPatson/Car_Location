@@ -12,17 +12,17 @@ import { useLocation } from "react-router-dom";
     //const [image, setImage] = useState([]);
     const [brand, setBrand] = useState(from.car["cars_brands"].brand);
     const [model, setModel] = useState(from.car["cars_brands"].model);
-    const [color, setColor] = useState("Gris Nardo");
+    const [color, setColor] = useState(from.car["color"]);
     const [doors, setDoors] = useState(from.car["doors"]);
     const [bootSize, setBootSize] = useState(from.car["boot_size"]);
     const [energy, setEnergy] = useState(from.car["energy"]);
     const [passengers, setPassenger] = useState(from.car["passengers"]);
-    const [type, setType] = useState("Sportif");
-    const [price, setPrice] = useState(290);
+    const [type, setType] = useState(from.car["type"]);
+    const [price, setPrice] = useState(from.car["price"]);
     const [description, setDescription] = useState("");
     const [airCondition, setAirCondition] = useState(from.car["air_conditioning"]);
     const [isAutomatic, setIsAutomatic] = useState(from.car["is_automatic"]);
-    const [isAvailable, setIsAvailable] = useState(true);
+    const [isAvailable, setIsAvailable] = useState(from.car["is_available"]);
 
     const cancelChanges = () => {
       setBrand(from.car["cars_brands"].brand);
@@ -33,6 +33,10 @@ import { useLocation } from "react-router-dom";
       setPassenger(from.car["passengers"]);
       setAirCondition(from.car["air_conditioning"]);
       setIsAutomatic(from.car["is_automatic"]);
+      setType(from.car["type"]);
+      setColor(from.car["color"]);
+      setIsAvailable(from.car["is_available"]);
+      setPrice(from.car["price"]);
     }
 
     return (
@@ -45,18 +49,49 @@ import { useLocation } from "react-router-dom";
               </Banner>
               <Detail>
                 <Info>
-                  <MarqueModel>
-                    <div>Marque:</div>
-                    <Line_right>
+                  <TopInfo>
+                    <SpecsColumn>
+                    
+                      <OneSpec>
+                        <div>Marque:</div>
                         <input type="text" value={brand} onChange={(e) => setBrand(e.target.value)} />
-                    </Line_right>
-                  </MarqueModel>
-                  <MarqueModel>
-                    <div>Modéle:</div>
-                    <Line_right>
-                        <input type="text" value={model} onChange={(e) => setModel(e.target.value)} />
-                    </Line_right>
-                  </MarqueModel>
+                          
+                      </OneSpec>
+                    
+                      <OneSpec>
+                        <div>Prix:</div>
+                        <input type="number" min={"10"} max={""}  value={price} onChange={(e) => setPrice(e.target.value)}/>
+                      </OneSpec>
+                      {/* 
+                          
+                      
+                      <div>Couleur:</div>
+                      <Line_right>
+                        <input type="text"/>
+                      </Line_right> */}
+                    </SpecsColumn>
+                    <SpecsColumn>
+                      <OneSpec>
+                        <div>Modéle:</div>
+                        <input type="text" value={model} onChange={(e) => setModel(e.target.value)}/> 
+                      </OneSpec>
+                      <OneSpec>
+                        <div>Type:</div>
+                        <input type="text" value={type} onChange={(e) => setType(e.target.value)}/>
+                      </OneSpec>
+                    </SpecsColumn>
+                    <SpecsColumn>
+                      <OneSpec>
+                        <div>Couleur:</div>
+                        <input type="text" value={color} onChange={(e) => setColor(e.target.value)}/> 
+                      </OneSpec>
+                      <OneSpec>
+                        <div>Disponible:</div>
+                        <input type="checkbox" checked={isAvailable} onChange={(e) => setIsAvailable(e.target.checked)}/>
+                      </OneSpec>
+                    </SpecsColumn>
+                  </TopInfo> 
+                  
                   <DetailTable>
                     <Specs>
                         <form action="" method="post">
@@ -66,11 +101,12 @@ import { useLocation } from "react-router-dom";
                         </div>
                         <div>
                           <img src="./images/icons/suitcase.svg" alt="suitcase icon"/><label>Taille du coffre:</label>
-                          <input type="text" value={bootSize} onChange={(e) => setBootSize(e.target.value)}/> 
+                          <input type="text" value={bootSize} onChange={(e) => setBootSize(e.target.value)}/>
                         </div>
                         <div>
                           <img src="./images/icons/lightning.svg" alt="lightning_icon"/><label>Énergie:</label>  
                           <input type="text" id="" value={energy} onChange={(e) => setEnergy(e.target.value)}/> 
+                          
                         </div>
                         </form>
                     </Specs>
@@ -81,15 +117,18 @@ import { useLocation } from "react-router-dom";
                         <form action="" method='post'>
                             <div>
                               <img src="./images/icons/stick.svg" alt="stick_icon"/><label>Transmission:</label>
-                              <input type="text" size={"30"} value={isAutomatic} onChange={(e) => setIsAutomatic(e.target.value)}/>
+                              <input type="checkbox" size={"30"} checked={isAutomatic} onChange={(e) => setIsAutomatic(e.target.checked)}/>
+                              
                             </div>
                             <div>
                               <img src="./images/icons/seat.svg" alt="seat_icon"/><label>Nombre de places:</label>
                               <input type="number" min={"5"} max={"12"} value={passengers} onChange={(e) => setPassenger(e.target.value)}/>
+                              
                             </div>
                             <div>
                               <img src="./images/icons/cool.svg" alt="air_icon"/><label>Aire conditionnée:</label>
-                              <input type="text" value={airCondition} onChange={(e) => setAirCondition(e.target.value)}/>
+                              <input type="checkbox" checked={airCondition} onChange={(e) => setAirCondition(e.target.checked)}/>
+                              
                             </div>
                         </form>
                     </Specs>
@@ -99,8 +138,9 @@ import { useLocation } from "react-router-dom";
             </Test>
             <Buttons>
               <button className="__button__green">Sauvegarder </button>
-              <button className="__button__red" onClick={cancelChanges} >Annuler les changements</button>
+              <button className="__button__red" onClick={cancelChanges}>Annuler les changements</button>
               <button className="__button__blue">Modifier les images</button>
+              
             </Buttons>
           </Content>
         </Container>
@@ -121,7 +161,7 @@ import { useLocation } from "react-router-dom";
     `;
 
     const Content = styled.div`
-      margin-top: 5%;
+      margin-top: 10%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -170,22 +210,36 @@ import { useLocation } from "react-router-dom";
       display: flex;
       flex-direction: row;
     `;
-    
-    const MarqueModel = styled.div`
+    const TopInfo = styled.div`
       display: flex;
+      flex-direction: row;
+      width: 75%;
+    `;
+
+    const SpecsColumn = styled.div`
+      display: flex;
+      flex-direction: column;
       align-content: center; 
       margin: 20px 0 0 0;
-      font-size: 2vw;
+      font-size: 1.5vw;
       text-align: left;
     `;
-  
-    const Line_right = styled.div`
+    // const MarqueModelRight = styled.div`
+    //   display: flex;
+    //   flex-direction: row;
+    //   font-size: 1.5vw;
+    //   text-align: left;
+    // `;
+    const CheckBox = styled.div`
+      
+      `;
+    const OneSpec = styled.div`
       display: flex;
+      flex-direction: row;
       font-size: 3vh;
       margin-left: 5px;
       div {
-        border-left: 1px solid black;
-        border-width: 5em
+        margin-right: 5px;
       }
       input[type='text'], [type='number'] {
         background: none;
@@ -195,10 +249,14 @@ import { useLocation } from "react-router-dom";
         letter-spacing: 1px;
         margin: 0em 0.8em 0.875em 0;
         padding: 0 0 0 0;
-        width: 60%;
+        width: 100%;
         text-align : left;
         outline: none;
-       }   
+       }
+       input[type='checkbox']{
+         padding: 8px;
+         box-sizing: content-box;
+       }
     `;
     
     const Specs = styled.div`
