@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from './header'
+import Header from '../header'
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 

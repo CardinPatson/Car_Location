@@ -38,7 +38,10 @@ module.exports = (sequelize, DataTypes) => {
             air_conditioning: DataTypes.BOOLEAN,
             is_available: DataTypes.BOOLEAN,
             passengers: DataTypes.INTEGER,
-            description: DataTypes.TEXT
+            description: DataTypes.TEXT,
+            number_plate: DataTypes.STRING,
+            year: DataTypes.INTEGER,
+            mileage: DataTypes.INTEGER
         },
         {
             sequelize,

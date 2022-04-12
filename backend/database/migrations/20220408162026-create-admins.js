@@ -2,12 +2,17 @@
 module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable("admins", {
-            customer_id: {
+            user_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
-                unique: true
+                unique: true,
+                validate: {
+                    notEmpty: true,
+                    isInt: true,
+                    toInt: true
+                }
                 // references: {
-                //     model: "customers",
+                //     model: "users",
                 //     key: "id"
                 // }
             }

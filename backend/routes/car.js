@@ -1,5 +1,4 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
 const { checkSchema } = require("express-validator");
 
 const addCarsSchema = require("../validations/addCarsSchema");

@@ -1,6 +1,4 @@
-const express = require("express");
-const router = express.Router();
-
+const router = require("express").Router();
 const ordersCtrl = require("../controllers/orders");
 
 // API RESTFULL
@@ -12,6 +10,7 @@ router.get("/:id", ordersCtrl.getOrderById);
 
 // POST
 router.post("/", ordersCtrl.addOrder);
+router.post("/create-checkout-session", ordersCtrl.payement);
 
 // PUT
 router.put("/:id", ordersCtrl.updateOrder);

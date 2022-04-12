@@ -16,11 +16,11 @@ module.exports = {
                 //     key: "id"
                 // }
             },
-            customer_id: {
+            user_id: {
                 allowNull: false,
                 type: Sequelize.INTEGER
                 // references: {
-                //     model: "customers",
+                //     model: "users",
                 //     key: "id"
                 // }
             },
@@ -29,7 +29,7 @@ module.exports = {
                 type: Sequelize.DATE,
                 defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
             },
-            data_deparature: {
+            departure_date: {
                 allowNull: false,
                 type: Sequelize.DATE
             },
