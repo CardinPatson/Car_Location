@@ -16,7 +16,7 @@ const AddCars = (props) => {
 	const [bootSize, setBootSize] = useState(143);
 	const [energy, setEnergy] = useState("Essence");
 	const [passengers, setPassenger] = useState(5);
-	const [type, setType] = useState("Sportif");
+	const [type, setType] = useState("Sportive");
 	const [price, setPrice] = useState(290);
 	const [description, setDescription] = useState("");
 	const [airCondition, setAirCondition] = useState(true);
@@ -43,6 +43,7 @@ const AddCars = (props) => {
 		if (!image) return;
 		setImage([...image, URL.createObjectURL(url)]);
 		setUrlImage([...urlImage, url]);
+		// console.log(urlImage);
 	};
 
 	const handeSubmit = (e) => {
@@ -92,9 +93,10 @@ const AddCars = (props) => {
 				return;
 			}
 		}
-		// localStorage.setItem("popup", !popUp);
+		localStorage.setItem("popup", !popUp);
+		setPopUp(localStorage.getItem("popup"));
 		props.addCars(carProperty);
-		// window.location.reload();
+		// window.location.reload(); 
 
 		setTimeout(()=>{
 			window.location.reload();
@@ -576,7 +578,7 @@ const Form = styled.form`
 const Popup = styled.div`
 	position: absolute;
 	min-width: 100%;
-	min-height: 138%;
+	min-height: 100vh;
 	top: 0%;
 	left: 0%;
 	z-index: 101;

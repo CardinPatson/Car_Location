@@ -19,7 +19,7 @@ function CarReservation(){
                     <Photo>
                         <img src="./images/car_3.jpg" />
                     </Photo>
-                    <Name>{data.car.brand ? data.car.brand : "Marque voiture"}{" "}{data.car.model ? data.car.model : "Modèle voiture"}</Name>
+                    <Name>{data.car["cars_brands"].brand ? data.car["cars_brands"].brand : "Marque voiture"}{" "}{data.car["cars_brands"].model ? data.car["cars_brands"].model : "Modèle voiture"}</Name>
                     <Type>{data.car.type ? data.car.type : "Sportive"}</Type>
                     <Ligne>
                         <div></div>
