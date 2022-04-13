@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
-import styled from 'styled-components';
-import Header from '../header';
+import React, { useState } from "react";
+import styled from "styled-components";
+import Header from "../header";
 import { useLocation } from "react-router-dom";
 import { deleteCars, modifyCarsProperty } from "../../action/carAction";
 import { connect } from "react-redux";
@@ -28,6 +28,7 @@ import { Link } from "react-router-dom";
     const [isEnableDelete, setIsEnableDelete] = useState(false);
     const [isEnableUpdate, setIsEnableUpdate] = useState(false);
 
+
     const cancelChanges = () => {
       setBrand(from.car["cars_brands"].brand);
       setModel(from.car["cars_brands"].model);
@@ -41,12 +42,12 @@ import { Link } from "react-router-dom";
       setColor(from.car["color"]);
       setIsAvailable(from.car["is_available"]);
       setPrice(from.car["price"]);
-    }
+    };
 
     const deleteCar = () => {
       setIsEnableDelete(false);
       console.log(from.car["id"]);
-      props.deleteCars({"id": from.car["id"]});
+      props.deleteCars({ id: from.car["id"] });
     };
 
     const handleUpdate = () => {
@@ -481,7 +482,7 @@ import { Link } from "react-router-dom";
         width: 30%;	 
         outline: none;
       }
-`;
+    `;
     const Buttons = styled.div`
       display: flex;
       flex-direction: row;
@@ -493,8 +494,8 @@ import { Link } from "react-router-dom";
       .__button__blue {
         font-size: 3vh;
         color: #333333;
-        background-color: #00A9FF;
-        border: 2px solid #00486D;
+        background-color: #00a9ff;
+        border: 2px solid #00486d;
         font-size: 1.5vw;
         border-radius: 1vh;
         width: 80%;
@@ -504,8 +505,8 @@ import { Link } from "react-router-dom";
       }
       .__button__blue:hover {
         color: white;
-        background-color: #0078B5;
-        border: 2px solid #00A9FF;
+        background-color: #0078b5;
+        border: 2px solid #00a9ff;
       }
       .__button__blue:active {
         transform: scale(0.95);
@@ -548,25 +549,20 @@ import { Link } from "react-router-dom";
       .__button__green:active {
         transform: scale(0.95);
       }
-    `;
-    
-    /* const Border = styled.div``;
-    // const Name = styled.div`
-    //   font-size: 4vh;
-    //   margin: 0vh 1vh 0vh 1vh;
-    // `; */
-    
-    const mapStateToProps = (state) => {
-      return {
-        //recuperation des propriétés nécessaires
-      };
+`;
+
+  const mapStateToProps = (state) => {
+    return {
+      //recuperation des propriétés nécessaires
     };
-    const mapStateToDispatch = (dispatch) => {
-      return {
-        //property est un objet contenant les propriétés du véhicule
-        deleteCars: (property) => dispatch(deleteCars(property)),
-        modifyCarsProperty: (property) => dispatch(modifyCarsProperty(property)),
-      };
+  };
+  const mapStateToDispatch = (dispatch) => {
+    return {
+      //property est un objet contenant les propriétés du véhicule
+      deleteCars: (property) => dispatch(deleteCars(property)),
+      modifyCarsProperty: (property) => dispatch(modifyCarsProperty(property)),
     };
+  };
+  
 const connector = connect(mapStateToProps, mapStateToDispatch);
 export default connector(ModifyDetails);
