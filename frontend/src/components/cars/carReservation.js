@@ -17,7 +17,7 @@ function CarReservation(){
         <Content>
             <Detail>
                     <Photo>
-                        <img src="./images/car_3.jpg" />
+                        <img src={data.images[0]} />
                     </Photo>
                     <Name>{data.car["cars_brands"].brand ? data.car["cars_brands"].brand : "Marque voiture"}{" "}{data.car["cars_brands"].model ? data.car["cars_brands"].model : "Modèle voiture"}</Name>
                     <Type>{data.car.type ? data.car.type : "Sportive"}</Type>
@@ -118,12 +118,14 @@ const Detail = styled.div`
 
 const Photo = styled.div`
     width: 100%;
-    height: 20%;
+    height: 25%;
     margin: 0vh 0vh 3vh 0vh;
     img {
-        object-fit: contain;
-        width: auto;
-        height: 100%;
+        width: 90%;
+		height: auto;
+		object-fit: contain;
+		object-position: center;
+        border-radius: 2px;
     }
 `;
 
