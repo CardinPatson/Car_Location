@@ -216,11 +216,7 @@ function Cars(props) {
 						{props.cars.length ? (
 							props.cars.map((car) => {
 								return (
-									<CarSlot
-										key={car.car_id}
-										car={car}
-										images={carsImages[car.id]}
-									/>
+									<CarSlot key={car.id} car={car} images={carsImages[car.id]} />
 								);
 							})
 						) : (

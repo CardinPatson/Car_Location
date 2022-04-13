@@ -1,4 +1,9 @@
-import { ADD_CARS, GET_CARS, GET_CARS_IMAGES, DELETE_CARS, UPDATE_CARS } from "./actionTypes";
+import {
+	ADD_CARS,
+	GET_CARS,
+	GET_CARS_IMAGES,
+	DELETE_CARS,
+} from "./actionTypes";
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "axios";
 
@@ -81,6 +86,7 @@ export const getCarsProperty = createAsyncThunk(
 				console.error(err);
 			}
 		);
+		console.log(cars.data);
 		thunkAPI.dispatch(addCarsInfo(cars.data));
 	}
 );
@@ -123,7 +129,7 @@ export const deleteCars = createAsyncThunk(
 		const id = arg["id"];
 		const request = await Axios.delete(
 			`http://localhost:3001/api/cars/${id}`
-		) .catch((err) => {
+		).catch((err) => {
 			console.error(err);
 		});
 	}

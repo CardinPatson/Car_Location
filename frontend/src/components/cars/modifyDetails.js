@@ -65,11 +65,6 @@ import { Link } from "react-router-dom";
       props.modifyCarsProperty(from.car);
     };
 
-    const deleteCar = () => {
-      setIsEnableDelete(false);
-      console.log(from.car["id"]);
-      props.deleteCars({"id": from.car["id"]});
-    };
 
     console.log(from);
 
