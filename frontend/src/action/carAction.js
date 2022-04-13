@@ -102,7 +102,7 @@ export const getCarsImages = createAsyncThunk(
 export const getCarsSlot = createAsyncThunk(
 	"GET_CARS_SLOT",
 	async (arg, thunkAPI) => {
-		const request = await Axios.get(`http://localhost:3001/api/cars`, {
+		const request = await Axios.get(`http://localhost:3001/api/orders`, {
 			params: {
 				startDate: arg.startDate,
 				startTime: arg.startTime,
