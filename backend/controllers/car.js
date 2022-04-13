@@ -39,9 +39,9 @@ const getAllCars = async (req, res) => {
 };
 
 const getCarById = async (req, res) => {
-    try {
-        if (req.params.id) {
-            const id = parseInt(req.params.id);
+	try {
+		if (req.params.id) {
+			const id = parseInt(req.params.id);
 
             const data = await cars.findByPk(id, {
                 include: [
@@ -65,30 +65,30 @@ const getCarById = async (req, res) => {
 };
 
 const getCarByName = async (req, res) => {
-    try {
-        if (typeof req.params.name === "string") {
-            const name = req.params.name;
+	try {
+		if (typeof req.params.name === "string") {
+			const name = req.params.name;
 
-            const data = await cars.findOne({
-                where: { name: name },
-                include: [
-                    {
-                        model: cars_brands,
-                        required: true,
-                        as: "cars_brands"
-                    },
-                    {
-                        model: images,
-                        required: true,
-                        as: "images"
-                    }
-                ]
-            });
-            return res.status(200).json({ data });
-        }
-    } catch (error) {
-        return res.status(500).send(error.message);
-    }
+			const data = await cars.findOne({
+				where: { name: name },
+				include: [
+					{
+						model: cars_brands,
+						required: true,
+						as: "cars_brands",
+					},
+					{
+						model: images,
+						required: true,
+						as: "images",
+					},
+				],
+			});
+			return res.status(200).json({ data });
+		}
+	} catch (error) {
+		return res.status(500).send(error.message);
+	}
 };
 
 const getCarsImages = async (req, res) => {

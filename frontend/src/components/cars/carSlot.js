@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import CarDetails from "./carDetails";
 
 const CarSlot = (props) => {
-
 	const handleDetail = () => {};
 
 	return (
@@ -42,11 +41,7 @@ const CarSlot = (props) => {
 					<Details>
 						<div>
 							<Link to="/carDetails" state={{ from: props }}>
-								<button
-									className="details__button"
-								>
-									Détails
-								</button>
+								<button className="details__button">Détails</button>
 							</Link>
 						</div>
 
@@ -85,6 +80,11 @@ const Pic = styled.div`
 		width: 42vh;
 		height: 25vh;
 		object-fit: content;
+	}
+	@media (max-width: 1378px) {
+		img {
+			width: 35vh;
+		}
 	}
 	@media (max-width: 1200px) {
 		img {
