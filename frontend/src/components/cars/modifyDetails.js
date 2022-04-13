@@ -27,8 +27,6 @@ import { Link } from "react-router-dom";
     const [isAvailable, setIsAvailable] = useState(true);
     const [isEnableDelete, setIsEnableDelete] = useState(false);
     const [isEnableUpdate, setIsEnableUpdate] = useState(false);
-
-
     const cancelChanges = () => {
       setBrand(from.car["cars_brands"].brand);
       setModel(from.car["cars_brands"].model);
@@ -66,6 +64,14 @@ import { Link } from "react-router-dom";
       console.log(from.car);
       props.modifyCarsProperty(from.car);
     };
+
+    const deleteCar = () => {
+      setIsEnableDelete(false);
+      console.log(from.car["id"]);
+      props.deleteCars({"id": from.car["id"]});
+    };
+
+    console.log(from);
 
     return (
         <Container>
@@ -162,6 +168,7 @@ import { Link } from "react-router-dom";
               </Detail>
             </Test>
             <Buttons>
+
               <button className="__button__green" onClick = {() => {setIsEnableUpdate(true);}}>Sauvegarder </button>
               <button className="__button__blue" onClick={cancelChanges} >Annuler les changements</button>
               <button className="__button__red" onClick = {() => {setIsEnableDelete(true);}}>Supprimer la voiture</button>
@@ -421,6 +428,10 @@ import { Link } from "react-router-dom";
       font-size: 1.5vw;
       text-align: left;
     `;
+
+    const CheckBox = styled.div`
+      
+      `;
 
     const OneSpec = styled.div`
       display: flex;
