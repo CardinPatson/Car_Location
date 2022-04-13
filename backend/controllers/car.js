@@ -1,6 +1,7 @@
 const multerMiddleware = require("../middleware/image");
 
 const { images, cars, cars_brands } = require("../database/models");
+const { Op } = require("sequelize");
 
 const isUniqueCarName = async (name) => {
     try {
@@ -178,6 +179,8 @@ const addCarImages = async (req, res, next) => {
     }
 };
 
+// Seule petit problème : Si on modifie la marque et le modèle, les ancienne données resterons dans la DB meme s'il ne sont reliée a aucune voiture !!!
+
 const updateCar = async (req, res) => {
     const {
         newName,
@@ -197,115 +200,52 @@ const updateCar = async (req, res) => {
     } = req.body;
 
     try {
-        if (req.params.id) {
-            const car_id = parseInt(req.params.id);
-
-            const reponse = await cars.findByPk(car_id, {
-                include: [
-                    {
-                        model: cars_brands,
-                        required: true,
-                        as: "cars_brands"
-                    }
-                ]
+        if (!req.params.id) {
+            return res.status(400).json({
+                message: "Bad request"
             });
-
-            if (
-                newName == reponse.name &&
-                newPrice == reponse.price &&
-                newBrand == reponse.cars_brands.brand &&
-                newModel == reponse.cars_brands.model &&
-                newColor == reponse.color &&
-                newDoors == reponse.doors &&
-                newBootSize == reponse.boot_size &&
-                newType == reponse.type &&
-                newEnergy == reponse.energy &&
-                newIsAutomatic == reponse.is_automatic &&
-                newIsAvailable == reponse.is_available &&
-                newPassengers == reponse.passengers &&
-                newAirConditioning == reponse.air_conditioning &&
-                newDescription == reponse.description
-            ) {
-                return res.status(200).json({
-                    message: "No changes"
-                });
-            }
-
-            const count = await cars.count({
-                where: { brand_id: reponse.brand_id, id: reponse.id },
-                include: [
-                    {
-                        model: cars_brands,
-                        required: true,
-                        as: "cars_brands"
-                    }
-                ]
-            });
-
-            console.log("Count : --> ", count);
-
-            if (count == 1) {
-                const dataCarsBrands = await cars_brands.update(
-                    { brand: newBrand, model: newModel },
-                    { where: { id: reponse.brand_id } }
-                );
-
-                const data = await cars.update(
-                    {
-                        name: newName,
-                        price: newPrice,
-                        brand_id: dataCarsBrands.id,
-                        color: newColor,
-                        doors: newDoors,
-                        boot_size: newBootSize,
-                        type: newType,
-                        energy: newEnergy,
-                        is_automatic: newIsAutomatic,
-                        air_conditioning: newAirConditioning,
-                        is_available: newIsAvailable,
-                        passengers: newPassengers,
-                        description: newDescription
-                    },
-                    {
-                        where: { id: car_id }
-                    }
-                );
-                return res.status(200).json({ data });
-            } else if (count > 1) {
-                const dataCarsBrands = await cars_brands.findOrCreate({
-                    where: { brand: newBrand, model: newModel },
-                    attributes: ["id"]
-                });
-
-                const data = await cars.update(
-                    {
-                        name: newName,
-                        price: newPrice,
-                        brand_id: dataCarsBrands.id,
-                        color: newColor,
-                        doors: newDoors,
-                        boot_size: newBootSize,
-                        type: newType,
-                        energy: newEnergy,
-                        is_automatic: newIsAutomatic,
-                        air_conditioning: newAirConditioning,
-                        is_available: newIsAvailable,
-                        passengers: newPassengers,
-                        description: newDescription
-                    },
-                    {
-                        where: { id: car_id }
-                    }
-                );
-                return res.status(200).json({ data });
-            } else {
-                console.log("!!! Else ... Bizarre !!!");
-                return res.status(500).json({
-                    message: "Un truc vraiment bizarre !!!"
-                });
-            }
         }
+        const car_id = parseInt(req.params.id);
+
+        const dataCar = await cars.findByPk(car_id);
+
+        if (!dataCar) {
+            return res.status(404).json({
+                message: "Car not found"
+            });
+        }
+
+        const brandAndModel = await cars_brands.findOrCreate({
+            where: { brand: newBrand, model: newModel }
+        });
+
+        const modiffCars = await cars.update(
+            {
+                name: newName,
+                price: newPrice,
+                brand_id: brandAndModel[0].id,
+                color: newColor,
+                doors: newDoors,
+                boot_size: newBootSize,
+                type: newType,
+                energy: newEnergy,
+                is_automatic: newIsAutomatic,
+                air_conditioning: newAirConditioning,
+                is_available: newIsAvailable,
+                passengers: newPassengers,
+                description: newDescription
+            },
+            {
+                where: { id: car_id }
+            }
+        );
+
+        return res.status(200).json({
+            message: "Car updated",
+            modiffCars
+        });
     } catch (error) {
+        console.log("ERROR : ", error);
         return res.status(500).json({
             message: "Internal server error"
         });
