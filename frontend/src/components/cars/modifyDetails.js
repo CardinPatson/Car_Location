@@ -177,7 +177,7 @@ import { Link } from "react-router-dom";
                   <Link to="/cars" className="__redirect">
                     <button 
                       className="__accept__button"
-                      onClick={handleUpdate}
+                      onClick={deleteCar}
                       to="/cars"
                     >
                       Oui
@@ -205,7 +205,7 @@ import { Link } from "react-router-dom";
                   <Link to="/cars" className="__redirect">
                     <button 
                       className="__accept__button"
-                      onClick={deleteCar}
+                      onClick={handleUpdate}
                       to="/cars"
                     >
                       Oui
@@ -563,6 +563,6 @@ import { Link } from "react-router-dom";
       modifyCarsProperty: (property) => dispatch(modifyCarsProperty(property)),
     };
   };
-  
+
 const connector = connect(mapStateToProps, mapStateToDispatch);
 export default connector(ModifyDetails);
