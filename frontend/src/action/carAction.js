@@ -81,6 +81,7 @@ export const getCarsProperty = createAsyncThunk(
 				console.error(err);
 			}
 		);
+		console.log(cars.data);
 		thunkAPI.dispatch(addCarsInfo(cars.data));
 	}
 );

@@ -33,7 +33,7 @@ export const carReducer = createReducer(initialState, (builder) => {
 			state.cars = action.payload;
 		})
 		.addCase(addCarsImagesInfo, (state, action) => {
-			state.images = action.payload
+			state.images = action.payload;
 		})
 		.addDefaultCase((state, action) => {
 			return state;

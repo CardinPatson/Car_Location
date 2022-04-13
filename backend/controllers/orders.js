@@ -147,17 +147,18 @@ const isUserActive = async (id) => {
 
 const addOrder = async (req, res) => {
 	try {
+		//NEST EFFECTUER QUE SI ON A TOUTES LES INFOS DU USER
 		const carId = parseInt(req.params.car_id);
 
 		const { departure_date, return_date, user_id } = req.body;
 
-		const userActive = await isUserActive(orderData.user_id);
+		//const userActive = await isUserActive(orderData.user_id);
 
-		if (!userActive) {
-			return res.status(404).json({
-				message: "user not Active",
-			});
-		}
+		// if (!userActive) {
+		// 	return res.status(404).json({
+		// 		message: "user not Active",
+		// 	});
+		// }
 
 		const carData = await cars.findByPk(carId);
 
@@ -168,7 +169,7 @@ const addOrder = async (req, res) => {
 		}
 
 		const nbrOfDays = differenceBetweenDates(departure_date, return_date);
-
+		console.log(nbrOfDays);
 		const price = carData.price * nbrOfDays;
 
 		const orderData = await orders.create({
