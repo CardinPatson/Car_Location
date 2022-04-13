@@ -269,8 +269,8 @@ const payement = async (req, res) => {
 			},
 		],
 		mode: "payment",
-		success_url: `${YOUR_DOMAIN}?success=true`,
-		cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+		success_url: `${YOUR_DOMAIN}/paymentAccepted`,
+		cancel_url: `${YOUR_DOMAIN}/paymentDenied`,
 	});
 
 	res.redirect(303, session.url);
