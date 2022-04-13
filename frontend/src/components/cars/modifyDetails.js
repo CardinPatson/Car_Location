@@ -28,7 +28,6 @@ import { Link } from "react-router-dom";
     const [isEnableDelete, setIsEnableDelete] = useState(false);
     const [isEnableUpdate, setIsEnableUpdate] = useState(false);
 
-
     const cancelChanges = () => {
       setBrand(from.car["cars_brands"].brand);
       setModel(from.car["cars_brands"].model);
@@ -177,6 +176,7 @@ import { Link } from "react-router-dom";
                   <Link to="/cars" className="__redirect">
                     <button 
                       className="__accept__button"
+
                       onClick={deleteCar}
                       to="/cars"
                     >
@@ -422,7 +422,6 @@ import { Link } from "react-router-dom";
       font-size: 1.5vw;
       text-align: left;
     `;
-
     const OneSpec = styled.div`
       display: flex;
       flex-direction: row;
@@ -565,6 +564,5 @@ import { Link } from "react-router-dom";
       modifyCarsProperty: (property) => dispatch(modifyCarsProperty(property)),
     };
   };
-
 const connector = connect(mapStateToProps, mapStateToDispatch);
 export default connector(ModifyDetails);

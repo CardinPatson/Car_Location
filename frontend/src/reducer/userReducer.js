@@ -1,4 +1,5 @@
-import {createReducer} from "@reduxjs/toolkit"
+import { createReducer } from "@reduxjs/toolkit";
+import { addUserRegisterInfo } from "../action/userAction";
 const initialState = {
 	first_name: "",
 	last_name: "",
@@ -10,3 +11,7 @@ const initialState = {
 	telephone: 0,
 	mail: "",
 };
+
+export const userReducer = createReducer(initialState, (builder) => {
+	builder.addCase(addUserRegisterInfo, (state, action) => {});
+});

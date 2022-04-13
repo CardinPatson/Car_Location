@@ -1,7 +1,13 @@
-import { ADD_CARS, GET_CARS, GET_CARS_IMAGES, DELETE_CARS, UPDATE_CARS } from "./actionTypes";
+import {
+	ADD_CARS,
+	GET_CARS,
+	GET_CARS_IMAGES,
+	DELETE_CARS,
+	UPDATE_CARS,
+} from "./actionTypes";
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "axios";
-
+const DOMAIN_NAME = "http://localhost:3001";
 export const addCarsInfo = createAction(ADD_CARS, function prepare(cars) {
 	return {
 		payload: cars,
@@ -23,7 +29,7 @@ export const addCarsProperty = createAsyncThunk(
 	ADD_CARS,
 	async (arg, thunkAPI) => {
 		await Axios.post(
-			"http://localhost:3001/api/cars/",
+			`${DOMAIN_NAME}/api/cars/`,
 			{
 				name: arg.name,
 				description: arg.description,
@@ -54,7 +60,7 @@ export const addCarsProperty = createAsyncThunk(
 				Object.values(arg.image).forEach((file) => {
 					formData.append("image", file);
 				});
-				Axios.post(`http://localhost:3001/api/cars/${id}/images`, formData, {
+				Axios.post(`${DOMAIN_NAME}/api/cars/${id}/images`, formData, {
 					headers: {
 						"Content-Type": "multipart/form-data",
 					},
@@ -76,11 +82,10 @@ export const addCarsProperty = createAsyncThunk(
 export const getCarsProperty = createAsyncThunk(
 	GET_CARS,
 	async (arg, thunkAPI) => {
-		const cars = await Axios.get(`http://localhost:3001/api/cars`).catch(
-			(err) => {
-				console.error(err);
-			}
-		);
+		const cars = await Axios.get(`${DOMAIN_NAME}/api/cars`).catch((err) => {
+			console.error(err);
+		});
+		console.log(cars.data);
 		thunkAPI.dispatch(addCarsInfo(cars.data));
 	}
 );
@@ -88,11 +93,11 @@ export const getCarsProperty = createAsyncThunk(
 export const getCarsImages = createAsyncThunk(
 	GET_CARS_IMAGES,
 	async (arg, thunkAPI) => {
-		const carsImages = await Axios.get(
-			"http://localhost:3001/api/cars/images"
-		).catch((err) => {
-			console.error(err);
-		});
+		const carsImages = await Axios.get(`${DOMAIN_NAME}/api/cars/images`).catch(
+			(err) => {
+				console.error(err);
+			}
+		);
 		thunkAPI.dispatch(addCarsImagesInfo(carsImages.data));
 	}
 );
@@ -102,7 +107,7 @@ export const getCarsImages = createAsyncThunk(
 export const getCarsSlot = createAsyncThunk(
 	"GET_CARS_SLOT",
 	async (arg, thunkAPI) => {
-		const request = await Axios.get(`http://localhost:3001/api/orders`, {
+		const request = await Axios.get(`${DOMAIN_NAME}/api/orders`, {
 			params: {
 				startDate: arg.startDate,
 				startTime: arg.startTime,
@@ -121,11 +126,11 @@ export const deleteCars = createAsyncThunk(
 		console.log(arg);
 		console.log(arg["id"]);
 		const id = arg["id"];
-		const request = await Axios.delete(
-			`http://localhost:3001/api/cars/${id}`
-		) .catch((err) => {
-			console.error(err);
-		});
+		const request = await Axios.delete(`${DOMAIN_NAME}/api/cars/${id}`).catch(
+			(err) => {
+				console.error(err);
+			}
+		);
 	}
 );
 
@@ -133,9 +138,9 @@ export const modifyCarsProperty = createAsyncThunk(
 	UPDATE_CARS,
 	async (arg, thunkAPI) => {
 		const id = arg["id"];
-		console.log("helloFromAction")
+		console.log("helloFromAction");
 		await Axios.put(
-			`http://localhost:3001/api/cars/${id}`,
+			`${DOMAIN_NAME}/api/cars/${id}`,
 			{
 				newName: arg.name,
 				newDescription: arg.description,
@@ -157,10 +162,9 @@ export const modifyCarsProperty = createAsyncThunk(
 					"Content-Type": "Application/json",
 				},
 			}
-		)
-			.catch((err) => {
-				console.err(err);
-			});
+		).catch((err) => {
+			console.err(err);
+		});
 	}
 );
 
