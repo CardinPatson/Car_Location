@@ -15,47 +15,22 @@ function CarDetails(props) {
 	function Item(item) {
 		return (
 			<div className="__img__div">
-				<img src={item.item["url"]} alt="Caroussel" />
+				<img src={item["item"]} alt="Caroussel" />
 			</div>
 		);
 	}
 
-	var items = [
-		{
-			pos: 0,
-			url: "./images/car_4.jpg",
-		},
-		{
-			pos: 1,
-			url: "./images/car_6.jpg",
-		},
-		{
-			pos: 2,
-			url: "./images/car_7.jpg",
-		},
-		{
-			pos: 3,
-			url: "./images/car_8.jpg",
-		},
-		{
-			pos: 4,
-			url: "./images/car_9.jpg",
-		},
-		{
-			pos: 5,
-			url: "./images/car_1.jpg",
-		},
-		{
-			pos: 6,
-			url: "./images/car_2.jpg",
-		},
-		{
-			pos: 7,
-			url: "./images/car_5.jpg",
-		},
-	];
-
+	
+	
+	var items = from.images
+	const test = () => {
+		if(items.length <= 1){
+			return false;
+		};
+		return true;
+	}
 	const [index, setIndex] = useState(0);
+	const [swapIndicators, setSwapIndicators] = useState(test);
 
 	const handleChange = (cur, prev) => {
 		setIndex(cur);
@@ -73,8 +48,8 @@ function CarDetails(props) {
 						<Info>
 							<Name>
 								<div>
-									{from.car.brand ? from.car.brand : "Marque voiture"}{" "}
-									{from.car.model ? from.car.model : "Modèle voiture"}
+									{from.car["cars_brands"].brand ? from.car["cars_brands"].brand : "Marque voiture"}{" "}
+									{from.car["cars_brands"].model ? from.car["cars_brands"].model : "Modèle voiture"}
 								</div>
 								<LineRight>
 									<div>
@@ -126,7 +101,8 @@ function CarDetails(props) {
 								onChange={handleChange}
 								interval={50000}
 								animation="fade"
-								indicators={true}
+								navButtonsAlwaysInvisible={!swapIndicators}
+								indicators={swapIndicators}
 								swipe
 								className="__carousel"
 							>

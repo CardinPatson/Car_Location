@@ -2,14 +2,13 @@ import React, {useState} from 'react'
 import styled from 'styled-components';
 import Header from '../header';
 import { useLocation } from "react-router-dom";
-import { deleteCars } from "../../action/carAction";
+import { deleteCars, modifyCarsProperty } from "../../action/carAction";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
  
  function ModifyDetails(props){
     const location = useLocation();
     const { from } = location.state;
-    console.log(from);
 
     const [name, setName] = useState("RS3_Gris-Nardo");
     //const [image, setImage] = useState([]);
@@ -27,6 +26,7 @@ import { Link } from "react-router-dom";
     const [isAutomatic, setIsAutomatic] = useState(from.car["is_automatic"]);
     const [isAvailable, setIsAvailable] = useState(true);
     const [isEnableDelete, setIsEnableDelete] = useState(false);
+    const [isEnableUpdate, setIsEnableUpdate] = useState(false);
 
     const cancelChanges = () => {
       setBrand(from.car["cars_brands"].brand);
@@ -49,7 +49,22 @@ import { Link } from "react-router-dom";
       props.deleteCars({"id": from.car["id"]});
     };
 
-    console.log(from);
+    const handleUpdate = () => {
+      from.car["cars_brands"].brand = brand;
+      from.car["cars_brands"].model = model;
+      from.car["doors"] = doors;
+      from.car["boot_size"] = bootSize;
+      from.car["energy"] = energy;
+      from.car["passengers"] = passengers;
+      from.car["air_conditioning"] = airCondition;
+      from.car["is_automatic"] = isAutomatic;
+      from.car["type"] = type;
+      from.car["color"] = color;
+      from.car["is_available"] = isAvailable;
+      from.car["price"] = price;
+      console.log(from.car);
+      props.modifyCarsProperty(from.car);
+    };
 
     return (
         <Container>
@@ -74,13 +89,6 @@ import { Link } from "react-router-dom";
                         <div>Prix:</div>
                         <input type="number" min={"10"} max={""}  value={price} onChange={(e) => setPrice(e.target.value)}/>
                       </OneSpec>
-                      {/* 
-                          
-                      
-                      <div>Couleur:</div>
-                      <Line_right>
-                        <input type="text"/>
-                      </Line_right> */}
                     </SpecsColumn>
                     <SpecsColumn>
                       <OneSpec>
@@ -153,7 +161,7 @@ import { Link } from "react-router-dom";
               </Detail>
             </Test>
             <Buttons>
-              <button className="__button__green">Sauvegarder </button>
+              <button className="__button__green" onClick = {() => {setIsEnableUpdate(true);}}>Sauvegarder </button>
               <button className="__button__blue" onClick={cancelChanges} >Annuler les changements</button>
               <button className="__button__red" onClick = {() => {setIsEnableDelete(true);}}>Supprimer la voiture</button>
             </Buttons>
@@ -161,13 +169,41 @@ import { Link } from "react-router-dom";
           {isEnableDelete ? (
             <Popup>
               <Message>
-                <div>
+                <p>
                   Êtes-vous sûr de vouloir supprimer cette voiture ?
-                </div>
+                </p>
                 <Accept>
                   <Link to="/cars" className="__redirect">
                     <button 
-                      className=""
+                      className="__accept__button"
+                      onClick={handleUpdate}
+                      to="/cars"
+                    >
+                      Oui
+                    </button>
+                  </Link>
+                    <button 
+                      className="__cancel__button"
+                      onClick={() => {setIsEnableDelete(false);}}
+                    >
+                      Anuller
+                    </button>
+                </Accept>
+              </Message>
+            </Popup>
+            ) : (
+              ""
+          )}
+          {isEnableUpdate ? (
+            <Popup>
+              <Message>
+                <p>
+                  Êtes-vous sûr de vouloir modifier les caractéristiques de la voiture ?
+                </p>
+                <Accept>
+                  <Link to="/cars" className="__redirect">
+                    <button 
+                      className="__accept__button"
                       onClick={deleteCar}
                       to="/cars"
                     >
@@ -175,8 +211,8 @@ import { Link } from "react-router-dom";
                     </button>
                   </Link>
                     <button 
-                      className=""
-                      onClick={() => {setIsEnableDelete(false);}}
+                      className="__cancel__button"
+                      onClick={() => {setIsEnableUpdate(false);}}
                     >
                       Anuller
                     </button>
@@ -225,24 +261,22 @@ import { Link } from "react-router-dom";
     `;
   
     const Message = styled.div`
-      margin: 18%;
+      margin-top: 40vh;
       z-index: 102;
       display: flex;
       position: fixed;
       flex-direction: column;
-      justify-content: flex-start;
-      align-content: center;
-      align-items: center;
-      width: 35vw;
-      height: 25vh;
+      justify-content: center;
+      /* align-content: center;
+      align-items: center; */
       border: 1px solid #ff0f0f;
       border-radius: 3px;
       background-color: rgb(255, 255, 255, 1);
-      div {
-        padding: 3vh 2vh 2vh 2vh;
+      max-width: 50%;
+      p {
+        margin: 3vh 2vh 2vh 2vh;
         font-size: 1.8vw;
         display: flex;
-        width: 100%;
         gap: 10px;
       }
     `;  
@@ -250,6 +284,8 @@ import { Link } from "react-router-dom";
     const Accept = styled.div`
       display: flex;
       justify-content: center;
+      padding: 0px;
+      gap: 8%;
       button {
         border: 2px solid #00486D;
         font-size: 1.5vw;
@@ -260,7 +296,41 @@ import { Link } from "react-router-dom";
         cursor: pointer;
       }
       .__redirect {
-        width: 50%;
+        width: 40%;
+      }
+      .__accept__button {
+        width: 100%;
+        background-color: #0db520;
+        border: 2px solid #0a7d17;
+        font-size: 1.5vw;
+        color: #333333;
+        border-radius: 1vh;
+        cursor: pointer;
+      }
+      .__accept__button:hover {
+        color: white;
+        background-color: #0a7d17;
+        border: 2px solid #0db520;
+      }
+      .__accept__button:active {
+        transform: scale(0.95);
+      }
+      .__cancel__button {
+        width: 40%;
+        background-color: #ff0f0f;
+        border: 2px solid #820909;
+        font-size: 1.5vw;
+        color: #333333;
+        border-radius: 1vh;
+        cursor: pointer;
+      }
+      .__cancel__button:hover {
+        color: white;
+        background-color: #850101;
+        border: 2px solid #ff0f0f;
+      }
+      .__cancel__button:active {
+        transform: scale(0.95);
       }
     `;
 
@@ -350,9 +420,7 @@ import { Link } from "react-router-dom";
       font-size: 1.5vw;
       text-align: left;
     `;
-    const CheckBox = styled.div`
-      
-      `;
+
     const OneSpec = styled.div`
       display: flex;
       flex-direction: row;
@@ -400,7 +468,7 @@ import { Link } from "react-router-dom";
         padding: 5px;
         padding-right: 10px;
         height: auto;
-        width: 10%;
+        width: 8%;
       }
       input[type='text'], [type='number'] {
         border: none;
@@ -497,6 +565,7 @@ import { Link } from "react-router-dom";
       return {
         //property est un objet contenant les propriétés du véhicule
         deleteCars: (property) => dispatch(deleteCars(property)),
+        modifyCarsProperty: (property) => dispatch(modifyCarsProperty(property)),
       };
     };
 const connector = connect(mapStateToProps, mapStateToDispatch);
