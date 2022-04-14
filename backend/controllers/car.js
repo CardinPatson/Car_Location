@@ -1,7 +1,6 @@
 const multerMiddleware = require("../middleware/image");
 
 const { images, cars, cars_brands } = require("../database/models");
-const { Op } = require("sequelize");
 
 const isUniqueCarName = async (name) => {
     try {
@@ -218,6 +217,27 @@ const updateCar = async (req, res) => {
         const brandAndModel = await cars_brands.findOrCreate({
             where: { brand: newBrand, model: newModel }
         });
+
+        if (
+            newName == dataCar.name &&
+            newPrice == dataCar.price &&
+            newBrand == dataCar.cars_brands.brand &&
+            newModel == dataCar.cars_brands.model &&
+            newColor == dataCar.color &&
+            newDoors == dataCar.doors &&
+            newBootSize == dataCar.boot_size &&
+            newType == dataCar.type &&
+            newEnergy == dataCar.energy &&
+            newIsAutomatic == dataCar.is_automatic &&
+            newIsAvailable == dataCar.is_available &&
+            newPassengers == dataCar.passengers &&
+            newAirConditioning == dataCar.air_conditioning &&
+            newDescription == dataCar.description
+        ) {
+            return res.status(200).json({
+                message: "No changes"
+            });
+        }
 
         const modiffCars = await cars.update(
             {
