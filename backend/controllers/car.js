@@ -206,7 +206,15 @@ const updateCar = async (req, res) => {
         }
         const car_id = parseInt(req.params.id);
 
-        const dataCar = await cars.findByPk(car_id);
+        const dataCar = await cars.findByPk(car_id, {
+            include: [
+                {
+                    model: cars_brands,
+                    required: true,
+                    as: "cars_brands"
+                }
+            ]
+        });
 
         if (!dataCar) {
             return res.status(404).json({

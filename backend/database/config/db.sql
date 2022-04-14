@@ -68,3 +68,17 @@ ALTER TABLE "images" ADD FOREIGN KEY ("car_id") REFERENCES "cars" ("id") ON DELE
 ALTER TABLE "admins" ADD FOREIGN KEY ("customer_id") REFERENCES "customers" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE "orders" ADD FOREIGN KEY ("car_id") REFERENCES "cars" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE "orders" ADD FOREIGN KEY ("customer_id") REFERENCES "customers" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+
+
+SELECT A.au_lname, A.au_fname, A.au_city
+
+FROM dba.Authors AS A
+
+JOIN dba.BookAuthor AS BA ON A.au_id = BA.au_id
+
+JOIN dba.Books AS B ON BA.ba_id = B.ba_id
+
+WHERE A.au_city = 'califoria' and B.type = 'travel'
+ORDER BY A.au_city, A.au_lname, A.au_fname;
