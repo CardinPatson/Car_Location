@@ -30,12 +30,12 @@ function Register(props) {
 						</Ajust>
 						<Ajust>
 							<p>Prénom</p>
-							<input type="text" />
-							value={lastName}
-							onChange=
-							{(e) => {
+							<input type="text" value={lastName}
+							onChange={(e) => {
 								setLastName(e.target.value);
 							}}
+							/>
+							
 						</Ajust>
 					</Login>
 					<Email>
@@ -87,13 +87,12 @@ const Container = styled.div`
 	position: relative;
 `;
 const Content = styled.div`
-	margin-top: 30%;
 	display: flex;
 	flex-direction: column;
-	border: solid 0.5px rgba(0, 0, 0, 0.08);
+	border: 0;
 	border-radius: 3px;
 	background-color: rgb(255, 255, 255, 0.9);
-	box-shadow: 0 0 1px black;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 `;
 
 const Banner = styled.div`
@@ -109,6 +108,8 @@ const Banner = styled.div`
 const Form = styled.div`
 	display: flex;
 	flex-direction: column;
+	gap: 15px;
+	margin: 10px;
 	p {
 		text-align: left;
 		font-size: 3vh;
@@ -116,15 +117,15 @@ const Form = styled.div`
 	input {
 		border: 1px solid #797979;
 		border-radius: 0.5vh;
-		height: 4vh;
-		font-size: 2.5vh;
-		width: 80%;
+		height: 4.5vh;
+		font-size: 3vh;
+		width: 90%;
 	}
 	button {
-		font-size: 3vh;
+		font-size: 3.5vh;
 		color: #333333;
 		background-color: #00a9ff;
-		border: 1.5px solid #00486d;
+		border: 0px;
 		border-radius: 1vh;
 		width: 40%;
 		padding: 1vh;
@@ -134,7 +135,7 @@ const Form = styled.div`
 	button:hover {
 		color: white;
 		background-color: #0078b5;
-		border: 1.5px solid #00a9ff;
+		border: 0;
 	}
 	button:active {
 		transform: scale(0.95);
@@ -145,11 +146,12 @@ const Login = styled.div`
 	display: flex;
 	justify-content: flex-start;
 	flex-direction: row;
-	gap: 1vh;
+	gap: 4vh;
 `;
 const Ajust = styled.div`
 	display: flex;
 	flex-direction: Column;
+	gap: 5px;
 	input {
 		width: 25vh;
 	}
@@ -159,12 +161,14 @@ const Email = styled.div`
 	display: flex;
 	justify-content: flex-start;
 	flex-direction: column;
+	gap: 5px;
 `;
 const Password = styled.div`
 	margin: 1vh;
 	display: flex;
 	justify-content: flex-start;
 	flex-direction: column;
+	gap: 5px;
 `;
 const Confirm = styled.div`
 	display: flex;
