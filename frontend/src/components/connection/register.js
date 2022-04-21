@@ -87,6 +87,7 @@ const Container = styled.div`
 	position: relative;
 `;
 const Content = styled.div`
+	margin-top: 100px;
 	display: flex;
 	flex-direction: column;
 	border: 0;
@@ -102,7 +103,7 @@ const Banner = styled.div`
 	background-color: #00a9ff;
 	color: #333333;
 	text-align: center;
-	font-size: 3.6vh;
+	font-size: 25px;
 `;
 
 const Form = styled.div`
@@ -112,24 +113,22 @@ const Form = styled.div`
 	margin: 10px;
 	p {
 		text-align: left;
-		font-size: 3vh;
+		font-size: 22px;
 	}
 	input {
 		border: 1px solid #797979;
 		border-radius: 0.5vh;
-		height: 4.5vh;
-		font-size: 3vh;
-		width: 90%;
+		height: 32px;
+		font-size: 25px;
 	}
 	button {
-		font-size: 3.5vh;
+		font-size: 22px;
 		color: #333333;
 		background-color: #00a9ff;
 		border: 0px;
-		border-radius: 1vh;
-		width: 40%;
-		padding: 1vh;
-		margin: 2vh 1vh 2vh 1vh;
+		border-radius: 5px;
+		padding: 10px;
+		margin: 15px 10px 15px 10px;
 		cursor: pointer;
 	}
 	button:hover {
@@ -142,29 +141,29 @@ const Form = styled.div`
 	}
 `;
 const Login = styled.div`
-	margin: 1vh;
+	margin: 10px;
 	display: flex;
 	justify-content: flex-start;
 	flex-direction: row;
-	gap: 4vh;
+	gap: 25px;
 `;
 const Ajust = styled.div`
 	display: flex;
 	flex-direction: Column;
 	gap: 5px;
 	input {
-		width: 25vh;
+		width: 200px;
 	}
 `;
 const Email = styled.div`
-	margin: 1vh;
+	margin: 10px;
 	display: flex;
 	justify-content: flex-start;
 	flex-direction: column;
 	gap: 5px;
 `;
 const Password = styled.div`
-	margin: 1vh;
+	margin: 10px;
 	display: flex;
 	justify-content: flex-start;
 	flex-direction: column;
@@ -173,15 +172,13 @@ const Password = styled.div`
 const Confirm = styled.div`
 	display: flex;
 	justify-content: center;
-	margin: 2vh;
-	margin-bottom: 1vh;
 `;
 const Account = styled.label`
 	display: flex;
-	margin: 0vh 1vh 2vh 2vh;
+	margin: 0vh 10px 10px 10px;
 	cursor: pointer;
 	text-decoration: underline #00a9ff;
-	font-size: 2.25vh;
+	font-size: 18px;
 `;
 const mapStateToProps = (state) => {
 	return {};

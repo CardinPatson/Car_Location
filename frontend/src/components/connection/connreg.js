@@ -36,7 +36,6 @@ const Content = styled.div`
 	width: 100%;
 	display: flex;
 	justify-content: center;
-	align-items: center;
 	height: 100%;
 	background-image: url("./images/car_7.jpg");
 	background-repeat: no-repeat;

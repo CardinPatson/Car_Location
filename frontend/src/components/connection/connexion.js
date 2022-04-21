@@ -59,7 +59,7 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
-	margin-top: 30%;
+	margin-top: 100px;
 	display: flex;
 	flex-direction: column;
 	border-radius: 3px;
@@ -69,12 +69,12 @@ const Content = styled.div`
 
 const Banner = styled.div`
 	border-radius: 3px 3px 0 0;
-	padding: 1vh 1vh 1vh 1vh;
+	padding: 8px;
 	border-bottom: solid #797979 1px;
 	background-color: #00a9ff;
 	color: #333333;
 	text-align: center;
-	font-size: 3.6vh;
+	font-size: 25px;
 `;
 
 const Form = styled.form`
@@ -84,25 +84,23 @@ const Form = styled.form`
 	margin: 10px;
     p{
         text-align: left;
-        font-size: 3vh;
+        font-size: 22px;
     }
     input {
         border: 1px solid #797979;
         border-radius:0.5vh;
-        height: 4.5vh;
-        font-size: 3vh;
-        width: 90%;
+        height: 32px;
+        font-size: 25px;
     }
     button {
-        font-size: 3.5vh;
-        color: #333333;
-		border: 0;
-        background-color: #00A9FF;
-        border-radius: 1vh;
-        width: 50%;
-        padding: 1vh;
-        margin: 2vh 1vh 2vh 1vh;
-        cursor: pointer;
+		font-size: 22px;
+		color: #333333;
+		background-color: #00a9ff;
+		border: 0px;
+		border-radius: 5px;
+		padding: 10px;
+		margin: 15px 10px 15px 10px;
+		cursor: pointer;
     }
     button:hover{
         color: white;
@@ -115,7 +113,7 @@ const Form = styled.form`
 `;
 
 const Login = styled.div`
-	margin: 1vh;
+	margin: 10px;
 	display: flex;
 	gap: 5px;
 	justify-content: flex-start;
@@ -123,7 +121,7 @@ const Login = styled.div`
 `;
 
 const Password = styled.div`
-	margin: 1vh;
+	margin: 10px;
 	display: flex;
 	gap: 5px;
 	justify-content: flex-start;
@@ -143,32 +141,32 @@ const Remember = styled.label`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	font-size: 1vw;
+	font-size: 15px;
 `;
 
 const Options = styled.label`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	gap: 7vh;
+	gap: 40px;
 `;
 
 const Forgotpassword = styled.div`
 	display: flex;
 	align-items: center;
-	margin: 1vh 1vh 1vh 1vh;
+	margin: 10px;
 	cursor: pointer;
 	text-decoration: none;
-	font-size: 2.25vh;
+	font-size: 18px;
 `;
 
 const NoAccount = styled.label`
 	display: flex;
 	align-items: center;
-	margin: 1vh 1vh 1vh 2vh;
+	margin: 10px;
 	cursor: pointer;
 	text-decoration: underline #00a9ff;
-	font-size: 2.25vh;
+	font-size: 18px;
 `;
 
 export default Connexion;
