@@ -15,7 +15,7 @@ function CarDetails(props) {
 	function Item(item) {
 		return (
 			<div className="__img__div">
-				<img src={item["item"]} alt="Caroussel" />
+				<img src={item["item"]} alt="Caroussel"/>
 			</div>
 		);
 	}

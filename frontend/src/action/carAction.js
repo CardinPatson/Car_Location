@@ -144,8 +144,8 @@ export const modifyCarsProperty = createAsyncThunk(
 			{
 				newName: arg.name,
 				newDescription: arg.description,
-				newBrand: arg.brand,
-				newModel: arg.model,
+				newBrand: arg["cars_brands"].brand,
+				newModel: arg["cars_brands"].model,
 				newColor: arg.color,
 				newDoors: arg.doors,
 				newBootSize: arg.boot_size,
