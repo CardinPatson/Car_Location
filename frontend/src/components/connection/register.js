@@ -87,7 +87,10 @@ const Container = styled.div`
 	position: relative;
 `;
 const Content = styled.div`
+<<<<<<< HEAD
 	margin-top: 100px;
+=======
+>>>>>>> b025bdb09575ef597817c5a4b79f4350323ebdbe
 	display: flex;
 	flex-direction: column;
 	border: 0;
@@ -113,11 +116,16 @@ const Form = styled.div`
 	margin: 10px;
 	p {
 		text-align: left;
+<<<<<<< HEAD
 		font-size: 22px;
+=======
+		font-size: 3vh;
+>>>>>>> b025bdb09575ef597817c5a4b79f4350323ebdbe
 	}
 	input {
 		border: 1px solid #797979;
 		border-radius: 0.5vh;
+<<<<<<< HEAD
 		height: 32px;
 		font-size: 25px;
 	}
@@ -129,6 +137,21 @@ const Form = styled.div`
 		border-radius: 5px;
 		padding: 10px;
 		margin: 15px 10px 15px 10px;
+=======
+		height: 4.5vh;
+		font-size: 3vh;
+		width: 90%;
+	}
+	button {
+		font-size: 3.5vh;
+		color: #333333;
+		background-color: #00a9ff;
+		border: 0px;
+		border-radius: 1vh;
+		width: 40%;
+		padding: 1vh;
+		margin: 2vh 1vh 2vh 1vh;
+>>>>>>> b025bdb09575ef597817c5a4b79f4350323ebdbe
 		cursor: pointer;
 	}
 	button:hover {
@@ -145,7 +168,11 @@ const Login = styled.div`
 	display: flex;
 	justify-content: flex-start;
 	flex-direction: row;
+<<<<<<< HEAD
 	gap: 25px;
+=======
+	gap: 4vh;
+>>>>>>> b025bdb09575ef597817c5a4b79f4350323ebdbe
 `;
 const Ajust = styled.div`
 	display: flex;
@@ -178,7 +205,11 @@ const Account = styled.label`
 	margin: 0vh 10px 10px 10px;
 	cursor: pointer;
 	text-decoration: underline #00a9ff;
+<<<<<<< HEAD
 	font-size: 18px;
+=======
+	font-size: 2.25vh;
+>>>>>>> b025bdb09575ef597817c5a4b79f4350323ebdbe
 `;
 const mapStateToProps = (state) => {
 	return {};

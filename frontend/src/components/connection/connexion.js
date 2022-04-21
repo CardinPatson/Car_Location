@@ -59,7 +59,11 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
+<<<<<<< HEAD
 	margin-top: 100px;
+=======
+	margin-top: 30%;
+>>>>>>> b025bdb09575ef597817c5a4b79f4350323ebdbe
 	display: flex;
 	flex-direction: column;
 	border-radius: 3px;
@@ -69,12 +73,20 @@ const Content = styled.div`
 
 const Banner = styled.div`
 	border-radius: 3px 3px 0 0;
+<<<<<<< HEAD
 	padding: 8px;
+=======
+	padding: 1vh 1vh 1vh 1vh;
+>>>>>>> b025bdb09575ef597817c5a4b79f4350323ebdbe
 	border-bottom: solid #797979 1px;
 	background-color: #00a9ff;
 	color: #333333;
 	text-align: center;
+<<<<<<< HEAD
 	font-size: 25px;
+=======
+	font-size: 3.6vh;
+>>>>>>> b025bdb09575ef597817c5a4b79f4350323ebdbe
 `;
 
 const Form = styled.form`
@@ -89,6 +101,7 @@ const Form = styled.form`
     input {
         border: 1px solid #797979;
         border-radius:0.5vh;
+<<<<<<< HEAD
         height: 32px;
         font-size: 25px;
     }
@@ -101,6 +114,22 @@ const Form = styled.form`
 		padding: 10px;
 		margin: 15px 10px 15px 10px;
 		cursor: pointer;
+=======
+        height: 4.5vh;
+        font-size: 3vh;
+        width: 90%;
+    }
+    button {
+        font-size: 3.5vh;
+        color: #333333;
+		border: 0;
+        background-color: #00A9FF;
+        border-radius: 1vh;
+        width: 50%;
+        padding: 1vh;
+        margin: 2vh 1vh 2vh 1vh;
+        cursor: pointer;
+>>>>>>> b025bdb09575ef597817c5a4b79f4350323ebdbe
     }
     button:hover{
         color: white;
@@ -113,7 +142,11 @@ const Form = styled.form`
 `;
 
 const Login = styled.div`
+<<<<<<< HEAD
 	margin: 10px;
+=======
+	margin: 1vh;
+>>>>>>> b025bdb09575ef597817c5a4b79f4350323ebdbe
 	display: flex;
 	gap: 5px;
 	justify-content: flex-start;
@@ -121,7 +154,11 @@ const Login = styled.div`
 `;
 
 const Password = styled.div`
+<<<<<<< HEAD
 	margin: 10px;
+=======
+	margin: 1vh;
+>>>>>>> b025bdb09575ef597817c5a4b79f4350323ebdbe
 	display: flex;
 	gap: 5px;
 	justify-content: flex-start;
@@ -141,32 +178,54 @@ const Remember = styled.label`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+<<<<<<< HEAD
 	font-size: 15px;
+=======
+	font-size: 1vw;
+>>>>>>> b025bdb09575ef597817c5a4b79f4350323ebdbe
 `;
 
 const Options = styled.label`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+<<<<<<< HEAD
 	gap: 40px;
+=======
+	gap: 7vh;
+>>>>>>> b025bdb09575ef597817c5a4b79f4350323ebdbe
 `;
 
 const Forgotpassword = styled.div`
 	display: flex;
 	align-items: center;
+<<<<<<< HEAD
 	margin: 10px;
 	cursor: pointer;
 	text-decoration: none;
 	font-size: 18px;
+=======
+	margin: 1vh 1vh 1vh 1vh;
+	cursor: pointer;
+	text-decoration: none;
+	font-size: 2.25vh;
+>>>>>>> b025bdb09575ef597817c5a4b79f4350323ebdbe
 `;
 
 const NoAccount = styled.label`
 	display: flex;
 	align-items: center;
+<<<<<<< HEAD
 	margin: 10px;
 	cursor: pointer;
 	text-decoration: underline #00a9ff;
 	font-size: 18px;
+=======
+	margin: 1vh 1vh 1vh 2vh;
+	cursor: pointer;
+	text-decoration: underline #00a9ff;
+	font-size: 2.25vh;
+>>>>>>> b025bdb09575ef597817c5a4b79f4350323ebdbe
 `;
 
 export default Connexion;

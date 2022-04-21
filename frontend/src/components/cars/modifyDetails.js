@@ -270,11 +270,12 @@ import { Link } from "react-router-dom";
       justify-content: center;
       /* align-content: center;
       align-items: center; */
-      border: 1px solid #ff0f0f;
       border-radius: 3px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
       background-color: rgb(255, 255, 255, 1);
       max-width: 50%;
       p {
+        padding: 10px;
         margin: 3vh 2vh 2vh 2vh;
         font-size: 1.8vw;
         display: flex;
@@ -302,7 +303,7 @@ import { Link } from "react-router-dom";
       .__accept__button {
         width: 100%;
         background-color: #0db520;
-        border: 2px solid #0a7d17;
+        border: 0;
         font-size: 1.5vw;
         color: #333333;
         border-radius: 1vh;
@@ -311,7 +312,7 @@ import { Link } from "react-router-dom";
       .__accept__button:hover {
         color: white;
         background-color: #0a7d17;
-        border: 2px solid #0db520;
+        border: 0;
       }
       .__accept__button:active {
         transform: scale(0.95);
@@ -319,7 +320,7 @@ import { Link } from "react-router-dom";
       .__cancel__button {
         width: 40%;
         background-color: #ff0f0f;
-        border: 2px solid #820909;
+        border: 0;
         font-size: 1.5vw;
         color: #333333;
         border-radius: 1vh;
@@ -328,7 +329,7 @@ import { Link } from "react-router-dom";
       .__cancel__button:hover {
         color: white;
         background-color: #850101;
-        border: 2px solid #ff0f0f;
+        border: 0;
       }
       .__cancel__button:active {
         transform: scale(0.95);
@@ -336,8 +337,8 @@ import { Link } from "react-router-dom";
     `;
 
     const Test = styled.div`
-      border: 0.5px solid black;
       border-radius: 5px;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
       background-color: rgb(245, 245, 245, 0.95);
       display: flex;
       flex-direction: column;
@@ -492,11 +493,11 @@ import { Link } from "react-router-dom";
       align-items: center;
       .__button__blue {
         font-size: 3vh;
-        color: #333333;
+        color: #4a4a4a;
         background-color: #00a9ff;
-        border: 2px solid #00486d;
         font-size: 1.5vw;
-        border-radius: 1vh;
+        border-radius: 5px;
+        border: 0;
         width: 80%;
         padding: 1vh;
         margin: 2vh 1vh 2vh 1vh;
@@ -505,17 +506,17 @@ import { Link } from "react-router-dom";
       .__button__blue:hover {
         color: white;
         background-color: #0078b5;
-        border: 2px solid #00a9ff;
+        border: 0;
       }
       .__button__blue:active {
         transform: scale(0.95);
       }
       .__button__red {
         background-color: #ff0f0f;
-        border: 2px solid #820909;
+        border: 0;
         font-size: 1.5vw;
-        color: #333333;
-        border-radius: 1vh;
+        color: #4a4a4a;
+        border-radius: 5px;
         width: 80%;
         padding: 1vh;
         margin: 2vh 1vh 2vh 1vh;
@@ -524,7 +525,7 @@ import { Link } from "react-router-dom";
       .__button__red:hover {
         color: white;
         background-color: #850101;
-        border: 2px solid #ff0f0f;
+        border: 0;
       }
       .__button__red:active {
         transform: scale(0.95);
@@ -533,8 +534,9 @@ import { Link } from "react-router-dom";
         background-color: #0db520;
         border: 2px solid #0a7d17;
         font-size: 1.5vw;
-        color: #333333;
-        border-radius: 1vh;
+        color: #4a4a4a;
+        border-radius: 5px;
+        border: 0;
         width: 80%;
         padding: 1vh;
         margin: 2vh 1vh 2vh 1vh;
@@ -543,7 +545,7 @@ import { Link } from "react-router-dom";
       .__button__green:hover {
         color: white;
         background-color: #0a7d17;
-        border: 2px solid #0db520;
+        border: 0;
       }
       .__button__green:active {
         transform: scale(0.95);
