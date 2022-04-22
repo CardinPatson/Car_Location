@@ -255,7 +255,6 @@ const Content = styled.div`
 	.slot {
 		padding-bottom: 15px;
 		margin-bottom: 20px;
-		border: solid red 1px;
 		h5 {
 			padding: 15px 10px 15px 10px;
 			font-size: 1.15em;
@@ -271,9 +270,7 @@ const Content = styled.div`
 			justify-content: space-around;
 			input {
 				border: solid #00a9ff 1px;
-
 				margin-right: 5px;
-
 				font-family: "Roboto";
 				border: none;
 				padding: 5px;
@@ -285,7 +282,6 @@ const Content = styled.div`
 		.slot__time__left {
 			display: flex;
 			align-items: center;
-			border: solid red 1px;
 			flex-direction: column;
 			margin: 5px;
 		}
@@ -293,7 +289,6 @@ const Content = styled.div`
 			/* border: solid blue 1px; */
 			display: flex;
 			align-items: center;
-			border: solid red 1px;
 			flex-direction: column;
 			margin: 5px;
 			.DayPicker {
