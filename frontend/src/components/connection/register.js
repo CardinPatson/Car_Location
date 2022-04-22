@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { registerUser } from "../../action/userAction";
+import { connect } from "react-redux";
 
 function Register(props) {
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
+	const handleRegister = () => {
+		return;
+	};
 	return (
 		<Container>
 			<Content>
@@ -10,29 +20,60 @@ function Register(props) {
 					<Login>
 						<Ajust>
 							<p>Nom</p>
-							<input type="text" />
+							<input
+								type="text"
+								value={firstName}
+								onChange={(e) => {
+									setFirstName(e.target.value);
+								}}
+							/>
 						</Ajust>
 						<Ajust>
 							<p>Prénom</p>
-							<input type="text" />
+							<input type="text" value={lastName}
+							onChange={(e) => {
+								setLastName(e.target.value);
+							}}
+							/>
+							
 						</Ajust>
 					</Login>
 					<Email>
 						<p>Email</p>
-						<input type="email" />
+						<input
+							type="email"
+							value={email}
+							onChange={(e) => {
+								setEmail(e.target.value);
+							}}
+						/>
 					</Email>
 					<Password>
 						<p>Mot de passe</p>
-						<input type="password" />
+						<input
+							type="password"
+							value={password}
+							onChange={(e) => {
+								setPassword(e.target.value);
+							}}
+						/>
 						<br></br>
 						<p>Répéter le mot de passe</p>
 						<input type="password" />
 					</Password>
 					<Confirm>
-						<button onClick={() => {}}>S'inscrire</button>
+						<button
+							onClick={(e) => {
+								handleRegister(e);
+							}}
+						>
+							S'inscrire
+						</button>
 					</Confirm>
 					<Account>
-						<span onClick={props.onSwap} style={{ color: "#00A9FF" }}>Déjà inscrit ?</span>
+						<span onClick={props.onSwap} style={{ color: "#00A9FF" }}>
+							Déjà inscrit ?
+						</span>
 					</Account>
 				</Form>
 			</Content>
@@ -42,17 +83,17 @@ function Register(props) {
 
 const Container = styled.div`
 	display: flex;
-    flex-direction: column;
+	flex-direction: column;
 	position: relative;
 `;
 const Content = styled.div`
-	margin-top: 30%;
-    display: flex;
-    flex-direction: column;
-    border: solid 0.5px rgba(0, 0, 0, 0.08);
-    border-radius: 3px;
-    background-color: rgb(255, 255, 255, 0.9);
-    box-shadow: 0 0 1px black;
+	margin-top: 100px;
+	display: flex;
+	flex-direction: column;
+	border: 0;
+	border-radius: 3px;
+	background-color: rgb(255, 255, 255, 0.9);
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 `;
 
 const Banner = styled.div`
@@ -62,81 +103,93 @@ const Banner = styled.div`
 	background-color: #00a9ff;
 	color: #333333;
 	text-align: center;
-	font-size: 3.6vh;
+	font-size: 25px;
 `;
 
 const Form = styled.div`
-    display: flex;
-    flex-direction: column;
-    p{
-        text-align: left;
-        font-size: 3vh;
-    }
-    input {
-        border: 1px solid #797979;
-        border-radius:0.5vh;
-        height: 4vh;
-        font-size: 2.5vh;
-        width: 80%;
-    }
-    button {
-        font-size: 3vh;
-        color: #333333;
-        background-color: #00A9FF;
-        border: 1.5px solid #00486D;
-        border-radius: 1vh;
-        width: 40%;
-        padding: 1vh;
-        margin: 2vh 1vh 2vh 1vh;
-        cursor: pointer;
-    }
-    button:hover{
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	margin: 10px;
+	p {
+		text-align: left;
+		font-size: 22px;
+	}
+	input {
+		border: 1px solid #797979;
+		border-radius: 0.5vh;
+		height: 32px;
+		font-size: 25px;
+	}
+	button {
+		font-size: 22px;
+		color: #333333;
+		background-color: #00a9ff;
+		border: 0px;
+		border-radius: 5px;
+		padding: 10px;
+		margin: 15px 10px 15px 10px;
+		cursor: pointer;
+	}
+	button:hover {
 		color: white;
-        background-color: #0078B5;
-        border: 1.5px solid #00A9FF;
-    }
+		background-color: #0078b5;
+		border: 0;
+	}
 	button:active {
-        transform: scale(0.95);
-    }
+		transform: scale(0.95);
+	}
 `;
 const Login = styled.div`
-	margin: 1vh;
+	margin: 10px;
 	display: flex;
 	justify-content: flex-start;
 	flex-direction: row;
-	gap: 1vh;
+	gap: 25px;
 `;
 const Ajust = styled.div`
 	display: flex;
 	flex-direction: Column;
+	gap: 5px;
 	input {
-		width: 25vh;
+		width: 200px;
 	}
 `;
 const Email = styled.div`
-	margin: 1vh;
+	margin: 10px;
 	display: flex;
 	justify-content: flex-start;
 	flex-direction: column;
+	gap: 5px;
 `;
 const Password = styled.div`
-	margin: 1vh;
+	margin: 10px;
 	display: flex;
 	justify-content: flex-start;
 	flex-direction: column;
+	gap: 5px;
 `;
 const Confirm = styled.div`
 	display: flex;
 	justify-content: center;
-	margin: 2vh;
-	margin-bottom: 1vh;
 `;
 const Account = styled.label`
 	display: flex;
-	margin: 0vh 1vh 2vh 2vh;
+	margin: 0vh 10px 10px 10px;
 	cursor: pointer;
-	text-decoration: underline #00A9FF;
-	font-size: 2.25vh;
+	text-decoration: underline #00a9ff;
+	font-size: 18px;
 `;
+const mapStateToProps = (state) => {
+	return {};
+};
+const mapStateToDispatch = (dispatch) => {
+	return {
+		register: (payload) => {
+			dispatch(registerUser(payload));
+		},
+	};
+};
 
-export default Register;
+const connector = connect(mapStateToProps, mapStateToDispatch);
+export default connector(Register);
