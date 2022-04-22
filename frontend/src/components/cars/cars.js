@@ -147,10 +147,10 @@ function Cars(props) {
 							</select>
 						</div>
 					</Brand>
-					<Slot>
+					<div className="slot">
 						<h5>Période de location</h5>
-						<div className="slot__range">
-							<div className="slot__time">
+						<form className="slot__range">
+							<div className="slot__time__left">
 								<p>Du</p>
 								<StyledDatePickerWrapper>
 									<SingleDatePicker
@@ -174,7 +174,7 @@ function Cars(props) {
 									}}
 								/>
 							</div>
-							<div className="slot__time">
+							<div className="slot__time__rigth">
 								<p>Au </p>
 								<StyledDatePickerWrapper>
 									<SingleDatePicker
@@ -198,8 +198,8 @@ function Cars(props) {
 									}}
 								/>
 							</div>
-						</div>
-					</Slot>
+						</form>
+					</div>
 					<button
 						onClick={() => {
 							/**Verifier les données du formulaire */
@@ -251,6 +251,59 @@ const Content = styled.div`
 	background-size: cover;
 	background-position: center;
 	padding: 10px 0 15px 0;
+
+	.slot {
+		padding-bottom: 15px;
+		margin-bottom: 20px;
+		border: solid red 1px;
+		h5 {
+			padding: 15px 10px 15px 10px;
+			font-size: 1.15em;
+			font-weight: normal;
+			background-color: rgb(243, 243, 243, 0.9);
+			margin-bottom: 30px;
+		}
+		p {
+			margin-bottom: 15px;
+		}
+		.slot__range {
+			display: flex;
+			justify-content: space-around;
+			input {
+				border: solid #00a9ff 1px;
+
+				margin-right: 5px;
+
+				font-family: "Roboto";
+				border: none;
+				padding: 5px;
+				@media (min-width: 1000px) {
+					margin-left: 10px;
+				}
+			}
+		}
+		.slot__time__left {
+			display: flex;
+			align-items: center;
+			border: solid red 1px;
+			flex-direction: column;
+			margin: 5px;
+		}
+		.slot__time__rigth {
+			/* border: solid blue 1px; */
+			display: flex;
+			align-items: center;
+			border: solid red 1px;
+			flex-direction: column;
+			margin: 5px;
+			.DayPicker {
+				/* border: solid blue 1px; */
+				position: relative;
+				right: 110px;
+				margin-bottom: 15px;
+			}
+		}
+	}
 `;
 const Filter = styled.div`
 	border: solid #00a9ff 0.5px;
@@ -372,39 +425,6 @@ const Brand = styled(Price)`
 		outline: none;
 	}
 `;
-const Slot = styled(Brand)`
-	/* border: solid red 1px; */
-	display: flex;
-	flex-direction: column;
-	.slot__range {
-		padding: 0;
-	}
-	.slot__time {
-		display: flex;
-		align-items: center;
-		/* border: solid red 1px; */
-		flex-direction: column;
-		input {
-			/* background: #f3f3f3; */
-			border: solid #00a9ff 1px;
-			/*font-family: "Roboto";
-			padding: 5px;
-			width: 70%;
-			border-radius: 5px; */
-			margin-right: 5px;
-			font-family: "Roboto";
-			border: none;
-			padding: 5px;
-			/* font-size: 0.7em;
-			border: none;
-			/* background-color: #f3f3f3; */
-			/* padding: 5px; */
-			@media (min-width: 1000px) {
-				margin-left: 10px;
-			}
-		}
-	}
-`;
 
 const Available = styled.div`
 	/* border: solid red 1px; */
@@ -449,11 +469,12 @@ const CarsPannel = styled.div`
 const StyledDatePickerWrapper = styled.div`
 	& .SingleDatePicker,
 	.SingleDatePickerInput {
+		margin-bottom: 15px;
 		.DateInput {
-			/* width: 50%: */
-			height: 20px;
+			margin-bottom: 15px;
+			width: 100%;
+			height: 40px;
 			display: flex;
-			/* border: solid blue 1px; */
 			flex-direction: row;
 			justify-content: center;
 			align-items: center;
@@ -472,22 +493,21 @@ const StyledDatePickerWrapper = styled.div`
 
 			:hover,
 			.DateInput_input__focused {
-				/* border: 1px solid red; */
+				border: 1px #00b2f1 1px;
 			}
 
 			.CalendarDay__selected {
 				background: blue;
 				border: blueviolet;
-				border: solid blue 1px;
 			}
 		}
 
 		.SingleDatePicker_picker.SingleDatePicker_picker {
-			/* top: 43px;
-			left: 2px; */
-			border: solid red 1px;
-			/* top: 43px !important;
-			left: 2px !important; */
+			top: 43px !important;
+			left: 2px !important;
+		}
+		.DayPickerKeyboardShortcuts_buttonReset {
+			display: none;
 		}
 	}
 `;
