@@ -15,7 +15,7 @@ function CarDetails(props) {
 	function Item(item) {
 		return (
 			<div className="__img__div">
-				<img src={item["item"]} alt="Caroussel" />
+				<img src={item["item"]} alt="Caroussel"/>
 			</div>
 		);
 	}
@@ -61,36 +61,40 @@ function CarDetails(props) {
 								<Specs>
 									<div>
 										<img src="./images/icons/door.svg" alt="door_icon" />
-										{from.car.doors ? from.car.doors : "5"} portes
+										<p>{from.car.doors ? from.car.doors : "5"} portes</p>
 									</div>
 									<div>
 										<img
 											src="./images/icons/suitcase.svg"
 											alt="suitcase icon"
 										/>
-										{from.car.boot_size ? from.car.boot_size : "100"}L pour le
-										coffre
+										<p>{from.car.boot_size ? from.car.boot_size : "100"}L pour le
+										coffre</p>
 									</div>
 									<div>
 										<img
 											src="./images/icons/lightning.svg"
 											alt="lightning_icon"
 										/>
-										{from.car.energy ? from.car.energy : "Électrique"}
+										<p>{from.car.energy ? from.car.energy : "Électrique"}</p>
+										
 									</div>
 								</Specs>
 								<Specs>
 									<div>
 										<img src="./images/icons/stick.svg" alt="stick_icon" />
-										{from.car.is_automatic ? "Automatique" : "Manuelle"}
+										<p>{from.car.is_automatic ? "Automatique" : "Manuelle"}</p>
+										
 									</div>
 									<div>
 										<img src="./images/icons/seat.svg" alt="seat_icon" />
-										{from.car.passengers ? from.car.passengers : "3"}
+										<p>{from.car.passengers ? from.car.passengers : "3"}</p>
+										
 									</div>
 									<div>
 										<img src="./images/icons/air.svg" alt="air_icon" />
-										{from.car.air_conditioning ? "Oui" : "Non"}
+										<p>{from.car.air_conditioning ? "Oui" : "Non"}</p>
+										
 									</div>
 								</Specs>
 							</DetailTable>
@@ -146,22 +150,25 @@ const Content = styled.div`
 	margin: 0 auto;
 	margin-top: 100px;
 	padding: 5px;
+	display: flex;
+	flex-direction: column; 
+	align-items: center;
 `;
 
 const Test = styled.div`
-	border: 0.5px solid grey;
+	border: 0;
 	border-radius: 5px;
 	background-color: rgb(245, 245, 245, 0.9);
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
-	max-width: 85%;
 	margin-top: 40px;
 	margin-left: 8%;
 `;
 
 const Banner = styled.div`
-	font-size: 2.2vw;
+	font-size: 35px;
 	text-align: left;
 	background: rgb(0, 169, 245, 0.9);
 	border: 1px black;
@@ -172,16 +179,17 @@ const Banner = styled.div`
 const Detail = styled.div`
 	display: flex;
 	flex-direction: row;
+	justify-content: center;
 	/* //flex-grow: 1; */
 	/*border-radius: 1vh; */
 	/* box-shadow: 0 0 1px black; */
-	margin: 2vh 2vh 2vh 5vh;
+	margin: 20px 20px 20px 30px;
 `;
 
 const Info = styled.div`
 	display: flex;
 	flex-direction: column;
-	width: 45%;
+	justify-content: flex-start;
 	/* flex : 0.6; */
 	/* border : solid red 1px;  */
 `;
@@ -189,22 +197,26 @@ const Info = styled.div`
 const DetailTable = styled.div`
 	display: flex;
 	flex-direction: row;
-	height: 75%;
 	align-items: center;
+	margin-top: 25px;
+	margin-right: 25px;
+	flex-grow: 1;
+	gap: 50px;
 `;
 
 const Name = styled.div`
 	display: flex;
 	align-items: center;
-	margin: 20px 30px 0px 0px;
+	justify-content: flex-start;
+	margin: 10px 0px 0px 10px;
 	color: #333333;
-	font-size: 2.5vw;
+	font-size: 40px;
 	text-align: left;
 	p {
 		font: bold;
 		color: grey;
 		margin: 1px;
-		font-size: 2.4vw;
+		font-size: 25px;
 	}
 `;
 
@@ -221,50 +233,47 @@ const LineRight = styled.div`
 `;
 
 const Specs = styled.div`
+	display: flex;
+	flex-direction: column;
 	text-align: left;
 	/* margin: auto; */
-	width: 50%;
 	color: #00a9ff;
 	div {
 		display: flex;
 		align-items: center;
+		justify-content: flex-start;
 		text-align: left;
-		margin: 1vh;
-		margin-left: 0;
+		margin: 10px;
 		font-weight: bold;
-		font-size: 1.2vw;
+		font-size: 18px;
 		img {
 			padding: 5px;
 			padding-right: 10px;
-			height: auto;
-			width: 18%;
+			height: 50px;
+		}
+		p {
+			width: 180px;
 		}
 	}
 `;
-
-// const Ligne = styled.div`
-//   display: flex;
-//   padding: 1vh;
-//   div {
-//     border-left: 1px solid black;
-//   }
-// `;
 
 const Photo = styled.div`
 	border-left: 1px solid black;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 55%;
+	justify-content: flex-start;
+	padding-left: 30px;
+	padding-right: 30px;
 	.__carousel {
+		flex-grow: 1;
 		gap: 40px;
-		height: 80%;
-		width: 80%;
-		overflow: visible;
+		width: 400px;
+		overflow: hidden;
 		.__img__div {
 			display: flex;
 			width: 100%;
-			height: 35vh;
+			height: 280px;
 		}
 		img {
 			width: 100%;
@@ -278,10 +287,10 @@ const Photo = styled.div`
 const Price = styled.div`
 	display: flex;
 	flex-direction: row;
-	margin: 3vh 0vh 1vh 0vh;
+	margin: 20px 0 10px 0;
 	p {
 		font-weight: bold;
-		font-size: 3vw;
+		font-size: 35px;
 		color: #00a9f5;
 		text-align: bottom;
 	}
@@ -290,20 +299,19 @@ const Price = styled.div`
 		align-items: flex-end;
 		font-weight: bold;
 		margin-right: 20px;
-		font-size: 1vw;
+		font-size: 15px;
 	}
 	.__button {
 		display: flex;
 		text-decoration: none;
 		button {
-			font-size: 1.5vw;
+			font-size: 20px;
 			color: #333333;
 			background-color: #00a9ff;
 			border: 0px;
-			border-radius: 1vh;
+			border-radius: 5px;
 			padding: 0px 20px 0px 20px;
-			margin: 0vh 0vh 0vh 2vh;
-			cursor: pointer;
+			margin-left: 15px;
 		}
 		button:hover {
 			color: white;

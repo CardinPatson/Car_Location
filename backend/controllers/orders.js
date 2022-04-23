@@ -13,59 +13,62 @@ function differenceBetweenDates(date1, date2) {
 // const date1 = new Date("2022-12-17T13:24:00");
 
 const getAllOrders = async (req, res) => {
-    try {
-        let ordersData;
+	try {
+		let ordersData;
 
-        if (!Object.keys(req.query).length) {
-            console.log(req.query);
-            ordersData = await orders.findAll();
-            //LA REQUETE NE PASSE PAS AVEC LES INCLUDES
-            // {
-            // 	include: [
-            // 		{
-            // 			model: cars,
-            // 			as: "car",
-            // 		},
-            // 		{
-            // 			model: users,
-            // 			as: "user",
-            // 		},
-            // 	];
-            // }
-        } else if (Object.keys(req.query).length === 4) {
-            //TODO QUAND ON RECUPERE LA DATE IL FAIT UNE SOUSTRACTION DUNE HEURE DONT LA DATE QUE LON RECOIT EST DIFFERENTE DE CELLE DANS LA BASE DE DONNEES;
-            //TODO TRAVAILLER SUR LES DATES QUE LON INSERE DANS LA DB POUR QUELLE SOIT COHERENTE AVEC CELLE RECUPERER
-            ordersData = await orders.findAll({
-                where: {
-                    [Op.and]: [
-                        {
-                            departure_date: {
-                                [Op.gte]: new Date(
-                                    `${startDate}T${startTime}:00.000Z`
-                                ).toISOString()
-                            }
-                        },
-                        {
-                            return_date: {
-                                [Op.lte]: new Date(
-                                    `${endDate}T${endTime}:00.000Z`
-                                ).toISOString()
-                            }
-                        }
-                    ]
-                }
-            });
-            console.log(ordersData);
-        }
-        return res.status(200).json({
-            orders: ordersData
-        });
-    } catch (error) {
-        return res.status(500).json({
-            message: "Error getting all orders",
-            error
-        });
-    }
+		if (!Object.keys(req.query).length) {
+			console.log(req.query);
+			ordersData = await orders.findAll();
+			//LA REQUETE NE PASSE PAS AVEC LES INCLUDES
+			// {
+			// 	include: [
+			// 		{
+			// 			model: cars,
+			// 			as: "car",
+			// 		},
+			// 		{
+			// 			model: users,
+			// 			as: "user",
+			// 		},
+			// 	];
+			// }
+		} else if (Object.keys(req.query).length === 4) {
+			//TODO QUAND ON RECUPERE LA DATE IL FAIT UNE SOUSTRACTION DUNE HEURE DONT LA DATE QUE LON RECOIT EST DIFFERENTE DE CELLE DANS LA BASE DE DONNEES;
+			//TODO TRAVAILLER SUR LES DATES QUE LON INSERE DANS LA DB POUR QUELLE SOIT COHERENTE AVEC CELLE RECUPERER
+
+			const { startDate, startTime, endDate, endTime } = req.query;
+			ordersData = await orders.findAll({
+				where: {
+					[Op.and]: [
+						{
+							departure_date: {
+								[Op.gte]: new Date(
+									`${startDate}T${startTime}:00.000Z`
+								).toISOString(),
+							},
+						},
+						{
+							return_date: {
+								[Op.lte]: new Date(
+									`${endDate}T${endTime}:00.000Z`
+								).toISOString(),
+							},
+						},
+					],
+				},
+			});
+			console.log(ordersData);
+		}
+		return res.status(200).json({
+			orders: ordersData,
+		});
+	} catch (error) {
+		return res.status(500).json({
+			message: "Error getting all orders",
+			error,
+		});
+	}
+
 };
 
 const getOrderById = async (req, res) => {
