@@ -12,9 +12,22 @@ const app = express();
 
 //middleware
 app.use(cors());
+app.use(cors({ origin: "http://localhost:3001", credentials: true }));
+app.use((req, res, next) => {
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	res.setHeader(
+		"Access-Control-Allow-Headers",
+		"Origin, X-Requested-With, Content-Type, Authorization"
+	);
+	res.setHeader(
+		"Access-Control-Allow-Method",
+		"POST, GET, PUT, DELETE, OPTIONS, PATCH"
+	);
+	next();
+});
 app.use(express.json());
 app.listen(process.env.APP_PORT, () => {
-    console.log("server running on port", process.env.APP_PORT);
+	console.log("server running on port", process.env.APP_PORT);
 });
 
 //middleware pour le stockage des images
