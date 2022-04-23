@@ -69,20 +69,20 @@ const Box = styled.div`
 	display: flex;
     justify-content: center;
 	flex-direction: column;
-    border: solid 0.5px rgba(0, 0, 0, 0.08);
+    border: 0;
     background-color: rgb(255, 255, 255, 0.9);
-	margin: 10% 0% 0% 0%;
-	width: 55vh;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	margin-top: 150px;
 `;
 
 const Banner = styled.div`
     border-radius: 3px 3px 0 0;
-	padding: 1vh 1vh 1vh 1vh;
+	padding: 10px;
 	border-bottom: solid #797979 1px;
 	background-color: #00a9ff;
 	color: #333333;
 	text-align: center;
-	font-size: 3.6vh;
+	font-size: 25px;
 `;
 
 const Form = styled.form`
@@ -90,22 +90,22 @@ const Form = styled.form`
     flex-direction: column;
     p {
         text-align: left;
-        font-size: 3vh;
+        font-size: 20px;
     }
     input {
         border: 1px solid #797979;
-        border-radius:0.5vh;
-        height: 4vh;
-        font-size: 2.5vh;
-        width: 40vh;
+        border-radius: 2px;
+        height: 22px;
+        font-size: 15px;
+        width: 50%;
     }
     button {
-        font-size: 3vh;
+        font-size: 18px;
         color: #333333;
         background-color: #00A9FF;
-        border: 1.5px solid #00486D;
+        border: 0;
         border-radius: 1vh;
-        width 40%;
+        width: 40%;
         padding: 1vh;
         margin: 2vh 1vh 2vh 1vh;
         cursor: pointer;
@@ -113,14 +113,14 @@ const Form = styled.form`
     button:hover{
         background-color: #0078B5;
         color: white;
-        border: 1.5px solid #00A9FF;
+        border: 0;
     }
     button:active {
         transform: scale(0.95);
     }
     button:disabled,
     button[disabled]{
-        border: 1px solid #999999;
+        border: 0;
         background-color: #cccccc;
         color: #666666;
         cursor: not-allowed;
@@ -130,24 +130,26 @@ const Form = styled.form`
 const Instruction = styled.div`
     justify-content: center;
     text-align: center;
-    margin: 2vh 1vh 2vh 1vh;
+    margin: 15px 10px 15px 10px;
+    width: 400px;
+    font-size: 15px;
 `;
 
 const Mail = styled.div`
-    margin: 1vh;
+    margin: 10px;
 	display: flex;
     justify-content: center;
 `;
 
 const Confirm = styled.div`
-    margin: 1vh;
+    margin: 10px;
 	display: flex;
 	justify-content: center;
 `;
 
 const Message = styled.div`
-    margin: 2vh 1vh 2vh 1vh;
-    padding: 1vh;
+    margin: 15px 10px 15px 10px;
+    padding: 10px;
     border-top : 1px solid black;
     border-bottom : 1px solid black;
     color: #00a9ff;

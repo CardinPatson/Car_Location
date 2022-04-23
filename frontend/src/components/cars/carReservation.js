@@ -12,96 +12,116 @@ function CarReservation(props) {
 	const { data } = location.state;
 	console.log(data);
 	console.log(data.car.name);
-
 	const handleReservation = () => {
 		console.log("hello");
 		props.paymentPage();
 	};
+
 	return (
 		<Container>
 			<Header />
 			<Content>
-				<Detail>
-					<Photo>
-						<img src={data.images[0]} />
-					</Photo>
-					<Name>
-						{data.car["cars_brands"].brand
-							? data.car["cars_brands"].brand
-							: "Marque voiture"}{" "}
-						{data.car["cars_brands"].model
-							? data.car["cars_brands"].model
-							: "Modèle voiture"}
-					</Name>
-					<Type>{data.car.type ? data.car.type : "Sportive"}</Type>
-					<Ligne>
-						<div></div>
-					</Ligne>
-					<Specs>
-						<div>Nombre de portes</div>
-						<p id="">{data.car.doors ? data.car.doors : "5"}</p>
-						<div>Taille du coffre</div>
-						<p id="">
-							{data.car.boot_size ? data.car.boot_size : "100"}L
-						</p>
-						<div>Energie</div>
-						<p id="">
-							{data.car.energy ? data.car.energy : "Électrique"}
-						</p>
-						<div>Transmission</div>
-						<p id="">
-							{data.car.is_automatic ? "Automatique" : "Manuelle"}
-						</p>
-						<div>Nombre de places</div>
-						<p id="">
-							{data.car.passengers ? data.car.passengers : "3"}
-						</p>
-						<div>Aire conditionnée</div>
-						<p id="">{data.car.air_conditioning ? "Oui" : "Non"}</p>
-					</Specs>
-				</Detail>
-				<Reservation>
-					<Banner>Résumé de la réservation</Banner>
-					<Information>
-						<Date>
-							<p>
-								La voiture sera réservée pendant la période
-								suivante:
+				<ZoneLeft>
+					<Detail>
+						<Photo>
+							<img src={data.images[0]} />
+						</Photo>
+						<Name>
+							{data.car["cars_brands"].brand
+								? data.car["cars_brands"].brand
+								: "Marque voiture"}{" "}
+							{data.car["cars_brands"].model
+								? data.car["cars_brands"].model
+								: "Modèle voiture"}
+						</Name>
+						<Type>
+							{data.car.type ? data.car.type : "Sportive"}
+						</Type>
+						<Ligne>
+							<div></div>
+						</Ligne>
+						<Specs>
+							<div>Nombre de portes</div>
+							<p id="">{data.car.doors ? data.car.doors : "5"}</p>
+							<div>Taille du coffre</div>
+							<p id="">
+								{data.car.boot_size
+									? data.car.boot_size
+									: "100"}
+								L
 							</p>
-							<div>
-								<p>Du</p>
-								<span>01/01/01</span>
-								<p>au</p>
-								<span>02/02/02</span>
-							</div>
-						</Date>
-						<Price>
-							<p>Le prix total de location sera:</p>
-							<div>
-								<p>Pour toute la durée:</p>
-								<span>1250€</span>
-							</div>
-							<div>
-								<p>Par jour:</p>
-								<span>
-									{data.car.price ? data.car.price : "100"}€
-								</span>
-							</div>
-						</Price>
-						<Confirm>
-							<Check>
-								Je confirme vouloir louer cette voiture pendant
-								la durée et pour le prix précisé.
-								<input type="checkbox" />
-								<span></span>
-							</Check>
-							<button onClick={handleReservation}>
-								Confirmer la location
-							</button>
-							<img src="./images/logo.svg" />
-						</Confirm>
-					</Information>
-				</Reservation>
+							<div>Energie</div>
+							<p id="">
+								{data.car.energy
+									? data.car.energy
+									: "Électrique"}
+							</p>
+							<div>Transmission</div>
+							<p id="">
+								{data.car.is_automatic
+									? "Automatique"
+									: "Manuelle"}
+							</p>
+							<div>Nombre de places</div>
+							<p id="">
+								{data.car.passengers
+									? data.car.passengers
+									: "3"}
+							</p>
+							<div>Aire conditionnée</div>
+							<p id="">
+								{data.car.air_conditioning ? "Oui" : "Non"}
+							</p>
+						</Specs>
+					</Detail>
+				</ZoneLeft>
+				<ZoneRight>
+					<Reservation>
+						<Banner>Résumé de la réservation</Banner>
+						<Information>
+							<Date>
+								<p>
+									La voiture sera réservée pendant la période
+									suivante:
+								</p>
+								<div>
+									<p>Du</p>
+									<span>01/01/01</span>
+									<p>au</p>
+									<span>02/02/02</span>
+								</div>
+							</Date>
+							<Price>
+								<p>Le prix total de location sera:</p>
+								<div>
+									<p>Pour toute la durée:</p>
+									<span>1250€</span>
+								</div>
+								<div>
+									<p>Par jour:</p>
+									<span>
+										{data.car.price
+											? data.car.price
+											: "100"}
+										€
+									</span>
+								</div>
+							</Price>
+							<Confirm>
+								<Check>
+									Je confirme vouloir louer cette voiture
+									pendant la durée et pour le prix précisé.
+									<input type="checkbox" />
+									<span></span>
+								</Check>
+								<button onClick={handleReservation}>
+									Confirmer la location
+								</button>
+								<img src="./images/logo.svg" />
+							</Confirm>
+						</Information>
+					</Reservation>
+				</ZoneRight>
 			</Content>
 		</Container>
 	);
@@ -121,33 +141,44 @@ const Container = styled.div`
 `;
 const Content = styled.div`
 	/* border: solid black 1px; */
-	width: 80%;
-	height: 85%;
-	margin-top: 80px;
+	height: 90%;
+	margin-top: 65px;
 	display: flex;
 	flex-direction: row;
-	gap: 5vh;
+	gap: 25px;
 	justify-content: flex-start;
 	position: relative;
 `;
 
+const ZoneLeft = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+`;
+
+const ZoneRight = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+`;
+
 const Detail = styled.div`
 	display: flex;
-	justify-content: center;
+	flex-grow: 0;
+	justify-content: flex-start;
 	align-items: center;
 	flex-direction: column;
-	border: 1px solid #00a9ff;
+	overflow: hidden;
+	border: 0px;
 	border-radius: 5px;
-	box-shadow: 0 0 1px black;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 	margin: 1vh 1vh 1vh 5vh;
-	width: 30%;
 	background-color: rgb(255, 255, 255, 0.95);
 `;
 
 const Photo = styled.div`
-	width: 100%;
-	height: 25%;
-	margin: 0vh 0vh 3vh 0vh;
+	width: 250px;
+	margin: 1vh 0vh 3vh 0vh;
 	img {
 		width: 90%;
 		height: auto;
@@ -158,12 +189,12 @@ const Photo = styled.div`
 `;
 
 const Name = styled.div`
-	font-size: 4vh;
+	font-size: 30px;
 	margin: 0vh 1vh 0vh 1vh;
 `;
 
 const Type = styled.div`
-	font-size: 2vh;
+	font-size: 20px;
 	margin: 1vh 1vh 1vh 1vh;
 	font-weight: bold;
 `;
@@ -200,21 +231,21 @@ const Specs = styled.div`
 const Reservation = styled.div`
 	background-color: rgb(255, 255, 255, 0.95);
 	display: flex;
-	border: 1px solid #00a9ff;
+	border: 0px;
 	border-radius: 5px;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 	flex-direction: column;
 	margin: 1vh 1vh 1vh 1vh;
-	box-shadow: 0 0 1px black;
-	width: 100%;
 `;
 
 const Banner = styled.div`
 	padding: 1vh 1vh 1vh 1vh;
 	border-bottom: solid #797979 1px;
+	border-radius: 5px 5px 0 0;
 	background-color: #00a9ff;
 	color: #333333;
 	text-align: center;
-	font-size: 3.6vh;
+	font-size: 32px;
 `;
 
 const Information = styled.div`
@@ -225,7 +256,7 @@ const Information = styled.div`
 const Date = styled.div`
 	display: flex;
 	flex-direction: column;
-	font-size: 2vh;
+	font-size: 18px;
 	margin: 2vh;
 	margin-top: 3vh;
 	padding-bottom: 15px;
@@ -238,7 +269,7 @@ const Date = styled.div`
 		gap: 2vh;
 		margin: 2vh 1vh 1vh 2.5vh;
 		align-items: center;
-		font-size: 1.8vh;
+		font-size: 15px;
 		span {
 			border: 2px solid #00a9ff;
 			padding: 0.5vh;
@@ -253,7 +284,7 @@ const Date = styled.div`
 const Price = styled.div`
 	display: flex;
 	flex-direction: column;
-	font-size: 2vh;
+	font-size: 18px;
 	margin: 2vh;
 	margin-top: 2vh;
 	padding-bottom: 20px;
@@ -267,7 +298,7 @@ const Price = styled.div`
 		gap: 2vh;
 		margin: 1.5vh 1vh 0vh 2.5vh;
 		align-items: center;
-		font-size: 1.8vh;
+		font-size: 15px;
 		span {
 			text-align: center;
 			border-bottom: 1px solid black;
@@ -281,50 +312,46 @@ const Price = styled.div`
 `;
 
 const Confirm = styled.div`
-    display: flex;
-    margin: 4vh;
-    margin-bottom: 0;
-    flex-direction: column;
-    align-items: center;
-    button {
-        font-size: 3vh;
-        color: #333333;
-        background-color: #00A9FF;
-        border: 1.5px solid #00486D;
-        border-radius: 15px;
-        width 40%;
-        padding: 1vh;
-        margin: 2vh 1vh 2vh 1vh;
-        cursor: pointer;
-        box-shadow: 0 0 1px black;
-    }
-    button:hover{
-        color: white;
-        background-color: #0078B5;
-        border: 1.5px solid #00A9FF;
-    }
-    button:active {
-        transform: scale(0.95);
-    }
-    img {
-        height: auto;
-        width: 20%;
-    }
+	display: flex;
+	margin: 25px;
+	margin-bottom: 0;
+	flex-direction: column;
+	align-items: center;
+	button {
+		font-size: 28px;
+		color: #333333;
+		background-color: #00a9ff;
+		border: 0;
+		border-radius: 10px;
+		padding: 10px;
+		margin: 15px 10px 15px 10px;
+		cursor: pointer;
+		box-shadow: 0 0 1px black;
+	}
+	button:hover {
+		color: white;
+		background-color: #0078b5;
+		border: 0;
+	}
+	button:active {
+		transform: scale(0.95);
+	}
+	img {
+		height: 120px;
+		width: auto;
+	}
 `;
 
 const Check = styled.label`
 	display: block;
 	position: relative;
-	padding-left: 4vh;
+	padding-left: 25px;
 	cursor: pointer;
-	font-size: 2vh;
+	font-size: 20px;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	top: 0%;
-	left: 0%;
-	height: 5vh;
 	color: #00a9ff;
 	input {
 		position: absolute;

@@ -15,7 +15,6 @@ function differenceBetweenDates(date1, date2) {
 const getAllOrders = async (req, res) => {
 	try {
 		let ordersData;
-
 		if (!Object.keys(req.query).length) {
 			console.log(req.query);
 			ordersData = await orders.findAll();
@@ -35,6 +34,8 @@ const getAllOrders = async (req, res) => {
 		} else if (Object.keys(req.query).length === 4) {
 			//TODO QUAND ON RECUPERE LA DATE IL FAIT UNE SOUSTRACTION DUNE HEURE DONT LA DATE QUE LON RECOIT EST DIFFERENTE DE CELLE DANS LA BASE DE DONNEES;
 			//TODO TRAVAILLER SUR LES DATES QUE LON INSERE DANS LA DB POUR QUELLE SOIT COHERENTE AVEC CELLE RECUPERER
+
+			const { startDate, startTime, endDate, endTime } = req.query;
 			ordersData = await orders.findAll({
 				where: {
 					[Op.and]: [
