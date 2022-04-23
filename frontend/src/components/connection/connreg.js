@@ -3,10 +3,9 @@ import Header from "../header";
 import styled from "styled-components";
 import Connexion from "./connexion";
 import Register from "./register";
-
-
-
-function Connreg() {
+import { connect } from "react-redux";
+import { signInUser } from "../../action/userAction";
+function Connreg(props) {
 	const [connexion, setConnexion] = useState(true);
 	const toggle = React.useCallback(() => setConnexion(!connexion));
 
@@ -14,9 +13,13 @@ function Connreg() {
 		<Container>
 			<Header />
 			<Content>
-				{!connexion
-						? <Register onSwap={toggle}/>
-						: <Connexion onSwap={toggle}/>}
+				{!connexion ? (
+					<Register onSwap={toggle} />
+				) : (
+					<Connexion onSwap={toggle} />
+				)}
+				
+
 			</Content>
 		</Container>
 	);
@@ -27,7 +30,7 @@ const Container = styled.div`
 	max-width: 1600px;
 	top: 0;
 	display: flex;
-    flex-direction: column;
+	flex-direction: column;
 	position: relative;
 	height: 100vh;
 `;
@@ -42,5 +45,15 @@ const Content = styled.div`
 	background-size: cover;
 	background-position: center;
 `;
-
-export default Connreg;
+const mapStateToProps = (state) => {
+	return {};
+};
+const mapStateToDispatch = (dispatch) => {
+	return {
+		signin: () => {
+			dispatch(signInUser());
+		},
+	};
+};
+const connector = connect(mapStateToProps, mapStateToDispatch);
+export default connector(Connreg);
