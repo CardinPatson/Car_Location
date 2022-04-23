@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { checkSchema } = require("express-validator");
+const ensureLoggedIn = require("connect-ensure-login").ensureLoggedIn;
 
 const addCarsSchema = require("../validations/addCarsSchema");
 
