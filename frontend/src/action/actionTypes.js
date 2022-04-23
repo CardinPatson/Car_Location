@@ -8,3 +8,6 @@ export const UPDATE_CARS = "UPDATE_CARS";
 //USER
 export const ADD_USER_REGISTER = "ADD_USER_REGISTER";
 export const GET_USER = "GET_USER";
+
+//ORDERS
+export const GET_PAYMENT = "GET_PAYMENT";
