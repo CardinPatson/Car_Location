@@ -9,8 +9,81 @@ function Register(props) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
-	const handleRegister = () => {
-		return;
+	const [firstNameError, setFirstNameError] = useState("");
+	const [lastNameError, setLastNameError] = useState("");
+	const [emailError, setEmailError] = useState("");
+	const [passwordError, setPasswordError] = useState("");
+	const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
+	function clearErrors() {
+		setFirstNameError("");
+		setLastNameError("");
+		setEmailError("");
+		setPasswordError("");
+		setConfirmPasswordError("");
+	};
+
+	function checkValues() {
+		if(firstName === ""){
+			setFirstNameError("* Veuillez compléter le champ nom");
+			return 1;
+		};
+		if(lastName === ""){
+			setLastNameError("* Veuillez compléter le champ prénom");
+			return 1;
+		};
+		if(email === ""){
+			setEmailError("* Veuillez compléter le champ email");
+			return 1;
+		};
+		if(!(/[@]/.test(email)) | !(/[.]/.test(email))){
+			setEmailError("* Le mail doit être de la forme test@hello.be");
+			return 1;
+		};
+		
+		if(password === ""){
+			setPasswordError("* Veuillez compléter le champ mot de passe");
+			return 1;
+		};
+		if(confirmPassword === ""){
+			setConfirmPasswordError("* Veuillez compléter ce champ");
+			return 1;
+		};
+		if(confirmPassword !== password){
+			setPasswordError("* Les deux mots de passes ne correspondes pas");
+			setConfirmPasswordError("* Les deux mots de passes ne correspondes pas");
+			return 1;
+		};
+		if(password.length < 8){
+			setPasswordError("* Le mot de passe doit contenir au moins 8 caractères");
+			return 1;
+		};
+		if(!(/\d/.test(password))){
+			setPasswordError("* Le mot de passe doit contenir au moins 1 chiffre");
+			return 1;
+		};
+		if(!(/[A-Z]/.test(password))){
+			setPasswordError("* Le mot de passe doit contenir au moins 1 majuscule");
+			return 1;
+		};
+		return 0;
+	};
+
+	const handleRegister = (e) => {
+		e.preventDefault();
+		clearErrors();
+		const clientProperty = {
+			firstName,
+			lastName,
+			email,
+			password
+		};
+		if(checkValues() === 1){
+			return ;
+		};
+		console.log(clientProperty);
+		props.register(clientProperty);
+		return ;
 	};
 	return (
 		<Container>
@@ -18,7 +91,7 @@ function Register(props) {
 				<Banner>Créer un nouveau compte</Banner>
 				<Form>
 					<Login>
-						<Ajust>
+						<Ajust id="champ">			
 							<p>Nom</p>
 							<input
 								type="text"
@@ -27,18 +100,20 @@ function Register(props) {
 									setFirstName(e.target.value);
 								}}
 							/>
+							{firstNameError ? <p className="error">{firstNameError}</p> : ""}
 						</Ajust>
-						<Ajust>
+						<Ajust id="champ">
 							<p>Prénom</p>
 							<input type="text" value={lastName}
 							onChange={(e) => {
 								setLastName(e.target.value);
 							}}
 							/>
-							
+							{lastNameError ? <p className="error">{lastNameError}</p> : ""}
+
 						</Ajust>
 					</Login>
-					<Email>
+					<Email id="champ">
 						<p>Email</p>
 						<input
 							type="email"
@@ -47,8 +122,9 @@ function Register(props) {
 								setEmail(e.target.value);
 							}}
 						/>
+						{emailError ? <p className="error">{emailError}</p> : ""}
 					</Email>
-					<Password>
+					<Password id="champ">
 						<p>Mot de passe</p>
 						<input
 							type="password"
@@ -57,9 +133,17 @@ function Register(props) {
 								setPassword(e.target.value);
 							}}
 						/>
+						{passwordError ? <p className="error">{passwordError}</p> : ""}
 						<br></br>
 						<p>Répéter le mot de passe</p>
-						<input type="password" />
+						<input 
+							type="password" 
+							value={confirmPassword}
+							onChange={(e) => {
+								setConfirmPassword(e.target.value);
+							}}
+						/>
+						{confirmPasswordError ? <p className="error">{confirmPasswordError}</p> : ""}
 					</Password>
 					<Confirm>
 						<button
@@ -120,6 +204,11 @@ const Form = styled.div`
 		border-radius: 0.5vh;
 		height: 32px;
 		font-size: 25px;
+		outline: none;
+	}
+	.error {
+		color: red;
+		font-size: 15px;
 	}
 	button {
 		font-size: 22px;

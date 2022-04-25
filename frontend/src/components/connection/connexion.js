@@ -1,10 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Checkbox } from '@mui/material';
+import { Checkbox } from "@mui/material";
+import { connect } from "react-redux";
+import { signInUser } from "../../action/userAction";
 
 function Connexion(props) {
-	const handleConnexion = () => {
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [remember, setRemember] = useState(false);
+
+	const [emailError, setEmailError] = useState("");
+	const [passwordError, setPasswordError] = useState("");
+
+	function clearErrors() {
+		setEmailError("");
+		setPasswordError("");
+	}
+
+	function checkValues() {
+		if (email === "") {
+			setEmailError("* Veuillez compléter le champ email");
+			return 1;
+		}
+		if (password === "") {
+			setPasswordError("* Veuillez compléter le champ mot de passe");
+			return 1;
+		}
+	}
+
+	const handleConnexion = (e) => {
+		e.preventDefault();
+		clearErrors();
+		const connexionProperty = {
+			email,
+			password,
+		};
+		if (checkValues() === 1) {
+			return;
+		}
+		console.log(connexionProperty);
+		// props.connexion(connexionProperty);
 		return;
 	};
 	return (
@@ -14,16 +50,33 @@ function Connexion(props) {
 				<Form>
 					<Login>
 						<p>Email</p>
-						<input type="email" />
+						<input
+							type="email"
+							value={email}
+							onChange={(e) => {
+								setEmail(e.target.value);
+							}}
+						/>
+						{emailError ? <p className="error">{emailError}</p> : ""}
 					</Login>
 					<Password>
 						<p>Mot de passe</p>
-						<input type="password" />
+						<input
+							type="password"
+							value={password}
+							onChange={(e) => {
+								setPassword(e.target.value);
+							}}
+						/>
+						{passwordError ? <p className="error">{passwordError}</p> : ""}
 					</Password>
 					<Confirm>
 						<Remember>
-							<Checkbox>
-							</Checkbox>
+							<Checkbox
+								checked={remember}
+								onChange={(e) => setRemember(!remember)}
+								disableRipple={true}
+							/>
 							Se souvenir de moi
 						</Remember>
 						<button
@@ -33,6 +86,7 @@ function Connexion(props) {
 						>
 							Se connecter
 						</button>
+						<button onClick={props.signin()}>google </button>
 					</Confirm>
 					<Options>
 						<Forgotpassword>
@@ -51,6 +105,7 @@ function Connexion(props) {
 		</Container>
 	);
 }
+
 
 const Container = styled.div`
 	display: flex;
@@ -78,6 +133,7 @@ const Banner = styled.div`
 `;
 
 const Form = styled.form`
+
     display: flex;
     flex-direction: column;
 	gap: 15px;
@@ -101,15 +157,19 @@ const Form = styled.form`
 		padding: 10px;
 		margin: 15px 10px 15px 10px;
 		cursor: pointer;
-    }
-    button:hover{
-        color: white;
-        background-color: #0078B5;
+	}
+	button:hover {
+		color: white;
+		background-color: #0078b5;
 		border: 0;
-    }
-    button:active {
-        transform: scale(0.95);
-    }
+	}
+	button:active {
+		transform: scale(0.95);
+	}
+	.error {
+		color: red;
+		font-size: 15px;
+	}
 `;
 
 const Login = styled.div`
@@ -168,5 +228,17 @@ const NoAccount = styled.label`
 	text-decoration: underline #00a9ff;
 	font-size: 18px;
 `;
+const mapStateToProps = (state) => {
+	return {};
+};
+const mapStateToDispatch = (dispatch) => {
+	return {
+		signin: () => {
+			dispatch(signInUser());
+		},
+	};
+};
 
-export default Connexion;
+const connector = connect(mapStateToProps, mapStateToDispatch);
+export default connector(Connexion);
+
