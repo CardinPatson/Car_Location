@@ -41,6 +41,7 @@ export const signInUser = createAsyncThunk(GET_USER, async (arg, thunkAPI) => {
 	// window.location.href = "http://localhost:3001/login";
 	// const payload = await auth.singInWithPopup(provider)
 	const user = await Axios.get(`${DOMAIN_NAME}/auth/google`).catch((err) => {
+
 		console.log(err);
 	});
 });

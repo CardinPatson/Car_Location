@@ -26,4 +26,7 @@ router.put("/:id", carCtrl.updateCar);
 //DELETE
 router.delete("/:id", carCtrl.deleteCar);
 
+// TEST
+router.get("/test/:id", carCtrl.testCar);
+
 module.exports = router;

@@ -106,6 +106,7 @@ function Connexion(props) {
 	);
 }
 
+
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -132,21 +133,22 @@ const Banner = styled.div`
 `;
 
 const Form = styled.form`
-	display: flex;
-	flex-direction: column;
+
+    display: flex;
+    flex-direction: column;
 	gap: 15px;
 	margin: 10px;
-	p {
-		text-align: left;
-		font-size: 22px;
-	}
-	input {
-		border: 1px solid #797979;
-		border-radius: 0.5vh;
-		height: 32px;
-		font-size: 25px;
-	}
-	button {
+    p{
+        text-align: left;
+        font-size: 22px;
+    }
+    input {
+        border: 1px solid #797979;
+        border-radius:0.5vh;
+        height: 32px;
+        font-size: 25px;
+    }
+    button {
 		font-size: 22px;
 		color: #333333;
 		background-color: #00a9ff;
@@ -239,3 +241,4 @@ const mapStateToDispatch = (dispatch) => {
 
 const connector = connect(mapStateToProps, mapStateToDispatch);
 export default connector(Connexion);
+

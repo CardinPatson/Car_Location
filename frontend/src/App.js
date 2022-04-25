@@ -8,6 +8,9 @@ import ForgotPassword from "./components/clients/forgotPassword";
 import CarReservation from "./components/cars/carReservation";
 import CarDetails from "./components/cars/carDetails";
 import ModifyDetails from './components/cars/modifyDetails';
+import PaymentAccepted from "./components/clients/paymentAccepted";
+import PaymentDenied from "./components/clients/paymentDenied";
+import FormIdentities from "./components/clients/formIdentities";
 
 function App() {
   return (
@@ -21,6 +24,9 @@ function App() {
         <Route path="/carReservation" element={<CarReservation />} />
         <Route path="/carDetails" element={<CarDetails />} />
         <Route path="/modifyDetails" element ={<ModifyDetails/>} /> 
+        <Route path="/paymentAccepted" element ={<PaymentAccepted/>} /> 
+        <Route path="/paymentDenied" element ={<PaymentDenied/>} /> 
+        <Route path="/formIdentities" element = {<FormIdentities />} />
       </Routes>
     </Router>
   );

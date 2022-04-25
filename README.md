@@ -2,20 +2,20 @@
 
 Application Web de location de voiture développée dans le cadre du cours "Développement informatique III" du bachelier Technologie de l'informatique à l'EPHEC.
 
-Ce projet utilise la bibliothèque ReactJS pour le Frontend et l'environnement d'exécution NodeJS pour le backend.
+Ce projet utilise la bibliothèque ReactJS pour le Frontend, l'environnement d'exécution NodeJS pour le backend. Une base de données PostgreSQL pour la persistance des données et l'ORM Sequelize pour assurer une prise en charge adéquate de ces derniers.
 
 ### Pré-requis
 
 -   NodeJS & npm
--   Editeur de texte
+-   PostgreSQL
 
 ### Installation
 
-Clonez le Github avec `git clone https://github.com/CardinPatson/Car_Location.git`
+Clonez le Github avec `git clone https://github.com/CardinPatson/Car_Location`
 
 ## Démarrage
 
-Rendez-vous dans le répertoire _frontend_, ouvrez une console et lancez les commandes `npm install` et `npm start`. Faites de même avec le répertoire _backend_. Veuillez garder les deux fenêtres des consoles ouvertes.
+Rendez-vous dans le répertoire _frontend_, ouvrez une console et lancez la commande `npm install` pour installer les dépendances et `npm start` pour lancer le serveur. Faites de même avec le répertoire _backend_. Veuillez garder les deux fenêtres des consoles ouvertes.
 
 ## Auteurs
 

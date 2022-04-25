@@ -15,7 +15,6 @@ function differenceBetweenDates(date1, date2) {
 const getAllOrders = async (req, res) => {
 	try {
 		let ordersData;
-
 		if (!Object.keys(req.query).length) {
 			console.log(req.query);
 			ordersData = await orders.findAll();
@@ -114,7 +113,8 @@ const getPrice = async (req, res) => {
 
 		if (carData) {
 			const price =
-				differenceBetweenDates(departure_date, return_date) * carData.price;
+				differenceBetweenDates(departure_date, return_date) *
+				carData.price;
 
 			return res.status(200).json({
 				price: price,
@@ -255,7 +255,8 @@ const updateOrder = async (req, res) => {
 };
 
 // front
-const YOUR_DOMAIN = "http://localhost:3000";
+const YOUR_DOMAIN = "http://localhost:3001";
+const FRONT_DOMAIN = "http://localhost:3000";
 
 const PRICE_ID = "price_1KmyUUAid8mWK1L4RVC47QQ8";
 const CLIENT_MAIL = "bellaalirachid@gmail.com";
@@ -263,7 +264,7 @@ const QUANTITY = 1;
 
 const payement = async (req, res) => {
 	const session = await stripe.checkout.sessions.create({
-		user_email: CLIENT_MAIL,
+		customer_email: CLIENT_MAIL,
 		line_items: [
 			{
 				// Provide the exact Price ID (for example, pr_1234) of the product you want to sell
@@ -272,11 +273,16 @@ const payement = async (req, res) => {
 			},
 		],
 		mode: "payment",
-		success_url: `${YOUR_DOMAIN}?success=true`,
-		cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+		success_url: `${FRONT_DOMAIN}/paymentAccepted`,
+		cancel_url: `${FRONT_DOMAIN}/paymentDenied`,
 	});
-
-	res.redirect(303, session.url);
+	console.log("hello from back");
+	// res.header("Access-Control-Allow-Origin", FRONT_DOMAIN); // update to match the domain you will make the request from
+	// res.header(
+	// 	"Access-Control-Allow-Headers",
+	// 	"Origin, X-Requested-With, Content-Type, Accept"
+	// );
+	res.json({ url: session.url }); // <-- this is the changed line
 };
 
 module.exports = {

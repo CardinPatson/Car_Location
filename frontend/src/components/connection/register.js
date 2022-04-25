@@ -9,7 +9,6 @@ function Register(props) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
-
 	const [firstNameError, setFirstNameError] = useState("");
 	const [lastNameError, setLastNameError] = useState("");
 	const [emailError, setEmailError] = useState("");
@@ -111,6 +110,7 @@ function Register(props) {
 							}}
 							/>
 							{lastNameError ? <p className="error">{lastNameError}</p> : ""}
+
 						</Ajust>
 					</Login>
 					<Email id="champ">
