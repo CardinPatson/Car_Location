@@ -6,6 +6,7 @@ import { SingleDatePicker } from "react-dates";
 import moment from "moment";
 import styled from "styled-components";
 import "react-dates/lib/css/_datepicker.css";
+import { Link } from "react-router-dom";
 
 function Slot(props) {
 	const [focusedStart, setFocusedStart] = useState(false);
@@ -54,7 +55,10 @@ function Slot(props) {
 			setError("Veuillez entrez une plage horaire valide !");
 			return;
 		}
-		if (endDay.getTime() === currentDay.getTime() && endHour <= currentHour) {
+		if (
+			endDay.getTime() === currentDay.getTime() &&
+			endHour <= currentHour
+		) {
 			setError("Veuillez entrez une plage horaire valide !");
 			return;
 		}
@@ -139,13 +143,15 @@ function Slot(props) {
 							}}
 						/>
 					</div>
-					<button
-						onClick={(e) => {
-							handleClick(e);
-						}}
-					>
-						Valider
-					</button>
+					<Link to="/cars">
+						<button
+							onClick={(e) => {
+								handleClick(e);
+							}}
+						>
+							Valider
+						</button>
+					</Link>
 				</Form>
 			</Content>
 		</Container>

@@ -8,7 +8,10 @@ function Header() {
 			<Content>
 				<Logo>
 					<a href="/">
-						<img src="./images/logo.svg" alt="Logo of car-rental's site"/>
+						<img
+							src="./images/logo.svg"
+							alt="Logo of car-rental's site"
+						/>
 					</a>
 				</Logo>
 				<Nav>
@@ -34,7 +37,7 @@ function Header() {
 							//TODO AFFICHER LE MENU DE NAVIGATION
 						}}
 					>
-						<img src="./images/list.svg" alt="hamburger"/>
+						<img src="./images/list.svg" alt="hamburger" />
 					</div>
 				</Menu>
 			</Content>
@@ -89,24 +92,54 @@ const Nav = styled.div`
 	text-align: left;
 	margin-left: 5%;
 	flex: 1;
-
 	p {
 		/* border: solid blue 1px; */
+		width: max-content;
+		position: relative;
 		color: rgba(1, 1, 1, 0.7);
 		text-decoration: none;
-		margin: 0 auto;
 		padding: 5px;
 		padding-right: 12.5px;
 		padding-left: 12.5px;
 		font-size: 1.15em;
-		transition: all 0.2s linear;
-		&:hover {
-			color: #00a9ff;
-			cursor: pointer;
-			padding-right: 11.25px;
-			padding-left: 11.25px;
-			font-size: 1.2em;
-			border-bottom: 1px solid #00a9ff;
+	}
+	p::before,
+	p::after {
+		content: "";
+		left: 50%;
+		top: 100%;
+	}
+	p::after,
+	p::before {
+		position: absolute;
+		background: #00a9ff;
+		display: block;
+		width: 0px;
+		height: 1px;
+	}
+	p:hover::after {
+		color: #00a9ff;
+		cursor: pointer;
+		animation: test2 0.5s ease forwards;
+	}
+	p:hover::before {
+		color: #00a9ff;
+		cursor: pointer;
+		animation: test 0.5s ease forwards;
+	}
+	p:hover {
+		color: #00a9ff;
+		transition: 0.5s ease;
+	}
+	@keyframes test {
+		to {
+			width: 50%;
+			left: 0;
+		}
+	}
+	@keyframes test2 {
+		to {
+			width: 50%;
 		}
 	}
 	@media (max-width: 768px) {
