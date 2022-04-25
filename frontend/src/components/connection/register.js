@@ -83,7 +83,7 @@ function Register(props) {
 			return ;
 		};
 		console.log(clientProperty);
-		// props.register(clientProperty);
+		props.register(clientProperty);
 		return ;
 	};
 	return (

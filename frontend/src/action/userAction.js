@@ -1,6 +1,6 @@
 import { ADD_USER_REGISTER, GET_USER } from "./actionTypes";
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { auth, provider } from "../firebase";
+// import { auth, provider } from "../firebase";
 
 import Axios from "axios";
 const DOMAIN_NAME = "http://localhost:3001";
