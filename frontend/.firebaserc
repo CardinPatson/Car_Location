@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "car-rental-345808",
+    "car_rental": "car-rental-345808"
+  },
+  "targets": {}
+}
