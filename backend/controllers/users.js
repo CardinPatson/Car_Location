@@ -37,7 +37,7 @@ const getUser = async (req, res) => {
 		}
 		//CHECK IF PASSWORD IS THE SAME
 		const hash = await bcrypt.compare(password, data.password);
-		console.log(hash);
+		console.log("hash", hash);
 		if (!hash) {
 			res.status(401).json({ error: "Mot de passe incorrect" });
 			return;
@@ -109,12 +109,10 @@ const addGoogleUser = async (req, res, next) => {
 	});
 
 	console.log(response);
-	res
-		.status(200)
-		.json({
-			firstName: response.dataValues.first_name,
-			email: response.dataValues.mail,
-		});
+	res.status(200).json({
+		firstName: response.dataValues.first_name,
+		email: response.dataValues.mail,
+	});
 };
 
 const updateUser = async (req, res) => {
