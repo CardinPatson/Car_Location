@@ -14,7 +14,7 @@ router.get("/", auth, usersCtrl.getUser);
 // POST
 router.post("/", userValidation, usersCtrl.addUser);
 //REGISTER WITH GOOGLE
-router.post("/google");
+router.post("/google", auth, usersCtrl.addGoogleUser);
 //PUT
 router.put("/:id", usersCtrl.updateUser);
 
