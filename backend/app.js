@@ -7,7 +7,6 @@ const path = require("path");
 const carRoute = require("./routes/car");
 const ordersRoute = require("./routes/orders");
 const usersRoute = require("./routes/users");
-const authRoute = require("./routes/auth");
 
 //Configuration pour les variables d'environnement
 
@@ -52,5 +51,4 @@ app.use(passport.session());
 app.use("/api/cars", carRoute);
 app.use("/api/orders", ordersRoute);
 app.use("/api/users", usersRoute);
-app.use("/", authRoute);
 module.exports = app;
