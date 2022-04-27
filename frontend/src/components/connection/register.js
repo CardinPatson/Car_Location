@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { registerUser } from "../../action/userAction";
+import { googleSignIn, registerUser } from "../../action/userAction";
 import { connect } from "react-redux";
 
 function Register(props) {
@@ -311,6 +311,7 @@ const Google = styled.div`
 		background-color: rgba(207, 207, 207, 0.25);
 		color: rgba(0, 0, 0, 0.75);
 	}
+	cursor: pointer;
 `;
 const mapStateToProps = (state) => {
 	return {};
@@ -319,6 +320,9 @@ const mapStateToDispatch = (dispatch) => {
 	return {
 		register: (payload) => {
 			dispatch(registerUser(payload));
+		},
+		googleSignIn: () => {
+			dispatch(googleSignIn());
 		},
 	};
 };

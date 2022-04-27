@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Checkbox } from "@mui/material";
 import { connect } from "react-redux";
-import { signInUser } from "../../action/userAction";
+import { googleSignIn, signInUser } from "../../action/userAction";
 
 function Connexion(props) {
 	const [email, setEmail] = useState("");
@@ -243,6 +243,7 @@ const Google = styled.div`
 		background-color: rgba(207, 207, 207, 0.25);
 		color: rgba(0, 0, 0, 0.75);
 	}
+	cursor: pointer;
 `;
 const Forgotpassword = styled.div`
 	display: flex;
@@ -268,6 +269,9 @@ const mapStateToDispatch = (dispatch) => {
 	return {
 		signin: () => {
 			dispatch(signInUser());
+		},
+		googleSignIn: () => {
+			dispatch(googleSignIn());
 		},
 	};
 };
