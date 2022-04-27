@@ -77,6 +77,7 @@ const addUser = async (req, res) => {
 			password: hash,
 		});
 		res.status(200).json({
+			user: data.dataValues,
 			token: jwt.sign({ user: response.dataValues.id }, "SHORT_HASH_PHRASE", {
 				expiresIn: "24h",
 			}),
@@ -89,8 +90,31 @@ const addUser = async (req, res) => {
 };
 
 //AUTHENTIFICATION VIA GOOGLE
-const addGoogleUser = async (req, res) => {
-	console.log(req.federateUser);
+const addGoogleUser = async (req, res, next) => {
+	const { userName, userMail } = req.body;
+	console.log(req.body);
+	//check if user is in database
+	const data = await users.findOne({
+		where: { mail: userMail },
+	});
+	if (data) {
+		//return user in database
+		console.log("user already in database");
+		res.status(200).json({ user: data });
+	}
+
+	const response = await users.create({
+		first_name: userName,
+		mail: userMail,
+	});
+
+	console.log(response);
+	res
+		.status(200)
+		.json({
+			firstName: response.dataValues.first_name,
+			email: response.dataValues.mail,
+		});
 };
 
 const updateUser = async (req, res) => {

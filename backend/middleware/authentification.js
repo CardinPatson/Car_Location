@@ -1,12 +1,19 @@
 const jwt = require("jsonwebtoken");
 const admin = require("../firebase");
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
 	try {
 		//CHECK IF USER HAVE TOKEN
 		const token = req.headers.authfirebase;
-		const checkToken = await admin.verifyIdToken(token)
-		console.log("checkToken -->", checkToken)
-		next();
+		console.log(token);
+		admin
+			.verifyIdToken(token)
+			.then((decodedToken) => {
+				console.log(decodedToken.uid);
+				next();
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	} catch {
 		try {
 			//CHECK IF THE USER HAVE TOKEN ON CONNECTION
