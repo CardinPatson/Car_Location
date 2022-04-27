@@ -21,53 +21,53 @@ function Register(props) {
 		setEmailError("");
 		setPasswordError("");
 		setConfirmPasswordError("");
-	};
+	}
 
 	function checkValues() {
-		if(firstName === ""){
+		if (firstName === "") {
 			setFirstNameError("* Veuillez compléter le champ nom");
 			return 1;
-		};
-		if(lastName === ""){
+		}
+		if (lastName === "") {
 			setLastNameError("* Veuillez compléter le champ prénom");
 			return 1;
-		};
-		if(email === ""){
+		}
+		if (email === "") {
 			setEmailError("* Veuillez compléter le champ email");
 			return 1;
-		};
-		if(!(/[@]/.test(email)) | !(/[.]/.test(email))){
+		}
+		if (!/[@]/.test(email) | !/[.]/.test(email)) {
 			setEmailError("* Le mail doit être de la forme test@hello.be");
 			return 1;
-		};
-		
-		if(password === ""){
+		}
+
+		if (password === "") {
 			setPasswordError("* Veuillez compléter le champ mot de passe");
 			return 1;
-		};
-		if(confirmPassword === ""){
+		}
+		if (confirmPassword === "") {
 			setConfirmPasswordError("* Veuillez compléter ce champ");
 			return 1;
-		};
-		if(confirmPassword !== password){
+		}
+		if (confirmPassword !== password) {
 			setPasswordError("* Les deux mots de passes ne correspondes pas");
 			setConfirmPasswordError("* Les deux mots de passes ne correspondes pas");
 			return 1;
-		};
-		if(password.length < 8){
+		}
+		if (password.length < 8) {
 			setPasswordError("* Le mot de passe doit contenir au moins 8 caractères");
 			return 1;
-		};
-		if(!(/\d/.test(password))){
+		}
+		if (!/\d/.test(password)) {
 			setPasswordError("* Le mot de passe doit contenir au moins 1 chiffre");
 			return 1;
-		};
-		if(!(/[A-Z]/.test(password))){
+		}
+		if (!/[A-Z]/.test(password)) {
 			setPasswordError("* Le mot de passe doit contenir au moins 1 majuscule");
 			return 1;
-		};
+		}
 		return 0;
-	};
+	}
 
 	const handleRegister = (e) => {
 		e.preventDefault();
@@ -76,14 +76,14 @@ function Register(props) {
 			firstName,
 			lastName,
 			email,
-			password
+			password,
 		};
-		if(checkValues() === 1){
-			return ;
-		};
+		if (checkValues() === 1) {
+			return;
+		}
 		console.log(clientProperty);
 		props.register(clientProperty);
-		return ;
+		return;
 	};
 	return (
 		<Container>
@@ -91,7 +91,7 @@ function Register(props) {
 				<Banner>Créer un nouveau compte</Banner>
 				<Form>
 					<Login>
-						<Ajust id="champ">			
+						<Ajust id="champ">
 							<p>Nom</p>
 							<input
 								type="text"
@@ -104,13 +104,14 @@ function Register(props) {
 						</Ajust>
 						<Ajust id="champ">
 							<p>Prénom</p>
-							<input type="text" value={lastName}
-							onChange={(e) => {
-								setLastName(e.target.value);
-							}}
+							<input
+								type="text"
+								value={lastName}
+								onChange={(e) => {
+									setLastName(e.target.value);
+								}}
 							/>
 							{lastNameError ? <p className="error">{lastNameError}</p> : ""}
-
 						</Ajust>
 					</Login>
 					<Email id="champ">
@@ -136,14 +137,18 @@ function Register(props) {
 						{passwordError ? <p className="error">{passwordError}</p> : ""}
 						<br></br>
 						<p>Répéter le mot de passe</p>
-						<input 
-							type="password" 
+						<input
+							type="password"
 							value={confirmPassword}
 							onChange={(e) => {
 								setConfirmPassword(e.target.value);
 							}}
 						/>
-						{confirmPasswordError ? <p className="error">{confirmPasswordError}</p> : ""}
+						{confirmPasswordError ? (
+							<p className="error">{confirmPasswordError}</p>
+						) : (
+							""
+						)}
 					</Password>
 					<Confirm>
 						<button
@@ -154,6 +159,15 @@ function Register(props) {
 							S'inscrire
 						</button>
 					</Confirm>
+					<Google
+						onClick={() => {
+							/**A COMPLETER */
+							props.googleSignIn();
+							// window.location.pathname = "/";
+						}}
+					>
+						<img src="/images/google.svg" alt=""></img>Se connecter avec google
+					</Google>
 					<Account>
 						<span onClick={props.onSwap} style={{ color: "#00A9FF" }}>
 							Déjà inscrit ?
@@ -219,6 +233,7 @@ const Form = styled.div`
 		padding: 10px;
 		margin: 15px 10px 15px 10px;
 		cursor: pointer;
+		width: 100%;
 	}
 	button:hover {
 		color: white;
@@ -268,6 +283,34 @@ const Account = styled.label`
 	cursor: pointer;
 	text-decoration: underline #00a9ff;
 	font-size: 18px;
+`;
+const Google = styled.div`
+	@media (max-width: 768px) {
+		height: 56px;
+		padding: 10px;
+	}
+	margin: 0 10px 0 10px;
+
+	display: flex;
+	justify-content: center;
+	background-color: #fff;
+	align-items: center;
+	/* width: 100%; */
+	height: 56px;
+	border-radius: 5px;
+	box-shadow: inset 0 0 0 1px rgb(0 0 0 / 60%), inset 0 0 0 2px rgb(0 0 0 / 0%),
+		inset 0 0 0 1px rgb(0 0 0 / 0%);
+
+	/**BOX SHADOW INSET NOUS PERMET DAVOIR UN EFFET INTERIEUR SUR LES BORDURE */
+	vertical-align: middle;
+	z-index: 0;
+	transition-duration: 167ms;
+	font-size: 20px;
+	color: rgba(0, 0, 0, 0.6);
+	&:hover {
+		background-color: rgba(207, 207, 207, 0.25);
+		color: rgba(0, 0, 0, 0.75);
+	}
 `;
 const mapStateToProps = (state) => {
 	return {};
