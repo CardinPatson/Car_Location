@@ -59,6 +59,7 @@ export const registerUser = createAsyncThunk(
 			console.log(err);
 		});
 		thunkAPI.dispatch(addUserRegisterInfo(user.data));
+		window.location.pathname = "/";
 	}
 );
 
@@ -73,6 +74,7 @@ export const signInUser = createAsyncThunk(GET_USER, async (arg, thunkAPI) => {
 		console.log(err);
 	});
 	thunkAPI.dispatch(addUserSignInInfo(user.data));
+	window.location.pathname = "/";
 });
 
 export const googleSignIn = createAsyncThunk(

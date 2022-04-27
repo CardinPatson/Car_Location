@@ -88,9 +88,7 @@ function Connexion(props) {
 						</button>
 						<Google
 							onClick={() => {
-								/**A COMPLETER */
 								props.googleSignIn();
-								// window.location.pathname = "/";
 							}}
 						>
 							<img src="/images/google.svg" alt=""></img>Se connecter avec
@@ -128,16 +126,18 @@ const Content = styled.div`
 	border-radius: 3px;
 	background-color: rgb(255, 255, 255, 0.9);
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	padding: 15px;
 `;
 
 const Banner = styled.div`
 	border-radius: 3px 3px 0 0;
-	padding: 8px;
-	border-bottom: solid #797979 1px;
-	background-color: #00a9ff;
+	padding: 20px;
+	/* border-bottom: solid #797979 1px; */
+	/* background-color: #00a9ff; */
 	color: #333333;
 	text-align: center;
-	font-size: 25px;
+	font-size: 22px;
+	font-weight: bold;
 `;
 
 const Form = styled.form`
@@ -147,13 +147,21 @@ const Form = styled.form`
 	margin: 10px;
 	p {
 		text-align: left;
-		font-size: 22px;
+		font-size: 16px;
+		color: rgba(0, 0, 0, 0.65);
 	}
 	input {
-		border: 1px solid #797979;
+		border: none;
+		border-bottom: 1px solid #797979;
 		border-radius: 0.5vh;
 		height: 32px;
-		font-size: 25px;
+		font-size: 16px;
+		outline: none;
+		padding: 5px;
+		&:focus {
+			box-shadow: 2px 2px 12px #00a9ff;
+			/* border-radius: 5px 5px 0px 0px; */
+		}
 	}
 	button {
 		font-size: 22px;
@@ -200,6 +208,7 @@ const Confirm = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 15px;
+	margin-bottom: 35px  ;
 	button {
 		align-self: center;
 	}

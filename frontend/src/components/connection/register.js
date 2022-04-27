@@ -196,12 +196,13 @@ const Content = styled.div`
 
 const Banner = styled.div`
 	border-radius: 3px 3px 0 0;
-	padding: 1vh 1vh 1vh 1vh;
-	border-bottom: solid #797979 1px;
-	background-color: #00a9ff;
+	padding: 20px;
+	/* border-bottom: solid #797979 1px; */
+	/* background-color: #00a9ff; */
 	color: #333333;
 	text-align: center;
-	font-size: 25px;
+	font-size: 22px;
+	font-weight: bold;
 `;
 
 const Form = styled.div`
@@ -211,14 +212,21 @@ const Form = styled.div`
 	margin: 10px;
 	p {
 		text-align: left;
-		font-size: 22px;
+		font-size: 16px;
+		color: rgba(0, 0, 0, 0.65);
 	}
 	input {
-		border: 1px solid #797979;
+		border: none;
+		border-bottom: 1px solid #797979;
 		border-radius: 0.5vh;
 		height: 32px;
-		font-size: 25px;
+		font-size: 16px;
 		outline: none;
+		padding: 5px;
+		&:focus {
+			box-shadow: 2px 2px 12px #00a9ff;
+			/* border-radius: 5px 5px 0px 0px; */
+		}
 	}
 	.error {
 		color: red;
@@ -276,20 +284,21 @@ const Password = styled.div`
 const Confirm = styled.div`
 	display: flex;
 	justify-content: center;
-`;
+	`;
 const Account = styled.label`
 	display: flex;
 	margin: 0vh 10px 10px 10px;
 	cursor: pointer;
 	text-decoration: underline #00a9ff;
 	font-size: 18px;
-`;
+	`;
 const Google = styled.div`
 	@media (max-width: 768px) {
 		height: 56px;
 		padding: 10px;
 	}
 	margin: 0 10px 0 10px;
+	margin-bottom:30px ;
 
 	display: flex;
 	justify-content: center;
