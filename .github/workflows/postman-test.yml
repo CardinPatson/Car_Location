@@ -1,0 +1,60 @@
+name: postman-test
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    strategy:
+      matrix:
+        node-version: [14.x]
+      # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: ${{secrets.DB_USERNAME}}
+          POSTGRES_HOST: ${{secrets.DB_HOST}}
+          POSTGRES_PASSWORD: ${{secrets.DB_PASSWORD}}
+          POSTGRES_DB: ${{secrets.DB_NAME}}
+        options: >-
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+  steps:
+    - name: Check out Git repositor
+      uses: actions/checkout@v1
+      with:
+        ref: master
+    - name: Set up Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+        registry-url: https://registry.npmjs.org/
+    - name: Install dependencies
+      run: npm install
+    - name: Install newman
+      run: npm install -g newman
+    - name: Install nodemon
+      run: npm install -g nodemon
+    # run server
+    - name: Start server
+      run: nodemon server
+    - name: Run the API and Postman's tests
+      run: |
+        npm run start:dev &
+        sleep 60
+        newman run "Cars_Location.postman_collection.json"
+      #postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
+      env:
+        DBURL: postgresql://${{secrets.DB_USERNAME}}:${{secrets.DB_PASSWORD}}@${{secrets.DB_HOST}}:${{secrets.DB_PORT}}/${{secrets.DB_NAME}}
