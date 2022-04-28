@@ -29,8 +29,8 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 app.use(cookieParser());
-app.listen(process.env.APP_PORT, () => {
-	console.log("server running on port", process.env.APP_PORT);
+app.listen(3001,"0.0.0.0", () => {
+	console.log("server running on port 3001");
 });
 
 //middleware pour le stockage des images
