@@ -30,7 +30,6 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
-          - 3001:3001
     steps:
       - name: Check out Git repositor
         uses: actions/checkout@v1
