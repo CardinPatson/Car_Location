@@ -1,0 +1,69 @@
+name: postman-test
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    strategy:
+      matrix:
+        node-version: [14.x]
+      # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        options: >-
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+          - 3001:3001
+    steps:
+      - name: Check out Git repositor
+        uses: actions/checkout@v1
+        with:
+          ref: master
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://registry.npmjs.org/
+      - name: Install dependencies
+        run: npm install
+      - name: Install newman
+        run: npm install -g newman
+      - name: Install nodemon
+        run: npm install -g nodemon
+      # run server
+      - name: Start server
+        run: nodemon server
+        env:
+          APP_PORT: ${{secrets.APP_PORT}}
+          FIREBASE_API_KEY : ${{secrets.FIREBASE_API_KEY}}
+          FIREBASE_AUTH_DOMAIN: ${{secrets.FIREBASE_AUTH_DOMAIN}}
+          FIREBASE_PROJECT_ID: ${{secrets.FIREBASE_PROJECT_ID}}
+          FIREBASE_STORAGE_BUCKET: ${{secrets.FIREBASE_STORAGE_BUCKET}}
+          FIREBASE_MESSAGING_ID: ${{secrets.FIREBASE_MESSAGING_ID}}
+          FIREBASE_APP_ID: ${{secrets.FIREBASE_APP_ID}}
+          FIREBASE_MEASUREMENT_ID: ${{secrets.FIREBASE_MEASUREMENT_ID}}
+      - name: Run the API and Postman's tests
+        run: |
+          npm run start:dev &
+          sleep 60
+          newman run "Cars_Location.postman_collection.json"
+        #postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
+        env:
+          DBURL: postgresql://${{secrets.DB_USERNAME}}:${{secrets.DB_PASSWORD}}@${{secrets.DB_HOST}}:${{secrets.DB_PORT}}/${{secrets.DB_NAME}}

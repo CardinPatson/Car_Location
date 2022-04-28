@@ -1,6 +1,5 @@
 const dotenv = require("dotenv").config();
 const express = require("express");
-const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
@@ -12,7 +11,6 @@ const usersRoute = require("./routes/users");
 
 const app = express();
 
-require("./boot/auth")();
 //middleware
 app.use(cors());
 app.use(cors({ origin: "http://localhost:3001", credentials: true }));
@@ -30,8 +28,8 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 app.use(cookieParser());
-app.listen(process.env.APP_PORT, () => {
-	console.log("server running on port", process.env.APP_PORT);
+app.listen(3001,"0.0.0.0", () => {
+	console.log("server running on port 3001");
 });
 
 //middleware pour le stockage des images
@@ -44,8 +42,6 @@ app.use(
 		saveUninitialized: false,
 	})
 );
-app.use(passport.initialize());
-app.use(passport.session());
 
 //RESTFULL API
 app.use("/api/cars", carRoute);

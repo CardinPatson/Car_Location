@@ -5,8 +5,12 @@ import {
 	GET_USER,
 } from "./actionTypes";
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
+<<<<<<< HEAD
 import { auth, provider } from "../firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+=======
+// import { auth, provider } from "../firebase";
+>>>>>>> master
 
 import Axios from "axios";
 const DOMAIN_NAME = "http://localhost:3001";
@@ -65,12 +69,19 @@ export const registerUser = createAsyncThunk(
 
 //CONNECT USER VIA FORM
 export const signInUser = createAsyncThunk(GET_USER, async (arg, thunkAPI) => {
+<<<<<<< HEAD
 	const user = await Axios.get(`${DOMAIN_NAME}/user`, {
 		params: {
 			email: arg.email,
 			password: arg.password,
 		},
 	}).catch((err) => {
+=======
+	// window.location.href = "http://localhost:3001/login";
+	// const payload = await auth.singInWithPopup(provider)
+	const user = await Axios.get(`${DOMAIN_NAME}/auth/google`).catch((err) => {
+
+>>>>>>> master
 		console.log(err);
 	});
 	thunkAPI.dispatch(addUserSignInInfo(user.data));

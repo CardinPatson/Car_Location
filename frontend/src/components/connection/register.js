@@ -21,6 +21,7 @@ function Register(props) {
 		setEmailError("");
 		setPasswordError("");
 		setConfirmPasswordError("");
+<<<<<<< HEAD
 	}
 
 	function checkValues() {
@@ -68,6 +69,55 @@ function Register(props) {
 		}
 		return 0;
 	}
+=======
+	};
+
+	function checkValues() {
+		if(firstName === ""){
+			setFirstNameError("* Veuillez compléter le champ nom");
+			return 1;
+		};
+		if(lastName === ""){
+			setLastNameError("* Veuillez compléter le champ prénom");
+			return 1;
+		};
+		if(email === ""){
+			setEmailError("* Veuillez compléter le champ email");
+			return 1;
+		};
+		if(!(/[@]/.test(email)) | !(/[.]/.test(email))){
+			setEmailError("* Le mail doit être de la forme test@hello.be");
+			return 1;
+		};
+		
+		if(password === ""){
+			setPasswordError("* Veuillez compléter le champ mot de passe");
+			return 1;
+		};
+		if(confirmPassword === ""){
+			setConfirmPasswordError("* Veuillez compléter ce champ");
+			return 1;
+		};
+		if(confirmPassword !== password){
+			setPasswordError("* Les deux mots de passes ne correspondes pas");
+			setConfirmPasswordError("* Les deux mots de passes ne correspondes pas");
+			return 1;
+		};
+		if(password.length < 8){
+			setPasswordError("* Le mot de passe doit contenir au moins 8 caractères");
+			return 1;
+		};
+		if(!(/\d/.test(password))){
+			setPasswordError("* Le mot de passe doit contenir au moins 1 chiffre");
+			return 1;
+		};
+		if(!(/[A-Z]/.test(password))){
+			setPasswordError("* Le mot de passe doit contenir au moins 1 majuscule");
+			return 1;
+		};
+		return 0;
+	};
+>>>>>>> master
 
 	const handleRegister = (e) => {
 		e.preventDefault();
@@ -76,6 +126,7 @@ function Register(props) {
 			firstName,
 			lastName,
 			email,
+<<<<<<< HEAD
 			password,
 		};
 		if (checkValues() === 1) {
@@ -84,6 +135,16 @@ function Register(props) {
 		console.log(clientProperty);
 		props.register(clientProperty);
 		return;
+=======
+			password
+		};
+		if(checkValues() === 1){
+			return ;
+		};
+		console.log(clientProperty);
+		props.register(clientProperty);
+		return ;
+>>>>>>> master
 	};
 	return (
 		<Container>
@@ -91,7 +152,11 @@ function Register(props) {
 				<Banner>Créer un nouveau compte</Banner>
 				<Form>
 					<Login>
+<<<<<<< HEAD
 						<Ajust id="champ">
+=======
+						<Ajust id="champ">			
+>>>>>>> master
 							<p>Nom</p>
 							<input
 								type="text"
@@ -112,6 +177,10 @@ function Register(props) {
 								}}
 							/>
 							{lastNameError ? <p className="error">{lastNameError}</p> : ""}
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 						</Ajust>
 					</Login>
 					<Email id="champ">
@@ -137,18 +206,27 @@ function Register(props) {
 						{passwordError ? <p className="error">{passwordError}</p> : ""}
 						<br></br>
 						<p>Répéter le mot de passe</p>
+<<<<<<< HEAD
 						<input
 							type="password"
+=======
+						<input 
+							type="password" 
+>>>>>>> master
 							value={confirmPassword}
 							onChange={(e) => {
 								setConfirmPassword(e.target.value);
 							}}
 						/>
+<<<<<<< HEAD
 						{confirmPasswordError ? (
 							<p className="error">{confirmPasswordError}</p>
 						) : (
 							""
 						)}
+=======
+						{confirmPasswordError ? <p className="error">{confirmPasswordError}</p> : ""}
+>>>>>>> master
 					</Password>
 					<Confirm>
 						<button
@@ -220,6 +298,7 @@ const Form = styled.div`
 		border-bottom: 1px solid #797979;
 		border-radius: 0.5vh;
 		height: 32px;
+<<<<<<< HEAD
 		font-size: 16px;
 		outline: none;
 		padding: 5px;
@@ -227,6 +306,10 @@ const Form = styled.div`
 			box-shadow: 2px 2px 12px #00a9ff;
 			/* border-radius: 5px 5px 0px 0px; */
 		}
+=======
+		font-size: 25px;
+		outline: none;
+>>>>>>> master
 	}
 	.error {
 		color: red;

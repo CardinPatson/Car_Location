@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Checkbox } from "@mui/material";
 import { connect } from "react-redux";
+<<<<<<< HEAD
 import { googleSignIn, signInUser } from "../../action/userAction";
+=======
+import { signInUser } from "../../action/userAction";
+>>>>>>> master
 
 function Connexion(props) {
 	const [email, setEmail] = useState("");
@@ -86,6 +90,7 @@ function Connexion(props) {
 						>
 							Se connecter
 						</button>
+<<<<<<< HEAD
 						<Google
 							onClick={() => {
 								props.googleSignIn();
@@ -94,6 +99,9 @@ function Connexion(props) {
 							<img src="/images/google.svg" alt=""></img>Se connecter avec
 							google
 						</Google>
+=======
+						<button onClick={props.signin()}>google </button>
+>>>>>>> master
 					</Confirm>
 					<Options>
 						<Forgotpassword>
@@ -112,6 +120,7 @@ function Connexion(props) {
 		</Container>
 	);
 }
+
 
 const Container = styled.div`
 	display: flex;
@@ -141,8 +150,14 @@ const Banner = styled.div`
 `;
 
 const Form = styled.form`
+<<<<<<< HEAD
 	display: flex;
 	flex-direction: column;
+=======
+
+    display: flex;
+    flex-direction: column;
+>>>>>>> master
 	gap: 15px;
 	margin: 10px;
 	p {
@@ -172,7 +187,10 @@ const Form = styled.form`
 		padding: 10px;
 		margin: 15px 10px 15px 10px;
 		cursor: pointer;
+<<<<<<< HEAD
 		width: 100%;
+=======
+>>>>>>> master
 	}
 	button:hover {
 		color: white;
@@ -279,6 +297,7 @@ const mapStateToDispatch = (dispatch) => {
 		signin: () => {
 			dispatch(signInUser());
 		},
+<<<<<<< HEAD
 		googleSignIn: () => {
 			dispatch(googleSignIn());
 		},
@@ -287,3 +306,11 @@ const mapStateToDispatch = (dispatch) => {
 
 const connector = connect(mapStateToProps, mapStateToDispatch);
 export default connector(Connexion);
+=======
+	};
+};
+
+const connector = connect(mapStateToProps, mapStateToDispatch);
+export default connector(Connexion);
+
+>>>>>>> master
