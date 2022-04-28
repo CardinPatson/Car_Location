@@ -49,6 +49,8 @@ jobs:
       # run server
       - name: Start server
         run: nodemon server
+        env:
+          APP_PORT: ${{secrets.APP_PORT}}
       - name: Run the API and Postman's tests
         run: |
           npm run start:dev &
