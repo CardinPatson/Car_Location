@@ -29,11 +29,11 @@ export const addUserSignInInfo = createAction(
 	}
 );
 
-
 export const addUserGoogleInfo = createAction(
 	ADD_USER_GOOGLE,
 	function prepare(user) {
 		// window.location.pathname = "/connreg";
+		console.log(user);
 		return {
 			payload: user,
 		};
@@ -112,9 +112,8 @@ export const googleSignIn = createAsyncThunk(
 			});
 			window.location.pathname = "/";
 			thunkAPI.dispatch(
-				addUserGoogleInfo({ user: response.data, token: token })
+				addUserSignInInfo({ user: response.data.user, token: token })
 			);
-			console.log("response -->", response);
 		} else {
 			console.warn("cannot get user");
 		}
