@@ -12,7 +12,6 @@ const usersRoute = require("./routes/users");
 
 const app = express();
 
-require("./boot/auth")();
 //middleware
 app.use(cors());
 app.use(cors({ origin: "http://localhost:3001", credentials: true }));
