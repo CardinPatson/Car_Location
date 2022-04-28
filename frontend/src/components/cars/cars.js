@@ -8,6 +8,7 @@ import {
 	getCarsImages,
 	getCarsSlot,
 } from "../../action/carAction";
+import { useLocation } from "react-router-dom";
 import localForage from "localforage";
 import "react-dates/initialize";
 import { SingleDatePicker } from "react-dates";
@@ -22,7 +23,22 @@ function Cars(props) {
 	const [endDate, setEndDate] = useState(moment());
 	const [endTime, setEndTime] = useState("");
 	const [error, setError] = useState("");
+	const [redirected, setRedirected] = useState(false);
+
+	const location = useLocation();
+	console.log(location);
 	useEffect(() => {
+		if (location["state"]) {
+			let info = location["state"];
+			console.log("present");
+			setRedirected(true);
+			setStartDate(moment(Date.parse(info["startDate"]).toISOString));
+			setStartTime(info["startTime"]);
+			setEndDate(moment(Date.parse(info["endDate"]).toISOString));
+			setEndTime(info["endTime"]);
+		} else {
+			setRedirected(false);
+		}
 		localForage
 			.clear()
 			.then(() => {
@@ -34,6 +50,7 @@ function Cars(props) {
 		props.getCars();
 		props.getCarsImages();
 	}, []);
+
 	console.log(props.cars);
 	let carsImages = {};
 	if (props.images && props.images.length) {
@@ -75,7 +92,10 @@ function Cars(props) {
 			setError("Veuillez entrez une plage horaire valide !");
 			return;
 		}
-		if (endDay.getTime() === currentDay.getTime() && endHour <= currentHour) {
+		if (
+			endDay.getTime() === currentDay.getTime() &&
+			endHour <= currentHour
+		) {
 			setError("Veuillez entrez une plage horaire valide !");
 			return;
 		}
@@ -167,6 +187,7 @@ function Cars(props) {
 									/>
 								</StyledDatePickerWrapper>
 								<input
+									value={startTime}
 									type="time"
 									onChange={(e) => {
 										setError("");
@@ -191,6 +212,7 @@ function Cars(props) {
 									/>
 								</StyledDatePickerWrapper>{" "}
 								<input
+									value={endTime}
 									type="time"
 									onChange={(e) => {
 										setError("");
@@ -216,7 +238,11 @@ function Cars(props) {
 						{props.cars.length ? (
 							props.cars.map((car) => {
 								return (
-									<CarSlot key={car.id} car={car} images={carsImages[car.id]} />
+									<CarSlot
+										key={car.id}
+										car={car}
+										images={carsImages[car.id]}
+									/>
 								);
 							})
 						) : (

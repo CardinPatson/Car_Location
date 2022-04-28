@@ -5,7 +5,7 @@ import CarDetails from "./carDetails";
 
 const CarSlot = (props) => {
 	const handleDetail = () => {};
-
+	console.log(props);
 	return (
 		<Container>
 			<Content>
@@ -21,7 +21,8 @@ const CarSlot = (props) => {
 				</Pic>
 				<Info>
 					<Name>
-						{props.car.cars_brands.brand} {props.car.cars_brands.model}
+						{props.car.cars_brands.brand}{" "}
+						{props.car.cars_brands.model}
 					</Name>
 					<Specs>
 						<div>Type</div>
@@ -30,7 +31,11 @@ const CarSlot = (props) => {
 						<p>{props.car.energy}</p>
 						<div>Places</div>
 						<p>{props.car.passengers}</p>
-						<div>{props.car.is_automatic ? "Automatique" : "Manuelle"}</div>
+						<div>
+							{props.car.is_automatic
+								? "Automatique"
+								: "Manuelle"}
+						</div>
 					</Specs>
 				</Info>
 				<Price>
@@ -41,7 +46,9 @@ const CarSlot = (props) => {
 					<Details>
 						<div>
 							<Link to="/carDetails" state={{ from: props }}>
-								<button className="details__button">Détails</button>
+								<button className="details__button">
+									Détails
+								</button>
 							</Link>
 						</div>
 
