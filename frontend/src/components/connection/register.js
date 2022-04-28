@@ -182,10 +182,13 @@ function Register(props) {
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
-	position: relative;
+	justify-content: center;
+	align-items: center;
+	margin-top: 75px;
+	margin-bottom: 15px;
+	height: 65%;
 `;
 const Content = styled.div`
-	margin-top: 100px;
 	display: flex;
 	flex-direction: column;
 	border: 0;
@@ -219,7 +222,7 @@ const Form = styled.div`
 		border: none;
 		border-bottom: 1px solid #797979;
 		border-radius: 0.5vh;
-		height: 32px;
+		height: 40%;
 		font-size: 16px;
 		outline: none;
 		padding: 5px;
@@ -284,21 +287,21 @@ const Password = styled.div`
 const Confirm = styled.div`
 	display: flex;
 	justify-content: center;
-	`;
+`;
 const Account = styled.label`
 	display: flex;
 	margin: 0vh 10px 10px 10px;
 	cursor: pointer;
 	text-decoration: underline #00a9ff;
 	font-size: 18px;
-	`;
+`;
 const Google = styled.div`
 	@media (max-width: 768px) {
 		height: 56px;
 		padding: 10px;
 	}
 	margin: 0 10px 0 10px;
-	margin-bottom:30px ;
+	margin-bottom: 30px;
 
 	display: flex;
 	justify-content: center;

@@ -1,14 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { connect } from "react-redux";
 
-function Header() {
+function Header(props) {
 	return (
 		<Container>
 			<Content>
 				<Logo>
 					<a href="/">
-						<img src="./images/logo.svg" alt="Logo of car-rental's site"/>
+						<img src="./images/logo.svg" alt="Logo of car-rental's site" />
 					</a>
 				</Logo>
 				<Nav>
@@ -22,19 +23,22 @@ function Header() {
 						<p>Ajouter voitures</p>
 					</Link>
 				</Nav>
-				<Login>
-					{/* {//TODO Si déjà inscris mentionner son nom } */}
-					<Link to="/connreg" style={{ textDecoration: "none" }}>
-						<p>Connexion</p>
-					</Link>
-				</Login>
+				{props.lastName ? (
+					<div> Bienvenue {props.firstName}</div>
+				) : (
+					<Login>
+						<Link to="/connreg" style={{ textDecoration: "none" }}>
+							<p>Connexion</p>
+						</Link>
+					</Login>
+				)}
 				<Menu>
 					<div
 						onClick={() => {
 							//TODO AFFICHER LE MENU DE NAVIGATION
 						}}
 					>
-						<img src="./images/list.svg" alt="hamburger"/>
+						<img src="./images/list.svg" alt="hamburger" />
 					</div>
 				</Menu>
 			</Content>
@@ -138,4 +142,17 @@ const Menu = styled.div`
 		display: none;
 	}
 `;
-export default Header;
+
+const mapStateToProps = (state) => {
+	return {
+		lastName: state.userState.lastName,
+	};
+};
+
+const mapStateToDispatch = (dispatch) => {
+	return {};
+};
+
+const connector = connect(mapStateToProps, mapStateToDispatch);
+
+export default connector(Header);

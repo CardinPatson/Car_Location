@@ -113,15 +113,15 @@ function Connexion(props) {
 	);
 }
 
-
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
+	margin-top: 80px;
 	position: relative;
+	margin-bottom: 20px;
 `;
 
 const Content = styled.div`
-	margin-top: 100px;
 	display: flex;
 	flex-direction: column;
 	border-radius: 3px;
@@ -209,7 +209,7 @@ const Confirm = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 15px;
-	margin-bottom: 35px  ;
+	margin-bottom: 35px;
 	button {
 		align-self: center;
 	}

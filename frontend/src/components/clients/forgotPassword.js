@@ -1,12 +1,25 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
 import Header from "../header";
 
-function ForgotPassword() {
+function ForgotPassword(props) {
 	const [message, setMessage] = useState(false);
+	const [error, setError] = useState("");
+	const [email, setEmail] = useState("");
 	const handleChanges = () => {
-		setMessage(!message);
-		document.getElementById("button").disabled = true;
+		if (!props.email) {
+			setError(
+				"Veuillez vous connectez afin de réinitialiser votre mot de passe"
+			);
+			return;
+		}
+
+		if (email === props.email) {
+			setMessage(!message);
+			document.getElementById("button").disabled = true;
+			// setEmail("un email de confirmation vous a été envoyé sur votre email");
+		}
 	};
 
 	return (
@@ -23,13 +36,21 @@ function ForgotPassword() {
 							</p>
 						</Instruction>
 						<Mail>
-							<input type="email" placeholder="Email" />
+							<input
+								type="email"
+								placeholder="Email"
+								value={email}
+								onChange={(e) => {
+									setEmail(e.target.value);
+								}}
+							/>
 						</Mail>
 						<Confirm>
 							<button type="button" onClick={handleChanges} id="button">
 								Réinitialiser
 							</button>
 						</Confirm>
+						{error && <Message style={{ color: "red" }}>{error}</Message>}
 						{message && (
 							<Message>
 								Un mail à été envoyer à cette adresse pour réinitialiser le mot
@@ -166,5 +187,16 @@ const Message = styled.div`
 	border-bottom: 1px solid black;
 	color: #00a9ff;
 `;
+const mapStateToProps = (state) => {
+	return {
+		firstName: state.userState.firstName,
+		email: state.userState.email,
+	};
+};
 
-export default ForgotPassword;
+const mapStateToDispatch = (dispatch) => {
+	return {};
+};
+
+const connector = connect(mapStateToProps, mapStateToDispatch);
+export default connect(ForgotPassword);
