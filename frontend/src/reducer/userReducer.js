@@ -1,17 +1,24 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { addUserRegisterInfo } from "../action/userAction";
+import { addUserGoogleInfo, addUserRegisterInfo } from "../action/userAction";
 const initialState = {
-	first_name: "",
-	last_name: "",
+	firstName: "",
+	lastName: "",
 	birthday: "",
 	password: "",
-	birth_place: "",
-	birth_country: "",
+	birthPlace: "",
+	birthCountry: "",
 	address: "",
 	telephone: 0,
-	mail: "",
+	email: "",
+	token: "",
 };
 
 export const userReducer = createReducer(initialState, (builder) => {
-	builder.addCase(addUserRegisterInfo, (state, action) => {});
+	builder
+		.addCase(addUserRegisterInfo, (state, action) => {})
+		.addCase(addUserGoogleInfo, (state, action) => {
+			state.firstName = action.user.firstName;
+			state.email = action.user.email;
+			state.token = action.token;
+		});
 });

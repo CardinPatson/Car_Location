@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Checkbox } from "@mui/material";
 import { connect } from "react-redux";
-import { signInUser } from "../../action/userAction";
+import { googleSignIn, signInUser } from "../../action/userAction";
 
 function Connexion(props) {
 	const [email, setEmail] = useState("");
@@ -86,7 +86,14 @@ function Connexion(props) {
 						>
 							Se connecter
 						</button>
-						<button onClick={props.signin()}>google </button>
+						<Google
+							onClick={() => {
+								props.googleSignIn();
+							}}
+						>
+							<img src="/images/google.svg" alt=""></img>Se connecter avec
+							google
+						</Google>
 					</Confirm>
 					<Options>
 						<Forgotpassword>
@@ -120,35 +127,44 @@ const Content = styled.div`
 	border-radius: 3px;
 	background-color: rgb(255, 255, 255, 0.9);
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	padding: 15px;
 `;
 
 const Banner = styled.div`
 	border-radius: 3px 3px 0 0;
-	padding: 8px;
-	border-bottom: solid #797979 1px;
-	background-color: #00a9ff;
+	padding: 20px;
+	/* border-bottom: solid #797979 1px; */
+	/* background-color: #00a9ff; */
 	color: #333333;
 	text-align: center;
-	font-size: 25px;
+	font-size: 22px;
+	font-weight: bold;
 `;
 
 const Form = styled.form`
-
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 	gap: 15px;
 	margin: 10px;
-    p{
-        text-align: left;
-        font-size: 22px;
-    }
-    input {
-        border: 1px solid #797979;
-        border-radius:0.5vh;
-        height: 32px;
-        font-size: 25px;
-    }
-    button {
+	p {
+		text-align: left;
+		font-size: 16px;
+		color: rgba(0, 0, 0, 0.65);
+	}
+	input {
+		border: none;
+		border-bottom: 1px solid #797979;
+		border-radius: 0.5vh;
+		height: 32px;
+		font-size: 16px;
+		outline: none;
+		padding: 5px;
+		&:focus {
+			box-shadow: 2px 2px 12px #00a9ff;
+			/* border-radius: 5px 5px 0px 0px; */
+		}
+	}
+	button {
 		font-size: 22px;
 		color: #333333;
 		background-color: #00a9ff;
@@ -157,6 +173,7 @@ const Form = styled.form`
 		padding: 10px;
 		margin: 15px 10px 15px 10px;
 		cursor: pointer;
+		width: 100%;
 	}
 	button:hover {
 		color: white;
@@ -192,6 +209,7 @@ const Confirm = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 15px;
+	margin-bottom: 35px  ;
 	button {
 		align-self: center;
 	}
@@ -210,7 +228,33 @@ const Options = styled.label`
 	align-items: center;
 	gap: 40px;
 `;
+const Google = styled.div`
+	@media (max-width: 768px) {
+		height: 56px;
+		padding: 10px;
+	}
+	display: flex;
+	justify-content: center;
+	background-color: #fff;
+	align-items: center;
+	width: 100%;
+	height: 56px;
+	border-radius: 5px;
+	box-shadow: inset 0 0 0 1px rgb(0 0 0 / 60%), inset 0 0 0 2px rgb(0 0 0 / 0%),
+		inset 0 0 0 1px rgb(0 0 0 / 0%);
 
+	/**BOX SHADOW INSET NOUS PERMET DAVOIR UN EFFET INTERIEUR SUR LES BORDURE */
+	vertical-align: middle;
+	z-index: 0;
+	transition-duration: 167ms;
+	font-size: 20px;
+	color: rgba(0, 0, 0, 0.6);
+	&:hover {
+		background-color: rgba(207, 207, 207, 0.25);
+		color: rgba(0, 0, 0, 0.75);
+	}
+	cursor: pointer;
+`;
 const Forgotpassword = styled.div`
 	display: flex;
 	align-items: center;
@@ -236,9 +280,11 @@ const mapStateToDispatch = (dispatch) => {
 		signin: () => {
 			dispatch(signInUser());
 		},
+		googleSignIn: () => {
+			dispatch(googleSignIn());
+		},
 	};
 };
 
 const connector = connect(mapStateToProps, mapStateToDispatch);
 export default connector(Connexion);
-
