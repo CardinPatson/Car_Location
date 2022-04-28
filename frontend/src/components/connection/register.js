@@ -126,7 +126,6 @@ function Register(props) {
 			firstName,
 			lastName,
 			email,
-<<<<<<< HEAD
 			password,
 		};
 		if (checkValues() === 1) {
@@ -135,16 +134,6 @@ function Register(props) {
 		console.log(clientProperty);
 		props.register(clientProperty);
 		return;
-=======
-			password
-		};
-		if(checkValues() === 1){
-			return ;
-		};
-		console.log(clientProperty);
-		props.register(clientProperty);
-		return ;
->>>>>>> master
 	};
 	return (
 		<Container>
@@ -152,11 +141,7 @@ function Register(props) {
 				<Banner>Créer un nouveau compte</Banner>
 				<Form>
 					<Login>
-<<<<<<< HEAD
 						<Ajust id="champ">
-=======
-						<Ajust id="champ">			
->>>>>>> master
 							<p>Nom</p>
 							<input
 								type="text"
@@ -177,10 +162,6 @@ function Register(props) {
 								}}
 							/>
 							{lastNameError ? <p className="error">{lastNameError}</p> : ""}
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 						</Ajust>
 					</Login>
 					<Email id="champ">
@@ -206,27 +187,18 @@ function Register(props) {
 						{passwordError ? <p className="error">{passwordError}</p> : ""}
 						<br></br>
 						<p>Répéter le mot de passe</p>
-<<<<<<< HEAD
 						<input
 							type="password"
-=======
-						<input 
-							type="password" 
->>>>>>> master
 							value={confirmPassword}
 							onChange={(e) => {
 								setConfirmPassword(e.target.value);
 							}}
 						/>
-<<<<<<< HEAD
 						{confirmPasswordError ? (
 							<p className="error">{confirmPasswordError}</p>
 						) : (
 							""
 						)}
-=======
-						{confirmPasswordError ? <p className="error">{confirmPasswordError}</p> : ""}
->>>>>>> master
 					</Password>
 					<Confirm>
 						<button
@@ -298,7 +270,6 @@ const Form = styled.div`
 		border-bottom: 1px solid #797979;
 		border-radius: 0.5vh;
 		height: 32px;
-<<<<<<< HEAD
 		font-size: 16px;
 		outline: none;
 		padding: 5px;
@@ -306,10 +277,6 @@ const Form = styled.div`
 			box-shadow: 2px 2px 12px #00a9ff;
 			/* border-radius: 5px 5px 0px 0px; */
 		}
-=======
-		font-size: 25px;
-		outline: none;
->>>>>>> master
 	}
 	.error {
 		color: red;

@@ -90,7 +90,6 @@ function Connexion(props) {
 						>
 							Se connecter
 						</button>
-<<<<<<< HEAD
 						<Google
 							onClick={() => {
 								props.googleSignIn();
@@ -99,9 +98,6 @@ function Connexion(props) {
 							<img src="/images/google.svg" alt=""></img>Se connecter avec
 							google
 						</Google>
-=======
-						<button onClick={props.signin()}>google </button>
->>>>>>> master
 					</Confirm>
 					<Options>
 						<Forgotpassword>
@@ -150,14 +146,8 @@ const Banner = styled.div`
 `;
 
 const Form = styled.form`
-<<<<<<< HEAD
 	display: flex;
 	flex-direction: column;
-=======
-
-    display: flex;
-    flex-direction: column;
->>>>>>> master
 	gap: 15px;
 	margin: 10px;
 	p {
@@ -187,10 +177,7 @@ const Form = styled.form`
 		padding: 10px;
 		margin: 15px 10px 15px 10px;
 		cursor: pointer;
-<<<<<<< HEAD
 		width: 100%;
-=======
->>>>>>> master
 	}
 	button:hover {
 		color: white;
@@ -297,7 +284,6 @@ const mapStateToDispatch = (dispatch) => {
 		signin: () => {
 			dispatch(signInUser());
 		},
-<<<<<<< HEAD
 		googleSignIn: () => {
 			dispatch(googleSignIn());
 		},
@@ -306,11 +292,3 @@ const mapStateToDispatch = (dispatch) => {
 
 const connector = connect(mapStateToProps, mapStateToDispatch);
 export default connector(Connexion);
-=======
-	};
-};
-
-const connector = connect(mapStateToProps, mapStateToDispatch);
-export default connector(Connexion);
-
->>>>>>> master
