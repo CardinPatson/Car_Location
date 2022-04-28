@@ -2,8 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import localForage from "localforage";
 
 function Header(props) {
+	console.log(props.firstName);
 	return (
 		<Container>
 			<Content>
@@ -23,8 +25,28 @@ function Header(props) {
 						<p>Ajouter voitures</p>
 					</Link>
 				</Nav>
-				{props.lastName ? (
-					<div> Bienvenue {props.firstName}</div>
+				{props.firstName ? (
+					<>
+						<div> Bienvenue {props.firstName} </div>
+						<Logout>
+							<button
+								onClick={() => {
+									localForage
+										.clear()
+										.then(function () {
+											console.log("database empty");
+										})
+										.catch(function (err) {
+											console.log(err);
+										});
+									window.location.pathname = "/connreg";
+								}}
+								className="logout__button"
+							>
+								<img src="./images/logout.svg" />
+							</button>
+						</Logout>
+					</>
 				) : (
 					<Login>
 						<Link to="/connreg" style={{ textDecoration: "none" }}>
@@ -64,6 +86,9 @@ const Content = styled.div`
 	justify-content: space-between;
 	background: #f5f5f5;
 	height: 60px;
+	.logout__button {
+		border: "none";
+	}
 `;
 const Logo = styled.div`
 	/* border: solid red 1px; */
@@ -134,7 +159,7 @@ const Login = styled.div`
 		display: none;
 	}
 `;
-
+const Logout = styled(Login)``;
 const Menu = styled.div`
 	margin-right: 25px;
 	padding: 5px;
@@ -145,7 +170,7 @@ const Menu = styled.div`
 
 const mapStateToProps = (state) => {
 	return {
-		lastName: state.userState.lastName,
+		firstName: state.userState.firstName,
 	};
 };
 

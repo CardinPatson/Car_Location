@@ -3,6 +3,7 @@ import {
 	ADD_USER_SIGNIN,
 	ADD_USER_GOOGLE,
 	GET_USER,
+	REMOVE_USER,
 } from "./actionTypes";
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { auth, provider } from "../firebase";
@@ -28,10 +29,11 @@ export const addUserSignInInfo = createAction(
 	}
 );
 
+
 export const addUserGoogleInfo = createAction(
 	ADD_USER_GOOGLE,
 	function prepare(user) {
-		//firstname and email
+		// window.location.pathname = "/connreg";
 		return {
 			payload: user,
 		};
@@ -64,21 +66,25 @@ export const registerUser = createAsyncThunk(
 );
 
 //CONNECT USER VIA FORM
-export const signInUser = createAsyncThunk(GET_USER, async (arg, thunkAPI) => {
-	const user = await Axios.get(`${DOMAIN_NAME}/user`, {
-		params: {
-			email: arg.email,
-			password: arg.password,
-		},
-	}).catch((err) => {
-		console.log(err);
-	});
-	window.location.pathname = "/";
-	thunkAPI.dispatch(addUserSignInInfo(user.data));
-});
+export const signInUser = createAsyncThunk(
+	ADD_USER_SIGNIN,
+	async (arg, thunkAPI) => {
+		console.log("in request");
+		const user = await Axios.get(`${DOMAIN_NAME}/api/users`, {
+			params: {
+				email: arg.email,
+				password: arg.password,
+			},
+		}).catch((err) => {
+			console.log(err);
+		});
+		window.location.pathname = "/";
+		thunkAPI.dispatch(addUserSignInInfo(user.data));
+	}
+);
 
 export const googleSignIn = createAsyncThunk(
-	GET_USER,
+	ADD_USER_GOOGLE,
 	async (arg, thunkAPI) => {
 		let token = "";
 

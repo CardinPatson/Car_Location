@@ -40,7 +40,7 @@ function Connexion(props) {
 			return;
 		}
 		console.log(connexionProperty);
-		// props.connexion(connexionProperty);
+		props.signIn(connexionProperty);
 		return;
 	};
 	return (
@@ -277,8 +277,8 @@ const mapStateToProps = (state) => {
 };
 const mapStateToDispatch = (dispatch) => {
 	return {
-		signin: () => {
-			dispatch(signInUser());
+		signIn: (payload) => {
+			dispatch(signInUser(payload));
 		},
 		googleSignIn: () => {
 			dispatch(googleSignIn());

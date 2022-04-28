@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 app.use(cookieParser());
-app.listen(3001,"0.0.0.0", () => {
+app.listen(3001, () => {
 	console.log("server running on port 3001");
 });
 

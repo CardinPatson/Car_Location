@@ -10,7 +10,6 @@ export const ADD_USER_REGISTER = "ADD_USER_REGISTER";
 export const ADD_USER_SIGNIN = "ADD_USER_SIGNIN";
 export const ADD_USER_GOOGLE = "ADD_USER_GOOGLE";
 export const GET_USER = "GET_USER";
-
+export const REMOVE_USER = "REMOVE_USER";
 //ORDERS
 export const GET_PAYMENT = "GET_PAYMENT";
-
