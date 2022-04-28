@@ -48,7 +48,7 @@ jobs:
         run: npm install -g nodemon
       - name: Run the API and Postman's tests
         run: |   
-          nodemon server &
+          npm run start:dev  &
           sleep 60
           newman run "Cars_Location.postman_collection.json"
         #postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
