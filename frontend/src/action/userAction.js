@@ -58,8 +58,8 @@ export const registerUser = createAsyncThunk(
 		).catch((err) => {
 			console.log(err);
 		});
-		thunkAPI.dispatch(addUserRegisterInfo(user.data));
 		window.location.pathname = "/";
+		thunkAPI.dispatch(addUserRegisterInfo(user.data));
 	}
 );
 
@@ -73,8 +73,8 @@ export const signInUser = createAsyncThunk(GET_USER, async (arg, thunkAPI) => {
 	}).catch((err) => {
 		console.log(err);
 	});
-	thunkAPI.dispatch(addUserSignInInfo(user.data));
 	window.location.pathname = "/";
+	thunkAPI.dispatch(addUserSignInInfo(user.data));
 });
 
 export const googleSignIn = createAsyncThunk(
@@ -88,8 +88,6 @@ export const googleSignIn = createAsyncThunk(
 
 		// const credential = GoogleAuthProvider.credentialFromResult(payload);
 		token = await auth.currentUser.getIdToken();
-		console.log("token -->", token);
-		console.log(payload);
 		if (payload.user && token) {
 			//check if user is in database or not
 			const response = await Axios.post(
@@ -106,11 +104,10 @@ export const googleSignIn = createAsyncThunk(
 			).catch((err) => {
 				console.error(err);
 			});
-			console.log(response);
+			window.location.pathname = "/";
 			thunkAPI.dispatch(
 				addUserGoogleInfo({ user: response.data, token: token })
 			);
-			window.location.pathname = "/";
 			console.log("response -->", response);
 		} else {
 			console.warn("cannot get user");
