@@ -30,6 +30,7 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
+          - 3001:3001
     steps:
       - name: Check out Git repositor
         uses: actions/checkout@v1
@@ -51,6 +52,13 @@ jobs:
         run: nodemon server
         env:
           APP_PORT: ${{secrets.APP_PORT}}
+          FIREBASE_API_KEY : ${{secrets.FIREBASE_API_KEY}}
+          FIREBASE_AUTH_DOMAIN: ${{secrets.FIREBASE_AUTH_DOMAIN}}
+          FIREBASE_PROJECT_ID: ${{secrets.FIREBASE_PROJECT_ID}}
+          FIREBASE_STORAGE_BUCKET: ${{secrets.FIREBASE_STORAGE_BUCKET}}
+          FIREBASE_MESSAGING_ID: ${{secrets.FIREBASE_MESSAGING_ID}}
+          FIREBASE_APP_ID: ${{secrets.FIREBASE_APP_ID}}
+          FIREBASE_MEASUREMENT_ID: ${{secrets.FIREBASE_MEASUREMENT_ID}}
       - name: Run the API and Postman's tests
         run: |
           npm run start:dev &
