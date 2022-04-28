@@ -28,6 +28,14 @@ const getUserById = async (req, res) => {
 const getUser = async (req, res) => {
 	try {
 		const { email, password } = req.query;
+		let status = "";
+		const adminData = await admins.findOne({ where: { mail: email } });
+
+		if (adminData) {
+			status = "admin";
+		} else {
+			status = "client";
+		}
 		const data = await users.findOne({ where: { mail: email } });
 
 		//CHECK IF USERS IN DATABASE
@@ -44,6 +52,7 @@ const getUser = async (req, res) => {
 		}
 		res.status(200).json({
 			user: data.dataValues,
+			status: status,
 			token: jwt.sign({ user: data.dataValues.id }, "SHORT_HASH_PHRASE", {
 				expiresIn: "24h",
 			}),
@@ -92,7 +101,6 @@ const addUser = async (req, res) => {
 //AUTHENTIFICATION VIA GOOGLE
 const addGoogleUser = async (req, res, next) => {
 	const { userName, userMail } = req.body;
-	console.log(req.body);
 	//check if user is in database
 	const data = await users.findOne({
 		where: { mail: userMail },
@@ -100,7 +108,8 @@ const addGoogleUser = async (req, res, next) => {
 	if (data) {
 		//return user in database
 		console.log("user already in database");
-		res.status(200).json({ user: data });
+		res.status(200).json({ user: data.dataValues });
+		return;
 	}
 
 	const response = await users.create({
@@ -109,10 +118,7 @@ const addGoogleUser = async (req, res, next) => {
 	});
 
 	console.log(response);
-	res.status(200).json({
-		firstName: response.dataValues.first_name,
-		email: response.dataValues.mail,
-	});
+	res.status(200).json({ user: response.dataValues });
 };
 
 const updateUser = async (req, res) => {
