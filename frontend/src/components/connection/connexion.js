@@ -3,11 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Checkbox } from "@mui/material";
 import { connect } from "react-redux";
-<<<<<<< HEAD
 import { googleSignIn, signInUser } from "../../action/userAction";
-=======
-import { signInUser } from "../../action/userAction";
->>>>>>> master
 
 function Connexion(props) {
 	const [email, setEmail] = useState("");

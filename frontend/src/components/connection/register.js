@@ -21,7 +21,6 @@ function Register(props) {
 		setEmailError("");
 		setPasswordError("");
 		setConfirmPasswordError("");
-<<<<<<< HEAD
 	}
 
 	function checkValues() {
@@ -69,55 +68,6 @@ function Register(props) {
 		}
 		return 0;
 	}
-=======
-	};
-
-	function checkValues() {
-		if(firstName === ""){
-			setFirstNameError("* Veuillez compléter le champ nom");
-			return 1;
-		};
-		if(lastName === ""){
-			setLastNameError("* Veuillez compléter le champ prénom");
-			return 1;
-		};
-		if(email === ""){
-			setEmailError("* Veuillez compléter le champ email");
-			return 1;
-		};
-		if(!(/[@]/.test(email)) | !(/[.]/.test(email))){
-			setEmailError("* Le mail doit être de la forme test@hello.be");
-			return 1;
-		};
-		
-		if(password === ""){
-			setPasswordError("* Veuillez compléter le champ mot de passe");
-			return 1;
-		};
-		if(confirmPassword === ""){
-			setConfirmPasswordError("* Veuillez compléter ce champ");
-			return 1;
-		};
-		if(confirmPassword !== password){
-			setPasswordError("* Les deux mots de passes ne correspondes pas");
-			setConfirmPasswordError("* Les deux mots de passes ne correspondes pas");
-			return 1;
-		};
-		if(password.length < 8){
-			setPasswordError("* Le mot de passe doit contenir au moins 8 caractères");
-			return 1;
-		};
-		if(!(/\d/.test(password))){
-			setPasswordError("* Le mot de passe doit contenir au moins 1 chiffre");
-			return 1;
-		};
-		if(!(/[A-Z]/.test(password))){
-			setPasswordError("* Le mot de passe doit contenir au moins 1 majuscule");
-			return 1;
-		};
-		return 0;
-	};
->>>>>>> master
 
 	const handleRegister = (e) => {
 		e.preventDefault();
