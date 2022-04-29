@@ -45,7 +45,6 @@ const getUser = async (req, res) => {
 		}
 		//CHECK IF PASSWORD IS THE SAME
 		const hash = await bcrypt.compare(password, data.password);
-		console.log("hash", hash);
 		if (!hash) {
 			res.status(401).json({ error: "Mot de passe incorrect" });
 			return;
@@ -53,7 +52,7 @@ const getUser = async (req, res) => {
 		res.status(200).json({
 			user: data.dataValues,
 			status: status,
-			token: jwt.sign({ user: data.dataValues.id }, "SHORT_HASH_PHRASE", {
+			token: jwt.sign({ user: data.dataValues.mail }, "SHORT_HASH_PHRASE", {
 				expiresIn: "24h",
 			}),
 		});
@@ -70,11 +69,10 @@ const addUser = async (req, res) => {
 			where: { mail: email },
 		});
 		if (data) {
-			console.log("Users already exist");
 			res.status(200).json({ error: `Users ${lastName} already exist` });
 			return;
 		}
-		console.log(data);
+
 		//ENCRYPTER LE PASSWORD DU USER
 		const hash = await bcrypt.hash(password, 10);
 
@@ -88,7 +86,7 @@ const addUser = async (req, res) => {
 		res.status(200).json({
 			user: data.dataValues,
 			status: "client",
-			token: jwt.sign({ user: response.dataValues.id }, "SHORT_HASH_PHRASE", {
+			token: jwt.sign({ user: response.dataValues.mail }, "SHORT_HASH_PHRASE", {
 				expiresIn: "24h",
 			}),
 		});
@@ -108,12 +106,10 @@ const addGoogleUser = async (req, res, next) => {
 	});
 	const adminData = await admins.findOne({ where: { email: userMail } });
 	if (adminData && data) {
-		console.log("in admin");
 		res.status(200).json({ user: data.dataValues, status: "admin" });
 	}
 	if (data) {
 		//return user in database
-		console.log("user already in database");
 		res.status(200).json({ user: data.dataValues, status: "client" });
 		return;
 	}
@@ -123,7 +119,6 @@ const addGoogleUser = async (req, res, next) => {
 		mail: userMail,
 	});
 
-	console.log(response);
 	res.status(200).json({ user: response.dataValues, status: "client" });
 };
 

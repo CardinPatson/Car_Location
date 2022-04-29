@@ -6,6 +6,7 @@ const path = require("path");
 const carRoute = require("./routes/car");
 const ordersRoute = require("./routes/orders");
 const usersRoute = require("./routes/users");
+const adminsRoute = require("./routes/admin");
 
 //Configuration pour les variables d'environnement
 
@@ -47,4 +48,5 @@ app.use(
 app.use("/api/cars", carRoute);
 app.use("/api/orders", ordersRoute);
 app.use("/api/users", usersRoute);
+app.use("/api/admins", adminsRoute);
 module.exports = app;
