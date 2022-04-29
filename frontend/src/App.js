@@ -12,8 +12,9 @@ import ModifyDetails from "./components/cars/modifyDetails";
 import PaymentAccepted from "./components/clients/paymentAccepted";
 import PaymentDenied from "./components/clients/paymentDenied";
 import FormIdentities from "./components/clients/formIdentities";
+import AddAdmin from "./components/admin/addAdmin";
 
-function App() {
+function App(props) {
 	return (
 		<Router>
 			<Routes>
@@ -28,8 +29,13 @@ function App() {
 				<Route path="/formIdentities" element={<FormIdentities />} />
 
 				{/* admin */}
-				<Route path="/add-cars" element={<AddCars />} />
-				<Route path="/modifyDetails" element={<ModifyDetails />} />
+				{props.status === "admin" && (
+					<>
+						<Route path="/add-cars" element={<AddCars />} />
+						<Route path="/modifyDetails" element={<ModifyDetails />} />
+						<Route path="/add-administrator" element={<AddAdmin />} />
+					</>
+				)}
 			</Routes>
 		</Router>
 	);

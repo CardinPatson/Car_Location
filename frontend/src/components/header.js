@@ -21,9 +21,18 @@ function Header(props) {
 					<Link to="/cars" style={{ textDecoration: "none" }}>
 						<p>Voitures</p>
 					</Link>
-					<Link to="/add-cars" style={{ textDecoration: "none" }}>
-						<p>Ajouter voitures</p>
-					</Link>
+					{props.firstName && props.status === "admin" ? (
+						<>
+							<Link to="/add-cars" style={{ textDecoration: "none" }}>
+								<p>Ajouter voitures</p>
+							</Link>
+							<Link to="/add-administrator" style={{ textDecoration: "none" }}>
+								<p>Ajouter admin</p>
+							</Link>
+						</>
+					) : (
+						<></>
+					)}
 				</Nav>
 				{props.firstName ? (
 					<>
@@ -171,6 +180,7 @@ const Menu = styled.div`
 const mapStateToProps = (state) => {
 	return {
 		firstName: state.userState.firstName,
+		status : state.userState.status
 	};
 };
 

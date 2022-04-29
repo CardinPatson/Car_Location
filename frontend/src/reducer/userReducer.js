@@ -16,6 +16,7 @@ const initialState = {
 	telephone: 0,
 	email: "",
 	token: "",
+	status: "",
 };
 
 export const userReducer = createReducer(initialState, (builder) => {
@@ -43,6 +44,7 @@ export const userReducer = createReducer(initialState, (builder) => {
 				state.address = action.payload.user.telephone;
 			if (action.payload.user.mail) state.email = action.payload.user.mail;
 			if (action.payload.token) state.token = action.payload.token;
+			if (action.payload.status) state.status = action.payload.status;
 		})
 		.addCase(addUserGoogleInfo, (state, action) => {
 			console.log(action);
