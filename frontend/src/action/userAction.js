@@ -112,7 +112,11 @@ export const googleSignIn = createAsyncThunk(
 			});
 			window.location.pathname = "/";
 			thunkAPI.dispatch(
-				addUserSignInInfo({ user: response.data.user, token: token })
+				addUserSignInInfo({
+					user: response.data.user,
+					token: token,
+					status: response.data.status,
+				})
 			);
 		} else {
 			console.warn("cannot get user");
