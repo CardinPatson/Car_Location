@@ -27,7 +27,6 @@ export const userReducer = createReducer(initialState, (builder) => {
 			state.email = action.payload.user.email;
 		})
 		.addCase(addUserSignInInfo, (state, action) => {
-			console.log(action.payload);
 			if (action.payload.user.first_name)
 				state.firstName = action.payload.user.first_name;
 			if (action.payload.user.last_name)
@@ -47,7 +46,6 @@ export const userReducer = createReducer(initialState, (builder) => {
 			if (action.payload.status) state.status = action.payload.status;
 		})
 		.addCase(addUserGoogleInfo, (state, action) => {
-			console.log(action);
 			state.firstName = action.payload.firstName;
 			state.email = action.payload.email;
 			state.token = action.token;

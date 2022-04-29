@@ -3,14 +3,20 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Checkbox } from "@mui/material";
 import { connect } from "react-redux";
-import { googleSignIn, signInUser } from "../../action/userAction";
+import {
+	googleSignIn,
+	registerAdmin,
+	signInUser,
+} from "../../action/userAction";
 import Header from "../header";
 
 function Connexion(props) {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [remember, setRemember] = useState(false);
+	const [emailAdmin, setEmailAdmin] = useState("");
+	const [emailUser, setEmailUser] = useState("");
+	const [passwordAdmin, setPasswordAdmin] = useState("");
+	const [passwordUser, setPasswordUser] = useState("");
 
+	const [error, setError] = useState("");
 	const [emailError, setEmailError] = useState("");
 	const [passwordError, setPasswordError] = useState("");
 
@@ -20,28 +26,38 @@ function Connexion(props) {
 	}
 
 	function checkValues() {
-		if (email === "") {
+		if (!emailAdmin && !emailUser) {
 			setEmailError("* Veuillez compléter le champ email");
 			return 1;
 		}
-		if (password === "") {
+		if (!passwordAdmin && !passwordUser) {
 			setPasswordError("* Veuillez compléter le champ mot de passe");
 			return 1;
 		}
+		if (emailAdmin !== props.email) {
+			setEmailError("* Email administrateur incorrect");
+		}
 	}
 
-	const handleConnexion = (e) => {
+	const handleConnexion = async (e) => {
 		e.preventDefault();
 		clearErrors();
 		const connexionProperty = {
-			email,
-			password,
+			emailAdmin,
+			passwordAdmin,
+			emailUser,
+			passwordUser,
+			token: props.token,
 		};
 		if (checkValues() === 1) {
 			return;
 		}
-		console.log(connexionProperty);
-		props.signIn(connexionProperty);
+		const admin = await props.addAdmin(connexionProperty);
+		console.log(admin);
+		if (!admin)
+			setError(
+				"Une erreur est survenue lors de l'insertion de l'administrateur! Veuillez réessayer!!"
+			);
 		return;
 	};
 	return (
@@ -51,14 +67,15 @@ function Connexion(props) {
 				<Container>
 					<Content>
 						<Banner>Ajouter un administrateur</Banner>
+						{error ? <p style={{ color: "red" }}>{error}</p> : <></>}
 						<Form>
 							<Login>
 								<p>Votre email</p>
 								<input
 									type="email"
-									value={email}
+									value={emailAdmin}
 									onChange={(e) => {
-										setEmail(e.target.value);
+										setEmailAdmin(e.target.value);
 									}}
 								/>
 								{emailError ? <p className="error">{emailError}</p> : ""}
@@ -67,9 +84,9 @@ function Connexion(props) {
 								<p>Votre Mot de passe</p>
 								<input
 									type="password"
-									value={password}
+									value={passwordAdmin}
 									onChange={(e) => {
-										setPassword(e.target.value);
+										setPasswordAdmin(e.target.value);
 									}}
 								/>
 								{passwordError ? <p className="error">{passwordError}</p> : ""}
@@ -78,9 +95,9 @@ function Connexion(props) {
 								<p>Email du nouvel administrateur</p>
 								<input
 									type="email"
-									value={email}
+									value={emailUser}
 									onChange={(e) => {
-										setEmail(e.target.value);
+										setEmailUser(e.target.value);
 									}}
 								/>
 								{emailError ? <p className="error">{emailError}</p> : ""}
@@ -89,9 +106,9 @@ function Connexion(props) {
 								<p>Mot de passe du nouvel administrateur</p>
 								<input
 									type="password"
-									value={password}
+									value={passwordUser}
 									onChange={(e) => {
-										setPassword(e.target.value);
+										setPasswordUser(e.target.value);
 									}}
 								/>
 								{passwordError ? <p className="error">{passwordError}</p> : ""}
@@ -105,7 +122,9 @@ function Connexion(props) {
 									Envoyer
 								</button>
 							</Confirm>
-                            <p style={{color : "red"}}>⚠️Le nouvel administrateur doit posséder un compte</p>
+							<p style={{ color: "red" }}>
+								⚠️Le nouvel administrateur doit posséder un compte
+							</p>
 						</Form>
 					</Content>
 				</Container>
@@ -241,15 +260,15 @@ const Confirm = styled.div`
 `;
 
 const mapStateToProps = (state) => {
-	return {};
+	return {
+		token: state.userState.token,
+		email: state.userState.email,
+	};
 };
 const mapStateToDispatch = (dispatch) => {
 	return {
-		signIn: (payload) => {
-			dispatch(signInUser(payload));
-		},
-		googleSignIn: () => {
-			dispatch(googleSignIn());
+		addAdmin: async (payload) => {
+			await dispatch(registerAdmin(payload));
 		},
 	};
 };
