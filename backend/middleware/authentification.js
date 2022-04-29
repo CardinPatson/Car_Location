@@ -4,16 +4,16 @@ module.exports = async (req, res, next) => {
 	try {
 		//CHECK IF USER HAVE TOKEN
 		const token = req.headers.authfirebase;
-		console.log(token);
 		admin
 			.verifyIdToken(token)
 			.then((decodedToken) => {
-				console.log(decodedToken.uid);
+				console.log("in decode");
 				next();
 			})
 			.catch((error) => {
 				console.log(error);
 			});
+		console.log("not decode");
 	} catch {
 		try {
 			//CHECK IF THE USER HAVE TOKEN ON CONNECTION

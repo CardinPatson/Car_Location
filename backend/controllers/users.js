@@ -29,8 +29,8 @@ const getUser = async (req, res) => {
 	try {
 		const { email, password } = req.query;
 		let status = "";
-		const adminData = await admins.findOne({ where: { mail: email } });
-
+		console.log("in request");
+		const adminData = await admins.findOne({ where: { email: email } });
 		if (adminData) {
 			status = "admin";
 		} else {
@@ -87,6 +87,7 @@ const addUser = async (req, res) => {
 		});
 		res.status(200).json({
 			user: data.dataValues,
+			status: "client",
 			token: jwt.sign({ user: response.dataValues.id }, "SHORT_HASH_PHRASE", {
 				expiresIn: "24h",
 			}),
@@ -105,10 +106,15 @@ const addGoogleUser = async (req, res, next) => {
 	const data = await users.findOne({
 		where: { mail: userMail },
 	});
+	const adminData = await admins.findOne({ where: { email: userMail } });
+	if (adminData && data) {
+		console.log("in admin");
+		res.status(200).json({ user: data.dataValues, status: "admin" });
+	}
 	if (data) {
 		//return user in database
 		console.log("user already in database");
-		res.status(200).json({ user: data.dataValues });
+		res.status(200).json({ user: data.dataValues, status: "client" });
 		return;
 	}
 
@@ -118,7 +124,7 @@ const addGoogleUser = async (req, res, next) => {
 	});
 
 	console.log(response);
-	res.status(200).json({ user: response.dataValues });
+	res.status(200).json({ user: response.dataValues, status: "client" });
 };
 
 const updateUser = async (req, res) => {
