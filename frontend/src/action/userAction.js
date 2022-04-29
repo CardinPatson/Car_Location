@@ -1,9 +1,9 @@
 import {
 	ADD_USER_REGISTER,
+	ADD_ADMIN,
 	ADD_USER_SIGNIN,
 	ADD_USER_GOOGLE,
 	GET_USER,
-	REMOVE_USER,
 } from "./actionTypes";
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { auth, provider } from "../firebase";
@@ -32,8 +32,6 @@ export const addUserSignInInfo = createAction(
 export const addUserGoogleInfo = createAction(
 	ADD_USER_GOOGLE,
 	function prepare(user) {
-		// window.location.pathname = "/connreg";
-		console.log(user);
 		return {
 			payload: user,
 		};
@@ -69,7 +67,6 @@ export const registerUser = createAsyncThunk(
 export const signInUser = createAsyncThunk(
 	ADD_USER_SIGNIN,
 	async (arg, thunkAPI) => {
-		console.log("in request");
 		const user = await Axios.get(`${DOMAIN_NAME}/api/users`, {
 			params: {
 				email: arg.email,
@@ -120,6 +117,39 @@ export const googleSignIn = createAsyncThunk(
 			);
 		} else {
 			console.warn("cannot get user");
+		}
+	}
+);
+
+export const registerAdmin = createAsyncThunk(
+	ADD_ADMIN,
+	async (arg, thunkAPI) => {
+		//insert administrator
+		const admin = await Axios.post(
+			`${DOMAIN_NAME}/api/admins`,
+			{
+				emailAdmin: arg.emailAdmin,
+				passwordAdmin: arg.passwordAdmin,
+				emailUser: arg.emailUser,
+				passwordUser: arg.passwordUser,
+			},
+			{
+				headers: {
+					"Content-Type": "Application/json",
+					Authorization: `Bearer ${arg.token}`,
+				},
+			}
+		).catch((err) => {
+			console.error(err);
+		});
+		console.log(admin.status);
+		if (admin.status === 200) {
+			window.location.pathname = "/cars";
+			return;
+		}
+		if (admin.data.error) {
+			console.log(admin.data.error);
+			return admin.data.error;
 		}
 	}
 );
