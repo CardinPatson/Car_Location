@@ -3,7 +3,13 @@ import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "axios";
 const DOMAIN_NAME = "http://localhost:3001";
 
-export const getOrdersInfoByDates = createAction(
+export const carsSortedWithDate = createAction(function prepare(carsByDates) {
+	return {
+		payload: carsByDates,
+	};
+});
+
+export const getOrdersInfoByDates = createAsyncThunk(
 	GET_ORDERS_BY_DATE,
 	async (arg, thunkAPI) => {
 		const startDate = arg.startDate;
@@ -22,5 +28,6 @@ export const getOrdersInfoByDates = createAction(
 		).catch((err) => {
 			console.err(err);
 		});
+		thunkAPI.dispatch(carsSortedWithDate(carsList.data));
 	}
 );

@@ -62,6 +62,7 @@ function Cars(props) {
 			};
 			console.log(allInfo);
 			props.getCarsByDate(allInfo);
+			console.log(props.carsDates);
 		}
 		let brandModel = [];
 		if (props.cars.length) {
