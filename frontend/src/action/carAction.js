@@ -4,12 +4,10 @@ import {
 	GET_CARS_IMAGES,
 	DELETE_CARS,
 	UPDATE_CARS,
-	GET_CARS_SLOT,
 } from "./actionTypes";
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "axios";
 const DOMAIN_NAME = "http://localhost:3001";
-
 export const addCarsInfo = createAction(ADD_CARS, function prepare(cars) {
 	return {
 		payload: cars,
@@ -87,7 +85,6 @@ export const getCarsProperty = createAsyncThunk(
 		const cars = await Axios.get(`${DOMAIN_NAME}/api/cars`).catch((err) => {
 			console.error(err);
 		});
-		console.log(cars.data);
 		thunkAPI.dispatch(addCarsInfo(cars.data));
 	}
 );
@@ -95,11 +92,11 @@ export const getCarsProperty = createAsyncThunk(
 export const getCarsImages = createAsyncThunk(
 	GET_CARS_IMAGES,
 	async (arg, thunkAPI) => {
-		const carsImages = await Axios.get(
-			`${DOMAIN_NAME}/api/cars/images`
-		).catch((err) => {
-			console.error(err);
-		});
+		const carsImages = await Axios.get(`${DOMAIN_NAME}/api/cars/images`).catch(
+			(err) => {
+				console.error(err);
+			}
+		);
 		thunkAPI.dispatch(addCarsImagesInfo(carsImages.data));
 	}
 );
@@ -107,11 +104,9 @@ export const getCarsImages = createAsyncThunk(
 // get slot cars images
 //dans le params on peut recupérer le contenu via le req.query
 export const getCarsSlot = createAsyncThunk(
-	GET_CARS_SLOT,
+	"GET_CARS_SLOT",
 	async (arg, thunkAPI) => {
-		console.log("hello from date filter");
-		console.log(arg);
-		const request = await Axios.get(`${DOMAIN_NAME}/api/cars`, {
+		const request = await Axios.get(`${DOMAIN_NAME}/api/orders`, {
 			params: {
 				startDate: arg.startDate,
 				startTime: arg.startTime,
@@ -127,14 +122,12 @@ export const getCarsSlot = createAsyncThunk(
 export const deleteCars = createAsyncThunk(
 	DELETE_CARS,
 	async (arg, thunkAPI) => {
-		console.log(arg);
-		console.log(arg["id"]);
 		const id = arg["id"];
-		const request = await Axios.delete(
-			`${DOMAIN_NAME}/api/cars/${id}`
-		).catch((err) => {
-			console.error(err);
-		});
+		const request = await Axios.delete(`${DOMAIN_NAME}/api/cars/${id}`).catch(
+			(err) => {
+				console.error(err);
+			}
+		);
 	}
 );
 
@@ -142,7 +135,6 @@ export const modifyCarsProperty = createAsyncThunk(
 	UPDATE_CARS,
 	async (arg, thunkAPI) => {
 		const id = arg["id"];
-		console.log("helloFromAction");
 		await Axios.put(
 			`${DOMAIN_NAME}/api/cars/${id}`,
 			{

@@ -5,10 +5,9 @@ const DOMAIN_NAME = "http://localhost:3001";
 
 export const carsSortedWithDate = createAction(
 	GET_ORDERS_BY_DATE,
-	function prepare(carsByDates) {
-		console.log(carsByDates);
+	function prepare(carsByDates, oldStateCars) {
 		return {
-			payload: carsByDates,
+			payload: { carsByDates, oldStateCars },
 		};
 	}
 );
@@ -16,8 +15,7 @@ export const carsSortedWithDate = createAction(
 export const getOrdersInfoByDates = createAsyncThunk(
 	GET_ORDERS_BY_DATE,
 	async (arg, thunkAPI) => {
-		console.log("Hello from action");
-		console.log(arg);
+
 		const carsList = await Axios.get(`${DOMAIN_NAME}/api/orders`, {
 			params: {
 				startDate: arg.startDate,
@@ -28,7 +26,7 @@ export const getOrdersInfoByDates = createAsyncThunk(
 		}).catch((err) => {
 			console.err(err);
 		});
-		console.log(carsList["data"]);
-		thunkAPI.dispatch(carsSortedWithDate(carsList["data"]));
+		const oldStateCars = thunkAPI.getState().carState.cars;
+		thunkAPI.dispatch(carsSortedWithDate(carsList.data.orders, oldStateCars));
 	}
 );
