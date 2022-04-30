@@ -113,8 +113,7 @@ const getPrice = async (req, res) => {
 
 		if (carData) {
 			const price =
-				differenceBetweenDates(departure_date, return_date) *
-				carData.price;
+				differenceBetweenDates(departure_date, return_date) * carData.price;
 
 			return res.status(200).json({
 				price: price,

@@ -1,6 +1,7 @@
 {
 	"dependencies": {
 		"bcrypt": "^5.0.1",
+		"chai": "^4.3.6",
 		"connect-ensure-login": "^0.1.1",
 		"cookie-parser": "^1.4.6",
 		"cors": "^2.8.5",
@@ -20,14 +21,20 @@
 		"pg-promise": "^10.11.1",
 		"sequelize": "^6.18.0",
 		"stripe": "^8.216.0",
+		"supertest": "^6.2.3",
 		"util": "^0.12.4"
 	},
 	"devDependencies": {
+		"mocha": "^9.2.2",
 		"nodemon": "^2.0.15",
 		"sequelize-cli": "^6.4.1"
 	},
 	"homepage": "http://localhost:3001/",
 	"scripts": {
-		"start": "node app.js"
+		"start": "nodemon server.js",
+		"test": "cross-env NODE_ENV=test mocha ./test/*",
+		"pretest": "cross-env NODE_ENV=test npm run db:reset",
+		"db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all --seeders-path ./database/seeders/test",
+		"db:create:test": "cross-env NODE_ENV=test npx sequelize-cli db:create"
 	}
 }

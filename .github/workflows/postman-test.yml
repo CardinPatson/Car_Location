@@ -18,13 +18,13 @@ jobs:
       # Label used to access the service container
       postgres:
         # Docker Hub image
-        image: postgres:14
+        image: postgres:14-alpine
 
         # Provide the password for postgres
         env:
-          POSTGRES_USER: root
-          POSTGRES_PASSWORD: secret
-          POSTGRES_DB: car_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
         # needed because the postgres container does not provide a healthcheck
         options: >-
           --health-cmd pg_isready --health-interval 10s --health-timeout 5s
@@ -47,14 +47,18 @@ jobs:
         run: npm install -g newman
       - name: Install nodemon
         run: npm install -g nodemon
+      - name: Install mocha
+        run: npm install -g mocha
+      - name: Install chai
+        run: npm install -g chai
       - name: Create .env file
         uses: SpicyPizza/create-envfile@v1
         with:
-          envkey_DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          envkey_DB_NAME: ${{ secrets.DB_NAME }}
-          envkey_DB_HOST: ${{ secrets.DB_HOST }}
-          envkey_DB_PORT: ${{ secrets.DB_PORT }}
-          envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          envkey_DB_USERNAME_TEST: postgres
+          envkey_DB_NAME_TEST: postgres
+          envkey_DB_HOST_TEST: localhost
+          envkey_DB_PORT_TEST: ${{ job.services.postgres.ports[5432] }}
+          envkey_DB_PASSWORD_TEST: postgres
           envkey_APP_PORT: ${{ secrets.APP_PORT }}
           envkey_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           envkey_FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
@@ -66,20 +70,12 @@ jobs:
           directory: backend
           file_name: .env
           fail_on_empty: false
-      - name: Install golang-migrate
-        run: |
-          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.14.1/migrate.linux-amd64.tar.gz | tar xvz
-          sudo mv migrate.linux-amd64 /usr/bin/migrate
-          which migrate
-      - name: Run migrations
-        run: make migrateup
       - name: Run the API and Postmans tests
         run: |
           npm run start &
           sleep 10
-          make test
+          npm run test
         env:
           PORT: "3001"
-          STAGE: "local"
 #           DBURL: postgresql://${{ secrets.DB_USERNAME }}:${{ secrets.DB_PASSWORD }}@${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}
 #postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
