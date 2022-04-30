@@ -24,7 +24,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
+          POSTGRES_DB: test
         # needed because the postgres container does not provide a healthcheck
         options: >-
           --health-cmd pg_isready --health-interval 10s --health-timeout 5s
@@ -57,7 +57,7 @@ jobs:
         uses: SpicyPizza/create-envfile@v1
         with:
           envkey_DB_USERNAME_TEST: postgres
-          envkey_DB_NAME_TEST: postgres
+          envkey_DB_NAME_TEST: test
           envkey_DB_HOST_TEST: localhost
           envkey_DB_PORT_TEST: ${{ job.services.postgres.ports[5432] }}
           envkey_DB_PASSWORD_TEST: postgres
@@ -73,11 +73,12 @@ jobs:
           file_name: .env
           fail_on_empty: false
       - name: Run the API and Postmans tests
-        run: |
-          npm run start &
-          sleep 10
-          npm run test
+        run: npm run test
         env:
           APP_PORT: "3001"
+          DB_USERNAME_TEST: postgres
+          DB_NAME_TEST: test
+          DB_HOST_TEST: localhost
+          DB_PORT_TEST: ${{ job.services.postgres.ports[5432] }}
 #           DBURL: postgresql://${{ secrets.DB_USERNAME }}:${{ secrets.DB_PASSWORD }}@${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}
 #postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
