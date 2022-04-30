@@ -29,7 +29,7 @@ const FormIdentities = (props) => {
 		// console.log(url);
 		if (!identityImage || !permisImage) return;
 		setIdenImage([...identityImage, URL.createObjectURL(url)]);
-    	setUrlImage([...urlImage, url]);
+		setUrlImage([...urlImage, url]);
 		// console.log(urlImage);
 	};
 
@@ -175,11 +175,13 @@ const FormIdentities = (props) => {
 														type="file"
 														accept="image/gif , image/png , image/jpeg"
 														name="image"
-														id="file"
+														id="file2"
 														multiple
-														onChange={handleImagePermis}
+														onChange={
+															handleImagePermis
+														}
 													/>
-													<label htmlFor="file">
+													<label htmlFor="file2">
 														<span>
 															Ajouter les photos
 														</span>
@@ -217,8 +219,7 @@ const FormIdentities = (props) => {
 										</Form>
 									</div>
 								</Specs>
-								<Specs>
-								</Specs>
+								<Specs></Specs>
 							</DetailTable>
 						</Info>
 					</Detail>
@@ -287,7 +288,7 @@ const Form = styled.form`
 	.add__detail__cars,
 	.add__detail__cars__ {
 		display: flex;
-		justify-content: space-between;
+		/* justify-content: space-between; */
 		align-items: center;
 		margin: 20px 0;
 		padding: 0 10px;
@@ -298,13 +299,21 @@ const Form = styled.form`
 		#file {
 			display: none;
 		}
+		#file2 {
+			display: none;
+		}
 		.add__photo__cars {
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
 			span {
 				padding: 10px;
 				border-radius: 3px;
 				cursor: pointer;
 				background-color: #00a9ff;
-				display: in-line;
+				display: flex;
+				flex-direction: row;
+				max-width: max-content;
 			}
 		}
 		div {
