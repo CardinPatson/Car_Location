@@ -6,7 +6,8 @@ on:
     branches: [master]
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    runs-on: 
+      container : ubuntu-latest
     defaults:
       run:
         working-directory: backend
@@ -14,24 +15,23 @@ jobs:
       matrix:
         node-version: [14.x]
       # Service containers to run with `container-job`
-#     services:
-#       # Label used to access the service container
-#       postgres:
-#         # Docker Hub image
-#         image: postgres
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
 
-#         # Provide the password for postgres
-#         env:
-#           POSTGRES_USER: ${{ secrets.DB_USERNAME }}
-#           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
-#           POSTGRES_DB: ${{ secrets.DB_NAME }}
-#         # needed because the postgres container does not provide a healthcheck
-#         options: >-
-#           --health-cmd pg_isready --health-interval 10s --health-timeout 5s
-#           --health-retries 5
-#         ports:
-#           - 5432/tcp
-#           - 3001:3001
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: ${{ secrets.DB_USERNAME }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.DB_NAME }}
+        # needed because the postgres container does not provide a healthcheck
+        options: >-
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       - name: Check out Git repositor
         uses: actions/checkout@v1
@@ -55,6 +55,7 @@ jobs:
           envkey_DB_NAME: ${{ secrets.DB_NAME }}
           envkey_DB_HOST: ${{ secrets.DB_HOST }}
           envkey_DB_PORT : ${{ secrets.DB_PORT }}
+          envkey_DB_PASSWORD : ${{ secrets.DB_PASSWORD }}
           envkey_APP_PORT: ${{ secrets.APP_PORT }}
           envkey_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           envkey_FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
@@ -63,17 +64,19 @@ jobs:
           envkey_FIREBASE_MESSAGING_ID: ${{ secrets.FIREBASE_MESSAGING_ID }}
           envkey_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
           envkey_FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
-      - name: Run the API and Postman's tests
+      - name: Run the API and Postmans tests
         run: |
           npm start &
           sleep 60
           newman run "Cars_Location.postman_collection.json"
-#       - name: Run the API and Postman's tests
-#         env:
-#           DB_USERNAME: ${{ secrets.DB_USERNAME }}
-#           DB_NAME : ${{ secrets.DB_NAME }}
-#           DB_PASSWORD : ${{ secrets.DB_PASSWORD }}
-#           DB_HOST: ${{ secrets.DB_HOST }}
-#           DB_PORT : ${{ job.services.postgres.ports[5432] }}
+        env:
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT : ${{ secrets.DB_PORT }}
+          APP_PORT : ${{ secrets.APP_PORT }}
+          PORT: "3001"
+          STAGE: "local"
 #           DBURL: postgresql://${{ secrets.DB_USERNAME }}:${{ secrets.DB_PASSWORD }}@${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}
         #postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
