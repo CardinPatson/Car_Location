@@ -12,6 +12,7 @@ const multerMiddleware = require("../middleware/image");
 
 //GET
 router.get("/", carCtrl.getAllCars);
+router.get("/:id", carCtrl.getCarById);
 
 router.get("/images", carCtrl.getCarsImages);
 

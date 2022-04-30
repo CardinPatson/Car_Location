@@ -145,8 +145,9 @@ const addCar = async (req, res) => {
             passengers: passengers,
             description: description
         });
-        return res.status(200).json({ id: data2.dataValues.id });
+        return res.status(201).json({ id: data2.dataValues.id });
     } catch (error) {
+        console.log(error);
         return res.status(500).json({
             message: "Internal server error test"
         });

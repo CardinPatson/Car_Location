@@ -1,33 +1,33 @@
 {
-	"dependencies": {
-		"bcrypt": "^5.0.1",
-		"connect-ensure-login": "^0.1.1",
-		"cookie-parser": "^1.4.6",
-		"cors": "^2.8.5",
-		"dotenv": "^16.0.0",
-		"express": "^4.17.3",
-		"express-session": "^1.17.2",
-		"express-validator": "^6.14.0",
-		"firebase-admin": "^10.1.0",
-		"jsonwebtoken": "^8.5.1",
-		"multer": "^1.4.4",
-		"passport": "^0.5.2",
-		"passport-google-oauth20": "^2.0.0",
-		"path": "^0.12.7",
-		"pg": "^8.7.3",
-		"pg-format": "^1.0.4",
-		"pg-hstore": "^2.3.4",
-		"pg-promise": "^10.11.1",
-		"sequelize": "^6.18.0",
-		"stripe": "^8.216.0",
-		"util": "^0.12.4"
-	},
-	"devDependencies": {
-		"nodemon": "^2.0.15",
-		"sequelize-cli": "^6.4.1"
-	},
-	"homepage": "http://localhost:3001/",
-	"scripts": {
-		"start": "node app.js"
-	}
+    "dependencies": {
+        "bcrypt": "^5.0.1",
+        "connect-ensure-login": "^0.1.1",
+        "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.0",
+        "express": "^4.17.3",
+        "express-session": "^1.17.2",
+        "express-validator": "^6.14.0",
+        "firebase-admin": "^10.1.0",
+        "jsonwebtoken": "^8.5.1",
+        "multer": "^1.4.4",
+        "passport": "^0.5.2",
+        "passport-google-oauth20": "^2.0.0",
+        "path": "^0.12.7",
+        "pg": "^8.7.3",
+        "pg-format": "^1.0.4",
+        "pg-hstore": "^2.3.4",
+        "pg-promise": "^10.11.1",
+        "sequelize": "^6.18.0",
+        "stripe": "^8.216.0",
+        "util": "^0.12.4"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.16",
+        "sequelize-cli": "^6.4.1"
+    },
+    "homepage": "http://localhost:3001/",
+    "scripts": {
+        "start": "nodemon app.js"
+    }
 }
