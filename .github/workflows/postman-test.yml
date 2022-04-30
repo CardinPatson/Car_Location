@@ -72,12 +72,12 @@ jobs:
           sudo mv migrate.linux-amd64 /usr/bin/migrate
           which migrate
       - name: Run migrations
-        run: make migrateup 
+        run: make migrateup
       - name: Run the API and Postmans tests
         run: |
           npm run start &
           sleep 10
-          newman run "Cars_Location.postman_collection.json"
+          make test
         env:
           PORT: "3001"
           STAGE: "local"
