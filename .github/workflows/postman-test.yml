@@ -48,11 +48,6 @@ jobs:
       - name: Install nodemon
         run: npm install -g nodemon
       - name: Run the API and Postman's tests
-        run: |   
-          npm start &
-          sleep 60
-          newman run "Cars_Location.postman_collection.json"
-        #postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
         env:
 #           POSTGRES_HOST: ${{secrets.DB_HOST}}
 #           POSTGRES_PORT : ${{ job.services.postgres.ports[5432] }}
@@ -65,3 +60,9 @@ jobs:
           FIREBASE_MESSAGING_ID: ${{secrets.FIREBASE_MESSAGING_ID}}
           FIREBASE_APP_ID: ${{secrets.FIREBASE_APP_ID}}
           FIREBASE_MEASUREMENT_ID: ${{secrets.FIREBASE_MEASUREMENT_ID}}
+        run: |   
+          npm start &
+          sleep 60
+          newman run "Cars_Location.postman_collection.json"
+        #postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
+        
