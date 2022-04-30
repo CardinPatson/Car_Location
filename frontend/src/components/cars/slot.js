@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { getCarsSlot } from "../../action/carAction";
 import "react-dates/initialize";
-import { SingleDatePicker } from "react-dates";
+import { SingleDatePicker, toISODateString } from "react-dates";
 import moment from "moment";
 import styled from "styled-components";
 import "react-dates/lib/css/_datepicker.css";
+import { Link } from "react-router-dom";
 
 function Slot(props) {
 	const [focusedStart, setFocusedStart] = useState(false);
@@ -20,8 +21,7 @@ function Slot(props) {
 	// console.log(moment().format("dddd, Do MMMM YYYY, h:mm:ss a"));
 	// console.log(typeof moment().format("dddd, Do MMMM YYYY, h:mm:ss a"));
 
-	const handleClick = (e) => {
-		e.preventDefault();
+	function checkValues(e) {
 		//date actuelle
 		let currentDate = moment().format("D MMMM YYYY");
 		let currentDay = new window.Date(currentDate);
@@ -38,12 +38,11 @@ function Slot(props) {
 		//heure de début et fin de location
 		let startHour = parseInt(startTime.substring(0, 2));
 		let endHour = parseInt(endTime.substring(0, 2));
-
 		//CONDITION DE SOUMISSION
 		//si pas heure de début ou de fin erreur
 		if (!endTime || !startTime) {
 			setError("Veuillez entrez une plage horaire valide !");
-			return;
+			return 0;
 		}
 
 		//si la date est aujourdhui l'heure de début ou de fin doit être supérieur à l'heure actuelle
@@ -52,33 +51,43 @@ function Slot(props) {
 			startHour <= currentHour
 		) {
 			setError("Veuillez entrez une plage horaire valide !");
-			return;
+			return 0;
 		}
-		if (endDay.getTime() === currentDay.getTime() && endHour <= currentHour) {
+		if (
+			endDay.getTime() === currentDay.getTime() &&
+			endHour <= currentHour
+		) {
 			setError("Veuillez entrez une plage horaire valide !");
-			return;
+			return 0;
 		}
 
 		//si la date de début et de fin est aujourdhui , l'heure de fin de location doit être supérieur à celle de début
 		if (startDay.getTime() === endDay.getTime() && startHour >= endHour) {
 			setError("Veuillez entrez une plage horaire valide !");
-			return;
+			return 0;
 		}
 		//Heure d'ouverture du magazin
 		if (startHour < 8 || startHour > 19 || endHour < 8 || endHour > 19) {
 			setError("L'heure d'ouverture du magazin est de 8:00 a 19:00 !!");
+			return 0;
+		}
+		return 1;
+	}
+	const handleClick = (e) => {
+		let startDateFormat = startDate.format("D MMMM YYYY");
+		let endDateFormat = endDate.format("D MMMM YYYY");
+		if (!checkValues(e)) {
+			e.preventDefault();
 			return;
 		}
-
-		const filterInfo = {
+		console.log({
 			startDate: startDateFormat,
 			endDate: endDateFormat,
 			startTime: startTime,
 			endTime: endTime,
-		};
+		});
 		//requête vers l'api
-		props.getSlot(filterInfo);
-
+		//props.getSlot(filterInfo);
 		//si requête ok redirection vers la page /cars
 	};
 	return (
@@ -139,13 +148,21 @@ function Slot(props) {
 							}}
 						/>
 					</div>
-					<button
+					<Link
+						to="/cars"
+						state={{
+							startDate: startDate.format("D MMMM YYYY"),
+							endDate: endDate.format("D MMMM YYYY"),
+							startTime: startTime,
+							endTime: endTime,
+						}}
 						onClick={(e) => {
+							console.log("test");
 							handleClick(e);
 						}}
 					>
-						Valider
-					</button>
+						<button>Confirmer</button>
+					</Link>
 				</Form>
 			</Content>
 		</Container>

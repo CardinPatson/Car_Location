@@ -1,4 +1,4 @@
-import { combineReducers,  getDefaultMiddleware } from "@reduxjs/toolkit";
+import { combineReducers, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { carReducer } from "./carReducer";
 import { userReducer } from "./userReducer";
 const rootReducer = combineReducers({

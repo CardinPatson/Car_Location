@@ -16,7 +16,6 @@ const getAllOrders = async (req, res) => {
 	try {
 		let ordersData;
 		if (!Object.keys(req.query).length) {
-			console.log(req.query);
 			ordersData = await orders.findAll();
 			//LA REQUETE NE PASSE PAS AVEC LES INCLUDES
 			// {
@@ -36,27 +35,67 @@ const getAllOrders = async (req, res) => {
 			//TODO TRAVAILLER SUR LES DATES QUE LON INSERE DANS LA DB POUR QUELLE SOIT COHERENTE AVEC CELLE RECUPERER
 
 			const { startDate, startTime, endDate, endTime } = req.query;
+
 			ordersData = await orders.findAll({
 				where: {
-					[Op.and]: [
+					[Op.or]: [
 						{
-							departure_date: {
-								[Op.gte]: new Date(
-									`${startDate}T${startTime}:00.000Z`
-								).toISOString(),
-							},
+							[Op.and]: [
+								{
+									departure_date: {
+										[Op.lte]: new Date(
+											`${startDate}T${startTime}:00.000Z`
+										).toISOString(),
+									},
+								},
+								{
+									return_date: {
+										[Op.gte]: new Date(
+											`${startDate}T${startTime}:00.000Z`
+										).toISOString(),
+									},
+								},
+							],
 						},
 						{
-							return_date: {
-								[Op.lte]: new Date(
-									`${endDate}T${endTime}:00.000Z`
-								).toISOString(),
-							},
+							[Op.and]: [
+								{
+									departure_date: {
+										[Op.gte]: new Date(
+											`${startDate}T${startTime}:00.000Z`
+										).toISOString(),
+									},
+								},
+								{
+									return_date: {
+										[Op.lte]: new Date(
+											`${endDate}T${endTime}:00.000Z`
+										).toISOString(),
+									},
+								},
+							],
+						},
+						{
+							[Op.and]: [
+								{
+									departure_date: {
+										[Op.lte]: new Date(
+											`${endDate}T${endTime}:00.000Z`
+										).toISOString(),
+									},
+								},
+								{
+									return_date: {
+										[Op.gte]: new Date(
+											`${endDate}T${endTime}:00.000Z`
+										).toISOString(),
+									},
+								},
+							],
 						},
 					],
 				},
 			});
-			console.log(ordersData);
 		}
 		return res.status(200).json({
 			orders: ordersData,
@@ -170,7 +209,7 @@ const addOrder = async (req, res) => {
 		}
 
 		const nbrOfDays = differenceBetweenDates(departure_date, return_date);
-		console.log(nbrOfDays);
+
 		const price = carData.price * nbrOfDays;
 
 		const orderData = await orders.create({

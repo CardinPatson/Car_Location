@@ -8,6 +8,8 @@ import {
 	getCarsImages,
 	getCarsSlot,
 } from "../../action/carAction";
+import { getOrdersInfoByDates } from "../../action/orderAction";
+import { useLocation } from "react-router-dom";
 import localForage from "localforage";
 import "react-dates/initialize";
 import { SingleDatePicker } from "react-dates";
@@ -15,6 +17,7 @@ import moment from "moment";
 import "react-dates/lib/css/_datepicker.css";
 
 function Cars(props) {
+	const [displayedCars, setDisplayedCars] = useState([]);
 	const [focusedStart, setFocusedStart] = useState(false);
 	const [focusedEnd, setFocusedEnd] = useState(false);
 	const [startDate, setStartDate] = useState(moment());
@@ -22,6 +25,58 @@ function Cars(props) {
 	const [endDate, setEndDate] = useState(moment());
 	const [endTime, setEndTime] = useState("");
 	const [error, setError] = useState("");
+	const [maxPrice, setMaxPrice] = useState(0);
+	const [minPrice, setMinPrice] = useState(0);
+	const [sliderValue, setSliderValue] = useState(0);
+	const [fullBrandModel, setFullBrandModel] = useState([]);
+	const [currentModel, setCurrentModel] = useState([
+		{ model: "select a brand" },
+	]);
+	const [brandValue, setBrandValue] = useState("");
+	const [modelValue, setModelValue] = useState("");
+
+	const location = useLocation();
+	function manageBrandModal(cars) {
+		if (location["state"]) {
+			let info = location["state"];
+			setStartDate(moment(new Date(info["startDate"]).toISOString()));
+			setStartTime(info["startTime"]);
+			setEndDate(moment(new Date(info["endDate"]).toISOString()));
+			setEndTime(info["endTime"]);
+		}
+		let brandModel = [];
+
+		if (cars.length) {
+			for (let a = 0; a < cars.length; a++) {
+				if (
+					!brandModel.some(
+						(car) => car.brand === cars[a]["cars_brands"]["brand"]
+					)
+				) {
+					brandModel.push({
+						brand: cars[a]["cars_brands"]["brand"],
+					});
+				}
+			}
+			setFullBrandModel(brandModel);
+			setBrandValue(brandModel[0]["brand"]);
+			onChangeBrand(brandModel[0]["brand"]);
+		}
+		if (cars.length) {
+			let min = cars[0]["price"];
+			let max = 0;
+			for (let a = 0; a < cars.length; a++) {
+				if (cars[a]["price"] > max) {
+					max = cars[a]["price"];
+				}
+				if (cars[a]["price"] < min) {
+					min = cars[a]["price"];
+				}
+			}
+			setMinPrice(min);
+			setMaxPrice(max);
+		}
+	}
 	useEffect(() => {
 		localForage
 			.clear()
@@ -33,13 +88,46 @@ function Cars(props) {
 			});
 		props.getCars();
 		props.getCarsImages();
+
+		if (props.carsByDates.length) {
+			manageBrandModal(props.carsByDates);
+		} else {
+			manageBrandModal(props.cars);
+		}
+
+		// setDisplayedCars(displayedCars);
 	}, []);
-	console.log(props.cars);
 	let carsImages = {};
 	if (props.images && props.images.length) {
 		for (let image of props.images) {
 			if (image.car_id) carsImages[image.car_id] = image.file_names;
 		}
+	}
+
+	function onChangeBrand(value) {
+		function onChangeBrandSubFunction(car) {
+			let test = [];
+			for (let i = 0; i < car.length; i++) {
+				if (
+					car[i]["cars_brands"]["brand"] === value &&
+					!test.some(
+						(model) => model["model"] === car[i]["cars_brands"]["model"]
+					)
+				) {
+					test.push({ model: car[i]["cars_brands"]["model"] });
+				}
+			}
+			setCurrentModel(test);
+			setBrandValue(value);
+			setModelValue(test[0]["model"]);
+		}
+		if (props.carsByDates.length) {
+			onChangeBrandSubFunction(props.carsByDates);
+		} else {
+			onChangeBrandSubFunction(props.cars);
+		}
+
+		return 1;
 	}
 	const handleClick = (e) => {
 		e.preventDefault();
@@ -48,9 +136,9 @@ function Cars(props) {
 		let currentDay = new window.Date(currentDate);
 
 		//date de début et de fin de location
-		let startDateFormat = startDate.format("D MMMM YYYY");
+		let startDateFormat = startDate.format("YYYY-MM-DD");
 		let startDay = new window.Date(startDateFormat);
-		let endDateFormat = endDate.format("D MMMM YYYY");
+		let endDateFormat = endDate.format("YYYY-MM-DD");
 		let endDay = new window.Date(endDateFormat);
 
 		//heure actuelle
@@ -90,17 +178,13 @@ function Cars(props) {
 			setError("L'heure d'ouverture du magazin est de 8:00 a 19:00 !!");
 			return;
 		}
-
 		const filterInfo = {
 			startDate: startDateFormat,
 			endDate: endDateFormat,
 			startTime: startTime,
 			endTime: endTime,
 		};
-		//requête vers l'api
-		// props.getSlot(filterInfo);
-
-		//si requête ok redirection vers la page /cars
+		props.getCarsByDate(filterInfo);
 	};
 	return (
 		<Container>
@@ -116,34 +200,59 @@ function Cars(props) {
 					<Price>
 						<h5>Prix/jour</h5>
 						<div>
-							<span>Prix Min</span>
+							<span>{minPrice}</span>
 							<input
 								type="range"
-								min="200"
-								max="400"
-								// value="300"
+								min={minPrice}
+								max={maxPrice}
+								value={sliderValue}
+								onChange={(e) => {
+									setSliderValue(e.target.value);
+								}}
 								className="slider"
 							/>
-							<span>Prix Max</span>
+							<span>{maxPrice}</span>
 						</div>
 						<p>Valeur</p>
 					</Price>
 					<Brand>
 						<h5>Marque et modèle</h5>
 						<div>
-							<select>
-								<option value="Brand1">Marque 1</option>
-								<option value="Brand2">Marque 2</option>
-								<option value="Brand3">Marque 3</option>
+							<select
+								onChange={(e) => onChangeBrand(e.target.value)}
+								value={brandValue}
+							>
+								{fullBrandModel.length ? (
+									fullBrandModel.map((info) => {
+										return (
+											<option value={info.brand} key={info.brand}>
+												{info.brand}
+											</option>
+										);
+									})
+								) : (
+									<></>
+								)}
 							</select>
 							<span>
 								<span className="foo rectangle"></span>
 								<span className="foo triangle-right"></span>
 							</span>
-							<select>
-								<option value="Model">Modèle 1</option>
-								<option value="Model 2">Modèle 2</option>
-								<option value="Model 3">Modèle 3</option>
+							<select
+								value={modelValue}
+								onChange={(e) => setModelValue(e.target.value)}
+							>
+								{currentModel.length ? (
+									currentModel.map((info) => {
+										return (
+											<option value={info["model"]} key={info["model"]}>
+												{info["model"]}
+											</option>
+										);
+									})
+								) : (
+									<></>
+								)}
 							</select>
 						</div>
 					</Brand>
@@ -167,6 +276,7 @@ function Cars(props) {
 									/>
 								</StyledDatePickerWrapper>
 								<input
+									value={startTime}
 									type="time"
 									onChange={(e) => {
 										setError("");
@@ -191,6 +301,7 @@ function Cars(props) {
 									/>
 								</StyledDatePickerWrapper>{" "}
 								<input
+									value={endTime}
 									type="time"
 									onChange={(e) => {
 										setError("");
@@ -200,28 +311,32 @@ function Cars(props) {
 							</div>
 						</form>
 					</div>
-					<button
-						onClick={() => {
-							/**Verifier les données du formulaire */
-							// todo pour la date envoyer les données au composant slot
-						}}
-					>
-						Valider
-					</button>
+					<button onClick={handleClick}>Appliquer</button>
 				</Filter>
 				<Available>
 					<h2>Voitures disponibles</h2>
 
 					<CarsPannel>
-						{props.cars.length ? (
-							props.cars.map((car) => {
-								return (
-									<CarSlot key={car.id} car={car} images={carsImages[car.id]} />
-								);
-							})
-						) : (
-							<></>
-						)}
+						{props.carsByDates.length
+							? props.carsByDates.map((car) => {
+									return (
+										<CarSlot
+											key={car.id}
+											car={car}
+											images={carsImages[car.id]}
+										/>
+									);
+							  })
+							: props.cars.map((car) => {
+									return (
+										<CarSlot
+											key={car.id}
+											car={car}
+											images={carsImages[car.id]}
+										/>
+									);
+							  })}
+
 					</CarsPannel>
 				</Available>
 			</Content>
@@ -308,7 +423,7 @@ const Filter = styled.div`
 	/* position: fixed;
 	left: 20%; */
 	flex: 0.3;
-	overflow-y: hidden;
+	overflow-y: show;
 	margin-right: 15px;
 	border-radius: 5px;
 	box-shadow: 0 0 1px black;
@@ -504,6 +619,10 @@ const StyledDatePickerWrapper = styled.div`
 		.DayPickerKeyboardShortcuts_buttonReset {
 			display: none;
 		}
+		.SingleDatePicker_picker_1 {
+			background: none;
+
+		}
 	}
 `;
 
@@ -511,13 +630,15 @@ const mapStateToProps = (state) => {
 	return {
 		cars: state.carState.cars,
 		images: state.carState.images,
+		carsByDates: state.carState.filterCars,
 	};
 };
 const mapStateToDispatch = (dispatch) => {
 	return {
 		getCars: () => dispatch(getCarsProperty()),
 		getCarsImages: () => dispatch(getCarsImages()),
-		getSlot: (payload) => dispatch(getCarsSlot(payload)),
+		// getSlot: (payload) => dispatch(getCarsSlot(payload)),
+		getCarsByDate: (payload) => dispatch(getOrdersInfoByDates(payload)),
 	};
 };
 const connector = connect(mapStateToProps, mapStateToDispatch);

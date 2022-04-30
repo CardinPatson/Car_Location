@@ -1,3 +1,4 @@
+
 import {
 	ADD_USER_REGISTER,
 	ADD_ADMIN,
@@ -8,7 +9,6 @@ import {
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { auth, provider } from "../firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-
 import Axios from "axios";
 const DOMAIN_NAME = "http://localhost:3001";
 export const addUserRegisterInfo = createAction(

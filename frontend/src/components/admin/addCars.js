@@ -657,7 +657,7 @@ const mapStateToProps = (state) => {
 const mapStateToDispatch = (dispatch) => {
 	return {
 		//property est un objet contenant les propriétés du véhicule
-		addCars: (property) => dispatch(addCarsProperty(property)),
+		addCars: (payload) => dispatch(addCarsProperty(payload)),
 	};
 };
 const connector = connect(mapStateToProps, mapStateToDispatch);
