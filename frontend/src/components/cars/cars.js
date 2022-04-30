@@ -36,7 +36,47 @@ function Cars(props) {
 	const [modelValue, setModelValue] = useState("");
 
 	const location = useLocation();
-	console.log(location);
+	function manageBrandModal(cars) {
+		if (location["state"]) {
+			let info = location["state"];
+			setStartDate(moment(new Date(info["startDate"]).toISOString()));
+			setStartTime(info["startTime"]);
+			setEndDate(moment(new Date(info["endDate"]).toISOString()));
+			setEndTime(info["endTime"]);
+		}
+		let brandModel = [];
+
+		if (cars.length) {
+			for (let a = 0; a < cars.length; a++) {
+				if (
+					!brandModel.some(
+						(car) => car.brand === cars[a]["cars_brands"]["brand"]
+					)
+				) {
+					brandModel.push({
+						brand: cars[a]["cars_brands"]["brand"],
+					});
+				}
+			}
+			setFullBrandModel(brandModel);
+			setBrandValue(brandModel[0]["brand"]);
+			onChangeBrand(brandModel[0]["brand"]);
+		}
+		if (cars.length) {
+			let min = cars[0]["price"];
+			let max = 0;
+			for (let a = 0; a < cars.length; a++) {
+				if (cars[a]["price"] > max) {
+					max = cars[a]["price"];
+				}
+				if (cars[a]["price"] < min) {
+					min = cars[a]["price"];
+				}
+			}
+			setMinPrice(min);
+			setMaxPrice(max);
+		}
+	}
 	useEffect(() => {
 		localForage
 			.clear()
@@ -48,48 +88,14 @@ function Cars(props) {
 			});
 		props.getCars();
 		props.getCarsImages();
-		if (location["state"]) {
-			let info = location["state"];
-			console.log(new Date(info["startDate"]).toISOString());
-			setStartDate(moment(new Date(info["startDate"]).toISOString()));
-			setStartTime(info["startTime"]);
-			setEndDate(moment(new Date(info["endDate"]).toISOString()));
-			setEndTime(info["endTime"]);
+
+		if (props.carsByDates.length) {
+			manageBrandModal(props.carsByDates);
+		} else {
+			manageBrandModal(props.cars);
 		}
-		let brandModel = [];
-		if (props.cars.length) {
-			for (let a = 0; a < props.cars.length; a++) {
-				console.log(props.cars[a]["cars_brands"]);
-				if (
-					!brandModel.some(
-						(car) =>
-							car.brand === props.cars[a]["cars_brands"]["brand"]
-					)
-				) {
-					brandModel.push({
-						brand: props.cars[a]["cars_brands"]["brand"],
-					});
-				}
-			}
-			setFullBrandModel(brandModel);
-			setBrandValue(brandModel[0]["brand"]);
-			onChangeBrand(brandModel[0]["brand"]);
-		}
-		if (props.cars.length) {
-			let min = props.cars[0]["price"];
-			let max = 0;
-			for (let a = 0; a < props.cars.length; a++) {
-				if (props.cars[a]["price"] > max) {
-					max = props.cars[a]["price"];
-				}
-				if (props.cars[a]["price"] < min) {
-					min = props.cars[a]["price"];
-				}
-			}
-			setMinPrice(min);
-			setMaxPrice(max);
-		}
-		setDisplayedCars(props.cars);
+
+		// setDisplayedCars(displayedCars);
 	}, []);
 	let carsImages = {};
 	if (props.images && props.images.length) {
@@ -97,22 +103,30 @@ function Cars(props) {
 			if (image.car_id) carsImages[image.car_id] = image.file_names;
 		}
 	}
+
 	function onChangeBrand(value) {
-		let test = [];
-		for (let i = 0; i < props.cars.length; i++) {
-			if (
-				props.cars[i]["cars_brands"]["brand"] === value &&
-				!test.some(
-					(model) =>
-						model["model"] === props.cars[i]["cars_brands"]["model"]
-				)
-			) {
-				test.push({ model: props.cars[i]["cars_brands"]["model"] });
+		function onChangeBrandSubFunction(car) {
+			let test = [];
+			for (let i = 0; i < car.length; i++) {
+				if (
+					car[i]["cars_brands"]["brand"] === value &&
+					!test.some(
+						(model) => model["model"] === car[i]["cars_brands"]["model"]
+					)
+				) {
+					test.push({ model: car[i]["cars_brands"]["model"] });
+				}
 			}
+			setCurrentModel(test);
+			setBrandValue(value);
+			setModelValue(test[0]["model"]);
 		}
-		setCurrentModel(test);
-		setBrandValue(value);
-		setModelValue(test[0]["model"]);
+		if (props.carsByDates.length) {
+			onChangeBrandSubFunction(props.carsByDates);
+		} else {
+			onChangeBrandSubFunction(props.cars);
+		}
+
 		return 1;
 	}
 	const handleClick = (e) => {
@@ -149,10 +163,7 @@ function Cars(props) {
 			setError("Veuillez entrez une plage horaire valide !");
 			return;
 		}
-		if (
-			endDay.getTime() === currentDay.getTime() &&
-			endHour <= currentHour
-		) {
+		if (endDay.getTime() === currentDay.getTime() && endHour <= currentHour) {
 			setError("Veuillez entrez une plage horaire valide !");
 			return;
 		}
@@ -173,12 +184,7 @@ function Cars(props) {
 			startTime: startTime,
 			endTime: endTime,
 		};
-		console.log(filterInfo);
 		props.getCarsByDate(filterInfo);
-		//requête vers l'api
-		// props.getSlot(filterInfo);
-
-		//si requête ok redirection vers la page /cars
 	};
 	return (
 		<Container>
@@ -219,10 +225,7 @@ function Cars(props) {
 								{fullBrandModel.length ? (
 									fullBrandModel.map((info) => {
 										return (
-											<option
-												value={info.brand}
-												key={info.brand}
-											>
+											<option value={info.brand} key={info.brand}>
 												{info.brand}
 											</option>
 										);
@@ -242,10 +245,7 @@ function Cars(props) {
 								{currentModel.length ? (
 									currentModel.map((info) => {
 										return (
-											<option
-												value={info["model"]}
-												key={info["model"]}
-											>
+											<option value={info["model"]} key={info["model"]}>
 												{info["model"]}
 											</option>
 										);
@@ -317,19 +317,25 @@ function Cars(props) {
 					<h2>Voitures disponibles</h2>
 
 					<CarsPannel>
-						{displayedCars.length ? (
-							displayedCars.map((car) => {
-								return (
-									<CarSlot
-										key={car.id}
-										car={car}
-										images={carsImages[car.id]}
-									/>
-								);
-							})
-						) : (
-							<></>
-						)}
+						{props.carsByDates.length
+							? props.carsByDates.map((car) => {
+									return (
+										<CarSlot
+											key={car.id}
+											car={car}
+											images={carsImages[car.id]}
+										/>
+									);
+							  })
+							: props.cars.map((car) => {
+									return (
+										<CarSlot
+											key={car.id}
+											car={car}
+											images={carsImages[car.id]}
+										/>
+									);
+							  })}
 					</CarsPannel>
 				</Available>
 			</Content>
@@ -619,11 +625,10 @@ const StyledDatePickerWrapper = styled.div`
 `;
 
 const mapStateToProps = (state) => {
-	console.log(state);
 	return {
 		cars: state.carState.cars,
 		images: state.carState.images,
-		carsByDates: state.carState.carsByDates,
+		carsByDates: state.carState.filterCars,
 	};
 };
 const mapStateToDispatch = (dispatch) => {

@@ -5,7 +5,7 @@ import CarDetails from "./carDetails";
 
 const CarSlot = (props) => {
 	const handleDetail = () => {};
-	console.log(props);
+
 	return (
 		<Container>
 			<Content>
@@ -21,8 +21,7 @@ const CarSlot = (props) => {
 				</Pic>
 				<Info>
 					<Name>
-						{props.car.cars_brands.brand}{" "}
-						{props.car.cars_brands.model}
+						{props.car.cars_brands.brand} {props.car.cars_brands.model}
 					</Name>
 					<Specs>
 						<div>Type</div>
@@ -31,11 +30,7 @@ const CarSlot = (props) => {
 						<p>{props.car.energy}</p>
 						<div>Places</div>
 						<p>{props.car.passengers}</p>
-						<div>
-							{props.car.is_automatic
-								? "Automatique"
-								: "Manuelle"}
-						</div>
+						<div>{props.car.is_automatic ? "Automatique" : "Manuelle"}</div>
 					</Specs>
 				</Info>
 				<Price>
@@ -46,9 +41,7 @@ const CarSlot = (props) => {
 					<Details>
 						<div>
 							<Link to="/carDetails" state={{ from: props }}>
-								<button className="details__button">
-									Détails
-								</button>
+								<button className="details__button">Détails</button>
 							</Link>
 						</div>
 
@@ -127,24 +120,24 @@ const Specs = styled.div`
 `;
 
 const Price = styled.div`
-    padding: 2vh;
-    display: flex;
-    flex-direction: column;
-    gap: 10%;
-    align-items: center;
-    flex-grow: 2;
-    button {
-        font-size: 1.25em;
-        border-radius: 10px;
-        width 80%;
-        padding: 6px;
-        margin: 5px 0 5px 0;
-        cursor: pointer;
-        box-shadow: 0 0 1px black;
-    }
-    button:active {
-        transform: scale(0.95);
-    }
+	padding: 2vh;
+	display: flex;
+	flex-direction: column;
+	gap: 10%;
+	align-items: center;
+	flex-grow: 2;
+	button {
+		font-size: 1.25em;
+		border-radius: 10px;
+		width: 80%;
+		padding: 6px;
+		margin: 5px 0 5px 0;
+		cursor: pointer;
+		box-shadow: 0 0 1px black;
+	}
+	button:active {
+		transform: scale(0.95);
+	}
 `;
 
 const Amount = styled.div`
@@ -164,30 +157,30 @@ const Amount = styled.div`
 `;
 
 const Details = styled.div`
-	margin 1vh;
+	margin: 1vh;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 0px;
 	.details__button {
 		color: #333333;
-        background-color: #00A9FF;
-        border: 1px solid #00486D;
+		background-color: #00a9ff;
+		border: 1px solid #00486d;
 	}
 	.details__button:hover {
 		color: white;
 		background-color: #006699;
-    }
+	}
 	.modify__button {
 		color: #333333;
-        background-color: #c4c4c4;
-        border: 1px solid #00486D;
+		background-color: #c4c4c4;
+		border: 1px solid #00486d;
 	}
 	.modify__button:hover {
 		color: white;
 		background-color: #919191;
-    }
-	.car__detail{
+	}
+	.car__detail {
 		position: absolute;
 		min-width: 100%;
 		min-height: 138%;
@@ -198,7 +191,6 @@ const Details = styled.div`
 		/* display: flex;
 		justify-content: center; */
 	}
-}
 `;
 
 export default CarSlot;
