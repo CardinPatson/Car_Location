@@ -3,7 +3,7 @@ const chai = require("chai");
 const { agent } = require("supertest");
 const { omit } = require("lodash");
 
-const request = agent(server);
+const request = agent(server());
 const { expect } = chai;
 
 const shouldNotRestockProduct = {
