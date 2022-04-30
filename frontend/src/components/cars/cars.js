@@ -50,19 +50,11 @@ function Cars(props) {
 		props.getCarsImages();
 		if (location["state"]) {
 			let info = location["state"];
+			console.log(new Date(info["startDate"]).toISOString());
 			setStartDate(moment(new Date(info["startDate"]).toISOString()));
 			setStartTime(info["startTime"]);
 			setEndDate(moment(new Date(info["endDate"]).toISOString()));
 			setEndTime(info["endTime"]);
-			let allInfo = {
-				startDate: startDate.format("YYYY-MM-DD"),
-				endDate: endDate.format("YYYY-MM-DD"),
-				startTime: info["startTime"],
-				endTime: info["endTime"],
-			};
-			console.log(allInfo);
-			props.getCarsByDate(allInfo);
-			console.log(props.carsDates);
 		}
 		let brandModel = [];
 		if (props.cars.length) {
@@ -130,9 +122,9 @@ function Cars(props) {
 		let currentDay = new window.Date(currentDate);
 
 		//date de début et de fin de location
-		let startDateFormat = startDate.format("D MMMM YYYY");
+		let startDateFormat = startDate.format("YYYY-MM-DD");
 		let startDay = new window.Date(startDateFormat);
-		let endDateFormat = endDate.format("D MMMM YYYY");
+		let endDateFormat = endDate.format("YYYY-MM-DD");
 		let endDay = new window.Date(endDateFormat);
 
 		//heure actuelle
@@ -175,13 +167,14 @@ function Cars(props) {
 			setError("L'heure d'ouverture du magazin est de 8:00 a 19:00 !!");
 			return;
 		}
-
 		const filterInfo = {
 			startDate: startDateFormat,
 			endDate: endDateFormat,
 			startTime: startTime,
 			endTime: endTime,
 		};
+		console.log(filterInfo);
+		props.getCarsByDate(filterInfo);
 		//requête vers l'api
 		// props.getSlot(filterInfo);
 
@@ -318,14 +311,7 @@ function Cars(props) {
 							</div>
 						</form>
 					</div>
-					<button
-						onClick={() => {
-							/**Verifier les données du formulaire */
-							// todo pour la date envoyer les données au composant slot
-						}}
-					>
-						Appliquer
-					</button>
+					<button onClick={handleClick}>Appliquer</button>
 				</Filter>
 				<Available>
 					<h2>Voitures disponibles</h2>
@@ -633,9 +619,11 @@ const StyledDatePickerWrapper = styled.div`
 `;
 
 const mapStateToProps = (state) => {
+	console.log(state);
 	return {
 		cars: state.carState.cars,
 		images: state.carState.images,
+		carsByDates: state.carState.carsByDates,
 	};
 };
 const mapStateToDispatch = (dispatch) => {

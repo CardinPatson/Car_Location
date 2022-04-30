@@ -37,6 +37,13 @@ const getAllOrders = async (req, res) => {
 			//TODO TRAVAILLER SUR LES DATES QUE LON INSERE DANS LA DB POUR QUELLE SOIT COHERENTE AVEC CELLE RECUPERER
 
 			const { startDate, startTime, endDate, endTime } = req.query;
+			console.log(req.query);
+			console.log(
+				new Date(`${startDate}T${startTime}:00.000Z`).toISOString()
+			);
+			console.log(
+				new Date(`${endDate}T${endTime}:00.000Z`).toISOString()
+			);
 			ordersData = await orders.findAll({
 				where: {
 					[Op.and]: [
@@ -114,7 +121,8 @@ const getPrice = async (req, res) => {
 
 		if (carData) {
 			const price =
-				differenceBetweenDates(departure_date, return_date) * carData.price;
+				differenceBetweenDates(departure_date, return_date) *
+				carData.price;
 
 			return res.status(200).json({
 				price: price,
