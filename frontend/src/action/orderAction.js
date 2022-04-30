@@ -17,7 +17,6 @@ export const carsSortedWithDate = createAction(
 export const getOrdersInfoByDates = createAsyncThunk(
 	GET_ORDERS_BY_DATE,
 	async (arg, thunkAPI) => {
-
 		const carsList = await Axios.get(`${DOMAIN_NAME}/api/orders`, {
 			params: {
 				startDate: arg.startDate,
@@ -30,6 +29,8 @@ export const getOrdersInfoByDates = createAsyncThunk(
 		});
 		const oldStateCars = thunkAPI.getState().carState.cars;
 		thunkAPI.dispatch(carsSortedWithDate(carsList.data.orders, oldStateCars));
+	}
+);
 export const postPaymentPage = createAsyncThunk(
 	GET_PAYMENT,
 	async (arg, thunkAPI) => {
