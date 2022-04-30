@@ -48,9 +48,11 @@ jobs:
       - name: Install nodemon
         run: npm install -g nodemon
       - name: Install mocha
-        run: npm install -g mocha
+        run: npm install mocha -g
       - name: Install chai
-        run: npm install -g chai
+        run: npm install chai -g
+      - name: Install cross-env
+        run: npm install cross-env -g
       - name: Create .env file
         uses: SpicyPizza/create-envfile@v1
         with:
@@ -76,6 +78,6 @@ jobs:
           sleep 10
           npm run test
         env:
-          PORT: "3001"
+          APP_PORT: "3001"
 #           DBURL: postgresql://${{ secrets.DB_USERNAME }}:${{ secrets.DB_PASSWORD }}@${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}
 #postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
