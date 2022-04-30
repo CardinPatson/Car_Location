@@ -18,13 +18,13 @@ jobs:
       # Label used to access the service container
       postgres:
         # Docker Hub image
-        image: postgres
+        image: postgres:14
 
         # Provide the password for postgres
         env:
-          POSTGRES_USER: ${{ secrets.DB_USERNAME }}
-          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.DB_NAME }}
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: secret
+          POSTGRES_DB: car_test
         # needed because the postgres container does not provide a healthcheck
         options: >-
           --health-cmd pg_isready --health-interval 10s --health-timeout 5s
@@ -63,10 +63,20 @@ jobs:
           envkey_FIREBASE_MESSAGING_ID: ${{ secrets.FIREBASE_MESSAGING_ID }}
           envkey_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
           envkey_FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
+          directory: backend
+          file_name: .env
+          fail_on_empty: false
+      - name: Install golang-migrate
+        run: |
+          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.14.1/migrate.linux-amd64.tar.gz | tar xvz
+          sudo mv migrate.linux-amd64 /usr/bin/migrate
+          which migrate
+      - name: Run migrations
+        run: make migrateup 
       - name: Run the API and Postmans tests
         run: |
           npm run start &
-          sleep 60
+          sleep 10
           newman run "Cars_Location.postman_collection.json"
         env:
           PORT: "3001"
