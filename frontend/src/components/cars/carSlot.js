@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import CarDetails from "./carDetails";
+import { connect } from "react-redux";
 
 const CarSlot = (props) => {
 	const handleDetail = () => {};
@@ -45,9 +46,11 @@ const CarSlot = (props) => {
 							</Link>
 						</div>
 
-						<Link to="/modifyDetails" state={{ from: props }}>
-							<button className="modify__button">Modifier</button>
-						</Link>
+						{props.status === "admin" && (
+							<Link to="/modifyDetails" state={{ from: props }}>
+								<button className="modify__button">Modifier</button>
+							</Link>
+						)}
 						{/* <div className="car__detail" style={{ display: "none" }}>
 							<CarDetails props={props} />
 						</div> */}
@@ -192,5 +195,14 @@ const Details = styled.div`
 		justify-content: center; */
 	}
 `;
+const mapStateToProps = (state) => {
+	return {
+		status: state.userState.status,
+	};
+};
 
-export default CarSlot;
+const mapStateToDispatch = (dispatch) => {
+	return {};
+};
+const connector = connect(mapStateToProps, mapStateToDispatch);
+export default connector(CarSlot);

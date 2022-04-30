@@ -32,9 +32,7 @@ const AddCars = (props) => {
 	// } , [])
 
 	const removeImage = (e) => {
-		e.preventDefault();
-		e.stopPropagation();
-		e.nativeEvent.stopImmediatePropagation();
+		setImage(image.filter((x) => x !== e));
 	};
 
 	const handleImage = (e) => {
@@ -348,6 +346,7 @@ const AddCars = (props) => {
 										onClick={() => {
 											removeImage(x);
 										}}
+										type="button"
 										value={x}
 									>
 										Retirer

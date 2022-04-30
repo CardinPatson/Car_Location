@@ -1,0 +1,86 @@
+name: postman-test
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    strategy:
+      matrix:
+        node-version: [14.x]
+      # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres:14-alpine
+
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
+        # needed because the postgres container does not provide a healthcheck
+        options: >-
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - name: Check out Git repositor
+        uses: actions/checkout@v1
+        with:
+          ref: master
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://registry.npmjs.org/
+      - name: Install dependencies
+        run: npm install
+      - name: Install newman
+        run: npm install -g newman
+      - name: Install nodemon
+        run: npm install -g nodemon
+      - name: Install mocha
+        run: npm install mocha -g
+      - name: Install chai
+        run: npm install chai -g
+      - name: Install cross-env
+        run: npm install cross-env -g
+      - name: Create .env file
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_DB_USERNAME_TEST: postgres
+          envkey_DB_NAME_TEST: test
+          envkey_DB_HOST_TEST: localhost
+          envkey_DB_PORT_TEST: ${{ job.services.postgres.ports[5432] }}
+          envkey_DB_PASSWORD_TEST: postgres
+          envkey_APP_PORT: ${{ secrets.APP_PORT }}
+          envkey_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          envkey_FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+          envkey_FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          envkey_FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+          envkey_FIREBASE_MESSAGING_ID: ${{ secrets.FIREBASE_MESSAGING_ID }}
+          envkey_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+          envkey_FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
+          directory: backend
+          file_name: .env
+          fail_on_empty: false
+      - name: Run the API and Postmans tests
+        run: |
+          npm run test &
+          sleep 10
+          exit
+        env:
+          APP_PORT: "3001"
+          DB_USERNAME_TEST: postgres
+          DB_NAME_TEST: test
+          DB_HOST_TEST: localhost
+#           DBURL: postgresql://${{ secrets.DB_USERNAME }}:${{ secrets.DB_PASSWORD }}@${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}
+#postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]

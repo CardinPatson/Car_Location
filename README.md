@@ -1,3 +1,6 @@
+[![postman-test](https://github.com/CardinPatson/Car_Location/actions/workflows/postman-test.yml/badge.svg)](https://github.com/CardinPatson/Car_Location/actions/workflows/postman-test.yml)
+
+---
 # Car Rental
 
 Application Web de location de voiture développée dans le cadre du cours "Développement informatique III" du bachelier Technologie de l'informatique à l'EPHEC.

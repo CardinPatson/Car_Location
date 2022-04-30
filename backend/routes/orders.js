@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const ordersCtrl = require("../controllers/orders");
+const ensureLoggedIn = require("connect-ensure-login").ensureLoggedIn;
 
 // API RESTFULL
 

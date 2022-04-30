@@ -336,6 +336,7 @@ function Cars(props) {
 										/>
 									);
 							  })}
+
 					</CarsPannel>
 				</Available>
 			</Content>
@@ -620,6 +621,7 @@ const StyledDatePickerWrapper = styled.div`
 		}
 		.SingleDatePicker_picker_1 {
 			background: none;
+
 		}
 	}
 `;

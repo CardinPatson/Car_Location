@@ -1,17 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import localForage from "localforage";
 
-function Header() {
+function Header(props) {
+	console.log(props.firstName);
 	return (
 		<Container>
 			<Content>
 				<Logo>
 					<a href="/">
-						<img
-							src="./images/logo.svg"
-							alt="Logo of car-rental's site"
-						/>
+						<img src="./images/logo.svg" alt="Logo of car-rental's site" />
 					</a>
 				</Logo>
 				<Nav>
@@ -21,16 +21,48 @@ function Header() {
 					<Link to="/cars" style={{ textDecoration: "none" }}>
 						<p>Voitures</p>
 					</Link>
-					<Link to="/add-cars" style={{ textDecoration: "none" }}>
-						<p>Ajouter voitures</p>
-					</Link>
+					{props.firstName && props.status === "admin" ? (
+						<>
+							<Link to="/add-cars" style={{ textDecoration: "none" }}>
+								<p>Ajouter voitures</p>
+							</Link>
+							<Link to="/add-administrator" style={{ textDecoration: "none" }}>
+								<p>Ajouter admin</p>
+							</Link>
+						</>
+					) : (
+						<></>
+					)}
 				</Nav>
-				<Login>
-					{/* {//TODO Si déjà inscris mentionner son nom } */}
-					<Link to="/connreg" style={{ textDecoration: "none" }}>
-						<p>Connexion</p>
-					</Link>
-				</Login>
+				{props.firstName ? (
+					<>
+						<div> Bienvenue {props.firstName} </div>
+						<Logout>
+							<button
+								onClick={() => {
+									localForage
+										.clear()
+										.then(function () {
+											console.log("database empty");
+										})
+										.catch(function (err) {
+											console.log(err);
+										});
+									window.location.pathname = "/connreg";
+								}}
+								className="logout__button"
+							>
+								<img src="./images/logout.svg" />
+							</button>
+						</Logout>
+					</>
+				) : (
+					<Login>
+						<Link to="/connreg" style={{ textDecoration: "none" }}>
+							<p>Connexion</p>
+						</Link>
+					</Login>
+				)}
 				<Menu>
 					<div
 						onClick={() => {
@@ -63,6 +95,9 @@ const Content = styled.div`
 	justify-content: space-between;
 	background: #f5f5f5;
 	height: 60px;
+	.logout__button {
+		border: "none";
+	}
 `;
 const Logo = styled.div`
 	/* border: solid red 1px; */
@@ -163,7 +198,7 @@ const Login = styled.div`
 		display: none;
 	}
 `;
-
+const Logout = styled(Login)``;
 const Menu = styled.div`
 	margin-right: 25px;
 	padding: 5px;
@@ -171,4 +206,18 @@ const Menu = styled.div`
 		display: none;
 	}
 `;
-export default Header;
+
+const mapStateToProps = (state) => {
+	return {
+		firstName: state.userState.firstName,
+		status : state.userState.status
+	};
+};
+
+const mapStateToDispatch = (dispatch) => {
+	return {};
+};
+
+const connector = connect(mapStateToProps, mapStateToDispatch);
+
+export default connector(Header);

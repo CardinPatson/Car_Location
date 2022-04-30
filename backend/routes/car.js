@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { checkSchema } = require("express-validator");
+const ensureLoggedIn = require("connect-ensure-login").ensureLoggedIn;
 
 const addCarsSchema = require("../validations/addCarsSchema");
 
@@ -11,6 +12,7 @@ const multerMiddleware = require("../middleware/image");
 
 //GET
 router.get("/", carCtrl.getAllCars);
+router.get("/:id", carCtrl.getCarById);
 
 router.get("/images", carCtrl.getCarsImages);
 

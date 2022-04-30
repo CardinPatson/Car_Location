@@ -15,7 +15,6 @@ function differenceBetweenDates(date1, date2) {
 const getAllOrders = async (req, res) => {
 	try {
 		let ordersData;
-
 		if (!Object.keys(req.query).length) {
 			ordersData = await orders.findAll();
 			//LA REQUETE NE PASSE PAS AVEC LES INCLUDES
@@ -36,9 +35,6 @@ const getAllOrders = async (req, res) => {
 			//TODO TRAVAILLER SUR LES DATES QUE LON INSERE DANS LA DB POUR QUELLE SOIT COHERENTE AVEC CELLE RECUPERER
 
 			const { startDate, startTime, endDate, endTime } = req.query;
-			// console.log(req.query);
-			// console.log(new Date(`${startDate}T${startTime}:00.000Z`).toISOString());
-			// console.log(new Date(`${endDate}T${endTime}:00.000Z`).getTime());
 
 			ordersData = await orders.findAll({
 				where: {
@@ -213,6 +209,7 @@ const addOrder = async (req, res) => {
 		}
 
 		const nbrOfDays = differenceBetweenDates(departure_date, return_date);
+
 		const price = carData.price * nbrOfDays;
 
 		const orderData = await orders.create({
@@ -296,7 +293,8 @@ const updateOrder = async (req, res) => {
 };
 
 // front
-const YOUR_DOMAIN = "http://localhost:3000";
+const YOUR_DOMAIN = "http://localhost:3001";
+const FRONT_DOMAIN = "http://localhost:3000";
 
 const PRICE_ID = "price_1KmyUUAid8mWK1L4RVC47QQ8";
 const CLIENT_MAIL = "bellaalirachid@gmail.com";
@@ -304,7 +302,7 @@ const QUANTITY = 1;
 
 const payement = async (req, res) => {
 	const session = await stripe.checkout.sessions.create({
-		user_email: CLIENT_MAIL,
+		customer_email: CLIENT_MAIL,
 		line_items: [
 			{
 				// Provide the exact Price ID (for example, pr_1234) of the product you want to sell
@@ -313,11 +311,16 @@ const payement = async (req, res) => {
 			},
 		],
 		mode: "payment",
-		success_url: `${YOUR_DOMAIN}/paymentAccepted`,
-		cancel_url: `${YOUR_DOMAIN}/paymentDenied`,
+		success_url: `${FRONT_DOMAIN}/paymentAccepted`,
+		cancel_url: `${FRONT_DOMAIN}/paymentDenied`,
 	});
-
-	res.redirect(303, session.url);
+	console.log("hello from back");
+	// res.header("Access-Control-Allow-Origin", FRONT_DOMAIN); // update to match the domain you will make the request from
+	// res.header(
+	// 	"Access-Control-Allow-Headers",
+	// 	"Origin, X-Requested-With, Content-Type, Accept"
+	// );
+	res.json({ url: session.url }); // <-- this is the changed line
 };
 
 module.exports = {
