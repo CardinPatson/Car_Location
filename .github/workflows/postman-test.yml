@@ -14,23 +14,23 @@ jobs:
       matrix:
         node-version: [14.x]
       # Service containers to run with `container-job`
-    #     services:
-    #       # Label used to access the service container
-    #       postgres:
-    #         # Docker Hub image
-    #         image: postgres
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
 
-    #         # Provide the password for postgres
-    #         env:
-    #           POSTGRES_USER: ${{env.DB_USERNAME}}
-    #           POSTGRES_PASSWORD: ${{env.DB_PASSWORD}}
-    #           POSTGRES_DB: ${{env.DB_NAME}}
-    #         # needed because the postgres container does not provide a healthcheck
-    #         options: >-
-    #           --health-cmd pg_isready --health-interval 10s --health-timeout 5s
-    #           --health-retries 5
-    #         ports:
-    #           - 5432:5432
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: ${{env.DB_USERNAME}}
+          POSTGRES_PASSWORD: ${{env.DB_PASSWORD}}
+          POSTGRES_DB: ${{env.DB_NAME}}
+        # needed because the postgres container does not provide a healthcheck
+        options: >-
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       - name: Check out Git repositor
         uses: actions/checkout@v1
@@ -49,8 +49,8 @@ jobs:
         run: npm install -g nodemon
       - name: Run the API and Postman's tests
         env:
-          #           POSTGRES_HOST: ${{env.DB_HOST}}
-          #           POSTGRES_PORT : ${{ job.services.postgres.ports[5432] }}
+          POSTGRES_HOST: ${{env.DB_HOST}}
+          POSTGRES_PORT : ${{ job.services.postgres.ports[5432] }}
           DBURL: postgresql://${{env.DB_USERNAME}}:${{env.DB_PASSWORD}}@${{env.DB_HOST}}:${{env.DB_PORT}}/${{env.DB_NAME}}
           APP_PORT: ${{env.APP_PORT}}
           FIREBASE_API_KEY: ${{env.FIREBASE_API_KEY}}
