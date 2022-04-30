@@ -96,12 +96,11 @@ const AddCars = (props) => {
 		localStorage.setItem("popup", !popUp);
 		setPopUp(localStorage.getItem("popup"));
 		props.addCars(carProperty);
-		// window.location.reload(); 
+		// window.location.reload();
 
-		setTimeout(()=>{
+		setTimeout(() => {
 			window.location.reload();
-
-		}, 3000)
+		}, 3000);
 	};
 	//INSERTION DE VOITURE DANS LA BASE DE DONNEES
 
@@ -247,7 +246,9 @@ const AddCars = (props) => {
 										setIsAutomatic(!isAutomatic);
 									}}
 									disableRipple={true}
-									sx={{ "& .MuiSvgIcon-root": { fontSize: 25 } }}
+									sx={{
+										"& .MuiSvgIcon-root": { fontSize: 25 },
+									}}
 								/>
 							</div>
 						</div>
@@ -263,7 +264,9 @@ const AddCars = (props) => {
 										setAirCondition(!airCondition);
 									}}
 									disableRipple={true}
-									sx={{ "& .MuiSvgIcon-root": { fontSize: 25 } }}
+									sx={{
+										"& .MuiSvgIcon-root": { fontSize: 25 },
+									}}
 								/>
 							</div>
 						</div>
@@ -279,7 +282,9 @@ const AddCars = (props) => {
 										setIsAvailable(!isAvailable);
 									}}
 									disableRipple={true}
-									sx={{ "& .MuiSvgIcon-root": { fontSize: 25 } }}
+									sx={{
+										"& .MuiSvgIcon-root": { fontSize: 25 },
+									}}
 								/>
 							</div>
 						</div>
@@ -333,7 +338,11 @@ const AddCars = (props) => {
 							// console.log(<img className="cars__photo" alt="cars" src={x} />);
 							return (
 								<div key={x} className="container__photo">
-									<img className="cars__photo" alt="cars" src={x} />
+									<img
+										className="cars__photo"
+										alt="cars"
+										src={x}
+									/>
 									<button
 										className="remove__photo__cars"
 										onClick={() => {
@@ -362,7 +371,8 @@ const AddCars = (props) => {
 				<Popup>
 					<Message>
 						<div>
-							Les données de la nouvelle voiture on été envoyées à la DB.
+							Les données de la nouvelle voiture on été envoyées à
+							la DB.
 						</div>
 						<img src="./images/validation.svg" alt="validé" />
 						<Link to="/cars" className="__button">
@@ -648,7 +658,7 @@ const mapStateToProps = (state) => {
 const mapStateToDispatch = (dispatch) => {
 	return {
 		//property est un objet contenant les propriétés du véhicule
-		addCars: (property) => dispatch(addCarsProperty(property)),
+		addCars: (payload) => dispatch(addCarsProperty(payload)),
 	};
 };
 const connector = connect(mapStateToProps, mapStateToDispatch);

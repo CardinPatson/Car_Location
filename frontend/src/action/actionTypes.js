@@ -9,3 +9,6 @@ export const GET_CARS_SLOT = "GET_CARS_SLOT";
 //USER
 export const ADD_USER_REGISTER = "ADD_USER_REGISTER";
 export const GET_USER = "GET_USER";
+
+//ORDERS
+export const GET_ORDERS_BY_DATE = "GET_ORDERS_BY_DATE";
