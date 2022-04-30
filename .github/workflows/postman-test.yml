@@ -73,12 +73,14 @@ jobs:
           file_name: .env
           fail_on_empty: false
       - name: Run the API and Postmans tests
-        run: npm run test
+        run: |
+          npm run test &
+          sleep 10
+          exit
         env:
           APP_PORT: "3001"
           DB_USERNAME_TEST: postgres
           DB_NAME_TEST: test
           DB_HOST_TEST: localhost
-          DB_PORT_TEST: ${{ job.services.postgres.ports[5432] }}
 #           DBURL: postgresql://${{ secrets.DB_USERNAME }}:${{ secrets.DB_PASSWORD }}@${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}
 #postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
