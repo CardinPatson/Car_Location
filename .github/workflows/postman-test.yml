@@ -14,22 +14,23 @@ jobs:
       matrix:
         node-version: [14.x]
       # Service containers to run with `container-job`
-    services:
-      # Label used to access the service container
-      postgres:
-        # Docker Hub image
-        image: postgres
+#     services:
+#       # Label used to access the service container
+#       postgres:
+#         # Docker Hub image
+#         image: postgres
 
-        # Provide the password for postgres
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
-        options: >-
-          --health-cmd pg_isready --health-interval 10s --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
+#         # Provide the password for postgres
+#         env:
+#           POSTGRES_USER: ${{secrets.DB_USERNAME}}
+#           POSTGRES_PASSWORD: ${{secrets.DB_PASSWORD}}
+#           POSTGRES_DB: ${{secrets.DB_NAME}}
+#         # needed because the postgres container does not provide a healthcheck
+#         options: >-
+#           --health-cmd pg_isready --health-interval 10s --health-timeout 5s
+#           --health-retries 5
+#         ports:
+#           - 5432:5432
     steps:
       - name: Check out Git repositor
         uses: actions/checkout@v1
@@ -53,6 +54,8 @@ jobs:
           newman run "Cars_Location.postman_collection.json"
         #postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
         env:
+#           POSTGRES_HOST: ${{secrets.DB_HOST}}
+#           POSTGRES_PORT : ${{ job.services.postgres.ports[5432] }}
           DBURL: postgresql://${{secrets.DB_USERNAME}}:${{secrets.DB_PASSWORD}}@${{secrets.DB_HOST}}:${{secrets.DB_PORT}}/${{secrets.DB_NAME}}
           APP_PORT: ${{secrets.APP_PORT}}
           FIREBASE_API_KEY : ${{secrets.FIREBASE_API_KEY}}
