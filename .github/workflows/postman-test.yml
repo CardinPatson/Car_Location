@@ -48,24 +48,31 @@ jobs:
         run: npm install -g newman
       - name: Install nodemon
         run: npm install -g nodemon
-      - name: Run the API and Postman's tests
-        env:
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_NAME : ${{ secrets.DB_NAME }}
-          DB_PASSWORD : ${{ secrets.DB_PASSWORD }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT : ${{ job.services.postgres.ports[5432] }}
-          DBURL: postgresql://${{ secrets.DB_USERNAME }}:${{ secrets.DB_PASSWORD }}@${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}
-          APP_PORT: ${{ secrets.APP_PORT }}
-          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
-          FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
-          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
-          FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
-          FIREBASE_MESSAGING_ID: ${{ secrets.FIREBASE_MESSAGING_ID }}
-          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
-          FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
-        run: |
-          npm start &
-          sleep 60
-          newman run "Cars_Location.postman_collection.json"
+      - name: Create .env file and run
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          envkey_DB_NAME: ${{ secrets.DB_NAME }}
+          envkey_DB_HOST: ${{ secrets.DB_HOST }}
+          envkey_DB_PORT : ${{ secrets.DB_PORT }}
+          envkey_APP_PORT: ${{ secrets.APP_PORT }}
+          envkey_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          envkey_FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+          envkey_FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          envkey_FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+          envkey_FIREBASE_MESSAGING_ID: ${{ secrets.FIREBASE_MESSAGING_ID }}
+          envkey_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+          envkey_FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
+          run: |
+              npm start &
+              sleep 60
+              newman run "Cars_Location.postman_collection.json"
+#       - name: Run the API and Postman's tests
+#         env:
+#           DB_USERNAME: ${{ secrets.DB_USERNAME }}
+#           DB_NAME : ${{ secrets.DB_NAME }}
+#           DB_PASSWORD : ${{ secrets.DB_PASSWORD }}
+#           DB_HOST: ${{ secrets.DB_HOST }}
+#           DB_PORT : ${{ job.services.postgres.ports[5432] }}
+#           DBURL: postgresql://${{ secrets.DB_USERNAME }}:${{ secrets.DB_PASSWORD }}@${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}
         #postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
