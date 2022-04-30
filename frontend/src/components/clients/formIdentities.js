@@ -1,9 +1,46 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { addCarsProperty } from "../../action/carAction";
+import { connect } from "react-redux";
 import Header from "../header";
 import styled from "styled-components";
-import { style } from "@mui/system";
+import { Link } from "react-router-dom";
+import Checkbox from "@mui/material/Checkbox";
 
-function formIdentities(props) {
+const FormIdentities = (props) => {
+	const [identityImage, setIdenImage] = useState([]);
+	const [permisImage, setPermImage] = useState([]);
+	const [urlImage, setUrlImage] = useState([]);
+	const [popUp, setPopUp] = useState(
+		localStorage.getItem("popup", true) === "true"
+	);
+
+	// useEffect(()=>{
+	// 	console.log(localStorage.getItem("popup" , true) === "true");
+	// } , [])
+
+	const removeImage = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		e.nativeEvent.stopImmediatePropagation();
+	};
+
+	const handleImage = (e) => {
+		const url = e.target.files[0];
+		// console.log(url);
+		if (!identityImage || !permisImage) return;
+		setIdenImage([...identityImage, URL.createObjectURL(url)]);
+    	setUrlImage([...urlImage, url]);
+		// console.log(urlImage);
+	};
+
+	const handleImagePermis = (e) => {
+		const url = e.target.files[0];
+		// console.log(url);
+		if (!identityImage || !permisImage) return;
+		setPermImage([...permisImage, URL.createObjectURL(url)]);
+		setUrlImage([...urlImage, url]);
+		// console.log(urlImage);
+	};
 	return (
 		<Container>
 			<Header />
@@ -75,13 +112,54 @@ function formIdentities(props) {
 										(Recto & Verso)
 									</div>
 									<div>
-										<input
-											type="file"
-											accept="image/gif , image/png , image/jpeg"
-											name="image"
-											id="file"
-											multiple
-										/>
+										<Form>
+											<div className="add__detail__cars">
+												<div className="add__photo__cars">
+													<p></p>
+													<input
+														type="file"
+														accept="image/gif , image/png , image/jpeg"
+														name="image"
+														id="file"
+														multiple
+														onChange={handleImage}
+													/>
+													<label htmlFor="file">
+														<span>
+															Ajouter les photos
+														</span>
+													</label>
+												</div>
+											</div>
+											<div className="identite_photo">
+												{identityImage.map((x) => {
+													// console.log(<img className="cars__photo" alt="cars" src={x} />);
+													return (
+														<div
+															key={x}
+															className="identite__photo"
+														>
+															<img
+																className="cars__photo"
+																alt="cars"
+																src={x}
+															/>
+															<button
+																className="remove__photo__cars"
+																onClick={() => {
+																	removeImage(
+																		x
+																	);
+																}}
+																value={x}
+															>
+																Retirer
+															</button>
+														</div>
+													);
+												})}
+											</div>
+										</Form>
 									</div>
 									<div>
 										Photo du permis de conduire
@@ -89,48 +167,384 @@ function formIdentities(props) {
 										(Recto & Verso)
 									</div>
 									<div>
-										<input
-											type="file"
-											accept="image/gif , image/png , image/jpeg"
-											name="image"
-											id="file"
-											multiple
-										/>
+										<Form>
+											<div className="add__detail__cars">
+												<div className="add__photo__cars">
+													<p></p>
+													<input
+														type="file"
+														accept="image/gif , image/png , image/jpeg"
+														name="image"
+														id="file"
+														multiple
+														onChange={handleImagePermis}
+													/>
+													<label htmlFor="file">
+														<span>
+															Ajouter les photos
+														</span>
+													</label>
+												</div>
+											</div>
+											<div className="permis_photo">
+												{permisImage.map((x) => {
+													// console.log(<img className="cars__photo" alt="cars" src={x} />);
+													return (
+														<div
+															key={x}
+															className="container__photo"
+														>
+															<img
+																className="cars__photo"
+																alt="cars"
+																src={x}
+															/>
+															<button
+																className="remove__photo__cars"
+																onClick={() => {
+																	removeImage(
+																		x
+																	);
+																}}
+																value={x}
+															>
+																Retirer
+															</button>
+														</div>
+													);
+												})}
+											</div>
+										</Form>
 									</div>
 								</Specs>
-								<Specs></Specs>
+								<Specs>
+								</Specs>
 							</DetailTable>
 						</Info>
 					</Detail>
+					<Buttons>
+						<button className="__button__blue">Soumission</button>
+					</Buttons>
 				</Test>
-				<Buttons>
-					<button className="__button__blue">Soumission</button>
-				</Buttons>
 			</Content>
+			{popUp ? (
+				<Popup>
+					<Message>
+						<div>
+							Les données de la nouvelle voiture on été envoyées à
+							la DB.
+						</div>
+						<img src="./images/validation.svg" alt="validé" />
+						<Link to="/cars" className="__button">
+							<button
+								onClick={() => {
+									localStorage.setItem("popup", false);
+									setPopUp(false);
+								}}
+								to="/cars"
+							>
+								OK
+							</button>
+						</Link>
+					</Message>
+				</Popup>
+			) : (
+				""
+			)}
 		</Container>
 	);
-}
-
+};
 const Container = styled.div`
+	max-width: 1000px;
+	margin: 0 auto;
 	top: 0;
-	background-size: 1600px;
-	max-width: 800px;
-	height: 110vh;
-	margin: auto;
 	display: flex;
 	justify-content: center;
+	background-image: url("./images/car_2.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
 `;
-
 const Content = styled.div`
-	margin-top: 15%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	padding-bottom: 30px;
-	width: 100%;
+	/* border : solid red 1px ; */
+	width: 70%;
+	@media (max-width: 768px) {
+		width: 85%;
+	}
+	margin: 0 auto;
+	margin-top: 100px;
+	padding: 5px;
+`;
+const Form = styled.form`
+	/* height: 100vh; */
+	border-radius: 3px 3px 0 0;
+	legend {
+		font-size: 1.2em;
+		font-weight: normal;
+		padding: 5px;
+		background-color: #00a9ff;
+	}
+	.add__detail__cars,
+	.add__detail__cars__ {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin: 20px 0;
+		padding: 0 10px;
+		/* border: solid blue 1px; */
+		/* select {
+			width: 76.8%;
+		} */
+		#file {
+			display: none;
+		}
+		.add__photo__cars {
+			span {
+				padding: 10px;
+				border-radius: 3px;
+				cursor: pointer;
+				background-color: #00a9ff;
+				display: in-line;
+			}
+		}
+		div {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			width: 80%;
+			/* border: solid red 1px; */
+			input,
+			textarea {
+				-ms-box-sizing: content-box;
+				-moz-box-sizing: content-box;
+				-webkit-box-sizing: content-box;
+				box-sizing: content-box;
+				width: 90%;
+				padding: 8px;
+				border: solid #00a9ff 1px;
+				border-radius: 5px;
+				outline: none;
+				font-size: 15px;
+				font-family: "Roboto";
+				&:focus {
+					box-shadow: 2px 2px 12px #00a9ff;
+				}
+			}
+			p {
+				color: red;
+				font-weight: bold;
+			}
+		}
+		.add__detail__cars__checkbox {
+			/* border: solid red 1px; */
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			width: 80%;
+			p {
+				color: red;
+				font-weight: bold;
+			}
+			div {
+				width: 10%;
+			}
+		}
+		.add__detail__cars__select {
+			appearance: none;
+			-ms-box-sizing: content-box;
+			-moz-box-sizing: content-box;
+			-webkit-box-sizing: content-box;
+			box-sizing: content-box;
+			width: 90%;
+			padding: 8px;
+			border: solid #00a9ff 1px;
+			border-radius: 5px;
+			outline: none;
+			font-size: 15px;
+			font-family: "Roboto";
+			background-image: url("./images/arrow.svg");
+			background-repeat: no-repeat;
+			background-position: 98.5%;
+			background-size: 1.8%;
+			cursor: pointer;
+			&:focus {
+				box-shadow: 2px 2px 12px #00a9ff;
+				border-radius: 5px 5px 0px 0px;
+			}
+		}
+		span {
+			width: 24vh;
+			text-align: left;
+			padding-left: 10px;
+		}
+	}
+	.identite_photo {
+		/* border: solid red 1px; */
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		padding: 5px;
+		.identite__photo {
+			/* border: solid red 1px; */
+			justify-self: center;
+			align-self: center;
+			width: 400%;
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			padding: 5px;
+			.cars__photo {
+				/* border : solid red 1px; */
+				/* padding: 5px; */
+				max-width: 100%;
+				height: auto;
+				object-fit: content;
+				border-radius: 3px;
+				margin: 5px;
+			}
+			.remove__photo__cars {
+				border: 1px solid #ed1b0d;
+				margin-top: 15px;
+				padding: 5px 10px;
+				transition-duration: 0.5s;
+				background-color: #fa5e5e;
+				border-radius: 3px;
+				&:hover {
+					background-color: #ed1b0d;
+				}
+			}
+		}
+	}
+	.permis_photo {
+		/* border: solid red 1px; */
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		padding: 5px;
+		.container__photo {
+			/* border: solid red 1px; */
+			justify-self: center;
+			align-self: center;
+			width: 300%;
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			padding: 5px;
+			.cars__photo {
+				/* border : solid red 1px; */
+				/* padding: 5px; */
+				max-width: 100%;
+				height: auto;
+				object-fit: content;
+				border-radius: 3px;
+				margin: 5px;
+			}
+			.remove__photo__cars {
+				border: 1px solid #ed1b0d;
+				margin-top: 15px;
+				padding: 5px 10px;
+				transition-duration: 0.5s;
+				background-color: #fa5e5e;
+				border-radius: 3px;
+				&:hover {
+					background-color: #ed1b0d;
+				}
+			}
+		}
+	}
+	.submit__detail__cars {
+		display: flex;
+		justify-content: flex-end;
+		padding: 10px;
+		button {
+			padding: 5px 10px;
+			font-size: 1em;
+			cursor: pointer;
+			border: solid #00a9ff 1px;
+			border-radius: 5px;
+			outline: none;
+			background-color: #00a9ff;
+		}
+	}
+	.submit__value__uncompleted {
+		display: flex;
+		margin: 1vh 2vh 2vh 2vh;
+		justify-content: center;
+		p {
+			text-align: center;
+			font-weight: bold;
+			color: red;
+			border-bottom: 1px solid red;
+		}
+	}
 `;
 
+const Popup = styled.div`
+	position: absolute;
+	min-width: 100%;
+	min-height: 100vh;
+	top: 0%;
+	left: 0%;
+	z-index: 101;
+	background-color: rgb(189, 189, 189, 0.5);
+	display: flex;
+	justify-content: center;
+`;
+
+const Message = styled.div`
+	margin: 28vh;
+	z-index: 102;
+	display: flex;
+	position: fixed;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-content: center;
+	align-items: center;
+	width: 70vh;
+	height: 35vh;
+	border: 1px solid #00a9ff;
+	border-radius: 3px;
+	background-color: rgb(255, 255, 255, 0.9);
+	div {
+		padding: 3vh 2vh 2vh 2vh;
+		font-size: 18px;
+	}
+	img {
+		transform: rotate(9deg);
+		object-fit: content;
+		opacity: 1;
+		width: auto;
+		height: 32%;
+		object-fit: content;
+	}
+	.__button {
+		display: flex;
+		text-decoration: none;
+		width: 20%;
+	}
+	button {
+		font-size: 3vh;
+		color: #333333;
+		background-color: rgb(0, 169, 255, 0.8);
+		border: 1px solid #00486d;
+		border-radius: 5px;
+		width: 100%;
+		height: auto;
+		padding: 1vh;
+		margin: 5vh 1vh 1vh 1vh;
+		cursor: pointer;
+	}
+	button:hover {
+		color: white;
+		background-color: #0078b5;
+		border: 1px solid #00a9ff;
+	}
+	button:active {
+		transform: scale(0.95);
+	}
+`;
 const Test = styled.div`
 	border: 0.5px solid black;
 	border-radius: 5px;
@@ -139,7 +553,6 @@ const Test = styled.div`
 	background-color: rgb(245, 245, 245, 0.95);
 	display: flex;
 	flex-direction: column;
-	width: 80%;
 `;
 
 const Banner = styled.div`
@@ -159,10 +572,13 @@ const Detail = styled.div`
 	/* width: 100%; */
 	/*border-radius: 1vh; */
 	/* box-shadow: 0 0 1px black; */
-	margin: 1vh 1vh 1vh 5vh;
+	margin: 2vh 2vh 2vh 2vh;
 `;
 
 const Info = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 100%;
 	/* flex : 0.6; */
 	/* border : solid red 1px;  */
 `;
@@ -177,7 +593,6 @@ const DetailTable = styled.div`
 const TopInfo = styled.div`
 	display: flex;
 	flex-direction: row;
-	width: 100%;
 	gap: 5px;
 `;
 
@@ -196,23 +611,36 @@ const OneSpec = styled.div`
 	font-size: 3vh;
 	margin-left: 5px;
 	div {
+		display: flex;
 		margin-right: 5px;
-		font-size: 1vw;
+		font-size: 1.2vw;
 	}
 	input[type="text"],
 	[type="number"] {
-		background: none;
-		border: none;
-		border-bottom: solid 1px #00a9ff;
+		border-top-color: initial;
+    border-right-color: initial;
+    border-left-color: initial;
+    border-bottom-color: rgb(100, 93, 82);
+    outline-color: initial;
+	border: none;
+    border-bottom: 1px solid #797979;
+    border-radius: 0.5vh;
+    height: 40%;
+    font-size: 16px;
+    outline: none;
+    padding: 5px;
+	flex-grow: 1;
+		//background: none;
+		// border: none;
+		// border-bottom: solid 1px #00a9ff;
 		font-size: 1vw;
 		letter-spacing: 2px;
 		margin: 0em 0.8em 2.975em 0;
 		padding: 0 0 0 0;
-		width: 100%;
 		text-align: left;
-		outline: none;
-		::placeholder {
-			font-size: 1vw;
+		//outline: none;
+		// ::placeholder {
+		// 	font-size: 1vw;
 		}
 	}
 	input[type="checkbox"] {
@@ -230,7 +658,7 @@ const Specs = styled.div`
 	text-align: left;
 	/* margin: auto; */
 	width: 70%;
-	color: #00a9ff;
+	/* color: #00a9ff; */
 	div {
 		display: flex;
 		align-items: center;
@@ -275,6 +703,38 @@ const Specs = styled.div`
 		cursor: pointer;
 	}
 `;
+const ButtonPhoto = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 20px 0;
+	padding: 0 10px;
+	padding: 10px;
+	border-radius: 3px;
+	cursor: pointer;
+	background-color: #00a9ff;
+	color: black;
+	#file {
+		display: none;
+	}
+	// 		input {
+	// 				-ms-box-sizing: content-box;
+	// 				-moz-box-sizing: content-box;
+	// 				-webkit-box-sizing: content-box;
+	// 				box-sizing: content-box;
+	// 				width: 90%;
+	// 				padding: 8px;
+	// 				border: solid #00a9ff 1px;
+	// 				border-radius: 5px;
+	// 				outline: none;
+	// 				font-size: 15px;
+	// 				font-family: "Roboto";
+	// 				&:focus {
+	// 					box-shadow: 2px 2px 12px #00a9ff;
+	// 				}
+	// 			}
+`;
+
 const Buttons = styled.div`
 	display: flex;
 	flex-direction: row;
@@ -297,4 +757,16 @@ const Buttons = styled.div`
 		cursor: pointer;
 	}
 `;
-export default formIdentities;
+const mapStateToProps = (state) => {
+	return {
+		//recuperation des propriétés nécessaires
+	};
+};
+const mapStateToDispatch = (dispatch) => {
+	return {
+		//property est un objet contenant les propriétés du véhicule
+		addCars: (property) => dispatch(addCarsProperty(property)),
+	};
+};
+const connector = connect(mapStateToProps, mapStateToDispatch);
+export default connector(FormIdentities);
