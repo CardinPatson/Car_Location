@@ -6,8 +6,7 @@ on:
     branches: [master]
 jobs:
   tests:
-    runs-on: 
-      container : ubuntu-latest
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: backend
