@@ -53,8 +53,8 @@ jobs:
           envkey_DB_USERNAME: ${{ secrets.DB_USERNAME }}
           envkey_DB_NAME: ${{ secrets.DB_NAME }}
           envkey_DB_HOST: ${{ secrets.DB_HOST }}
-          envkey_DB_PORT : ${{ secrets.DB_PORT }}
-          envkey_DB_PASSWORD : ${{ secrets.DB_PASSWORD }}
+          envkey_DB_PORT: ${{ secrets.DB_PORT }}
+          envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           envkey_APP_PORT: ${{ secrets.APP_PORT }}
           envkey_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           envkey_FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
@@ -65,17 +65,11 @@ jobs:
           envkey_FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
       - name: Run the API and Postmans tests
         run: |
-          npm start &
+          npm run start &
           sleep 60
           newman run "Cars_Location.postman_collection.json"
         env:
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT : ${{ secrets.DB_PORT }}
-          APP_PORT : ${{ secrets.APP_PORT }}
           PORT: "3001"
           STAGE: "local"
 #           DBURL: postgresql://${{ secrets.DB_USERNAME }}:${{ secrets.DB_PASSWORD }}@${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}
-        #postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
+#postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
