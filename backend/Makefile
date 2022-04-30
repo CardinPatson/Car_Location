@@ -11,10 +11,10 @@ dropdb:
 	docker exec-it postgres14 dropdb car_test
 
 migrateup:
-	migrate -path database/migration -database "postgresql://root:secret@localhost:5432/car_test?sslmode=disable" -verbose up
+	migrate -path database/migrations -database "postgresql://root:secret@localhost:5432/car_test?sslmode=disable" -verbose up
 
 migratedown:
-	migrate -path database/migration -database "postgresql://root:secret@localhost:5432/car_test?sslmode=disable" -verbose down
+	migrate -path database/migrations -database "postgresql://root:secret@localhost:5432/car_test?sslmode=disable" -verbose down
 
 backend:
 	node app.js
