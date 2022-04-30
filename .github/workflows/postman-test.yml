@@ -48,7 +48,7 @@ jobs:
         run: npm install -g newman
       - name: Install nodemon
         run: npm install -g nodemon
-      - name: Create .env file and run
+      - name: Create .env file
         uses: SpicyPizza/create-envfile@v1
         with:
           envkey_DB_USERNAME: ${{ secrets.DB_USERNAME }}
@@ -63,10 +63,11 @@ jobs:
           envkey_FIREBASE_MESSAGING_ID: ${{ secrets.FIREBASE_MESSAGING_ID }}
           envkey_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
           envkey_FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
-          run: |
-              npm start &
-              sleep 60
-              newman run "Cars_Location.postman_collection.json"
+      - name: Run the API and Postman's tests
+        run: |
+          npm start &
+          sleep 60
+          newman run "Cars_Location.postman_collection.json"
 #       - name: Run the API and Postman's tests
 #         env:
 #           DB_USERNAME: ${{ secrets.DB_USERNAME }}
