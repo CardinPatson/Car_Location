@@ -317,26 +317,21 @@ function Cars(props) {
 					<h2>Voitures disponibles</h2>
 
 					<CarsPannel>
-						{props.carsByDates.length
-							? props.carsByDates.map((car) => {
-									return (
-										<CarSlot
-											key={car.id}
-											car={car}
-											images={carsImages[car.id]}
-										/>
-									);
-							  })
-							: props.cars.map((car) => {
-									return (
-										<CarSlot
-											key={car.id}
-											car={car}
-											images={carsImages[car.id]}
-										/>
-									);
-							  })}
-
+						{props.carsByDates && props.carsByDates.length ? (
+							props.carsByDates.map((car) => {
+								return (
+									<CarSlot key={car.id} car={car} images={carsImages[car.id]} />
+								);
+							})
+						) : props.cars && props.cars.length ? (
+							props.cars.map((car) => {
+								return (
+									<CarSlot key={car.id} car={car} images={carsImages[car.id]} />
+								);
+							})
+						) : (
+							<></>
+						)}
 					</CarsPannel>
 				</Available>
 			</Content>
@@ -621,7 +616,6 @@ const StyledDatePickerWrapper = styled.div`
 		}
 		.SingleDatePicker_picker_1 {
 			background: none;
-
 		}
 	}
 `;
