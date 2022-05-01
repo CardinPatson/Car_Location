@@ -10,6 +10,7 @@ module.exports = {
 		 *   name: 'John Doe',
 		 *   isBetaMember: false
 		 * }], {});
+		 * sequelize-cli seed:generate --name test-products
 		 */
 		await queryInterface.bulkInsert(
 			"cars",
@@ -28,6 +29,21 @@ module.exports = {
 					passengers: 5,
 					air_conditioning: true,
 					description: "okooo",
+				},
+				{
+					name: "merco",
+					price: 150,
+					brand_id: 1,
+					color: "rouge",
+					doors: 5,
+					boot_size: 143,
+					type: "sportif",
+					energy: "Essence",
+					is_automatic: true,
+					air_conditioning: true,
+					is_available: true,
+					passengers: 4,
+					description: "belle voiture",
 				},
 			],
 			{}
