@@ -12,7 +12,8 @@ const multerMiddleware = require("../middleware/image");
 
 //GET
 router.get("/", carCtrl.getAllCars);
-router.get("/:id", carCtrl.getCarById);
+//cette route bloque la route /image car il devient obligatoire que sa soit un integer après la route.
+// router.get("/:id", carCtrl.getCarById);
 
 router.get("/images", carCtrl.getCarsImages);
 
