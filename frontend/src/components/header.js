@@ -1,11 +1,10 @@
 import React from "react";
+import { clearUserInfo } from "../action/userAction";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import localForage from "localforage";
 
 function Header(props) {
-	console.log(props.firstName);
 	return (
 		<Container>
 			<Content>
@@ -40,14 +39,7 @@ function Header(props) {
 						<Logout>
 							<button
 								onClick={() => {
-									localForage
-										.clear()
-										.then(function () {
-											console.log("database empty");
-										})
-										.catch(function (err) {
-											console.log(err);
-										});
+									props.signOut();
 									window.location.pathname = "/connreg";
 								}}
 								className="logout__button"
@@ -210,12 +202,16 @@ const Menu = styled.div`
 const mapStateToProps = (state) => {
 	return {
 		firstName: state.userState.firstName,
-		status : state.userState.status
+		status: state.userState.status,
 	};
 };
 
 const mapStateToDispatch = (dispatch) => {
-	return {};
+	return {
+		signOut: () => {
+			dispatch(clearUserInfo());
+		},
+	};
 };
 
 const connector = connect(mapStateToProps, mapStateToDispatch);

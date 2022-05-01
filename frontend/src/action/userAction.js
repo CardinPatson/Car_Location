@@ -1,10 +1,10 @@
-
 import {
 	ADD_USER_REGISTER,
 	ADD_ADMIN,
 	ADD_USER_SIGNIN,
 	ADD_USER_GOOGLE,
 	GET_USER,
+	CLEAR_USER,
 } from "./actionTypes";
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { auth, provider } from "../firebase";
@@ -38,6 +38,11 @@ export const addUserGoogleInfo = createAction(
 	}
 );
 
+export const clearUserInfo = createAction(CLEAR_USER, function prepare() {
+	return {
+		payload: [],
+	};
+});
 //REGISTER USER VIA FORM
 export const registerUser = createAsyncThunk(
 	ADD_USER_REGISTER,
@@ -142,13 +147,11 @@ export const registerAdmin = createAsyncThunk(
 		).catch((err) => {
 			console.error(err);
 		});
-		console.log(admin.status);
 		if (admin.status === 200) {
 			window.location.pathname = "/cars";
 			return;
 		}
 		if (admin.data.error) {
-			console.log(admin.data.error);
 			return admin.data.error;
 		}
 	}

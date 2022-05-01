@@ -4,6 +4,7 @@ import {
 	addUserRegisterInfo,
 	addUserSignInInfo,
 	signOutUser,
+	clearUserInfo,
 } from "../action/userAction";
 const initialState = {
 	firstName: "",
@@ -49,6 +50,10 @@ export const userReducer = createReducer(initialState, (builder) => {
 			state.firstName = action.payload.firstName;
 			state.email = action.payload.email;
 			state.token = action.token;
+		})
+		.addCase(clearUserInfo, (state, payload) => {
+			state = initialState;
+			return state;
 		})
 		.addDefaultCase((state, action) => {});
 });

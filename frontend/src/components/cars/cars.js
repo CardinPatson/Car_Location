@@ -17,7 +17,6 @@ import moment from "moment";
 import "react-dates/lib/css/_datepicker.css";
 
 function Cars(props) {
-	const [displayedCars, setDisplayedCars] = useState([]);
 	const [focusedStart, setFocusedStart] = useState(false);
 	const [focusedEnd, setFocusedEnd] = useState(false);
 	const [startDate, setStartDate] = useState(moment());
@@ -78,24 +77,14 @@ function Cars(props) {
 		}
 	}
 	useEffect(() => {
-		localForage
-			.clear()
-			.then(() => {
-				console.log("clear");
-			})
-			.catch((e) => {
-				console.log(e);
-			});
 		props.getCars();
 		props.getCarsImages();
 
-		if (props.carsByDates.length) {
+		if (props.carsByDate && props.carsByDates.length) {
 			manageBrandModal(props.carsByDates);
 		} else {
 			manageBrandModal(props.cars);
 		}
-
-		// setDisplayedCars(displayedCars);
 	}, []);
 	let carsImages = {};
 	if (props.images && props.images.length) {
@@ -121,7 +110,7 @@ function Cars(props) {
 			setBrandValue(value);
 			setModelValue(test[0]["model"]);
 		}
-		if (props.carsByDates.length) {
+		if (props.carsByDate && props.carsByDates.length) {
 			onChangeBrandSubFunction(props.carsByDates);
 		} else {
 			onChangeBrandSubFunction(props.cars);
