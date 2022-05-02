@@ -37,7 +37,7 @@ const getUser = async (req, res) => {
 			status = "client";
 		}
 		const data = await users.findOne({ where: { mail: email } });
-
+		console.log(req.query);
 		//CHECK IF USERS IN DATABASE
 		if (!data) {
 			res.status(401).json({ error: "Utilisateur introuvable" });

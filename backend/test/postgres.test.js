@@ -29,6 +29,9 @@ describe("postgres test", () => {
 	it("select all cars", async () => {
 		const query = await client.query("SELECT * FROM cars");
 	});
+	it("select all users", async () => {
+		const query = await client.query("SELECT * FROM users");
+	});
 
 	it("select all items", () => {});
 });
