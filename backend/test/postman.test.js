@@ -7,13 +7,7 @@ var connectionString = `postgres://${process.env.DB_USERNAME_TEST}:${process.env
 
 describe("postgres test", () => {
 	var client;
-
 	before(() => {
-		console.log("POSTGRES_USER=" + process.env.DB_USERNAME);
-		console.log("POSTGRES_PASSWORD=" + process.env.DB_PASSWORD);
-		console.log("POSTGRES_DB=" + process.env.DB_NAME);
-		console.log("POSTGRES_HOST=" + process.env.DB_HOST);
-		console.log(connectionString);
 		client = new pg.Client(connectionString);
 	});
 
@@ -32,11 +26,8 @@ describe("postgres test", () => {
 		});
 	});
 
-	it("create a table", async () => {
+	it("select all cars", async () => {
 		const query = await client.query("SELECT * FROM cars");
-		// query.on("end", () => {
-		// 	client.end();
-		// });
 	});
 
 	it("select all items", () => {});

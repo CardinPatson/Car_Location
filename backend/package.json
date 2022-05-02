@@ -31,7 +31,7 @@
 	},
 	"homepage": "http://localhost:3001/",
 	"scripts": {
-		"start": "nodemon server.js",
+		"start": "nodemon app.js",
 		"test": "cross-env NODE_ENV=test mocha ./test/*",
 		"pretest": "cross-env NODE_ENV=test npm run db:reset",
 		"db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all --seeders-path ./database/seeders/test",
