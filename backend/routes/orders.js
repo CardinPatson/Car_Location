@@ -7,7 +7,7 @@ const ensureLoggedIn = require("connect-ensure-login").ensureLoggedIn;
 //GET
 router.get("/", ordersCtrl.getAllOrders);
 
-router.get("/:id", ordersCtrl.getOrderById);
+// router.get("/:id", ordersCtrl.getOrderById);
 
 // POST
 router.post("/", ordersCtrl.addOrder);

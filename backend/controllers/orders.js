@@ -188,9 +188,9 @@ const isUserActive = async (id) => {
 const addOrder = async (req, res) => {
 	try {
 		//NEST EFFECTUER QUE SI ON A TOUTES LES INFOS DU USER
-		const carId = parseInt(req.params.car_id);
+		// const carId = parseInt(req.params.carId);
 
-		const { departure_date, return_date, user_id } = req.body;
+		const { carId,departureDate, returnDate, userId } = req.body;
 
 		//const userActive = await isUserActive(orderData.user_id);
 
@@ -208,15 +208,15 @@ const addOrder = async (req, res) => {
 			});
 		}
 
-		const nbrOfDays = differenceBetweenDates(departure_date, return_date);
+		const nbrOfDays = differenceBetweenDates(departureDate, returnDate);
 
 		const price = carData.price * nbrOfDays;
 
 		const orderData = await orders.create({
 			car_id: carId,
-			user_id: user_id,
-			departure_date: departure_date,
-			return_date: return_date,
+			user_id: userId,
+			departure_date: departureDate,
+			return_date: returnDate,
 			total_price: price,
 		});
 
@@ -235,7 +235,7 @@ const updateOrder = async (req, res) => {
 	try {
 		const orderId = parseInt(req.params.order_id);
 
-		const { car_id, user_id, departure_date, return_date, total_price } =
+		const { carId, userId, departureDate, returnDate, totalPrice } =
 			req.body;
 
 		const orderData = await orders.findByPk(orderId);
@@ -246,7 +246,7 @@ const updateOrder = async (req, res) => {
 			});
 		}
 
-		const carData = await cars.findByPk(car_id);
+		const carData = await cars.findByPk(carId);
 
 		if (!carData) {
 			return res.status(404).json({
@@ -254,7 +254,7 @@ const updateOrder = async (req, res) => {
 			});
 		}
 
-		const userData = await users.findByPk(user_id);
+		const userData = await users.findByPk(userId);
 
 		if (!userData) {
 			return res.status(404).json({
@@ -262,16 +262,16 @@ const updateOrder = async (req, res) => {
 			});
 		}
 
-		const nbrOfDays = differenceBetweenDates(departure_date, return_date);
+		const nbrOfDays = differenceBetweenDates(departureDate, returnDate);
 
 		const price = carData.price * nbrOfDays;
 
 		const updatedOrderData = await orders.update(
 			{
-				car_id: car_id,
-				user_id: user_id,
-				departure_date: departure_date,
-				return_date: return_date,
+				car_id: carId,
+				user_id: userId,
+				departure_date: departureDate,
+				return_date: returnDate,
 				total_price: price,
 			},
 			{

@@ -8,10 +8,8 @@ const { omit } = require("lodash");
 const { expect } = chai;
 
 describe("Fetch admins test", async () => {
-	it("Should return all admins", async () => {
-		const response = await request("http://localhost:3001").get(
-			"/api/cars/images"
-		);
-		expect(response.status).to.equal(200);
+	it("Should post an admin", async () => {
+		// const response = await request(server).get("/api/admins");
+		// expect(response.status).to.equal(200);
 	});
 });

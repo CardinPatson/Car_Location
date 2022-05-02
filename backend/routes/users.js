@@ -8,8 +8,6 @@ const auth = require("../middleware/authentification");
 //GET
 router.get("/",  usersCtrl.getUser);
 // router.get("/:id", usersCtrl.getUserById);
-// router.get("/", usersCtrl.getUser);
-//SIGNIN WITH GOOGLE
 
 // POST
 router.post("/", userValidation, usersCtrl.addUser);
