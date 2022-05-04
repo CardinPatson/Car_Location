@@ -1,5 +1,5 @@
 "use strict";
-
+const bcrypt = require("bcrypt");
 module.exports = {
 	async up(queryInterface, Sequelize) {
 		/**
@@ -11,15 +11,17 @@ module.exports = {
 		 *   isBetaMember: false
 		 * }], {});
 		 */
+		const hashToto = await bcrypt.hash("Toto1234", 10);
+		const hashTiti = await bcrypt.hash("Titi1234", 10);
+		const hashTata = await bcrypt.hash("Tata1234", 10);
 		await queryInterface.bulkInsert(
 			"users",
 			[
 				{
-					id: 1,
 					civility: null,
 					first_name: "test",
 					last_name: "toto",
-					password: "Toto1234",
+					password: hashToto,
 					mail: "test.toto@gmail.com",
 					birth_date: "2000-05-01",
 					address: "Rue des tests de toto 13",
@@ -31,11 +33,10 @@ module.exports = {
 					tokens: null,
 				},
 				{
-					id: 2,
 					civility: null,
 					first_name: "test",
 					last_name: "tata",
-					password: "Tata1234",
+					password: hashTata,
 					mail: "test.tata@gmail.com",
 					birth_date: "2000-05-01",
 					address: "Rue des tests de tata 14",
@@ -47,11 +48,10 @@ module.exports = {
 					tokens: null,
 				},
 				{
-					id: 3,
 					civility: null,
 					first_name: "test",
 					last_name: "titi",
-					password: "Titi1234",
+					password: hashTiti,
 					mail: "test.titi@gmail.com",
 					birth_date: "2000-05-01",
 					address: "Rue des tests de titi 15",

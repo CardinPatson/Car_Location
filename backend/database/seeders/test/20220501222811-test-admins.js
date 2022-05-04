@@ -1,5 +1,6 @@
 "use strict";
 
+
 module.exports = {
 	async up(queryInterface, Sequelize) {
 		/**
@@ -11,16 +12,12 @@ module.exports = {
 		 *   isBetaMember: false
 		 * }], {});
 		 */
-    await queryInterface.bulkInsert(
+		await queryInterface.bulkInsert(
 			"admins",
 			[
 				{
 					id: 1,
-					email :"test.toto@gmail.com"
-				},
-				{
-					id: 2,
-					email : "test.tata@gmail.com"
+					email: "test.toto@gmail.com",
 				},
 			],
 			{}
