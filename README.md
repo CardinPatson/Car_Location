@@ -1,4 +1,4 @@
-[![postman-test](https://github.com/CardinPatson/Car_Location/actions/workflows/postman-test.yml/badge.svg)](https://github.com/CardinPatson/Car_Location/actions/workflows/postman-test.yml)
+[![postman-test](https://github.com/CardinPatson/Car_Location/actions/workflows/integration-test.yml/badge.svg?branch=master)](https://github.com/CardinPatson/Car_Location/actions/workflows/integration-test.yml)
 
 ---
 # Car Rental
