@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 exports.addAdmin = async (req, res, next) => {
 	try {
-		const { emailAdmin, emailUser, passwordAdmin, passwordUser } = req.body;
+		const { emailAdmin, emailUser, passwordAdmin } = req.body;
 		//check if user already admins
 		const data = await admins.findOne({ where: { email: emailUser } });
 		if (data) {
@@ -14,39 +14,14 @@ exports.addAdmin = async (req, res, next) => {
 		//check if users exist in database
 		const userData = await users.findOne({ where: { mail: emailUser } });
 		if (!userData) {
-			res
-				.status(404)
-				.json({ error: "Create an account before add administrator" });
-			return;
-		}
-		//compare user password
-		if (!userData.dataValues.password) {
-			res.status(400).json({
-				error:
-					"Veuillez configurer un mot de passe pour le nouvel administrateur",
-			});
-			return;
-		}
-		const hashUser = await bcrypt.compare(
-			passwordUser,
-			userData.dataValues.password
-		);
-
-		if (!hashUser) {
-			console.log("error pass user");
-
-			res
-				.status(401)
-				.json({ error: "Mot de passe de du nouvel administrateur incorrect" });
+			res.status(404).json({ error: "User email not found" });
 			return;
 		}
 		//compare the admin password
 		const adminData = await users.findOne({ where: { mail: emailAdmin } });
 		const hashAdmin = await bcrypt.compare(passwordAdmin, adminData.password);
 		if (!hashAdmin) {
-			res
-				.status(401)
-				.json({ error: "Mot de passe de l'administrateur incorrect" });
+			res.status(404).json({ error: "wrong password" });
 			return;
 		}
 

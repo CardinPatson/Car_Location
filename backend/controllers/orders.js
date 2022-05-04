@@ -103,7 +103,6 @@ const getAllOrders = async (req, res) => {
 	} catch (error) {
 		return res.status(500).json({
 			message: "Error getting all orders",
-			error,
 		});
 	}
 };
@@ -190,7 +189,7 @@ const addOrder = async (req, res) => {
 		//NEST EFFECTUER QUE SI ON A TOUTES LES INFOS DU USER
 		// const carId = parseInt(req.params.carId);
 
-		const { carId,departureDate, returnDate, userId } = req.body;
+		const { carId, departureDate, returnDate, userId } = req.body;
 
 		//const userActive = await isUserActive(orderData.user_id);
 
@@ -235,8 +234,7 @@ const updateOrder = async (req, res) => {
 	try {
 		const orderId = parseInt(req.params.order_id);
 
-		const { carId, userId, departureDate, returnDate, totalPrice } =
-			req.body;
+		const { carId, userId, departureDate, returnDate, totalPrice } = req.body;
 
 		const orderData = await orders.findByPk(orderId);
 
@@ -314,7 +312,6 @@ const payement = async (req, res) => {
 		success_url: `${FRONT_DOMAIN}/paymentAccepted`,
 		cancel_url: `${FRONT_DOMAIN}/paymentDenied`,
 	});
-	console.log("hello from back");
 	// res.header("Access-Control-Allow-Origin", FRONT_DOMAIN); // update to match the domain you will make the request from
 	// res.header(
 	// 	"Access-Control-Allow-Headers",

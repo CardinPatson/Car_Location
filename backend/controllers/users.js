@@ -29,7 +29,6 @@ const getUser = async (req, res) => {
 	try {
 		const { email, password } = req.query;
 		let status = "";
-		console.log("in request");
 		const adminData = await admins.findOne({ where: { email: email } });
 		if (adminData) {
 			status = "admin";
@@ -37,10 +36,9 @@ const getUser = async (req, res) => {
 			status = "client";
 		}
 		const data = await users.findOne({ where: { mail: email } });
-		console.log(req.query);
 		//CHECK IF USERS IN DATABASE
 		if (!data) {
-			res.status(401).json({ error: "Utilisateur introuvable" });
+			res.status(404).json({ error: "Utilisateur introuvable" });
 			return;
 		}
 		//CHECK IF PASSWORD IS THE SAME
@@ -69,7 +67,7 @@ const addUser = async (req, res) => {
 			where: { mail: email },
 		});
 		if (data) {
-			res.status(200).json({ error: `Users ${lastName} already exist` });
+			res.status(500).json({ error: `Users ${lastName} already exist` });
 			return;
 		}
 
@@ -107,6 +105,7 @@ const addGoogleUser = async (req, res, next) => {
 	const adminData = await admins.findOne({ where: { email: userMail } });
 	if (adminData && data) {
 		res.status(200).json({ user: data.dataValues, status: "admin" });
+		return;
 	}
 	if (data) {
 		//return user in database
