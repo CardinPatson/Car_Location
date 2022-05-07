@@ -2,9 +2,9 @@
 # https://github.com/firebase/firebase-tools
 
 name: Deploy to Firebase Hosting on merge
-'on':
+"on":
   push:
-    branches:  [master]
+    branches: [master]
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -19,18 +19,24 @@ jobs:
         uses: SpicyPizza/create-envfile@v1
         with:
           envkey_REACT_APP_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
-          envkey_REACT_APP_FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
-          envkey_REACT_APP_FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
-          envkey_REACT_APP_FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
-          envkey_REACT_APP_FIREBASE_MESSAGING_ID: ${{ secrets.FIREBASE_MESSAGING_ID }}
+          envkey_REACT_APP_FIREBASE_AUTH_DOMAIN:
+            ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+          envkey_REACT_APP_FIREBASE_PROJECT_ID:
+            ${{ secrets.FIREBASE_PROJECT_ID }}
+          envkey_REACT_APP_FIREBASE_STORAGE_BUCKET:
+            ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+          envkey_REACT_APP_FIREBASE_MESSAGING_ID:
+            ${{ secrets.FIREBASE_MESSAGING_ID }}
           envkey_REACT_APP_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
-          envkey_REACT_APP_FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
-          envkey_REACT_APP_STRIPE_SECRET_KEY: ${{ secrets.REACT_APP_STRIPE_SECRET_KEY }}
+          envkey_REACT_APP_FIREBASE_MEASUREMENT_ID:
+            ${{ secrets.FIREBASE_MEASUREMENT_ID }}
+          envkey_REACT_APP_STRIPE_SECRET_KEY:
+            ${{ secrets.REACT_APP_STRIPE_SECRET_KEY }}
       - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          entrypoint: 'frontend'
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CAR_RENTAL_345808 }}'
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount:
+            "${{ secrets.FIREBASE_SERVICE_ACCOUNT_CAR_RENTAL_345808 }}"
           channelId: live
           projectId: car-rental-345808
