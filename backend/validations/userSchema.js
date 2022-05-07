@@ -1,25 +1,29 @@
 const { body } = require("express-validator");
 
 module.exports = [
-	body("firstName")
-		.exists({ checkFalsy: true })
-		.withMessage("Le champ firstName est requis")
-		.isString()
-		.isLength({ min: 3, max: 30 }),
+    body("firstName")
+        .exists()
+        .isLength({ min: 2, max: 100 })
+        .escape()
+        .withMessage("First name must have more than 2 characters"),
 
-	body("lastName")
-		.exists({ checkFalsy: true })
-		.withMessage("le champ lastName est requis")
-		.isString()
-		.isLength({ min: 3, max: 30 }),
-	body("email")
-		.exists({ checkFalsy: true })
-		.withMessage("le champ email est requis")
-		.isEmail()
-		.isLength({ min: 3, max: 30 }),
-	body("password")
-		.exists({ checkFalsy: true })
-		.withMessage("password is required")
-		.isString()
-		.isLength({ min: 5, max: 30 }),
+    body("lastName")
+        .exists()
+        .isLength({ min: 2, max: 100 })
+        .escape()
+        .withMessage("Last name must have more than 2 characters"),
+
+    body("email")
+        .exists()
+        .escape()
+        .isEmail()
+        .normalizeEmail()
+        .withMessage("Email must be a valid email"),
+
+    body("password")
+        .exists()
+        .isLength({ min: 6, max: 100 })
+        .escape()
+        .isString()
+        .withMessage("Password must have more than 6 characters")
 ];
