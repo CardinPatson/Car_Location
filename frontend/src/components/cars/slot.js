@@ -70,8 +70,6 @@ function Slot(props) {
 		return 1;
 	}
 	const handleClick = (e) => {
-		let startDateFormat = startDate.format("D MMMM YYYY");
-		let endDateFormat = endDate.format("D MMMM YYYY");
 		if (!checkValues(e)) {
 			e.preventDefault();
 			return;
