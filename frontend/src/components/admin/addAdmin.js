@@ -47,7 +47,6 @@ function Connexion(props) {
 			return;
 		}
 		const admin = await props.addAdmin(connexionProperty);
-		console.log(admin);
 		if (!admin)
 			setError(
 				"Une erreur est survenue lors de l'insertion de l'administrateur! Veuillez réessayer!!"

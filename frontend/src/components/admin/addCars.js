@@ -75,7 +75,6 @@ const AddCars = (props) => {
 			isAvailable,
 			image: urlImage,
 		};
-		console.log(carProperty);
 
 		for (
 			let i = 0;
@@ -181,7 +180,6 @@ const AddCars = (props) => {
 								type="number"
 								value={bootSize}
 								onChange={(e) => {
-									console.log(e.target.value);
 									setBootSize(e.target.value);
 								}}
 							/>

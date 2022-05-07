@@ -1,14 +1,15 @@
 {
 	"database": {
-		"rules": "database.rules.json"
+		"rules": "frontend/database.rules.json"
 	},
 	"hosting": {
-		"public": "build",
+		"public": "frontend/build",
 		"ignore": [
 			"firebase.json",
 			"**/.*",
 			"**/node_modules/**",
-			"**/src/**"
+			"**/src/**",
+			"**/*.map"
 		]
 	}
 }

@@ -81,7 +81,10 @@ export const addCarsProperty = createAsyncThunk(
 //RECUPERATION DES VOITURES DANS LA BASE DE DONNEES
 export const getCarsProperty = createAsyncThunk(
 	GET_CARS,
+
 	async (arg, thunkAPI) => {
+		console.log(process.env.REACT_APP_PORT);
+
 		const cars = await Axios.get(`${DOMAIN_NAME}/api/cars`).catch((err) => {
 			console.error(err);
 		});

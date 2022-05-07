@@ -43,7 +43,6 @@ import { Link } from "react-router-dom";
 
     const deleteCar = () => {
       setIsEnableDelete(false);
-      console.log(from.car["id"]);
       props.deleteCars({ id: from.car["id"] });
     };
 
@@ -60,7 +59,6 @@ import { Link } from "react-router-dom";
       from.car["color"] = color;
       from.car["is_available"] = isAvailable;
       from.car["price"] = price;
-      console.log(from.car);
       props.modifyCarsProperty(from.car);
     };
 

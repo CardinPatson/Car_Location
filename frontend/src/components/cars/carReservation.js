@@ -8,12 +8,9 @@ import { connect } from "react-redux";
 function CarReservation(props) {
 	const location = useLocation();
 
-	console.log(location);
 	const { data } = location.state;
-	console.log(data);
-	console.log(data.car.name);
+
 	const handleReservation = () => {
-		console.log("hello");
 		props.paymentPage();
 	};
 

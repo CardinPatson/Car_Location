@@ -30,7 +30,6 @@ function CarDetails(props) {
 
 	const handleChange = (cur, prev) => {
 		setIndex(cur);
-		console.log(cur, prev);
 	};
 	return (
 		<Container>

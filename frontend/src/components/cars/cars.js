@@ -80,7 +80,7 @@ function Cars(props) {
 		} else {
 			manageBrandModal(props.cars);
 		}
-	});
+	}, []);
 	let carsImages = {};
 	if (props.images && props.images.length) {
 		for (let image of props.images) {
@@ -110,7 +110,6 @@ function Cars(props) {
 		} else {
 			onChangeBrandSubFunction(props.cars);
 		}
-
 		return 1;
 	}
 	const handleClick = (e) => {

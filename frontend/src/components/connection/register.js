@@ -81,7 +81,6 @@ function Register(props) {
 		if (checkValues() === 1) {
 			return;
 		}
-		console.log(clientProperty);
 		props.register(clientProperty);
 		return;
 	};

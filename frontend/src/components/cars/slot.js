@@ -76,12 +76,7 @@ function Slot(props) {
 			e.preventDefault();
 			return;
 		}
-		console.log({
-			startDate: startDateFormat,
-			endDate: endDateFormat,
-			startTime: startTime,
-			endTime: endTime,
-		});
+
 		//requête vers l'api
 		//props.getSlot(filterInfo);
 		//si requête ok redirection vers la page /cars
@@ -153,7 +148,6 @@ function Slot(props) {
 							endTime: endTime,
 						}}
 						onClick={(e) => {
-							console.log("test");
 							handleClick(e);
 						}}
 					>
