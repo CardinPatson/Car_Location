@@ -44,7 +44,7 @@ function Header(props) {
 								}}
 								className="logout__button"
 							>
-								<img src="./images/logout.svg" />
+								<img alt="logout" src="./images/logout.svg" />
 							</button>
 						</Logout>
 					</>

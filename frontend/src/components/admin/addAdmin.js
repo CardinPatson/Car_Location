@@ -1,13 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Checkbox } from "@mui/material";
 import { connect } from "react-redux";
-import {
-	googleSignIn,
-	registerAdmin,
-	signInUser,
-} from "../../action/userAction";
+import { registerAdmin } from "../../action/userAction";
 import Header from "../header";
 
 function Connexion(props) {

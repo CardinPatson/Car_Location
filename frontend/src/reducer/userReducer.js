@@ -3,7 +3,6 @@ import {
 	addUserGoogleInfo,
 	addUserRegisterInfo,
 	addUserSignInInfo,
-	signOutUser,
 	clearUserInfo,
 } from "../action/userAction";
 const initialState = {

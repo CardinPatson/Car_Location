@@ -8,29 +8,25 @@ import { useState } from "react";
 function CarDetails(props) {
 	const location = useLocation();
 
-	console.log(location);
 	const { from } = location.state;
-	console.log(from);
 
 	function Item(item) {
 		return (
 			<div className="__img__div">
-				<img src={item["item"]} alt="Caroussel"/>
+				<img src={item["item"]} alt="Caroussel" />
 			</div>
 		);
 	}
 
-	
-	
-	var items = from.images
+	var items = from.images;
 	const test = () => {
-		if(items.length <= 1){
+		if (items.length <= 1) {
 			return false;
-		};
+		}
 		return true;
-	}
+	};
 	const [index, setIndex] = useState(0);
-	const [swapIndicators, setSwapIndicators] = useState(test);
+	let swapIndicators = test;
 
 	const handleChange = (cur, prev) => {
 		setIndex(cur);
@@ -48,8 +44,12 @@ function CarDetails(props) {
 						<Info>
 							<Name>
 								<div>
-									{from.car["cars_brands"].brand ? from.car["cars_brands"].brand : "Marque voiture"}{" "}
-									{from.car["cars_brands"].model ? from.car["cars_brands"].model : "Modèle voiture"}
+									{from.car["cars_brands"].brand
+										? from.car["cars_brands"].brand
+										: "Marque voiture"}{" "}
+									{from.car["cars_brands"].model
+										? from.car["cars_brands"].model
+										: "Modèle voiture"}
 								</div>
 								<LineRight>
 									<div>
@@ -68,8 +68,10 @@ function CarDetails(props) {
 											src="./images/icons/suitcase.svg"
 											alt="suitcase icon"
 										/>
-										<p>{from.car.boot_size ? from.car.boot_size : "100"}L pour le
-										coffre</p>
+										<p>
+											{from.car.boot_size ? from.car.boot_size : "100"}L pour le
+											coffre
+										</p>
 									</div>
 									<div>
 										<img
@@ -77,24 +79,20 @@ function CarDetails(props) {
 											alt="lightning_icon"
 										/>
 										<p>{from.car.energy ? from.car.energy : "Électrique"}</p>
-										
 									</div>
 								</Specs>
 								<Specs>
 									<div>
 										<img src="./images/icons/stick.svg" alt="stick_icon" />
 										<p>{from.car.is_automatic ? "Automatique" : "Manuelle"}</p>
-										
 									</div>
 									<div>
 										<img src="./images/icons/seat.svg" alt="seat_icon" />
 										<p>{from.car.passengers ? from.car.passengers : "3"}</p>
-										
 									</div>
 									<div>
 										<img src="./images/icons/air.svg" alt="air_icon" />
 										<p>{from.car.air_conditioning ? "Oui" : "Non"}</p>
-										
 									</div>
 								</Specs>
 							</DetailTable>
@@ -151,7 +149,7 @@ const Content = styled.div`
 	margin-top: 100px;
 	padding: 5px;
 	display: flex;
-	flex-direction: column; 
+	flex-direction: column;
 	align-items: center;
 `;
 

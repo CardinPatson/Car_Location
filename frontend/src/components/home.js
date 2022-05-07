@@ -4,13 +4,17 @@ import Slot from "./cars/slot";
 import styled from "styled-components";
 import Carousel from "react-material-ui-carousel";
 import { useState } from "react";
-import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
+import {
+	Accordion,
+	AccordionSummary,
+	AccordionDetails,
+} from "@material-ui/core";
 
 function Home() {
 	function Item(item) {
 		return (
 			<div className="__img__div">
-				<img src={item.item["url"]} />
+				<img alt="url" src={item.item["url"]} />
 			</div>
 		);
 	}
@@ -69,44 +73,38 @@ function Home() {
 		<Container>
 			<Header />
 			<Content>
-				<Slot className="slot"/>
+				<Slot className="slot" />
 				<Info>
 					<Questions>
 						<Part>
 							<Accordion>
-								<AccordionSummary>
-									Qu'est ce que Car Rental ?
-        						</AccordionSummary>
+								<AccordionSummary>Qu'est ce que Car Rental ?</AccordionSummary>
 								<AccordionDetails>
 									Pro-CarRental est un site de location de voiture dont
 									l'entreprise est basée à Bruxelles. Ce site vous propose une
 									large variétée de véhicules pour toutes les gammes de prix. De
 									la sportive à la citadine, il y en pour tous les goûts et
 									budgets !
-        						</AccordionDetails>
+								</AccordionDetails>
 							</Accordion>
 						</Part>
 						<Part>
 							<Accordion>
-								<AccordionSummary>
-									Comment louer ?
-        						</AccordionSummary>
+								<AccordionSummary>Comment louer ?</AccordionSummary>
 								<AccordionDetails>
 									Pour louer une voiture, rien de plus simple ! Une fois votre
 									voiture choisie, il vous suffit de fournir votre carte
-									d'identité et votre permit de conduire. Un mail vous sera alors
-									envoyé pour confirmer la location.
-        						</AccordionDetails>
+									d'identité et votre permit de conduire. Un mail vous sera
+									alors envoyé pour confirmer la location.
+								</AccordionDetails>
 							</Accordion>
 						</Part>
 						<Part>
 							<Accordion>
-								<AccordionSummary>
-									Oû récupérer ma voiture ?
-        						</AccordionSummary>
+								<AccordionSummary>Oû récupérer ma voiture ?</AccordionSummary>
 								<AccordionDetails>
 									Pour récupérer votre voiture, allez voir Aymar au garage.
-        						</AccordionDetails>
+								</AccordionDetails>
 							</Accordion>
 						</Part>
 					</Questions>
@@ -128,7 +126,6 @@ function Home() {
 		</Container>
 	);
 }
-
 
 const Container = styled.div`
 	/* border: solid red 1px; */
@@ -227,7 +224,7 @@ const Part = styled.div`
 		border-radius: 0px 0px 5px 5px;
 		border-top: 1px solid rgba(0, 0, 0, 0.8);
 		padding: 0;
-		padding-top: 10px; 
+		padding-top: 10px;
 		margin: 10px;
 		margin-top: 0;
 		/* régler la taille de l'accordéon quand il est déroulé */

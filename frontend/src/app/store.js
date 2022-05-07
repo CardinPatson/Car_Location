@@ -11,7 +11,6 @@ import {
 } from "redux-persist";
 import localForage from "localforage";
 import rootReducer from "../reducer";
-import localStorage from "redux-persist/es/storage";
 
 const persistConfig = {
 	key: "root",
@@ -27,7 +26,7 @@ export const store = configureStore({
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
 			serializableCheck: {
-				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PURGE, REGISTER],
+				ignoredActions: [PERSIST, FLUSH, REHYDRATE, PAUSE, PURGE, REGISTER],
 				// ignoredPath: ["REGISTER"],
 			},
 		}),

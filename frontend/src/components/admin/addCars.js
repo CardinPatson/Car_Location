@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { addCarsProperty } from "../../action/carAction";
 import { connect } from "react-redux";
 import Header from "../header";
@@ -336,11 +336,7 @@ const AddCars = (props) => {
 							// console.log(<img className="cars__photo" alt="cars" src={x} />);
 							return (
 								<div key={x} className="container__photo">
-									<img
-										className="cars__photo"
-										alt="cars"
-										src={x}
-									/>
+									<img className="cars__photo" alt="cars" src={x} />
 									<button
 										className="remove__photo__cars"
 										onClick={() => {
@@ -370,8 +366,7 @@ const AddCars = (props) => {
 				<Popup>
 					<Message>
 						<div>
-							Les données de la nouvelle voiture on été envoyées à
-							la DB.
+							Les données de la nouvelle voiture on été envoyées à la DB.
 						</div>
 						<img src="./images/validation.svg" alt="validé" />
 						<Link to="/cars" className="__button">
