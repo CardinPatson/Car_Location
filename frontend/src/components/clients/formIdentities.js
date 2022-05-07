@@ -603,13 +603,15 @@ const TopInfo = styled.div`
 	display: flex;
 	flex-direction: row;
 	gap: 5px;
+	align-content: center;
+	text-align: left;
 `;
 
 const SpecsColumn = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-content: center;
-	margin: 20px 0 0 0;
+	margin: 25px 0 0 0;
 	font-size: 1.5vw;
 	text-align: left;
 `;
@@ -618,10 +620,11 @@ const OneSpec = styled.div`
 	display: flex;
 	flex-direction: row;
 	font-size: 3vh;
-	margin-left: 5px;
+	margin-left: 7px;
+	color: rgba(0,0,0,0.65);
 	div {
 		display: flex;
-		margin-right: 5px;
+		margin-right: 6px;
 		font-size: 1.2vw;
 	}
 	input[type="text"],
@@ -643,8 +646,8 @@ const OneSpec = styled.div`
 		// border: none;
 		// border-bottom: solid 1px #00a9ff;
 		font-size: 1vw;
-		letter-spacing: 2px;
-		margin: 0em 0.8em 2.975em 0;
+		letter-spacing: 1px;
+		margin: 0em 0.8em 3.975em 0;
 		padding: 0 0 0 0;
 		text-align: left;
 		//outline: none;
