@@ -225,13 +225,32 @@ const AddCars = (props) => {
 						<span>Type</span>
 						<div>
 							<p></p>
-							<input
+							{/* <input
 								type="text"
 								value={type}
 								onChange={(e) => {
 									setType(e.target.value);
 								}}
-							/>
+								"Berline","Break","Coupe","Cabriolet","Monospace","SUV","4x4","Fourgonnette"
+							/> */}
+							<select
+								className="add__detail__cars__select"
+								value={type}
+								onChange={(e) => {
+									setType(e.target.value);
+								}}
+							>
+								<option value="Berline">Berline</option>
+								<option value="Break">Break</option>
+								<option value="Coupe">Coupe</option>
+								<option value="Cabriolet">Cabriolet</option>
+								<option value="Monospace">Monospace</option>
+								<option value="SUV">SUV</option>
+								<option value="4x4">4x4</option>
+								<option value="Fourgonnette">
+									Fourgonnette
+								</option>
+							</select>
 						</div>
 					</div>
 					<div className="add__detail__cars__">
@@ -336,7 +355,11 @@ const AddCars = (props) => {
 							// console.log(<img className="cars__photo" alt="cars" src={x} />);
 							return (
 								<div key={x} className="container__photo">
-									<img className="cars__photo" alt="cars" src={x} />
+									<img
+										className="cars__photo"
+										alt="cars"
+										src={x}
+									/>
 									<button
 										className="remove__photo__cars"
 										onClick={() => {
@@ -366,7 +389,8 @@ const AddCars = (props) => {
 				<Popup>
 					<Message>
 						<div>
-							Les données de la nouvelle voiture on été envoyées à la DB.
+							Les données de la nouvelle voiture on été envoyées à
+							la DB.
 						</div>
 						<img src="./images/validation.svg" alt="validé" />
 						<Link to="/cars" className="__button">
