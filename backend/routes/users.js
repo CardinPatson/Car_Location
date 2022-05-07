@@ -6,7 +6,7 @@ const auth = require("../middleware/authentification");
 // API RESTFULL
 
 //GET
-router.get("/",  usersCtrl.getUser);
+router.get("/", usersCtrl.getUser);
 // router.get("/:id", usersCtrl.getUserById);
 
 // POST
