@@ -1,8 +1,7 @@
 const router = require("express").Router();
-const { checkSchema } = require("express-validator");
 const ensureLoggedIn = require("connect-ensure-login").ensureLoggedIn;
 
-const addCarsSchema = require("../validations/addCarsSchema");
+const addCarsSchema = require("../validations/addCars");
 
 const carCtrl = require("../controllers/car");
 
@@ -18,8 +17,8 @@ router.get("/", carCtrl.getAllCars);
 router.get("/images", carCtrl.getCarsImages);
 
 // POST
-// router.post("/", checkSchema(addCarsSchema), carCtrl.addCar);
-router.post("/", carCtrl.addCar);
+router.post("/", addCarsSchema, carCtrl.addCar);
+// router.post("/", carCtrl.addCar);
 router.post("/:id/images", multerMiddleware, carCtrl.addCarImages);
 
 //PUT
