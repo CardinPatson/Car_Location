@@ -32,6 +32,8 @@ jobs:
             ${{ secrets.FIREBASE_MEASUREMENT_ID }}
           envkey_REACT_APP_STRIPE_SECRET_KEY:
             ${{ secrets.REACT_APP_STRIPE_SECRET_KEY }}
+          envkey_REACT_APP_URL: ${{ secrets.REACT_APP_URL }}
+          envkey_REACT_APP_PORT: ${{ secrets.REACT_APP_PORT }}
       - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
