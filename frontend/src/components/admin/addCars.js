@@ -225,13 +225,24 @@ const AddCars = (props) => {
 						<span>Type</span>
 						<div>
 							<p></p>
-							<input
-								type="text"
+							<select
+								className="add__detail__cars__select"
 								value={type}
 								onChange={(e) => {
 									setType(e.target.value);
 								}}
-							/>
+							>
+								<option value="Berline">Berline</option>
+								<option value="Break">Break</option>
+								<option value="Coupe">Coupe</option>
+								<option value="Cabriolet">Cabriolet</option>
+								<option value="Monospace">Monospace</option>
+								<option value="SUV">SUV</option>
+								<option value="4x4">4x4</option>
+								<option value="Fourgonnette">
+									Fourgonnette
+								</option>
+							</select>
 						</div>
 					</div>
 					<div className="add__detail__cars__">
