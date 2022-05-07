@@ -61,6 +61,7 @@ jobs:
           envkey_DB_HOST_TEST: localhost
           envkey_DB_PORT_TEST: ${{ job.services.postgres.ports[5432] }}
           envkey_DB_PASSWORD_TEST: postgres
+          envkey_APP_IP: ${{ secrets.APP_IP }}
           envkey_APP_PORT: ${{ secrets.APP_PORT }}
           envkey_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           envkey_FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
