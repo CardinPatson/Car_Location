@@ -1,6 +1,7 @@
 import React from "react";
 import Cars from "../../cars/cars";
-import { render, screen, fireEvent } from "../test-utils";
+import { render, screen, act } from "../test-utils";
+import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
@@ -12,6 +13,7 @@ import { setupServer } from "msw/node";
 
 // We use msw to intercept the network request during the test,
 const initialState = { cars: [], images: [], filterCars: [] };
+
 const carProperty = {
 	air_conditioning: true,
 	boot_size: 143,
@@ -89,18 +91,32 @@ test("should return the image state", () => {
 // END TO END TEST OF CARS PAGE
 test("Get Cars", async () => {
 	const history = createMemoryHistory();
+	history.push("/cars");
+
 	render(
 		<Router location={history.location} navigator={history}>
 			<Cars />
 		</Router>,
 		{ carProperty }
 	);
-	// const linkElement = screen.getAllByText("Ajouter une voiture");
-	// expect(linkElement).toBeInTheDocument();
+
+	const clickHandler = jest.fn((evt) => {
+		// Create a simulated click event function
+		evt.preventDefault();
+		evt.stopPropagation();
+		history.push("/carDetail");
+	});
+
+	//Bind the simulated click event function to the button
+	screen.getByText("Détails").onclick = (evt) => clickHandler(evt);
+
+	//Expect on page
 	expect(await screen.findByText("Voitures disponibles")).toBeTruthy();
 	expect(await screen.findAllByText("Type")).toBeTruthy();
 	expect(await screen.findAllByText("Places")).toBeTruthy();
-	// fireEvent.click(screen.getAllByRole("button", { name: "Détails" })[0]);
-	// expect(await screen.findByText("Caractéristiques")).toBeInTheDocument();
-	// expect(await screen.findByText("Voitures disponibles")).noBeInTheDocument();
+	act(() => {
+		userEvent.click(screen.getByRole("button", { name: "Détails" }));
+	});
+	expect(clickHandler).toHaveBeenCalled(); //Assert that the click envent is called
+	expect(history.location.pathname).toBe("/carDetail");
 });
