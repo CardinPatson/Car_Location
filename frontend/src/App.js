@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { connect } from "react-redux";
 import Home from "./components/home";
@@ -13,6 +14,12 @@ import PaymentAccepted from "./components/clients/paymentAccepted";
 import PaymentDenied from "./components/clients/paymentDenied";
 import FormIdentities from "./components/clients/formIdentities";
 import AddAdmin from "./components/admin/addAdmin";
+
+export const LocationDisplay = () => {
+	const location = useLocation();
+
+	return <div data-testid="location-display">{location.pathname}</div>;
+};
 
 function App(props) {
 	return (
