@@ -20,10 +20,12 @@ function CarDetails(props) {
 
 	var items = from.images;
 	const test = () => {
-		if (items.length <= 1) {
-			return false;
+		if (items) {
+			if (items.length <= 1) {
+				return false;
+			}
+			return true;
 		}
-		return true;
 	};
 	const [index, setIndex] = useState(0);
 	let swapIndicators = test;
@@ -107,9 +109,7 @@ function CarDetails(props) {
 								swipe
 								className="__carousel"
 							>
-								{items.map((item, i) => (
-									<Item key={i} item={item} />
-								))}
+								{items && items.map((item, i) => <Item key={i} item={item} />)}
 							</Carousel>
 							<Price>
 								<p>{from.car.price ? from.car.price : "100"}€</p>
