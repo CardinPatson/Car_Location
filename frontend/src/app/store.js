@@ -5,13 +5,11 @@ import {
 	FLUSH,
 	REHYDRATE,
 	PAUSE,
-	PERSIST,
 	PURGE,
 	REGISTER,
 } from "redux-persist";
 import localForage from "localforage";
 import rootReducer from "../reducer";
-import localStorage from "redux-persist/es/storage";
 
 const persistConfig = {
 	key: "root",

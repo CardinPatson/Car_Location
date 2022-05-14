@@ -8,9 +8,7 @@ import { useState } from "react";
 function CarDetails(props) {
     const location = useLocation();
 
-    console.log(location);
     const { from } = location.state;
-    console.log(from.car);
 
     function Item(item) {
         return (
@@ -59,7 +57,6 @@ function CarDetails(props) {
 
     const handleChange = (cur, prev) => {
         setIndex(cur);
-        console.log(cur, prev);
     };
     return (
         <Container>

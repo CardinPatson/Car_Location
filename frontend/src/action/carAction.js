@@ -7,7 +7,7 @@ import {
 } from "./actionTypes";
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "axios";
-const DOMAIN_NAME = "http://localhost:3001";
+const DOMAIN_NAME = `${process.env.REACT_APP_URL}:${process.env.REACT_APP_PORT}`;
 export const addCarsInfo = createAction(ADD_CARS, function prepare(cars) {
 	return {
 		payload: cars,
@@ -81,7 +81,10 @@ export const addCarsProperty = createAsyncThunk(
 //RECUPERATION DES VOITURES DANS LA BASE DE DONNEES
 export const getCarsProperty = createAsyncThunk(
 	GET_CARS,
+
 	async (arg, thunkAPI) => {
+		console.log(process.env.REACT_APP_PORT);
+
 		const cars = await Axios.get(`${DOMAIN_NAME}/api/cars`).catch((err) => {
 			console.error(err);
 		});
@@ -101,33 +104,13 @@ export const getCarsImages = createAsyncThunk(
 	}
 );
 
-// get slot cars images
-//dans le params on peut recupérer le contenu via le req.query
-export const getCarsSlot = createAsyncThunk(
-	"GET_CARS_SLOT",
-	async (arg, thunkAPI) => {
-		const request = await Axios.get(`${DOMAIN_NAME}/api/orders`, {
-			params: {
-				startDate: arg.startDate,
-				startTime: arg.startTime,
-				endDate: arg.endDate,
-				endTime: arg.endTime,
-			},
-		}).catch((err) => {
-			console.error(err);
-		});
-	}
-);
-
 export const deleteCars = createAsyncThunk(
 	DELETE_CARS,
 	async (arg, thunkAPI) => {
 		const id = arg["id"];
-		const request = await Axios.delete(`${DOMAIN_NAME}/api/cars/${id}`).catch(
-			(err) => {
-				console.error(err);
-			}
-		);
+		await Axios.delete(`${DOMAIN_NAME}/api/cars/${id}`).catch((err) => {
+			console.error(err);
+		});
 	}
 );
 

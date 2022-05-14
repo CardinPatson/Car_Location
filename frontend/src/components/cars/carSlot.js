@@ -1,12 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import CarDetails from "./carDetails";
 import { connect } from "react-redux";
 
 const CarSlot = (props) => {
-	const handleDetail = () => {};
-
 	return (
 		<Container>
 			<Content>

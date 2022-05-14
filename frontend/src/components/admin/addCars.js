@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { addCarsProperty } from "../../action/carAction";
 import { connect } from "react-redux";
 import Header from "../header";
@@ -75,7 +75,6 @@ const AddCars = (props) => {
 			isAvailable,
 			image: urlImage,
 		};
-		console.log(carProperty);
 
 		for (
 			let i = 0;
@@ -181,7 +180,6 @@ const AddCars = (props) => {
 								type="number"
 								value={bootSize}
 								onChange={(e) => {
-									console.log(e.target.value);
 									setBootSize(e.target.value);
 								}}
 							/>
@@ -225,6 +223,14 @@ const AddCars = (props) => {
 						<span>Type</span>
 						<div>
 							<p></p>
+							{/* <input
+								type="text"
+								value={type}
+								onChange={(e) => {
+									setType(e.target.value);
+								}}
+								"Berline","Break","Coupe","Cabriolet","Monospace","SUV","4x4","Fourgonnette"
+							/> */}
 							<select
 								className="add__detail__cars__select"
 								value={type}

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { getCarsSlot } from "../../action/carAction";
 import "react-dates/initialize";
-import { SingleDatePicker, toISODateString } from "react-dates";
+import { SingleDatePicker } from "react-dates";
 import moment from "moment";
 import styled from "styled-components";
 import "react-dates/lib/css/_datepicker.css";
@@ -53,10 +52,7 @@ function Slot(props) {
 			setError("Veuillez entrez une plage horaire valide !");
 			return 0;
 		}
-		if (
-			endDay.getTime() === currentDay.getTime() &&
-			endHour <= currentHour
-		) {
+		if (endDay.getTime() === currentDay.getTime() && endHour <= currentHour) {
 			setError("Veuillez entrez une plage horaire valide !");
 			return 0;
 		}
@@ -74,18 +70,11 @@ function Slot(props) {
 		return 1;
 	}
 	const handleClick = (e) => {
-		let startDateFormat = startDate.format("D MMMM YYYY");
-		let endDateFormat = endDate.format("D MMMM YYYY");
 		if (!checkValues(e)) {
 			e.preventDefault();
 			return;
 		}
-		console.log({
-			startDate: startDateFormat,
-			endDate: endDateFormat,
-			startTime: startTime,
-			endTime: endTime,
-		});
+
 		//requête vers l'api
 		//props.getSlot(filterInfo);
 		//si requête ok redirection vers la page /cars
@@ -157,7 +146,6 @@ function Slot(props) {
 							endTime: endTime,
 						}}
 						onClick={(e) => {
-							console.log("test");
 							handleClick(e);
 						}}
 					>
@@ -307,9 +295,9 @@ const mapStateToProps = (state) => {
 };
 const mapStateToDispatch = (dispatch) => {
 	return {
-		getSlot: (payload) => {
-			dispatch(getCarsSlot(payload));
-		},
+		// getSlot: (payload) => {
+		// 	dispatch(getCarsSlot(payload));
+		// },
 	};
 };
 const connector = connect(mapStateToProps, mapStateToDispatch);

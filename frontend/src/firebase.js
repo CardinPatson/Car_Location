@@ -24,4 +24,4 @@ const auth = getAuth();
 //initialisation du fournisseur google
 const provider = new GoogleAuthProvider();
 
-export { auth, db , provider };
+export { auth, db, provider };

@@ -199,4 +199,4 @@ const mapStateToDispatch = (dispatch) => {
 };
 
 const connector = connect(mapStateToProps, mapStateToDispatch);
-export default connect(ForgotPassword);
+export default connector(ForgotPassword);

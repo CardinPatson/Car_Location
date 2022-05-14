@@ -39,7 +39,6 @@ function Connexion(props) {
 		if (checkValues() === 1) {
 			return;
 		}
-		console.log(connexionProperty);
 		props.signIn(connexionProperty);
 		return;
 	};

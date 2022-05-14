@@ -3,14 +3,9 @@ import { connect } from "react-redux";
 import Header from "../header";
 import styled from "styled-components";
 import CarSlot from "./carSlot";
-import {
-	getCarsProperty,
-	getCarsImages,
-	getCarsSlot,
-} from "../../action/carAction";
+import { getCarsProperty, getCarsImages } from "../../action/carAction";
 import { getOrdersInfoByDates } from "../../action/orderAction";
 import { useLocation } from "react-router-dom";
-import localForage from "localforage";
 import "react-dates/initialize";
 import { SingleDatePicker } from "react-dates";
 import moment from "moment";
@@ -115,7 +110,6 @@ function Cars(props) {
 		} else {
 			onChangeBrandSubFunction(props.cars);
 		}
-
 		return 1;
 	}
 	const handleClick = (e) => {
@@ -247,6 +241,7 @@ function Cars(props) {
 					</Brand>
 					<div className="slot">
 						<h5>Période de location</h5>
+						{error ? <p style={{ color: "red" }}>{error}</p> : <></>}
 						<form className="slot__range">
 							<div className="slot__time__left">
 								<p>Du</p>
@@ -620,7 +615,6 @@ const mapStateToDispatch = (dispatch) => {
 	return {
 		getCars: () => dispatch(getCarsProperty()),
 		getCarsImages: () => dispatch(getCarsImages()),
-		// getSlot: (payload) => dispatch(getCarsSlot(payload)),
 		getCarsByDate: (payload) => dispatch(getOrdersInfoByDates(payload)),
 	};
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { googleSignIn, registerUser } from "../../action/userAction";
 import { connect } from "react-redux";
@@ -81,7 +81,6 @@ function Register(props) {
 		if (checkValues() === 1) {
 			return;
 		}
-		console.log(clientProperty);
 		props.register(clientProperty);
 		return;
 	};

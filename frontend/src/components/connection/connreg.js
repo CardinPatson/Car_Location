@@ -7,7 +7,9 @@ import { connect } from "react-redux";
 import { signInUser } from "../../action/userAction";
 function Connreg(props) {
 	const [connexion, setConnexion] = useState(true);
-	const toggle = React.useCallback(() => setConnexion(!connexion));
+	const toggle = React.useCallback(() => {
+		setConnexion(!connexion);
+	}, [connexion]);
 
 	return (
 		<Container>
@@ -18,8 +20,6 @@ function Connreg(props) {
 				) : (
 					<Connexion onSwap={toggle} />
 				)}
-				
-
 			</Content>
 		</Container>
 	);

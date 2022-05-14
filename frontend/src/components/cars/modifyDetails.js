@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
     const location = useLocation();
     const { from } = location.state;
 
-    const [name, setName] = useState("RS3_Gris-Nardo");
     //const [image, setImage] = useState([]);
     const [brand, setBrand] = useState(from.car["cars_brands"].brand);
     const [model, setModel] = useState(from.car["cars_brands"].model);
@@ -21,7 +20,6 @@ import { Link } from "react-router-dom";
     const [passengers, setPassenger] = useState(from.car["passengers"]);
     const [type, setType] = useState(from.car["type"]);
     const [price, setPrice] = useState(from.car["price"]);
-    const [description, setDescription] = useState("");
     const [airCondition, setAirCondition] = useState(from.car["air_conditioning"]);
     const [isAutomatic, setIsAutomatic] = useState(from.car["is_automatic"]);
     const [isAvailable, setIsAvailable] = useState(true);
@@ -45,7 +43,6 @@ import { Link } from "react-router-dom";
 
     const deleteCar = () => {
       setIsEnableDelete(false);
-      console.log(from.car["id"]);
       props.deleteCars({ id: from.car["id"] });
     };
 
@@ -62,7 +59,6 @@ import { Link } from "react-router-dom";
       from.car["color"] = color;
       from.car["is_available"] = isAvailable;
       from.car["price"] = price;
-      console.log(from.car);
       props.modifyCarsProperty(from.car);
     };
 
