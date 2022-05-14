@@ -5,30 +5,6 @@ import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { render, screen } from "../test-utils";
 
-//Normalement Mock API fait un requete mais dans les tests on mocker la requete
-// jest.mock("../../action/carAction", () => ({
-// 	addCarsInfo: () => ({
-// 		air_conditioning: true,
-// 		boot_size: 143,
-// 		brand_id: 2,
-// 		cars_brands: { brand: "Audi", id: 2, model: "RS 3" },
-// 		color: "Gris Nardo",
-// 		description: "hello",
-// 		doors: 5,
-// 		energy: "Essence",
-// 		id: 2,
-// 		is_automatic: true,
-// 		is_available: true,
-// 		mileage: null,
-// 		name: "RS3_Gris-Nardo",
-// 		number_plate: null,
-// 		passengers: 5,
-// 		price: 100,
-// 		type: "Sportive",
-// 		year: null,
-// 	}),
-// }));
-
 //INITIAL STATE
 const initialState = {
 	cars: [
@@ -96,6 +72,8 @@ test("Get Legend", async () => {
 	);
 	// const linkElement = screen.getAllByText("Ajouter une voiture");
 	// expect(linkElement).toBeInTheDocument();
-	const legend = await screen.findByText("Ajouter une voiture");
-	expect(legend).toBeTruthy();
+	expect(await screen.findByText("Ajouter une voiture")).toBeTruthy();
+	expect(await screen.findByText("Nom")).toBeTruthy();
+	expect(await screen.findByText("Marque")).toBeTruthy();
+	expect(await screen.findByText("Modèle")).toBeTruthy();
 });

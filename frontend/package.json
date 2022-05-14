@@ -50,6 +50,7 @@
 	},
 	"devDependencies": {
 		"@testing-library/dom": "^8.13.0",
-		"@testing-library/react": "^12.1.2"
+		"@testing-library/react": "^12.1.2",
+		"jest": "^28.1.0"
 	}
 }

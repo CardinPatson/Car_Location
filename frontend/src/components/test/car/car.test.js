@@ -1,93 +1,55 @@
 import React from "react";
 import Cars from "../../cars/cars";
-import { render, screen } from "../test-utils";
+import { render, screen, fireEvent } from "../test-utils";
 import "@testing-library/jest-dom";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
+import carReducer from "../../../reducer/carReducer";
+import { addCarsImagesInfo, addCarsInfo } from "../../../action/carAction";
 
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 
 // We use msw to intercept the network request during the test,
+const initialState = { cars: [], images: [], filterCars: [] };
+const carProperty = {
+	air_conditioning: true,
+	boot_size: 143,
+	brand_id: 2,
+	cars_brands: { brand: "Audi", id: 2, model: "RS 3" },
+	color: "Gris Nardo",
+	description: "hello",
+	doors: 5,
+	energy: "Essence",
+	id: 2,
+	is_automatic: true,
+	is_available: true,
+	mileage: null,
+	name: "RS3_Gris-Nardo",
+	number_plate: null,
+	passengers: 5,
+	price: 100,
+	type: "Sportive",
+	year: null,
+};
+
+const imageProperty = {
+	car_id: 2,
+	file_names: [
+		"http://localhost:3001/images/tyler-clemmensen-d1Jum1vVLew-unsplash.jpg1651331740235.jpg",
+		"http://localhost:3001/images/kevin-bhagat-3cLpiv8h5so-unsplash.jpg1651331740244.jpg",
+	],
+	length: 2,
+	id: 1,
+};
 export const handlers = [
 	rest.get("/api/cars", (req, res, ctx) => {
-		return res(
-			ctx.json({
-				air_conditioning: true,
-				boot_size: 143,
-				brand_id: 2,
-				cars_brands: { brand: "Audi", id: 2, model: "RS 3" },
-				color: "Gris Nardo",
-				description: "hello",
-				doors: 5,
-				energy: "Essence",
-				id: 2,
-				is_automatic: true,
-				is_available: true,
-				mileage: null,
-				name: "RS3_Gris-Nardo",
-				number_plate: null,
-				passengers: 5,
-				price: 100,
-				type: "Sportive",
-				year: null,
-			}),
-			ctx.delay(150)
-		);
+		return res(ctx.json({ data: carProperty }), ctx.delay(150));
 	}),
 	rest.get("/api/cars/images", (req, res, ctx) => {
-		return res(
-			ctx.json({
-				car_id: 2,
-				file_names: [
-					"http://localhost:3001/images/tyler-clemmensen-d1Jum1vVLew-unsplash.jpg1651331740235.jpg",
-					"http://localhost:3001/images/kevin-bhagat-3cLpiv8h5so-unsplash.jpg1651331740244.jpg",
-				],
-				length: 2,
-				id: 1,
-			}),
-			ctx.delay(150)
-		);
+		return res(ctx.json({ data: imageProperty }), ctx.delay(150));
 	}),
 ];
-
-
-const initialState = {
-	cars: [
-		{
-			air_conditioning: true,
-			boot_size: 143,
-			brand_id: 2,
-			cars_brands: { brand: "Audi", id: 2, model: "RS 3" },
-			color: "Gris Nardo",
-			description: "hello",
-			doors: 5,
-			energy: "Essence",
-			id: 2,
-			is_automatic: true,
-			is_available: true,
-			mileage: null,
-			name: "RS3_Gris-Nardo",
-			number_plate: null,
-			passengers: 5,
-			price: 100,
-			type: "Sportive",
-			year: null,
-		},
-	],
-	images: [
-		{
-			car_id: 2,
-			file_names: [
-				"http://localhost:3001/images/tyler-clemmensen-d1Jum1vVLew-unsplash.jpg1651331740235.jpg",
-				"http://localhost:3001/images/kevin-bhagat-3cLpiv8h5so-unsplash.jpg1651331740244.jpg",
-			],
-			length: 2,
-			id: 1,
-		},
-	],
-	filterCars: [],
-};
 
 const server = setupServer(...handlers);
 
@@ -100,17 +62,45 @@ afterEach(() => server.resetHandlers());
 // Disable API mocking after the tests are done.
 afterAll(() => server.close());
 
+//UNIT TEST ON CARS REDUCER
+test("should return the initial state", () => {
+	expect(carReducer(undefined, {})).toEqual({
+		cars: [],
+		images: [],
+		filterCars: [],
+	});
+});
+
+test("should return the car state", () => {
+	expect(carReducer(undefined, addCarsInfo(carProperty))).toEqual({
+		cars: carProperty,
+		images: [],
+		filterCars: [],
+	});
+});
+test("should return the image state", () => {
+	expect(carReducer(undefined, addCarsImagesInfo(imageProperty))).toEqual({
+		cars: [],
+		images: imageProperty,
+		filterCars: [],
+	});
+});
+
+// END TO END TEST OF CARS PAGE
 test("Get Cars", async () => {
 	const history = createMemoryHistory();
-
 	render(
 		<Router location={history.location} navigator={history}>
 			<Cars />
 		</Router>,
-		{ initialState }
+		{ carProperty }
 	);
 	// const linkElement = screen.getAllByText("Ajouter une voiture");
 	// expect(linkElement).toBeInTheDocument();
-	const legend = await screen.findByText("Voitures disponibles");
-	expect(legend).toBeTruthy();
+	expect(await screen.findByText("Voitures disponibles")).toBeTruthy();
+	expect(await screen.findAllByText("Type")).toBeTruthy();
+	expect(await screen.findAllByText("Places")).toBeTruthy();
+	// fireEvent.click(screen.getAllByRole("button", { name: "Détails" })[0]);
+	// expect(await screen.findByText("Caractéristiques")).toBeInTheDocument();
+	// expect(await screen.findByText("Voitures disponibles")).noBeInTheDocument();
 });
