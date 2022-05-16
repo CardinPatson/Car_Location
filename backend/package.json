@@ -27,12 +27,13 @@
 	"devDependencies": {
 		"mocha": "^9.2.2",
 		"nodemon": "^2.0.15",
+		"nyc": "^15.1.0",
 		"sequelize-cli": "^6.4.1"
 	},
 	"homepage": "http://localhost:3001/",
 	"scripts": {
 		"start": "nodemon app.js",
-		"test": "cross-env NODE_ENV=test mocha ./test/*",
+		"test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha --exit ./test/*",
 		"pretest": "cross-env NODE_ENV=test npm run db:reset",
 		"db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all --seeders-path ./database/seeders/test",
 		"db:create:test": "cross-env NODE_ENV=test npx sequelize-cli db:create"
