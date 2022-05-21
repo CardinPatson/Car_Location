@@ -13,43 +13,6 @@ const getUserById = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-<<<<<<< HEAD
-	try {
-		const { email, password } = req.query;
-		let status = "";
-		const adminData = await admins.findOne({ where: { email: email } });
-		if (adminData) {
-			status = "admin";
-		} else {
-			status = "client";
-		}
-		const data = await users.findOne({ where: { mail: email } });
-		//CHECK IF USERS IN DATABASE
-		if (!data) {
-			res.status(404).json({ error: "Utilisateur introuvable" });
-			return;
-		}
-		//CHECK IF PASSWORD IS THE SAME
-		const hash = await bcrypt.compare(password, data.password);
-		if (!hash) {
-			res.status(401).json({ error: "Mot de passe incorrect" });
-			return;
-		}
-		res.status(200).json({
-			user: data.dataValues,
-			status: status,
-			token: jwt.sign(
-				{ user: data.dataValues.mail },
-				"SHORT_HASH_PHRASE",
-				{
-					expiresIn: "24h",
-				}
-			),
-		});
-	} catch (error) {
-		res.status(500).json({ error });
-	}
-=======
     try {
         const { email, password } = req.query;
         let status = "";
@@ -85,7 +48,6 @@ const getUser = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error });
     }
->>>>>>> fdd9c8c ([FIX] Continue JS Docs)
 };
 
 /**
@@ -117,32 +79,6 @@ const addUser = async (req, res) => {
             return;
         }
 
-<<<<<<< HEAD
-		//ENCRYPTER LE PASSWORD DU USER
-		const hash = await bcrypt.hash(password, 10);
-		//CREATE USERS
-		const response = await users.create({
-			first_name: firstName,
-			last_name: lastName,
-			mail: email,
-			password: hash,
-		});
-		res.status(200).json({
-			user: response.dataValues,
-			status: "client",
-			token: jwt.sign(
-				{ user: response.dataValues.mail },
-				"SHORT_HASH_PHRASE",
-				{
-					expiresIn: "24h",
-				}
-			),
-		});
-	} catch (error) {
-		res.status(500).json({ error });
-	}
-	return;
-=======
         //ENCRYPTER LE PASSWORD DU USER
         const hash = await bcrypt.hash(password, 10);
         //CREATE USERS
@@ -167,7 +103,6 @@ const addUser = async (req, res) => {
         res.status(500).json({ error });
     }
     return;
->>>>>>> fdd9c8c ([FIX] Continue JS Docs)
 };
 
 //AUTHENTIFICATION VIA GOOGLE
