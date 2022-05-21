@@ -1,5 +1,5 @@
 import React from "react";
-import { render as rtlRender } from "@testing-library/react";
+import { render as rtlRender, cleanup } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import carReducer from "../../reducer/carReducer";
 import userReducer from "../../reducer/userReducer";
@@ -14,9 +14,34 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 // const request = require("supertest");
 // const { omit } = require("lodash");
 
-const initialState = { cars: [], images: [], filterCars: [] };
+import server from "../../../../backend/index";
 
-//CONTACTER LA BASE DE DONNEES POUR RECUPERER TOUTES LES VOITURES
+import request from "supertest";
+
+afterEach(cleanup);
+const chargeState = async () => {
+	const cars_state = await request(server).get("/api/cars/");
+	// const images_state = await request(server).get("/api/cars/images");
+
+	console.log(cars_state);
+
+	return {
+		carState: {
+			cars: [cars_state],
+			images: [images_state],
+		},
+		userState: {},
+	};
+};
+// let preloadedState = {};
+// async () => {
+// 	preloadedState = await chargeState();
+// 	console.log(preloadedState);
+// };
+
+// const initialState = { cars: [], images: [], filterCars: [] };
+
+// //CONTACTER LA BASE DE DONNEES POUR RECUPERER TOUTES LES VOITURES
 // const preloadedState = {
 // 	carState: {
 // 		cars: [
@@ -73,8 +98,15 @@ const rootReducer = combineReducers({
 	carState: carReducer,
 	userState: userReducer,
 });
-function render(ui, preloadedState, { ...renderOptions } = {}) {
-	const store = configureStore({ reducer: rootReducer, preloadedState });
+// const store = configureStore({ reducer: rootReducer, preloadedState });
+function render(
+	ui,
+	{
+		preloadedState,
+		store = configureStore({ reducer: rootReducer, preloadedState }),
+		...renderOptions
+	} = {}
+) {
 	function Wrapper({ children }) {
 		return <Provider store={store}>{children}</Provider>;
 	}

@@ -9,6 +9,7 @@ import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "axios";
 // const DOMAIN_NAME = `${process.env.REACT_APP_URL}:${process.env.APP_PORT}`;
 const DOMAIN_NAME = `${process.env.REACT_APP_URL}`;
+const DOMAIN_NAME_TEST = `${process.env.REACT_APP_URL_TEST}`;
 export const addCarsInfo = createAction(ADD_CARS, function prepare(cars) {
 	return {
 		payload: cars,
@@ -94,11 +95,11 @@ export const getCarsProperty = createAsyncThunk(
 export const getCarsImages = createAsyncThunk(
 	GET_CARS_IMAGES,
 	async (arg, thunkAPI) => {
-		const carsImages = await Axios.get(`${DOMAIN_NAME}/api/cars/images`).catch(
-			(err) => {
-				console.error(err);
-			}
-		);
+		const carsImages = await Axios.get(
+			`${DOMAIN_NAME}/api/cars/images`
+		).catch((err) => {
+			console.error(err);
+		});
 		thunkAPI.dispatch(addCarsImagesInfo(carsImages.data));
 	}
 );
