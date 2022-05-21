@@ -74,8 +74,8 @@ const initialState = { cars: [], images: [], filterCars: [] };
 // };
 
 const chargeState = async () => {
-	const cars_state = await request(app).get("/api/cars/");
-	const images_state = await request(app).get("/api/cars/images");
+	const cars_state = {}; // await request(app).get("/api/cars/");
+	const images_state = {}; //await request(app).get("/api/cars/images");
 
 	return {
 		carState: {
@@ -86,9 +86,9 @@ const chargeState = async () => {
 	};
 };
 let preloadedState = {};
-(async () => {
+async () => {
 	preloadedState = await chargeState();
-});
+};
 
 const rootReducer = combineReducers({
 	carState: carReducer,

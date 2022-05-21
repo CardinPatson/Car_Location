@@ -15,6 +15,7 @@
 		"chai": "^4.3.6",
 		"cross-env": "^7.0.3",
 		"firebase": "^9.6.11",
+		"firebase-admin": "^10.2.0",
 		"install": "^0.13.0",
 		"localforage": "^1.10.0",
 		"localStorage": "^1.0.4",

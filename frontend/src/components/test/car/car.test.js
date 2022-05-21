@@ -44,25 +44,25 @@ const imageProperty = {
 	length: 2,
 	id: 1,
 };
-export const handlers = [
-	rest.get("/api/cars", (req, res, ctx) => {
-		return res(ctx.json({ data: carProperty }), ctx.delay(150));
-	}),
-	rest.get("/api/cars/images", (req, res, ctx) => {
-		return res(ctx.json({ data: imageProperty }), ctx.delay(150));
-	}),
-];
+// export const handlers = [
+// 	rest.get("/api/cars", (req, res, ctx) => {
+// 		return res(ctx.json({ data: carProperty }), ctx.delay(150));
+// 	}),
+// 	rest.get("/api/cars/images", (req, res, ctx) => {
+// 		return res(ctx.json({ data: imageProperty }), ctx.delay(150));
+// 	}),
+// ];
 
-const server = setupServer(...handlers);
+// const server = setupServer(...handlers);
 
 // Enable API mocking before tests.
-beforeAll(() => server.listen());
+// beforeAll(() => server.listen());
 
 // Reset any runtime request handlers we may add during the tests.
-afterEach(() => server.resetHandlers());
+// afterEach(() => server.resetHandlers());
 
 // Disable API mocking after the tests are done.
-afterAll(() => server.close());
+// afterAll(() => server.close());
 
 //UNIT TEST ON CARS REDUCER
 test("should return the initial state", () => {
