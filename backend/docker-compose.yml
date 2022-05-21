@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+    db:
+        image: postgres:14.3
+        restart: always
+        volumes:
+            - /var/lib/postgresql/data
+        environment:
+            - POSTGRES_USER=${DB_USERNAME}
+            - POSTGRES_PASSWORD=${DB_PASSWORD}
+        networks:
+            my_network:
+                ipv4_address: 192.168.0.2
+
+    api:
+        build: ./
+        restart: always
+        depends_on:
+            - db
+        ports:
+            - ${APP_PORT}:3001
+        command: npm start
+        volumes:
+            - .:/app/
+            - /app/node_modules
+        networks:
+            my_network:
+                ipv4_address: 192.168.0.3
+
+networks:
+    my_network:
+        ipam:
+            driver: default
+            config:
+                - subnet: 192.168.0.0/29

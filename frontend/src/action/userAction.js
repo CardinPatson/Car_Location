@@ -9,7 +9,8 @@ import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
 import Axios from "axios";
-const DOMAIN_NAME = `http://${process.env.REACT_APP_URL}:${process.env.REACT_APP_PORT}`;
+// const DOMAIN_NAME = `http://${process.env.REACT_APP_URL}:${process.env.REACT_APP_PORT}`;
+const DOMAIN_NAME = `http://${process.env.REACT_APP_URL}:${process.env.APP_PORT}`;
 export const addUserRegisterInfo = createAction(
 	ADD_USER_REGISTER,
 	function prepare(user) {

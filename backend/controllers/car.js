@@ -3,6 +3,12 @@ const multerMiddleware = require("../middleware/image");
 const { images, cars, cars_brands } = require("../database/models");
 const { validationResult } = require("express-validator");
 
+/**
+ * Check if a car name is unique
+ *
+ * @param {String} name Name of car
+ * @returns {Boolean} True if name is unique, false otherwise
+ */
 const isUniqueCarName = async (name) => {
     try {
         const data = await cars.count({
@@ -19,6 +25,14 @@ const isUniqueCarName = async (name) => {
     }
 };
 
+/**
+ * Returns all available cars
+ *
+ * @param {Object} req Request object
+ * @param {Object} res Response object
+ * @returns {Object} JSON object
+ *
+ * */
 const getAllCars = async (req, res) => {
     try {
         const data = await cars.findAll({
@@ -34,11 +48,17 @@ const getAllCars = async (req, res) => {
 
         return res.status(200).json(data);
     } catch (error) {
-        console.log(error);
         return res.status(500).send(error.message);
     }
 };
 
+/**
+ * Return a car with the specified id
+ *
+ * @param {Object} req Request object
+ * @param {Object} res Response object
+ * @returns {Object} JSON object
+ * */
 const getCarById = async (req, res) => {
     try {
         if (req.params.id) {
@@ -65,6 +85,13 @@ const getCarById = async (req, res) => {
     }
 };
 
+/**
+ * Return a car with specified name
+ *
+ * @param {Object} req Request object
+ * @param {Object} res Response object
+ * @returns {Object} JSON object
+ * */
 const getCarByName = async (req, res) => {
     try {
         if (typeof req.params.name === "string") {
@@ -92,6 +119,13 @@ const getCarByName = async (req, res) => {
     }
 };
 
+/**
+ * Return all images of a cars
+ *
+ * @param {Object} req Request object
+ * @param {Object} res Response object
+ * @returns {Object} JSON object
+ * */
 const getCarsImages = async (req, res) => {
     try {
         const data = await images.findAll({
@@ -109,6 +143,13 @@ const getCarsImages = async (req, res) => {
 
 // POST !!!
 
+/**
+ * Add a new car
+ *
+ * @param {Object} req Request object
+ * @param {Object} res Response object
+ * @returns {Object} JSON object
+ */
 const addCar = async (req, res) => {
     const {
         name,
@@ -141,6 +182,15 @@ const addCar = async (req, res) => {
             where: { brand: brand, model: model },
             attributes: ["id"]
         });
+
+        const nameExists = await isUniqueCarName(name);
+
+        if (!nameExists) {
+            return res.status(409).json({
+                message: "Car name already exists"
+            });
+        }
+
         const data2 = await cars.create({
             name: name,
             price: price,
@@ -158,13 +208,19 @@ const addCar = async (req, res) => {
         });
         return res.status(201).json({ id: data2.dataValues.id });
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             message: "Internal server error test"
         });
     }
 };
 
+/**
+ * Add a new image to a car
+ *
+ * @param {Object} req Request object
+ * @param {Object} res Response object
+ * @returns {Object} JSON object
+ */
 const addCarImages = async (req, res, next) => {
     try {
         const car_id = req.params.id;
@@ -191,7 +247,14 @@ const addCarImages = async (req, res, next) => {
 };
 
 // Seule petit problème : Si on modifie la marque et le modèle, les ancienne données resterons dans la DB meme s'il ne sont reliée a aucune voiture !!!
-
+/**
+ * Update a car
+ *
+ * @param {Object} req Request object
+ * @param {Object} res Response object
+ *
+ * @returns {Object} JSON object
+ */
 const updateCar = async (req, res) => {
     const {
         newName,
@@ -285,13 +348,20 @@ const updateCar = async (req, res) => {
             modiffCars
         });
     } catch (error) {
-        console.log("ERROR : ", error);
         return res.status(500).json({
             message: "Internal server error"
         });
     }
 };
 
+/**
+ * Delete a car
+ *
+ * @param {Object} req Request object
+ * @param {Object} res Response object
+ *
+ * @returns {Object} JSON object
+ */
 const deleteCar = async (req, res) => {
     try {
         if (req.params.id) {
@@ -308,45 +378,6 @@ const deleteCar = async (req, res) => {
     }
 };
 
-const testCar = async (req, res) => {
-    try {
-        if (req.params.id) {
-            const car_id = parseInt(req.params.id);
-
-            const reponse = await cars.findByPk(car_id, {
-                include: [
-                    {
-                        model: cars_brands,
-                        required: true,
-                        as: "cars_brands"
-                    }
-                ]
-            });
-
-            const count = await cars.count({
-                where: { brand_id: reponse.brand_id, id: reponse.id },
-                include: [
-                    {
-                        model: cars_brands,
-                        required: true,
-                        as: "cars_brands"
-                        // where: { id: reponse.id }
-                    }
-                ]
-            });
-
-            console.log("Count : --> ", count);
-
-            return res.status(200).json({ count });
-        }
-    } catch (error) {
-        console.log("Error !!! -> ", error);
-        return res.status(500).json({
-            message: "Internal server error"
-        });
-    }
-};
-
 module.exports = {
     getAllCars,
     getCarById,
@@ -355,6 +386,5 @@ module.exports = {
     updateCar,
     deleteCar,
     addCarImages,
-    getCarsImages,
-    testCar
+    getCarsImages
 };

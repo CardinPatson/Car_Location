@@ -3,7 +3,8 @@ import { GET_PAYMENT } from "./actionTypes";
 
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "axios";
-const DOMAIN_NAME = `http://${process.env.REACT_APP_URL}:${process.env.REACT_APP_PORT}`;
+// const DOMAIN_NAME = `http://${process.env.REACT_APP_URL}:${process.env.REACT_APP_PORT}`;
+const DOMAIN_NAME = `http://${process.env.REACT_APP_URL}:${process.env.APP_PORT}`;
 
 export const carsSortedWithDate = createAction(
 	GET_ORDERS_BY_DATE,

@@ -68,18 +68,26 @@ const getUser = async (req, res) => {
 const addUser = async (req, res) => {
 	try {
 		const { firstName, lastName, email, password } = req.body;
-		//VERIFIER SI LE USER EXISTE DEJA
+
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(422).json({
+				message: "Invalid data",
+				errors: errors.array(),
+			});
+		}
+
+		//CHECK IF EMAIL IS UNIQUE
 		const data = await users.findOne({
 			where: { mail: email },
 		});
 		if (data) {
-			res.status(409).json({ error: `Users ${lastName} already exist` });
+			res.status(200).json({ error: `Users ${lastName} already exist` });
 			return;
 		}
 
 		//ENCRYPTER LE PASSWORD DU USER
 		const hash = await bcrypt.hash(password, 10);
-
 		//CREATE USERS
 		const response = await users.create({
 			first_name: firstName,
@@ -88,7 +96,7 @@ const addUser = async (req, res) => {
 			password: hash,
 		});
 		res.status(200).json({
-			user: data.dataValues,
+			user: response.dataValues,
 			status: "client",
 			token: jwt.sign(
 				{ user: response.dataValues.mail },
@@ -98,7 +106,6 @@ const addUser = async (req, res) => {
 				}
 			),
 		});
-		// console.log(response);
 	} catch (error) {
 		res.status(500).json({ error });
 	}

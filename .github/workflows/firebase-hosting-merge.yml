@@ -34,11 +34,11 @@ jobs:
             ${{ secrets.REACT_APP_STRIPE_SECRET_KEY }}
           envkey_REACT_APP_URL: ${{ secrets.REACT_APP_URL }}
           envkey_REACT_APP_PORT: ${{ secrets.REACT_APP_PORT }}
-      - run: npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount:
-            "${{ secrets.FIREBASE_SERVICE_ACCOUNT_CAR_RENTAL_345808 }}"
-          channelId: live
-          projectId: car-rental-345808
+      # - run: npm run build
+      # - uses: FirebaseExtended/action-hosting-deploy@v0
+      #   with:
+      #     repoToken: "${{ secrets.GITHUB_TOKEN }}"
+      #     firebaseServiceAccount:
+      #       "${{ secrets.FIREBASE_SERVICE_ACCOUNT_CAR_RENTAL_345808 }}"
+      #     channelId: live
+      #     projectId: car-rental-345808
