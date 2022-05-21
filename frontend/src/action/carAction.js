@@ -7,7 +7,8 @@ import {
 } from "./actionTypes";
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "axios";
-const DOMAIN_NAME = `${process.env.REACT_APP_URL}:${process.env.REACT_APP_PORT}`;
+// const DOMAIN_NAME = `${process.env.REACT_APP_URL}:${process.env.REACT_APP_PORT}`;
+const DOMAIN_NAME = `${process.env.REACT_APP_URL}:${process.env.APP_PORT}`;
 export const addCarsInfo = createAction(ADD_CARS, function prepare(cars) {
 	return {
 		payload: cars,
@@ -83,8 +84,6 @@ export const getCarsProperty = createAsyncThunk(
 	GET_CARS,
 
 	async (arg, thunkAPI) => {
-		console.log(process.env.REACT_APP_PORT);
-
 		const cars = await Axios.get(`${DOMAIN_NAME}/api/cars`).catch((err) => {
 			console.error(err);
 		});
