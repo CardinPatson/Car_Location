@@ -4,6 +4,9 @@ import { googleSignIn, registerUser } from "../../action/userAction";
 import { connect } from "react-redux";
 
 function Register(props) {
+	// C'est une fonction de type composant react pour la page Register. 
+	// PRE: - 
+	// POST: retourne une page qui sert pour la creation de compte pour le site.
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
@@ -16,6 +19,9 @@ function Register(props) {
 	const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
 	function clearErrors() {
+		// C'est une fonction qui va nous servir de consulter si tout les champs on était bien compléter.
+		// PRE: -
+		// POST: Renvoie un message d'erreur pour chaque champs.
 		setFirstNameError("");
 		setLastNameError("");
 		setEmailError("");
@@ -24,6 +30,9 @@ function Register(props) {
 	}
 
 	function checkValues() {
+		// Cette fonction va consulter les champs de la page Register.
+		// PRE: -
+		// POST: Retourne une erreur si le champ ne respect pas les conditions.
 		if (firstName === "") {
 			setFirstNameError("* Veuillez compléter le champ nom");
 			return 1;
@@ -70,6 +79,9 @@ function Register(props) {
 	}
 
 	const handleRegister = (e) => {
+		// Cette fonction sert à verifier les informations entrées par le client et si elles sont correctes, à les envoyer à la DB. 
+		// PRE: Il va récupèrer les valeurs du champs du formulaire.
+		// POST: Si les tests passent, l'utilisateur est ajouté à la base de donnée et il retourn à la page d'accueil.  
 		e.preventDefault();
 		clearErrors();
 		const clientProperty = {

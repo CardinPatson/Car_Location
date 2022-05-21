@@ -6,6 +6,11 @@ import { connect } from "react-redux";
 import { googleSignIn, signInUser } from "../../action/userAction";
 
 function Connexion(props) {
+	// C'est un composant  REACT qui va nous servir de trouver les options de connection. 
+	// PRE: -
+	// POST: Il va retourner la page de connexion qui va être affiché sur le navigateur. 
+
+	// On voit ici les HOOKS qui vont nous servir à stocker les informations de l'utilisateur. 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [remember, setRemember] = useState(false);
@@ -14,11 +19,17 @@ function Connexion(props) {
 	const [passwordError, setPasswordError] = useState("");
 
 	function clearErrors() {
+		// Cette fonction sert à test erreur qui pourrait se trouver dans Email et password.
+		// PRE: -
+		// POST: Il va renvoyer un message d'erreur si les champs ne respect pas les conditions. 
 		setEmailError("");
 		setPasswordError("");
 	}
 
 	function checkValues() {
+		// Cette fonction sert pour consulter si le mail et le mot de passe entré par l'utilisateur sont correct.
+		// PRE: Récupère les valeurs des champs
+		// POST: Renvoie une erreur si un des champs est vide ou s'ils ne respectent pas les conditions.
 		if (email === "") {
 			setEmailError("* Veuillez compléter le champ email");
 			return 1;
@@ -28,8 +39,11 @@ function Connexion(props) {
 			return 1;
 		}
 	}
-
+     
 	const handleConnexion = (e) => {
+		// C'est une fonction qui va nous servir lorsqu'on click sur le bouton se connecter. 
+		// PRE:
+		// POST: Renvoie une autre page après un click sur le bouton.
 		e.preventDefault();
 		clearErrors();
 		const connexionProperty = {

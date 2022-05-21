@@ -6,6 +6,9 @@ import Register from "./register";
 import { connect } from "react-redux";
 import { signInUser } from "../../action/userAction";
 function Connreg(props) {
+	// C'est un fonction de type composant React qui va servir à l'utilisateur de se logger
+	// PRE : -
+	// Celle-ci va retourner une page qui va servir pour se connecter et aussi qui contient des liens qui menent vers (creation du compte et mot de passe oublié) 
 	const [connexion, setConnexion] = useState(true);
 	const toggle = React.useCallback(() => {
 		setConnexion(!connexion);
