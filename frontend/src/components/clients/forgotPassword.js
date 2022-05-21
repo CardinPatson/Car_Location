@@ -4,24 +4,27 @@ import styled from "styled-components";
 import Header from "../header";
 
 function ForgotPassword(props) {
+	// Ceci est une fonction de type composant React pour le composant forgotPassword. Ce dernier est affiché lorsque l'utilisateur clique sur le bouton "Mot de passe oublié ?" dans la page connreg.
+	// PRE: -
+	// POST: Retourne le composant ForgotPassword.
+
+	// Ce sont les hooks utilisés pour stocker les valeurs du formulaire ainsi que les potentiels messages d'erreur.
 	const [message, setMessage] = useState(false);
 	const [error, setError] = useState("");
 	const [email, setEmail] = useState("");
-	const handleChanges = () => {
-		if (!props.email) {
-			setError(
-				"Veuillez vous connectez afin de réinitialiser votre mot de passe"
-			);
-			return;
-		}
 
-		if (email === props.email) {
-			setMessage(!message);
-			document.getElementById("button").disabled = true;
-			// setEmail("un email de confirmation vous a été envoyé sur votre email");
-		}
+	const handleChanges = () => {
+		// Cette fonction est exécutée lorsque le client appuye sur le bouton "Réinitialiser". Elle permet de réinitialiser le mot de passe du client.
+		// PRE: Récupère le mail du client.
+		// POST: Affiche un message pour informer l'utilisateur que un mail lui a été envoyé pour réinitialiser le mot de passe.
+
+		// Ici on fait apparaitre le message.
+		setMessage(!message);
+		// Et on désactive le bouton pour qu'il ne puisse plus appeler cette fonction.
+		document.getElementById("button").disabled = true;
 	};
 
+	// Ici, c'est toute la structure du composant forgotPassword.
 	return (
 		<Container>
 			<Header />
@@ -31,8 +34,8 @@ function ForgotPassword(props) {
 					<Form>
 						<Instruction>
 							<p>
-								Pour réinitialiser votre mot de passe, précisez l'adresse mail
-								du compte:
+								Pour réinitialiser votre mot de passe, précisez
+								l'adresse mail du compte:
 							</p>
 						</Instruction>
 						<Mail>
@@ -46,15 +49,21 @@ function ForgotPassword(props) {
 							/>
 						</Mail>
 						<Confirm>
-							<button type="button" onClick={handleChanges} id="button">
+							<button
+								type="button"
+								onClick={handleChanges}
+								id="button"
+							>
 								Réinitialiser
 							</button>
 						</Confirm>
-						{error && <Message style={{ color: "red" }}>{error}</Message>}
+						{error && (
+							<Message style={{ color: "red" }}>{error}</Message>
+						)}
 						{message && (
 							<Message>
-								Un mail à été envoyer à cette adresse pour réinitialiser le mot
-								de passe.
+								Un mail à été envoyer à cette adresse pour
+								réinitialiser le mot de passe.
 							</Message>
 						)}
 					</Form>

@@ -11,7 +11,14 @@ import {
 } from "@material-ui/core";
 
 function Home() {
+	// Ceci est une fonction de type composant React pour la page Home. C'est la première page sur laquelle n'importe quel utilisateur tombe quand il accède au site.
+	// PRE: -
+	// POST: Retourne la page Home.
+
 	function Item(item) {
+		// Cette fonction permet de créer une div avec les informations d'une image. Elle est utilisée par le caroussel.
+		// PRE: Un item correspondant à l'url de l'image
+		// POST: Retourne la div construite à partir de cette item
 		return (
 			<div className="__img__div">
 				<img alt="url" src={item.item["url"]} />
@@ -19,6 +26,7 @@ function Home() {
 		);
 	}
 
+	// C'est la liste des images qui seront affichées dans le caroussel sur la page d'accueil.
 	var items = [
 		{
 			pos: 0,
@@ -63,12 +71,12 @@ function Home() {
 	];
 
 	const [index, setIndex] = useState(0);
-
+	// Cette fonction est utilisée par le caroussel pour faire défiler les images
 	const handleChange = (cur, prev) => {
 		setIndex(cur);
-		// console.log(cur, prev);
 	};
 
+	// Ici, c'est toute la structure de la page home.
 	return (
 		<Container>
 			<Header />
@@ -78,32 +86,41 @@ function Home() {
 					<Questions>
 						<Part>
 							<Accordion>
-								<AccordionSummary>Qu'est ce que Car Rental ?</AccordionSummary>
+								<AccordionSummary>
+									Qu'est ce que Car Rental ?
+								</AccordionSummary>
 								<AccordionDetails>
-									Pro-CarRental est un site de location de voiture dont
-									l'entreprise est basée à Bruxelles. Ce site vous propose une
-									large variétée de véhicules pour toutes les gammes de prix. De
-									la sportive à la citadine, il y en pour tous les goûts et
-									budgets !
+									Pro-CarRental est un site de location de
+									voiture dont l'entreprise est basée à
+									Bruxelles. Ce site vous propose une large
+									variétée de véhicules pour toutes les gammes
+									de prix. De la sportive à la citadine, il y
+									en pour tous les goûts et budgets !
 								</AccordionDetails>
 							</Accordion>
 						</Part>
 						<Part>
 							<Accordion>
-								<AccordionSummary>Comment louer ?</AccordionSummary>
+								<AccordionSummary>
+									Comment louer ?
+								</AccordionSummary>
 								<AccordionDetails>
-									Pour louer une voiture, rien de plus simple ! Une fois votre
-									voiture choisie, il vous suffit de fournir votre carte
-									d'identité et votre permit de conduire. Un mail vous sera
+									Pour louer une voiture, rien de plus simple
+									! Une fois votre voiture choisie, il vous
+									suffit de fournir votre carte d'identité et
+									votre permit de conduire. Un mail vous sera
 									alors envoyé pour confirmer la location.
 								</AccordionDetails>
 							</Accordion>
 						</Part>
 						<Part>
 							<Accordion>
-								<AccordionSummary>Oû récupérer ma voiture ?</AccordionSummary>
+								<AccordionSummary>
+									Oû récupérer ma voiture ?
+								</AccordionSummary>
 								<AccordionDetails>
-									Pour récupérer votre voiture, allez voir Aymar au garage.
+									Pour récupérer votre voiture, allez voir
+									Aymar au garage.
 								</AccordionDetails>
 							</Accordion>
 						</Part>

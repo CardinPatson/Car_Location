@@ -36,7 +36,10 @@ function ModifyDetails(props) {
 	const [isEnableUpdate, setIsEnableUpdate] = useState(false);
 
 	const cancelChanges = () => {
-		// Cette fonction permet de
+		// Cette fonction permet d'annuller les changements fais par l'admin sur les inputs.
+		// PRE: Récupère les infos de la voitures par le props.
+		// POST: Remet les données dans les inputs à zéro.
+
 		setBrand(from.car["cars_brands"].brand);
 		setModel(from.car["cars_brands"].model);
 		setDoors(from.car["doors"]);
@@ -52,11 +55,21 @@ function ModifyDetails(props) {
 	};
 
 	const deleteCar = () => {
+		// Cette fonction permet de faire disparaitre le popUp de confirmation de suppression et de supprimer la voiture de la DB.
+		// PRE: -
+		// POST: Cache le popUp de confirmation et supprime la voiture.
+
+		// Cache le popUP.
 		setIsEnableDelete(false);
+
+		// Supprime la voiture de la DB.
 		props.deleteCars({ id: from.car["id"] });
 	};
 
 	const handleUpdate = () => {
+		// Cette fonction est exécutée lorsqu'on appuye sur le bouton "oui" du popUp de confirmation de modification de la voiture. Elle permet de changer les cractéristiques de la voiture par ce qui est indiqué dans les inputs.
+		// PRE: Récupère les valeurs des inputs
+		// POST: Affecte chaque valeur dans l'objet de la voiture.
 		from.car["cars_brands"].brand = brand;
 		from.car["cars_brands"].model = model;
 		from.car["doors"] = doors;
@@ -69,9 +82,12 @@ function ModifyDetails(props) {
 		from.car["color"] = color;
 		from.car["is_available"] = isAvailable;
 		from.car["price"] = price;
+
+		// Ici on envoie l'objet de la voiture modifié
 		props.modifyCarsProperty(from.car);
 	};
 
+	// Ici, c'est toute la structure de la page modifier les détails de la voiture.
 	return (
 		<Container>
 			<Header />

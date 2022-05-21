@@ -5,6 +5,28 @@ import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { render, screen } from "../test-utils";
 
+import app from "../../../../../backend/app";
+import request from "supertest";
+const chargeState = async () => {
+	const cars_state = await request(app).get("/api/cars/");
+	const images_state = await request(app).get("/api/cars/images");
+
+	console.log(cars_state);
+
+	return {
+		carState: {
+			cars: [cars_state],
+			images: [images_state],
+		},
+		userState: {},
+	};
+};
+let preloadedState = {};
+async () => {
+	preloadedState = await chargeState();
+	console.log(preloadedState);
+};
+
 //INITIAL STATE
 const initialState = {
 	cars: [
@@ -68,7 +90,7 @@ test("Get Legend", async () => {
 		<Router location={history.location} navigator={history}>
 			<AddCars />
 		</Router>,
-		{ initialState }
+		preloadedState
 	);
 	// const linkElement = screen.getAllByText("Ajouter une voiture");
 	// expect(linkElement).toBeInTheDocument();

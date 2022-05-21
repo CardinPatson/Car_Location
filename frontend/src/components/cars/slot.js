@@ -8,6 +8,11 @@ import "react-dates/lib/css/_datepicker.css";
 import { Link } from "react-router-dom";
 
 function Slot(props) {
+	// Ceci est une fonction de type composant React pour le composant slot. Ce dernier se situe dans la page d'accueil (home.js) et permet à l'utilisateur de préciser une date et une heure de réservation.
+	// PRE: -
+	// POST: Retourne un composant Slot.
+
+	// Voici les hooks dans lequels on va stocker les dates et heures données par le client.
 	const [focusedStart, setFocusedStart] = useState(false);
 	const [focusedEnd, setFocusedEnd] = useState(false);
 	const [startDate, setStartDate] = useState(moment());
@@ -15,30 +20,30 @@ function Slot(props) {
 	const [endDate, setEndDate] = useState(moment());
 	const [endTime, setEndTime] = useState("");
 	const [error, setError] = useState("");
-	// console.log(moment().format("LT"));
-
-	// console.log(moment().format("dddd, Do MMMM YYYY, h:mm:ss a"));
-	// console.log(typeof moment().format("dddd, Do MMMM YYYY, h:mm:ss a"));
 
 	function checkValues(e) {
-		//date actuelle
+		// Cette fonction permet de vérifier les valeurs entrées par le client.
+		// PRE: Récupère les valeurs précisées par l'utilisateur
+		// POST: Si une valeur est erronée, on retourne un message d'erreur.
+
+		// date actuelle
 		let currentDate = moment().format("D MMMM YYYY");
 		let currentDay = new window.Date(currentDate);
 
-		//date de début et de fin de location
+		// date de début et de fin de location
 		let startDateFormat = startDate.format("D MMMM YYYY");
 		let startDay = new window.Date(startDateFormat);
 		let endDateFormat = endDate.format("D MMMM YYYY");
 		let endDay = new window.Date(endDateFormat);
 
-		//heure actuelle
+		// heure actuelle
 		let currentHour = parseInt(startDate.format("LT").substring(0, 2));
 
 		//heure de début et fin de location
 		let startHour = parseInt(startTime.substring(0, 2));
 		let endHour = parseInt(endTime.substring(0, 2));
-		//CONDITION DE SOUMISSION
-		//si pas heure de début ou de fin erreur
+		// CONDITION DE SOUMISSION
+		// si pas heure de début ou de fin erreur
 		if (!endTime || !startTime) {
 			setError("Veuillez entrez une plage horaire valide !");
 			return 0;
@@ -52,7 +57,10 @@ function Slot(props) {
 			setError("Veuillez entrez une plage horaire valide !");
 			return 0;
 		}
-		if (endDay.getTime() === currentDay.getTime() && endHour <= currentHour) {
+		if (
+			endDay.getTime() === currentDay.getTime() &&
+			endHour <= currentHour
+		) {
 			setError("Veuillez entrez une plage horaire valide !");
 			return 0;
 		}
@@ -70,6 +78,9 @@ function Slot(props) {
 		return 1;
 	}
 	const handleClick = (e) => {
+		// Cette fonction est exécutée lorsque l'utilisateur appuye sur le bouton "Confirmer". Normallement, elle redirige vers la page cars.
+		// PRE: -
+		// POST: Si la vérification des champs ne passe pas, on ne redirige pas vers la page cars.
 		if (!checkValues(e)) {
 			e.preventDefault();
 			return;
@@ -79,6 +90,8 @@ function Slot(props) {
 		//props.getSlot(filterInfo);
 		//si requête ok redirection vers la page /cars
 	};
+
+	// Ici, c'est toute la structure du composant slot.
 	return (
 		<Container>
 			<Content>

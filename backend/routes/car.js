@@ -28,6 +28,6 @@ router.put("/:id", carCtrl.updateCar);
 router.delete("/:id", carCtrl.deleteCar);
 
 // TEST
-router.get("/test/:id", carCtrl.testCar);
+// router.get("/test/:id", carCtrl.testCar);
 
 module.exports = router;

@@ -5,12 +5,20 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 
 function Header(props) {
+	// Ceci est une fonction de type composant React pour le composant Header. Elle permet à l'utilisateur de naviguer entre les pages.
+	// PRE: -
+	// POST:  Retourne le composant Header.
+
+	//Ici, c'est toute la structure du composant Header.
 	return (
 		<Container>
 			<Content>
 				<Logo>
 					<a href="/">
-						<img src="./images/logo.svg" alt="Logo of car-rental's site" />
+						<img
+							src="./images/logo.svg"
+							alt="Logo of car-rental's site"
+						/>
 					</a>
 				</Logo>
 				<Nav>
@@ -22,10 +30,16 @@ function Header(props) {
 					</Link>
 					{props.firstName && props.status === "admin" ? (
 						<>
-							<Link to="/add-cars" style={{ textDecoration: "none" }}>
+							<Link
+								to="/add-cars"
+								style={{ textDecoration: "none" }}
+							>
 								<p>Ajouter voitures</p>
 							</Link>
-							<Link to="/add-administrator" style={{ textDecoration: "none" }}>
+							<Link
+								to="/add-administrator"
+								style={{ textDecoration: "none" }}
+							>
 								<p>Ajouter admin</p>
 							</Link>
 						</>

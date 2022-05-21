@@ -5,6 +5,14 @@ require("dotenv").config();
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
+/**
+ * Difference between two dates in dates
+ *
+ * @param {Date} date1 Departure date
+ * @param {Date} date2 Return date
+ *
+ * @returns {Number} Difference between two dates in days
+ */
 function differenceBetweenDates(date1, date2) {
     const diff = Math.abs(date2.getTime() - date1.getTime());
     return Math.ceil(diff / (1000 * 3600 * 24));
@@ -12,6 +20,14 @@ function differenceBetweenDates(date1, date2) {
 
 // const date1 = new Date("2022-12-17T13:24:00");
 
+/**
+ * Get all orders
+ *
+ * @param {Object} req Request
+ * @param {Object} res Response
+ *
+ * @returns {Object} All orders
+ */
 const getAllOrders = async (req, res) => {
     try {
         let ordersData;
@@ -107,6 +123,14 @@ const getAllOrders = async (req, res) => {
     }
 };
 
+/**
+ * Return a specific order by id
+ *
+ * @param {Object} req Request
+ * @param {Object} res Response
+ *
+ * @returns {Object} Order
+ */
 const getOrderById = async (req, res) => {
     try {
         const orderId = parseInt(req.params.order_id);
@@ -141,6 +165,15 @@ const getOrderById = async (req, res) => {
 };
 
 // return price of cars from date departure to date return
+
+/**
+ * Return price of cars from date departure to date return
+ *
+ * @param {Object} req Request
+ * @param {Object} res Response
+ *
+ * @returns {Object} Price of cars
+ */
 const getPrice = async (req, res) => {
     try {
         const carId = parseInt(req.params.car_id);
@@ -169,22 +202,14 @@ const getPrice = async (req, res) => {
     }
 };
 
-const isUserActive = async (id) => {
-    try {
-        const userData = await users.findByPk(id, {
-            attributes: ["is_active"]
-        });
-
-        if (userData.is_active) {
-            return userData.is_active;
-        } else {
-            throw new Error("user is not active");
-        }
-    } catch (error) {
-        throw new Error(error);
-    }
-};
-
+/**
+ * Create a new order
+ *
+ * @param {Object} req Request
+ * @param {Object} res Response
+ *
+ * @returns {Object} Order
+ */
 const addOrder = async (req, res) => {
     try {
         //NEST EFFECTUER QUE SI ON A TOUTES LES INFOS DU USER
@@ -231,6 +256,14 @@ const addOrder = async (req, res) => {
     }
 };
 
+/**
+ * Update an order
+ *
+ * @param {Object} req Request
+ * @param {Object} res Response
+ *
+ * @returns {Object} Order
+ */
 const updateOrder = async (req, res) => {
     try {
         const orderId = parseInt(req.params.order_id);
@@ -300,6 +333,14 @@ const PRICE_ID = "price_1KmyUUAid8mWK1L4RVC47QQ8";
 const CLIENT_MAIL = "bellaalirachid@gmail.com";
 const QUANTITY = 1;
 
+/**
+ * Initialize payment session with Stripe
+ *
+ * @param {Object} req Request
+ * @param {Object} res Response
+ *
+ * @returns {Object} Payment session
+ */
 const payement = async (req, res) => {
     const session = await stripe.checkout.sessions.create({
         customer_email: CLIENT_MAIL,
