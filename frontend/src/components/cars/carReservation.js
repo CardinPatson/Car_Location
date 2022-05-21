@@ -6,14 +6,22 @@ import { postPaymentPage } from "../../action/orderAction";
 import { connect } from "react-redux";
 
 function CarReservation(props) {
-	const location = useLocation();
+	// Ceci est une fonction de type composant React pour la page carReservation.
+	// PRE: -
+	// POST: retourne la page réservation de la voiture pour qu'elle soit affichée.
 
+	// Ces deux lignes permettent de récupérer les données transmisent pas le composant parent. Dans ce cas si, il transmet les données de la voiture que le client veux réserver.
+	const location = useLocation();
 	const { data } = location.state;
 
 	const handleReservation = () => {
+		// Cette fonction redirige vers la page de payement quand le client clique sur le bouton "Confirmer la location"
+		// PRE: -
+		// POST: Redirige vers la page de payement
 		props.paymentPage();
 	};
 
+	// Ici, c'est toute la structure de la page carReservation.
 	return (
 		<Container>
 			<Header />
@@ -31,7 +39,9 @@ function CarReservation(props) {
 								? data.car["cars_brands"].model
 								: "Modèle voiture"}
 						</Name>
-						<Type>{data.car.type ? data.car.type : "Sportive"}</Type>
+						<Type>
+							{data.car.type ? data.car.type : "Sportive"}
+						</Type>
 						<Ligne>
 							<div></div>
 						</Ligne>
@@ -39,15 +49,34 @@ function CarReservation(props) {
 							<div>Nombre de portes</div>
 							<p id="">{data.car.doors ? data.car.doors : "5"}</p>
 							<div>Taille du coffre</div>
-							<p id="">{data.car.boot_size ? data.car.boot_size : "100"}L</p>
+							<p id="">
+								{data.car.boot_size
+									? data.car.boot_size
+									: "100"}
+								L
+							</p>
 							<div>Energie</div>
-							<p id="">{data.car.energy ? data.car.energy : "Électrique"}</p>
+							<p id="">
+								{data.car.energy
+									? data.car.energy
+									: "Électrique"}
+							</p>
 							<div>Transmission</div>
-							<p id="">{data.car.is_automatic ? "Automatique" : "Manuelle"}</p>
+							<p id="">
+								{data.car.is_automatic
+									? "Automatique"
+									: "Manuelle"}
+							</p>
 							<div>Nombre de places</div>
-							<p id="">{data.car.passengers ? data.car.passengers : "3"}</p>
+							<p id="">
+								{data.car.passengers
+									? data.car.passengers
+									: "3"}
+							</p>
 							<div>Aire conditionnée</div>
-							<p id="">{data.car.air_conditioning ? "Oui" : "Non"}</p>
+							<p id="">
+								{data.car.air_conditioning ? "Oui" : "Non"}
+							</p>
 						</Specs>
 					</Detail>
 				</ZoneLeft>
@@ -56,7 +85,10 @@ function CarReservation(props) {
 						<Banner>Résumé de la réservation</Banner>
 						<Information>
 							<Date>
-								<p>La voiture sera réservée pendant la période suivante:</p>
+								<p>
+									La voiture sera réservée pendant la période
+									suivante:
+								</p>
 								<div>
 									<p>Du</p>
 									<span>01/01/01</span>
@@ -72,13 +104,18 @@ function CarReservation(props) {
 								</div>
 								<div>
 									<p>Par jour:</p>
-									<span>{data.car.price ? data.car.price : "100"}€</span>
+									<span>
+										{data.car.price
+											? data.car.price
+											: "100"}
+										€
+									</span>
 								</div>
 							</Price>
 							<Confirm>
 								<Check>
-									Je confirme vouloir louer cette voiture pendant la durée et
-									pour le prix précisé.
+									Je confirme vouloir louer cette voiture
+									pendant la durée et pour le prix précisé.
 									<input type="checkbox" />
 									<span></span>
 								</Check>

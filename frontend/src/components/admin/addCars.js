@@ -7,6 +7,12 @@ import { Link } from "react-router-dom";
 import Checkbox from "@mui/material/Checkbox";
 
 const AddCars = (props) => {
+	// Ceci est une fonction de type composant React pour la page AddCars.
+	// PRE: -
+	// POST: retourne la page ajouter voiture pour qu'elle soit affichée.
+
+	// Voici tous les hooks de la page.
+	// C'est dans ces derniers que l'on va stocker toutes les valeurs des champs, à chaque changement pour ces derniers.
 	const [name, setName] = useState("RS3_Gris-Nardo");
 	const [image, setImage] = useState([]);
 	const [brand, setBrand] = useState("Audi");
@@ -22,7 +28,11 @@ const AddCars = (props) => {
 	const [airCondition, setAirCondition] = useState(true);
 	const [isAutomatic, setIsAutomatic] = useState(true);
 	const [isAvailable, setIsAvailable] = useState(true);
+
+	// Dans se hooks, on stocke les url des images qui sont ajoutées par l'administrateur.
 	const [urlImage, setUrlImage] = useState([]);
+
+	// Ce hooks est utilisé pour l'affichage du popUp lorsqu'une voiture est ajoutée.
 	const [popUp, setPopUp] = useState(
 		localStorage.getItem("popup", true) === "true"
 	);
@@ -32,23 +42,31 @@ const AddCars = (props) => {
 	// } , [])
 
 	const removeImage = (e) => {
+		// Cette fonction permet d'enlever une image de la liste de celles actuellement ajoutées par l'administrateur.
+		// PRE: Récupère la liste des images.
+		// POST: Supprime l'image de la liste.
 		setImage(image.filter((x) => x !== e));
 	};
 
 	const handleImage = (e) => {
+		// Cette fonction est appellée lorqu'une image est ajoutée.
+		// PRE: Récupère la liste des url des images.
+		// POST: Rajoute l'url de l'image qui a été ajoutée par l'administrateur dans la liste des images.
 		const url = e.target.files[0];
-		// console.log(url);
 		if (!image) return;
 		setImage([...image, URL.createObjectURL(url)]);
 		setUrlImage([...urlImage, url]);
-		// console.log(urlImage);
 	};
 
 	const handeSubmit = (e) => {
-		//TODO Les verifications des champ du formulaire doivent être faite avant insertion
+		// Cette fonction est exécutée à chaque fois que le bouton "envoyer" est cliqué
+		// PRE: Récupère les valeurs des champs du formulaire.
+		// POST: Si aucune erreur n'est générée, elle envoie les données à la db pour ajouter la voiture.
+
+		// Le e.preventDefault() permet de contrer le comportement naturel de la page. Ce dernier impose un rafraichissement de la page une fois que le formulaire est complété.
 		e.preventDefault();
 
-		//supprime tous les messages d'erreur précédent
+		// Cette boucle permet de supprimer tous les messages d'erreur précédents.
 		for (
 			let i = 0;
 			i < document.getElementsByClassName("add__detail__cars").length;
@@ -58,6 +76,8 @@ const AddCars = (props) => {
 			let input_div = div.childNodes[1].childNodes;
 			if (input_div[0].innerHTML) input_div[0].innerHTML = "";
 		}
+
+		// Ici on stocke toutes les valeurs des hooks (et donc des champs) dans un objet. Si tous les tests de vérification passent, c'est cet objet qui sera envoyé avec la requête POST cars
 		const carProperty = {
 			name,
 			description,
@@ -76,6 +96,7 @@ const AddCars = (props) => {
 			image: urlImage,
 		};
 
+		// Ici on vérifie que chaque champ a été compléter, si ce n'est pas le cas, on qui la fonction handeSubmit() et on affiche un message d'erreur au niveau du champ concerné
 		for (
 			let i = 0;
 			i < document.getElementsByClassName("add__detail__cars").length;
@@ -90,8 +111,12 @@ const AddCars = (props) => {
 				return;
 			}
 		}
+
+		// Ici on va mettre la valeur du popUp à true dans le localStorage, pour pouvoir l'affichée après le rechargement de la page.
 		localStorage.setItem("popup", !popUp);
 		setPopUp(localStorage.getItem("popup"));
+
+		// C'est ici que l'on va envoyer les données à la DB. Le lien est fait avec REDUX.
 		props.addCars(carProperty);
 		// window.location.reload();
 
@@ -101,6 +126,7 @@ const AddCars = (props) => {
 	};
 	//INSERTION DE VOITURE DANS LA BASE DE DONNEES
 
+	// Ici, c'est toute la structure de la page addCars.
 	return (
 		<Container>
 			<Header />

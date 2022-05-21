@@ -5,6 +5,11 @@ import { registerAdmin } from "../../action/userAction";
 import Header from "../header";
 
 function Connexion(props) {
+	// Ceci est une fonction de type composant React pour la page addAdmin.
+	// PRE: -
+	// POST: retourne la page ajouter admin pour qu'elle soit affichée.
+
+	// Ici, on observe les hooks qui sont utilisé pour stocker les valuers des champs. Ils sont mis à jour à chaque fois qu'on change une valeur d'un champ.
 	const [emailAdmin, setEmailAdmin] = useState("");
 	const [emailUser, setEmailUser] = useState("");
 	const [passwordAdmin, setPasswordAdmin] = useState("");
@@ -15,11 +20,17 @@ function Connexion(props) {
 	const [passwordError, setPasswordError] = useState("");
 
 	function clearErrors() {
+		// Cette fonction permet, àchaque fois qu'on appuye sur le bouton pour envoiyer le formulaire, de nettoyer les précédents messages d'erreurs.
+		// PRE: -
+		// POST: Remet les précédents messages d'erreur à zéro.
 		setEmailError("");
 		setPasswordError("");
 	}
 
 	function checkValues() {
+		// Cette fonction permet, avant l'envoi des données, de vérifier les champs du formulaire afin qu'aucune données erronnées ne soit envoyé au Backend.
+		// PRE: Utilise les valeurs des champs du formulaire.
+		// POST: Retroune 1 et set une erreur si un champ n'est pas remplis correctement.
 		if (!emailAdmin && !emailUser) {
 			setEmailError("* Veuillez compléter le champ email");
 			return 1;
@@ -30,12 +41,17 @@ function Connexion(props) {
 		}
 		if (emailAdmin !== props.email) {
 			setEmailError("* Email administrateur incorrect");
+			return 1;
 		}
 	}
 
 	const handleConnexion = async (e) => {
+		// Cette fonction est exécutée à chaque fois que le bouton d'envoi du formulaire est cliqué.
+		// PRE: Récupère les valeurs des champs du formulaire.
+		// POST: Si tous les champs sont correctes, la fonction envoi les données à la DB.
 		e.preventDefault();
 		clearErrors();
+		// On crée un objet avec les valeurs des champs.
 		const connexionProperty = {
 			emailAdmin,
 			passwordAdmin,
@@ -43,16 +59,21 @@ function Connexion(props) {
 			passwordUser,
 			token: props.token,
 		};
+		// On effectue une vérification sur les champs du formulaire.
+		// Si tous les champs sont correctes on passe à la suite, sinon, on quitte la fonction handleConnexion.
 		if (checkValues() === 1) {
 			return;
 		}
+		// Ici, on essaye d'ajouter l'administrateur à la db.
 		const admin = await props.addAdmin(connexionProperty);
+		// Si l'insertion à échouée, on affiche un message d'erreur et on quitte la fonction handleConnexion.
 		if (!admin)
 			setError(
 				"Une erreur est survenue lors de l'insertion de l'administrateur! Veuillez réessayer!!"
 			);
 		return;
 	};
+	// Ici, c'est toute la structure de la page addAdmin.
 	return (
 		<SuperContainer>
 			<Header />
@@ -60,7 +81,11 @@ function Connexion(props) {
 				<Container>
 					<Content>
 						<Banner>Ajouter un administrateur</Banner>
-						{error ? <p style={{ color: "red" }}>{error}</p> : <></>}
+						{error ? (
+							<p style={{ color: "red" }}>{error}</p>
+						) : (
+							<></>
+						)}
 						<Form>
 							<Login>
 								<p>Votre email</p>
@@ -71,7 +96,11 @@ function Connexion(props) {
 										setEmailAdmin(e.target.value);
 									}}
 								/>
-								{emailError ? <p className="error">{emailError}</p> : ""}
+								{emailError ? (
+									<p className="error">{emailError}</p>
+								) : (
+									""
+								)}
 							</Login>
 							<Password>
 								<p>Votre Mot de passe</p>
@@ -82,7 +111,11 @@ function Connexion(props) {
 										setPasswordAdmin(e.target.value);
 									}}
 								/>
-								{passwordError ? <p className="error">{passwordError}</p> : ""}
+								{passwordError ? (
+									<p className="error">{passwordError}</p>
+								) : (
+									""
+								)}
 							</Password>
 							<Login>
 								<p>Email du nouvel administrateur</p>
@@ -93,7 +126,11 @@ function Connexion(props) {
 										setEmailUser(e.target.value);
 									}}
 								/>
-								{emailError ? <p className="error">{emailError}</p> : ""}
+								{emailError ? (
+									<p className="error">{emailError}</p>
+								) : (
+									""
+								)}
 							</Login>
 							<Password>
 								<p>Mot de passe du nouvel administrateur</p>
@@ -104,7 +141,11 @@ function Connexion(props) {
 										setPasswordUser(e.target.value);
 									}}
 								/>
-								{passwordError ? <p className="error">{passwordError}</p> : ""}
+								{passwordError ? (
+									<p className="error">{passwordError}</p>
+								) : (
+									""
+								)}
 							</Password>
 							<Confirm>
 								<button
@@ -116,7 +157,8 @@ function Connexion(props) {
 								</button>
 							</Confirm>
 							<p style={{ color: "red" }}>
-								⚠️Le nouvel administrateur doit posséder un compte
+								⚠️Le nouvel administrateur doit posséder un
+								compte
 							</p>
 						</Form>
 					</Content>

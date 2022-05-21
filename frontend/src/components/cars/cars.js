@@ -12,16 +12,29 @@ import moment from "moment";
 import "react-dates/lib/css/_datepicker.css";
 
 function Cars(props) {
+	// Ceci est une fonction de type composant React pour la page cars.
+	// PRE: -
+	// POST: retourne la page de la liste des voitures pour qu'elle soit affichée.
+
+	// Ici, ce sont tous les hooks contenant les valeurs des filtres.
+
+	// Voici les hooks pour les valeurs du filtre date.
 	const [focusedStart, setFocusedStart] = useState(false);
 	const [focusedEnd, setFocusedEnd] = useState(false);
 	const [startDate, setStartDate] = useState(moment());
 	const [startTime, setStartTime] = useState("");
 	const [endDate, setEndDate] = useState(moment());
 	const [endTime, setEndTime] = useState("");
+
+	// Ce hooks "error" sera utilisé quand le filtre date est sera mal rempli.
 	const [error, setError] = useState("");
+
+	// Ici les hooks pour le filtre prix.
 	const [maxPrice, setMaxPrice] = useState(0);
 	const [minPrice, setMinPrice] = useState(0);
 	const [sliderValue, setSliderValue] = useState(0);
+
+	// Et ici, les hooks pour le filtre marque/modèle.
 	const [fullBrandModel, setFullBrandModel] = useState([]);
 	const [currentModel, setCurrentModel] = useState([
 		{ model: "select a brand" },
@@ -29,8 +42,16 @@ function Cars(props) {
 	const [brandValue, setBrandValue] = useState("");
 	const [modelValue, setModelValue] = useState("");
 
+	// Dans le cas ou l'utilisateur arrive sur cette page par le biais de la page home et de son slot date, on récupère les dates préalablement sélectionnées.
 	const location = useLocation();
+
 	function manageBrandModal(cars) {
+		// Cette fonction gère les filtres en général.
+		// PRE: Récupère la liste des voitures affichées.
+		// POST: Règle les paramètres des filtres pour qu'ils soient adaptés aux voitures actuellement affichées.
+
+		// Dans le cas ou l'utilisateur arrive sur cette page par le biais de la page home et de son slot date, on récupère les dates préalablement sélectionnées.
+		// Ensuite on injecte ces données dans le filtre date.
 		if (location["state"]) {
 			let info = location["state"];
 			setStartDate(moment(new Date(info["startDate"]).toISOString()));
@@ -40,6 +61,8 @@ function Cars(props) {
 		}
 		let brandModel = [];
 
+		// Ici on gère la génération des select pour le filtre marque/modèle
+		// On va générer le select des marques
 		if (cars.length) {
 			for (let a = 0; a < cars.length; a++) {
 				if (
@@ -71,7 +94,12 @@ function Cars(props) {
 			setMaxPrice(max);
 		}
 	}
+
+	// Le useEffect est une fonction exécutée au chargement de la page
 	useEffect(() => {
+		// Cette fontion permet de récupérer la liste des voitures initiale.
+		// PRE: -
+		// POST: Effectue les requêtes pour réucpérer les voitures ainsi que les images de ces dernières.
 		props.getCars();
 		props.getCarsImages();
 
@@ -81,6 +109,7 @@ function Cars(props) {
 			manageBrandModal(props.cars);
 		}
 	}, []);
+
 	let carsImages = {};
 	if (props.images && props.images.length) {
 		for (let image of props.images) {
@@ -89,13 +118,17 @@ function Cars(props) {
 	}
 
 	function onChangeBrand(value) {
+		// Cette fonction permet de générer le select des modèles en focntion de la marque sélectionnée.
+		// PRE: Récupère la valeur de la marque actuellement sélectionnée.
+		// POST: Génère le select du modèle avec tous les modèles disponibles pour cette marque.
 		function onChangeBrandSubFunction(car) {
 			let test = [];
 			for (let i = 0; i < car.length; i++) {
 				if (
 					car[i]["cars_brands"]["brand"] === value &&
 					!test.some(
-						(model) => model["model"] === car[i]["cars_brands"]["model"]
+						(model) =>
+							model["model"] === car[i]["cars_brands"]["model"]
 					)
 				) {
 					test.push({ model: car[i]["cars_brands"]["model"] });
@@ -113,6 +146,11 @@ function Cars(props) {
 		return 1;
 	}
 	const handleClick = (e) => {
+		// Cette fonction est appellée à chaque fois que l'on clique sur le bouton "Appliquer".
+		// PRE: Récupère les valeurs des filtres.
+		// POST: Si les test sur les dites valeurs passent, la liste des voitures est triée.
+
+		// Le e.preventDefault() permet de contrer le comportement naturel de la page. Ce dernier impose un rafraichissement de la page une fois que le formulaire est complété.
 		e.preventDefault();
 		//date actuelle
 		let currentDate = moment().format("D MMMM YYYY");
@@ -146,7 +184,10 @@ function Cars(props) {
 			setError("Veuillez entrez une plage horaire valide !");
 			return;
 		}
-		if (endDay.getTime() === currentDay.getTime() && endHour <= currentHour) {
+		if (
+			endDay.getTime() === currentDay.getTime() &&
+			endHour <= currentHour
+		) {
 			setError("Veuillez entrez une plage horaire valide !");
 			return;
 		}
@@ -161,14 +202,20 @@ function Cars(props) {
 			setError("L'heure d'ouverture du magazin est de 8:00 a 19:00 !!");
 			return;
 		}
+
+		// Une fois les test passé on met les paramètres du filtres dans un objet "filterInfo".
 		const filterInfo = {
 			startDate: startDateFormat,
 			endDate: endDateFormat,
 			startTime: startTime,
 			endTime: endTime,
 		};
+
+		// Pour finir, on vas chercher les voitures triées selon les honoraires fournis.
 		props.getCarsByDate(filterInfo);
 	};
+
+	// Ici, c'est toute la structure de la page cars.
 	return (
 		<Container>
 			<Content>
@@ -208,7 +255,10 @@ function Cars(props) {
 								{fullBrandModel.length ? (
 									fullBrandModel.map((info) => {
 										return (
-											<option value={info.brand} key={info.brand}>
+											<option
+												value={info.brand}
+												key={info.brand}
+											>
 												{info.brand}
 											</option>
 										);
@@ -228,7 +278,10 @@ function Cars(props) {
 								{currentModel.length ? (
 									currentModel.map((info) => {
 										return (
-											<option value={info["model"]} key={info["model"]}>
+											<option
+												value={info["model"]}
+												key={info["model"]}
+											>
 												{info["model"]}
 											</option>
 										);
@@ -241,7 +294,11 @@ function Cars(props) {
 					</Brand>
 					<div className="slot">
 						<h5>Période de location</h5>
-						{error ? <p style={{ color: "red" }}>{error}</p> : <></>}
+						{error ? (
+							<p style={{ color: "red" }}>{error}</p>
+						) : (
+							<></>
+						)}
 						<form className="slot__range">
 							<div className="slot__time__left">
 								<p>Du</p>
@@ -304,13 +361,21 @@ function Cars(props) {
 						{props.carsByDates && props.carsByDates.length ? (
 							props.carsByDates.map((car) => {
 								return (
-									<CarSlot key={car.id} car={car} images={carsImages[car.id]} />
+									<CarSlot
+										key={car.id}
+										car={car}
+										images={carsImages[car.id]}
+									/>
 								);
 							})
 						) : props.cars && props.cars.length ? (
 							props.cars.map((car) => {
 								return (
-									<CarSlot key={car.id} car={car} images={carsImages[car.id]} />
+									<CarSlot
+										key={car.id}
+										car={car}
+										images={carsImages[car.id]}
+									/>
 								);
 							})
 						) : (

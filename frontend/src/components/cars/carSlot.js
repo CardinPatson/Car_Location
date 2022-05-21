@@ -4,6 +4,11 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 const CarSlot = (props) => {
+	// Ceci est une fonction de type composant React pour le composant carSLot. Ce composant correspond à chaque voitures générées dans la liste des voitures de la page cars.
+	// PRE: -
+	// POST: retourne un composant carSlot à partir des informations données par le props.
+
+	// Ici, c'est toute la structure du composant carSlot.
 	return (
 		<Container>
 			<Content>
@@ -19,7 +24,8 @@ const CarSlot = (props) => {
 				</Pic>
 				<Info>
 					<Name>
-						{props.car.cars_brands.brand} {props.car.cars_brands.model}
+						{props.car.cars_brands.brand}{" "}
+						{props.car.cars_brands.model}
 					</Name>
 					<Specs>
 						<div>Type</div>
@@ -28,7 +34,11 @@ const CarSlot = (props) => {
 						<p>{props.car.energy}</p>
 						<div>Places</div>
 						<p>{props.car.passengers}</p>
-						<div>{props.car.is_automatic ? "Automatique" : "Manuelle"}</div>
+						<div>
+							{props.car.is_automatic
+								? "Automatique"
+								: "Manuelle"}
+						</div>
 					</Specs>
 				</Info>
 				<Price>
@@ -39,18 +49,20 @@ const CarSlot = (props) => {
 					<Details>
 						<div>
 							<Link to="/carDetails" state={{ from: props }}>
-								<button className="details__button">Détails</button>
+								<button className="details__button">
+									Détails
+								</button>
 							</Link>
 						</div>
 
+						{/* Si c'est l'administrateur qui est sur la page, on lui permet de voir le bouton pour modifier le voiture. */}
 						{props.status === "admin" && (
 							<Link to="/modifyDetails" state={{ from: props }}>
-								<button className="modify__button">Modifier</button>
+								<button className="modify__button">
+									Modifier
+								</button>
 							</Link>
 						)}
-						{/* <div className="car__detail" style={{ display: "none" }}>
-							<CarDetails props={props} />
-						</div> */}
 					</Details>
 				</Price>
 			</Content>

@@ -35,15 +35,17 @@ describe("POST /api/users", async () => {
 		const response = await request(server)
 			.post("/api/users")
 			.send(shouldAddUser);
+		console.log(response);
 		expect(response.status).to.equal(200);
 		expect(response.request._data).to.deep.include(shouldAddUser);
 	});
 
+	// Problème: Quand on add un user qui existe déjà, il restourne un code 200
 	it("Should fail to insert an existing users", async () => {
 		const response = await request(server)
 			.post("/api/users")
 			.send(shouldNotAddExistingUser);
-		expect(response.status).to.equal(500);
+		expect(response.status).to.equal(409);
 		expect(response.body).to.deep.include(shouldReturnErrorExistingUser);
 	});
 });

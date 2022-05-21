@@ -6,11 +6,18 @@ import Carousel from "react-material-ui-carousel";
 import { useState } from "react";
 
 function CarDetails(props) {
-	const location = useLocation();
+	// Ceci est une fonction de type composant React pour la page carDetails.
+	// PRE: -
+	// POST: retourne la page détails de la voiture pour qu'elle soit affichée.
 
+	// Ces deux lignes permettent de récupérer les données transmisent pas le composant parent. Dans ce cas si, il transmet les données de la voiture de laquelle le client à souhaité voir les détails.
+	const location = useLocation();
 	const { from } = location.state;
 
 	function Item(item) {
+		// Cette fonction permet de créer une div avec les informations d'une image. Elle est utilisée par le caroussel.
+		// PRE: Un item correspondant à l'url de l'image
+		// POST: Retourne la div construite à partir de cette item
 		return (
 			<div className="__img__div">
 				<img src={item["item"]} alt="Caroussel" />
@@ -18,8 +25,13 @@ function CarDetails(props) {
 		);
 	}
 
+	// On récupère les images de la v oiture transmises par le parent.
 	var items = from.images;
+
 	const test = () => {
+		// Cette fonction test permet de tester si la liste des images est vide ou pas. Le but étant de ne pas afficher d'images si la liste est vide et de ne pas utiliser le défilement du caroussel si la liste ne contient qu'une image.
+		// PRE: Utilise la liste des images
+		// POST: Retourne false si la liste contient 1 ou 0 images, et retourne true dans le cas contraire
 		if (items) {
 			if (items.length <= 1) {
 				return false;
@@ -27,12 +39,18 @@ function CarDetails(props) {
 			return true;
 		}
 	};
+
 	const [index, setIndex] = useState(0);
+
+	// Donc ici, on désactive le défilement du caroussel si il y a aucune ou 1 seule image.
 	let swapIndicators = test;
 
+	// Cette fonction est utilisée par le caroussel pour faire défiler les images
 	const handleChange = (cur, prev) => {
 		setIndex(cur);
 	};
+
+	// Ici, c'est toute la structure de la page carDetails.
 	return (
 		<Container>
 			<Header />
@@ -54,15 +72,27 @@ function CarDetails(props) {
 								</div>
 								<LineRight>
 									<div>
-										<p>{from.car.type ? from.car.type : "Sportive"}</p>
+										<p>
+											{from.car.type
+												? from.car.type
+												: "Sportive"}
+										</p>
 									</div>
 								</LineRight>
 							</Name>
 							<DetailTable>
 								<Specs>
 									<div>
-										<img src="./images/icons/door.svg" alt="door_icon" />
-										<p>{from.car.doors ? from.car.doors : "5"} portes</p>
+										<img
+											src="./images/icons/door.svg"
+											alt="door_icon"
+										/>
+										<p>
+											{from.car.doors
+												? from.car.doors
+												: "5"}{" "}
+											portes
+										</p>
 									</div>
 									<div>
 										<img
@@ -70,8 +100,10 @@ function CarDetails(props) {
 											alt="suitcase icon"
 										/>
 										<p>
-											{from.car.boot_size ? from.car.boot_size : "100"}L pour le
-											coffre
+											{from.car.boot_size
+												? from.car.boot_size
+												: "100"}
+											L pour le coffre
 										</p>
 									</div>
 									<div>
@@ -79,21 +111,46 @@ function CarDetails(props) {
 											src="./images/icons/lightning.svg"
 											alt="lightning_icon"
 										/>
-										<p>{from.car.energy ? from.car.energy : "Électrique"}</p>
+										<p>
+											{from.car.energy
+												? from.car.energy
+												: "Électrique"}
+										</p>
 									</div>
 								</Specs>
 								<Specs>
 									<div>
-										<img src="./images/icons/stick.svg" alt="stick_icon" />
-										<p>{from.car.is_automatic ? "Automatique" : "Manuelle"}</p>
+										<img
+											src="./images/icons/stick.svg"
+											alt="stick_icon"
+										/>
+										<p>
+											{from.car.is_automatic
+												? "Automatique"
+												: "Manuelle"}
+										</p>
 									</div>
 									<div>
-										<img src="./images/icons/seat.svg" alt="seat_icon" />
-										<p>{from.car.passengers ? from.car.passengers : "3"}</p>
+										<img
+											src="./images/icons/seat.svg"
+											alt="seat_icon"
+										/>
+										<p>
+											{from.car.passengers
+												? from.car.passengers
+												: "3"}
+										</p>
 									</div>
 									<div>
-										<img src="./images/icons/air.svg" alt="air_icon" />
-										<p>{from.car.air_conditioning ? "Oui" : "Non"}</p>
+										<img
+											src="./images/icons/air.svg"
+											alt="air_icon"
+										/>
+										<p>
+											{from.car.air_conditioning
+												? "Oui"
+												: "Non"}
+										</p>
 									</div>
 								</Specs>
 							</DetailTable>
@@ -109,10 +166,15 @@ function CarDetails(props) {
 								swipe
 								className="__carousel"
 							>
-								{items && items.map((item, i) => <Item key={i} item={item} />)}
+								{items &&
+									items.map((item, i) => (
+										<Item key={i} item={item} />
+									))}
 							</Carousel>
 							<Price>
-								<p>{from.car.price ? from.car.price : "100"}€</p>
+								<p>
+									{from.car.price ? from.car.price : "100"}€
+								</p>
 								<div>/jour</div>
 								<Link
 									to="/carReservation"
