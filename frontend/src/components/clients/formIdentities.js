@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../header";
 import styled from "styled-components";
 
-function formIdentities(props) {
+function FormIdentities(props) {
+	// Ceci est une fonction de type composant React pour la page formIdentities. Elle permet à l'utilisateur de modifier ou ajouter des informations personnelles.
+	// PRE: -
+	// POST:  Retourne la page formIdentities.
+
+	// Ici on a tous les hooks utilisés pour stocker les valeurs des inputs
+	const [name, setName] = useState("");
+	const [secondName, setSecondName] = useState("");
+	const [civility, setCivility] = useState("");
+	const [phoneNumber, setPhoneNumber] = useState("");
+	const [email, setEmail] = useState("");
+	const [adress, setAdress] = useState("");
+	const [postalCode, setPostalCode] = useState("");
+	const [location, setLocation] = useState("");
+
+	const [identCardLink, setIdentCardLink] = useState("");
+	const [drivingLincenseLink, setDrivingLincenseLink] = useState("");
+
+	// Ici, c'est toute la structure de la page formIdentities.
 	return (
 		<Container>
 			<Header />
@@ -17,40 +35,86 @@ function formIdentities(props) {
 								<SpecsColumn>
 									<OneSpec>
 										<div>Nom:</div>
-										<input type="text" />
+										<input
+											type="text"
+											value={name}
+											onChange={(e) => {
+												setName(e.target.value);
+											}}
+										/>
 									</OneSpec>
 									<OneSpec>
 										<div>Civilité:</div>
-										<input type="text" />
+										<input
+											type="text"
+											value={civility}
+											onChange={(e) => {
+												setCivility(e.target.value);
+											}}
+										/>
 									</OneSpec>
 									<OneSpec>
 										<div>Address email:</div>
 										<input
 											type="text"
-											placeholder="xyz@mail.com"
+											value={email}
+											onChange={(e) => {
+												setEmail(e.target.value);
+											}}
 										/>
 									</OneSpec>
 									<OneSpec>
 										<div>Code postal:</div>
-										<input type="text" />
+										<input
+											type="text"
+											value={postalCode}
+											onChange={(e) => {
+												setPostalCode(e.target.value);
+											}}
+										/>
 									</OneSpec>
 								</SpecsColumn>
 								<SpecsColumn>
 									<OneSpec>
 										<div>Prenom:</div>
-										<input type="text" />
+										<input
+											type="text"
+											value={secondName}
+											onChange={(e) => {
+												setSecondName(e.target.value);
+											}}
+										/>
 									</OneSpec>
 									<OneSpec>
 										<div>Tél:</div>
-										<input type="text" placeholder="+32" />
+										<input
+											type="text"
+											placeholder="+32"
+											value={phoneNumber}
+											onChange={(e) => {
+												setPhoneNumber(e.target.value);
+											}}
+										/>
 									</OneSpec>
 									<OneSpec>
 										<div>Address:</div>
-										<input type="text" placeholder="Rue" />
+										<input
+											type="text"
+											placeholder="Rue"
+											value={adress}
+											onChange={(e) => {
+												setAdress(e.target.value);
+											}}
+										/>
 									</OneSpec>
 									<OneSpec className="selectStyle">
 										<div>Ville:</div>
-										<select>
+										<select
+											value={location}
+											onChange={(e) => {
+												setLocation(e.target.value);
+											}}
+										>
 											<option>Namur</option>
 											<option>Liège</option>
 											<option>Luxembourg</option>
@@ -296,4 +360,4 @@ const Buttons = styled.div`
 		cursor: pointer;
 	}
 `;
-export default formIdentities;
+export default FormIdentities;
