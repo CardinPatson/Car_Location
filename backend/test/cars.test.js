@@ -16,13 +16,13 @@ const shouldAddCars = {
 	color: "okooo",
 	doors: 5,
 	bootSize: 140,
-	type: "okooo",
-	energy: "okooo",
+	type: "SUV",
+	energy: "Essence",
 	isAutomatic: true,
 	isAvailable: true,
 	passengers: 5,
 	airConditioning: true,
-	description: "okooo",
+	description: "okooo est une belle voiture",
 };
 
 const shouldGetCars = {
@@ -33,13 +33,13 @@ const shouldGetCars = {
 	color: "okooo",
 	doors: 5,
 	boot_size: 140,
-	type: "okooo",
-	energy: "okooo",
+	type: "SUV",
+	energy: "Essence",
 	is_automatic: true,
 	air_conditioning: true,
 	is_available: true,
 	passengers: 5,
-	description: "okooo",
+	description: "okooo est une belle voiture",
 	number_plate: null,
 	year: null,
 	mileage: null,
@@ -66,6 +66,7 @@ describe("POST /api/cars", async () => {
 describe("GET /api/cars", async () => {
 	it("Should return all cars", async () => {
 		const response = await request(server).get("/api/cars/");
+		console.log(response.body);
 		expect(response.status).to.equal(200);
 		expect(response.redirect).to.equal(false);
 		expect(response.body).to.deep.include(shouldGetCars);

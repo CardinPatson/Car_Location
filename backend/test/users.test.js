@@ -11,15 +11,15 @@ const { omit } = require("lodash");
 const { expect } = chai;
 
 const shouldAddUser = {
-	firstName: "test",
-	lastName: "exemple1",
-	password: "Exemple1234",
-	email: "test.exemple1@gmail.com",
+	firstName: "toto",
+	lastName: "exemple",
+	password: "Exemple@1234",
+	email: "toto.exemple@gmail.com",
 };
 const shouldNotAddExistingUser = {
 	firstName: "test",
 	lastName: "toto",
-	password: "Toto1234",
+	password: "Toto@1234",
 	email: "test.toto@gmail.com",
 };
 
@@ -43,15 +43,16 @@ describe("POST /api/users", async () => {
 		const response = await request(server)
 			.post("/api/users")
 			.send(shouldNotAddExistingUser);
-		expect(response.status).to.equal(500);
+		console.log(response.body);
+		expect(response.status).to.equal(200);
 		expect(response.body).to.deep.include(shouldReturnErrorExistingUser);
 	});
 });
 
 describe("POST /api/users/google", async () => {
 	const shouldAddGoogleUser = {
-		userName: "exemple2",
-		userMail: "test.exemple2@gmail.com",
+		userName: "titi",
+		userMail: "titi.exemple@gmail.com",
 	};
 	it("it should add google user", async () => {
 		//Don't know how to generate a token identification for goolgle
@@ -84,8 +85,8 @@ describe("POST /api/users/google", async () => {
 describe("GET /api/users", async () => {
 	it("Should get user", async () => {
 		const response = await request(server).get("/api/users/").query({
-			email: "test.exemple1@gmail.com",
-			password: "Exemple1234",
+			email: "toto.exemple@gmail.com",
+			password: "Exemple@1234",
 		});
 		expect(response.statusCode).to.equal(200);
 		expect(response.body.user.first_name).to.deep.include(
