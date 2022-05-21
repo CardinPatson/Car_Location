@@ -2,14 +2,13 @@ version: "3"
 
 services:
     db:
-        build: ./database/
+        image: postgres:14.3
         restart: always
-        environment:
-            - POSTGRES_DB=${DB_NAME}
-            - POSTGRES_USER=${DB_USERNAME}
-            - POSTGRES_PASSWORD=${DB_PASSWORD}
         volumes:
             - /var/lib/postgresql/data
+        environment:
+            - POSTGRES_USER=${DB_USERNAME}
+            - POSTGRES_PASSWORD=${DB_PASSWORD}
         networks:
             my_network:
                 ipv4_address: 192.168.0.2
