@@ -8,8 +8,31 @@ import { Router } from "react-router-dom";
 import carReducer from "../../../reducer/carReducer";
 import { addCarsImagesInfo, addCarsInfo } from "../../../action/carAction";
 
-import { rest } from "msw";
-import { setupServer } from "msw/node";
+// import { rest } from "msw";
+// import { setupServer } from "msw/node";
+
+import app from "../../../../../backend/app";
+import request from "supertest";
+
+const chargeState = async () => {
+	const cars_state = await request(app).get("/api/cars/");
+	const images_state = await request(app).get("/api/cars/images");
+
+	console.log(cars_state);
+
+	return {
+		carState: {
+			cars: [cars_state],
+			images: [images_state],
+		},
+		userState: {},
+	};
+};
+let preloadedState = {};
+async () => {
+	preloadedState = await chargeState();
+	console.log(preloadedState);
+};
 
 // We use msw to intercept the network request during the test,
 const initialState = { cars: [], images: [], filterCars: [] };
@@ -97,7 +120,7 @@ test("Get Cars", async () => {
 		<Router location={history.location} navigator={history}>
 			<Cars />
 		</Router>,
-		{ carProperty }
+		preloadedState
 	);
 
 	const clickHandler = jest.fn((evt) => {
