@@ -8,6 +8,6 @@ COPY . .
 
 EXPOSE 3001
 
-RUN npm install -y
+RUN npm install -y && apt update && apt install net-tools nano -y
 
 CMD npm start

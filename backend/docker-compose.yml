@@ -20,7 +20,7 @@ services:
             - db
         ports:
             - ${APP_PORT}:3001
-        command: npm start
+        # command: npm start
         volumes:
             - .:/app/
             - /app/node_modules
