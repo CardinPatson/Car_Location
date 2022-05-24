@@ -1,0 +1,5 @@
+{
+	"test": "cross-env NODE_ENV=test react-scripts test --detectOpenHandles",
+	"db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all --seeders-path ../backend/database/seeders/test",
+	"pretest": "cross-env NODE_ENV=test npm run db:reset"
+}
