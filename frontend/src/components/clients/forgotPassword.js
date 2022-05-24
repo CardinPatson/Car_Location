@@ -10,7 +10,6 @@ function ForgotPassword(props) {
 
 	// Ce sont les hooks utilisés pour stocker les valeurs du formulaire ainsi que les potentiels messages d'erreur.
 	const [message, setMessage] = useState(false);
-	const [error, setError] = useState("");
 	const [email, setEmail] = useState("");
 
 	const handleChanges = () => {
@@ -57,8 +56,8 @@ function ForgotPassword(props) {
 								Réinitialiser
 							</button>
 						</Confirm>
-						{error && (
-							<Message style={{ color: "red" }}>{error}</Message>
+						{message && (
+							<Message style={{ color: "red" }}>{message}</Message>
 						)}
 						{message && (
 							<Message>

@@ -1,7 +1,7 @@
 //action import
 import { addCarsInfo, addCarsImagesInfo } from "../action/carAction";
 import { carsSortedWithDate } from "../action/orderAction";
-import { createReducer, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 //FAIRE DU STATE INITIALE UN TABLEAU VIDE
 
@@ -26,10 +26,10 @@ const initialState = { cars: [], images: [], filterCars: [] };
 //L'action addCars ne renvoie rien mais déclenchera une rafraichissement pour prendre en compte le nouveau véhicule rajouté
 
 //CE REDUCER SERA UTILISE DANS LE CAS DUNE RECUPERATION DE VOITURE POUR LA SAUVEGARDE DE LETAT DES VOITURES EN LOCALE
-	const carReducer = createSlice({
-		name: "cars",
-		initialState: initialState,
-		reducers: {},
+const carReducer = createSlice({
+	name: "cars",
+	initialState: initialState,
+	reducers: {},
 	extraReducers: (builder) => {
 		builder
 			.addCase(addCarsInfo, (state, action) => {
@@ -45,7 +45,9 @@ const initialState = { cars: [], images: [], filterCars: [] };
 				let tempId = [];
 				let tempArray = [];
 				//GET ALL ID CARS NOT AVAILABLE
-				action.payload.carsByDates.forEach((x) => tempId.push(x.car_id));
+				action.payload.carsByDates.forEach((x) =>
+					tempId.push(x.car_id)
+				);
 
 				//PUSH CAR THAT NOT CORRESPOND
 				for (let car of action.payload.oldStateCars) {

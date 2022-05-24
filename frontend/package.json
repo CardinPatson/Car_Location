@@ -59,8 +59,12 @@
 		]
 	},
 	"devDependencies": {
+		"@cypress/react": "^5.12.5",
+		"@cypress/webpack-dev-server": "^1.8.4",
 		"@testing-library/dom": "^8.13.0",
 		"@testing-library/react": "^12.1.2",
-		"jest": "^28.1.0"
+		"cypress": "^9.7.0",
+		"jest": "^28.1.0",
+		"webpack-dev-server": "^4.9.0"
 	}
 }

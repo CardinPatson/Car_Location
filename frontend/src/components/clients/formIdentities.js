@@ -17,8 +17,8 @@ function FormIdentities(props) {
 	const [postalCode, setPostalCode] = useState("");
 	const [location, setLocation] = useState("");
 
-	const [identCardLink, setIdentCardLink] = useState("");
-	const [drivingLincenseLink, setDrivingLincenseLink] = useState("");
+	// const [identCardLink, setIdentCardLink] = useState("");
+	// const [drivingLincenseLink, setDrivingLincenseLink] = useState("");
 
 	// Ici, c'est toute la structure de la page formIdentities.
 	return (
