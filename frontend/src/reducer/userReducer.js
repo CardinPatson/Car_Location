@@ -57,6 +57,7 @@ const userReducer = createSlice({
 			})
 			.addCase(clearUserInfo, (state, payload) => {
 				state = initialState;
+
 				return state;
 			})
 			.addDefaultCase((state, action) => {});

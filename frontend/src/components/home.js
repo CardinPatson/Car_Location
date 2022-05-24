@@ -30,43 +30,43 @@ function Home() {
 	var items = [
 		{
 			pos: 0,
-			url: "./images/car_10.jpg",
+			url: "/images/car_10.jpg",
 		},
 		{
 			pos: 1,
-			url: "./images/car_6.jpg",
+			url: "/images/car_6.jpg",
 		},
 		{
 			pos: 2,
-			url: "./images/car_7.jpg",
+			url: "/images/car_7.jpg",
 		},
 		{
 			pos: 3,
-			url: "./images/car_8.jpg",
+			url: "/images/car_8.jpg",
 		},
 		{
 			pos: 4,
-			url: "./images/car_9.jpg",
+			url: "/images/car_9.jpg",
 		},
 		{
 			pos: 5,
-			url: "./images/car_1.jpg",
+			url: "/images/car_1.jpg",
 		},
 		{
 			pos: 6,
-			url: "./images/car_2.jpg",
+			url: "/images/car_2.jpg",
 		},
 		{
 			pos: 7,
-			url: "./images/car_5.jpg",
+			url: "/images/car_5.jpg",
 		},
 		{
 			pos: 8,
-			url: "./images/car_4.jpg",
+			url: "/images/car_4.jpg",
 		},
 		{
 			pos: 9,
-			url: "./images/car_11.jpg",
+			url: "/images/car_11.jpg",
 		},
 	];
 

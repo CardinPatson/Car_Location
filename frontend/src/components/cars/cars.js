@@ -134,20 +134,20 @@ function Cars(props) {
 		[location, onChangeBrand]
 	);
 
-	props.getCars();
-	props.getCarsImages();
 	// Le useEffect est une fonction exécutée au chargement de la page
 	useEffect(() => {
 		// Cette fontion permet de récupérer la liste des voitures initiale.
 		// PRE: -
 		// POST: Effectue les requêtes pour réucpérer les voitures ainsi que les images de ces dernières.
+		props.getCars();
+		props.getCarsImages();
 
 		if (props.carsByDates && props.carsByDates.length) {
 			manageBrandModal(props.carsByDates);
 		} else {
 			manageBrandModal(props.cars);
 		}
-	}, [manageBrandModal, props.carsByDates, props.cars]);
+	}, []);
 
 	let carsImages = {};
 	if (props.images && props.images.length) {

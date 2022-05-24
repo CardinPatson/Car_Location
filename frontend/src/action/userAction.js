@@ -10,7 +10,7 @@ import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
 import Axios from "axios";
 // const DOMAIN_NAME = `http://${process.env.REACT_APP_URL}:${process.env.APP_PORT}`;
-const DOMAIN_NAME = `http://${process.env.REACT_APP_URL}`;
+const DOMAIN_NAME = `${process.env.REACT_APP_URL}`;
 export const addUserRegisterInfo = createAction(
 	ADD_USER_REGISTER,
 	function prepare(user) {
@@ -113,6 +113,7 @@ export const googleSignIn = createAsyncThunk(
 				console.error(err);
 			});
 			window.location.pathname = "/";
+			console.log(response);
 			thunkAPI.dispatch(
 				addUserSignInInfo({
 					user: response.data.user,
@@ -136,7 +137,6 @@ export const registerAdmin = createAsyncThunk(
 				emailAdmin: arg.emailAdmin,
 				passwordAdmin: arg.passwordAdmin,
 				emailUser: arg.emailUser,
-				passwordUser: arg.passwordUser,
 			},
 			{
 				headers: {

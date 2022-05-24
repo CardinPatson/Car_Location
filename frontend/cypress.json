@@ -1,9 +1,8 @@
 {
-	"testFiles": "cypress/integration/*.spec.js",
 	"component": {
-		"testFiles": "**/*.test.{js,jsx,ts,tsx}",
-		"componentFolder": "src",
-		"viewportHeight": 500,
-		"viewportWidth": 700
+		"testFiles": "**/*.{test,spec}.{js,jsx,ts,tsx}",
+		"componentFolder": "cypress",
+		"viewportHeight": 1000,
+		"viewportWidth": 1300
 	}
 }
