@@ -1,8 +1,8 @@
 "use strict";
 const firebaseAdmin = require("firebase-admin");
 
-// const { initializeApp } = require("firebase-admin/app");
-// const auth = require("firebase-admin/auth/index.d.ts");
+const { initializeApp } = require("firebase-admin/app");
+const { getAuth } = require("firebase-admin/auth");
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -17,7 +17,7 @@ const firebaseConfig = {
 	measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 // console.log(firebaseConfig);
-const app = firebaseAdmin.initializeApp(firebaseConfig);
-// const defaultAuth = auth.getAuth();
+const app = initializeApp(firebaseConfig);
+const defaultAuth = getAuth();
 
-module.exports = app;
+module.exports = defaultAuth;

@@ -8,7 +8,7 @@ const usersRoute = require("./routes/users");
 const adminsRoute = require("./routes/admin");
 const app = express();
 
-const serverExpress = async (app) => {
+const serverExpress = (app) => {
 	//middleware
 	app.use(cors());
 	app.use(
@@ -49,8 +49,8 @@ const serverExpress = async (app) => {
 	app.use("/api/users", usersRoute);
 	app.use("/api/admins", adminsRoute);
 };
-async () => {
-	await serverExpress(app);
-};
-
+// async () => {
+// await
+// };
+serverExpress(app);
 module.exports = app;
