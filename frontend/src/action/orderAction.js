@@ -1,10 +1,10 @@
-import { GET_ORDERS_BY_DATE } from "./actionTypes";
+import { ADD_ORDER, GET_ORDERS_BY_DATE } from "./actionTypes";
 import { GET_PAYMENT } from "./actionTypes";
 
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "axios";
 // const DOMAIN_NAME = `http://${process.env.REACT_APP_URL}:${process.env.APP_PORT}`;
-const DOMAIN_NAME = `http://${process.env.REACT_APP_URL}`;
+const DOMAIN_NAME = `${process.env.REACT_APP_URL}`;
 
 export const carsSortedWithDate = createAction(
 	GET_ORDERS_BY_DATE,
@@ -29,7 +29,35 @@ export const getOrdersInfoByDates = createAsyncThunk(
 			console.err(err);
 		});
 		const oldStateCars = thunkAPI.getState().carState.cars;
-		thunkAPI.dispatch(carsSortedWithDate(carsList.data.orders, oldStateCars));
+		thunkAPI.dispatch(
+			carsSortedWithDate(carsList.data.orders, oldStateCars)
+		);
+	}
+);
+
+export const addOrderInfo = createAsyncThunk(
+	ADD_ORDER,
+	async (arg, thunkAPI) => {
+		await Axios.post(
+			`${DOMAIN_NAME}/api/orders`,
+			{
+				idCar: arg.idCar,
+				email: arg.email,
+				startDate: arg.startDate,
+				endDate: arg.endDate,
+				totalPrice: arg.totalPrice,
+			},
+			{
+				headers: {
+					"Content-Type": "Application/json",
+					Authorization: `Bearer ${arg.token}`,
+				},
+			}
+		)
+			.then((res) => {
+				console.log(res);
+			})
+			.catch();
 	}
 );
 export const postPaymentPage = createAsyncThunk(
@@ -42,6 +70,7 @@ export const postPaymentPage = createAsyncThunk(
 				headers: {
 					"Access-Control-Allow-Origin": "*",
 					"Content-Type": "Application/json",
+					Authorization: `Bearer ${arg.token}`,
 				},
 			}
 		)
