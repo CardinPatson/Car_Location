@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { connect } from "react-redux";
 import Header from "../header";
 import styled from "styled-components";
@@ -42,58 +42,97 @@ function Cars(props) {
 	const [brandValue, setBrandValue] = useState("");
 	const [modelValue, setModelValue] = useState("");
 
+	const onChangeBrand = useCallback(
+		(value) => {
+			// function onChangeBrand(value) {
+			// Cette fonction permet de générer le select des modèles en focntion de la marque sélectionnée.
+			// PRE: Récupère la valeur de la marque actuellement sélectionnée.
+			// POST: Génère le select du modèle avec tous les modèles disponibles pour cette marque.
+			function onChangeBrandSubFunction(car) {
+				let test = [];
+				for (let i = 0; i < car.length; i++) {
+					if (
+						car[i]["cars_brands"]["brand"] === value &&
+						!test.some(
+							(model) =>
+								model["model"] ===
+								car[i]["cars_brands"]["model"]
+						)
+					) {
+						test.push({ model: car[i]["cars_brands"]["model"] });
+					}
+				}
+				setCurrentModel(test);
+				setBrandValue(value);
+				setModelValue(test[0]["model"]);
+			}
+			if (props.carsByDates && props.carsByDates.length) {
+				onChangeBrandSubFunction(props.carsByDates);
+			} else {
+				onChangeBrandSubFunction(props.cars);
+			}
+			return 1;
+		},
+		[props.cars, props.carsByDates]
+	);
+
 	// Dans le cas ou l'utilisateur arrive sur cette page par le biais de la page home et de son slot date, on récupère les dates préalablement sélectionnées.
 	const location = useLocation();
 
-	function manageBrandModal(cars) {
-		// Cette fonction gère les filtres en général.
-		// PRE: Récupère la liste des voitures affichées.
-		// POST: Règle les paramètres des filtres pour qu'ils soient adaptés aux voitures actuellement affichées.
+	const manageBrandModal = useCallback(
+		(cars) => {
+			// function manageBrandModal(cars) {
+			// Cette fonction gère les filtres en général.
+			// PRE: Récupère la liste des voitures affichées.
+			// POST: Règle les paramètres des filtres pour qu'ils soient adaptés aux voitures actuellement affichées.
 
-		// Dans le cas ou l'utilisateur arrive sur cette page par le biais de la page home et de son slot date, on récupère les dates préalablement sélectionnées.
-		// Ensuite on injecte ces données dans le filtre date.
-		if (location["state"]) {
-			let info = location["state"];
-			setStartDate(moment(new Date(info["startDate"]).toISOString()));
-			setStartTime(info["startTime"]);
-			setEndDate(moment(new Date(info["endDate"]).toISOString()));
-			setEndTime(info["endTime"]);
-		}
-		let brandModel = [];
+			// Dans le cas ou l'utilisateur arrive sur cette page par le biais de la page home et de son slot date, on récupère les dates préalablement sélectionnées.
+			// Ensuite on injecte ces données dans le filtre date.
+			if (location["state"]) {
+				let info = location["state"];
+				setStartDate(moment(new Date(info["startDate"]).toISOString()));
+				setStartTime(info["startTime"]);
+				setEndDate(moment(new Date(info["endDate"]).toISOString()));
+				setEndTime(info["endTime"]);
+			}
+			let brandModel = [];
 
-		// Ici on gère la génération des select pour le filtre marque/modèle
-		// On va générer le select des marques
-		if (cars.length) {
-			for (let a = 0; a < cars.length; a++) {
-				if (
-					!brandModel.some(
-						(car) => car.brand === cars[a]["cars_brands"]["brand"]
-					)
-				) {
-					brandModel.push({
-						brand: cars[a]["cars_brands"]["brand"],
-					});
+			// Ici on gère la génération des select pour le filtre marque/modèle
+			// On va générer le select des marques
+			if (cars.length) {
+				for (let a = 0; a < cars.length; a++) {
+					if (
+						!brandModel.some(
+							(car) =>
+								car.brand === cars[a]["cars_brands"]["brand"]
+						)
+					) {
+						brandModel.push({
+							brand: cars[a]["cars_brands"]["brand"],
+						});
+					}
 				}
+				setFullBrandModel(brandModel);
+				setBrandValue(brandModel[0]["brand"]);
+				onChangeBrand(brandModel[0]["brand"]);
 			}
-			setFullBrandModel(brandModel);
-			setBrandValue(brandModel[0]["brand"]);
-			onChangeBrand(brandModel[0]["brand"]);
-		}
-		if (cars.length) {
-			let min = cars[0]["price"];
-			let max = 0;
-			for (let a = 0; a < cars.length; a++) {
-				if (cars[a]["price"] > max) {
-					max = cars[a]["price"];
+			if (cars.length) {
+				let min = cars[0]["price"];
+				let max = 0;
+				for (let a = 0; a < cars.length; a++) {
+					if (cars[a]["price"] > max) {
+						max = cars[a]["price"];
+					}
+					if (cars[a]["price"] < min) {
+						min = cars[a]["price"];
+					}
 				}
-				if (cars[a]["price"] < min) {
-					min = cars[a]["price"];
-				}
+				setMinPrice(min);
+				setMaxPrice(max);
 			}
-			setMinPrice(min);
-			setMaxPrice(max);
-		}
-	}
+		},
+		[location, onChangeBrand]
+	);
 
 	// Le useEffect est une fonction exécutée au chargement de la page
 	useEffect(() => {
@@ -102,8 +141,7 @@ function Cars(props) {
 		// POST: Effectue les requêtes pour réucpérer les voitures ainsi que les images de ces dernières.
 		props.getCars();
 		props.getCarsImages();
-		console.log(props.cars);
-		if (props.carsByDate && props.carsByDates.length) {
+		if (props.carsByDates && props.carsByDates.length) {
 			manageBrandModal(props.carsByDates);
 		} else {
 			manageBrandModal(props.cars);
@@ -117,34 +155,6 @@ function Cars(props) {
 		}
 	}
 
-	function onChangeBrand(value) {
-		// Cette fonction permet de générer le select des modèles en focntion de la marque sélectionnée.
-		// PRE: Récupère la valeur de la marque actuellement sélectionnée.
-		// POST: Génère le select du modèle avec tous les modèles disponibles pour cette marque.
-		function onChangeBrandSubFunction(car) {
-			let test = [];
-			for (let i = 0; i < car.length; i++) {
-				if (
-					car[i]["cars_brands"]["brand"] === value &&
-					!test.some(
-						(model) =>
-							model["model"] === car[i]["cars_brands"]["model"]
-					)
-				) {
-					test.push({ model: car[i]["cars_brands"]["model"] });
-				}
-			}
-			setCurrentModel(test);
-			setBrandValue(value);
-			setModelValue(test[0]["model"]);
-		}
-		if (props.carsByDate && props.carsByDates.length) {
-			onChangeBrandSubFunction(props.carsByDates);
-		} else {
-			onChangeBrandSubFunction(props.cars);
-		}
-		return 1;
-	}
 	const handleClick = (e) => {
 		// Cette fonction est appellée à chaque fois que l'on clique sur le bouton "Appliquer".
 		// PRE: Récupère les valeurs des filtres.
@@ -375,6 +385,7 @@ function Cars(props) {
 										key={car.id}
 										car={car}
 										images={carsImages[car.id]}
+										verifDate={handleClick}
 									/>
 								);
 							})

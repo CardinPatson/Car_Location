@@ -13,7 +13,7 @@ const AddCars = (props) => {
 
 	// Voici tous les hooks de la page.
 	// C'est dans ces derniers que l'on va stocker toutes les valeurs des champs, à chaque changement pour ces derniers.
-	const [name, setName] = useState("RS3_Gris-Nardo");
+	const [name, setName] = useState("RS3 Gris-Nardo");
 	const [image, setImage] = useState([]);
 	const [brand, setBrand] = useState("Audi");
 	const [model, setModel] = useState("RS 3");
@@ -22,7 +22,7 @@ const AddCars = (props) => {
 	const [bootSize, setBootSize] = useState(143);
 	const [energy, setEnergy] = useState("Essence");
 	const [passengers, setPassenger] = useState(5);
-	const [type, setType] = useState("Sportive");
+	const [type, setType] = useState("Berline");
 	const [price, setPrice] = useState(290);
 	const [description, setDescription] = useState("");
 	const [airCondition, setAirCondition] = useState(true);
@@ -113,12 +113,12 @@ const AddCars = (props) => {
 		}
 
 		// Ici on va mettre la valeur du popUp à true dans le localStorage, pour pouvoir l'affichée après le rechargement de la page.
-		localStorage.setItem("popup", !popUp);
-		setPopUp(localStorage.getItem("popup"));
 
 		// C'est ici que l'on va envoyer les données à la DB. Le lien est fait avec REDUX.
 		props.addCars(carProperty);
 		// window.location.reload();
+		localStorage.setItem("popup", !popUp);
+		setPopUp(localStorage.getItem("popup"));
 
 		setTimeout(() => {
 			window.location.reload();
@@ -265,6 +265,7 @@ const AddCars = (props) => {
 								}}
 							>
 								<option value="Berline">Berline</option>
+								<option value="Sportive">Sportive</option>
 								<option value="Break">Break</option>
 								<option value="Coupe">Coupe</option>
 								<option value="Cabriolet">Cabriolet</option>

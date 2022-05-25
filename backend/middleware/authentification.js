@@ -5,7 +5,7 @@ module.exports = async (req, res, next) => {
 		//CHECK IF USER HAVE TOKEN
 
 		const token = req.headers.authfirebase;
-
+		console.log(token);
 		admin
 			.verifyIdToken(token)
 			.then((decodedToken) => {

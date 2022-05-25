@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect, useCallback } from "react";
 import Header from "../header";
 import styled from "styled-components";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { postPaymentPage } from "../../action/orderAction";
 import { connect } from "react-redux";
+import "react-dates/initialize";
+import { SingleDatePicker } from "react-dates";
+import moment from "moment";
+import "react-dates/lib/css/_datepicker.css";
+import { addOrderInfo } from "../../action/orderAction";
 
 function CarReservation(props) {
 	// Ceci est une fonction de type composant React pour la page carReservation.
@@ -14,11 +20,99 @@ function CarReservation(props) {
 	const location = useLocation();
 	const { data } = location.state;
 
+	// Voici les hooks pour les valeurs du filtre date.
+	const [focusedStart, setFocusedStart] = useState(false);
+	const [focusedEnd, setFocusedEnd] = useState(false);
+	const [startDate, setStartDate] = useState(moment());
+	const [endDate, setEndDate] = useState(moment());
+
+	// Ce hooks "error" sera utilisé quand le filtre date est sera mal rempli.
+	const [error, setError] = useState("");
+
+	const [totalPrice, setTotalPrice] = useState(data.car.price);
+
+	const verifDate = useCallback(() => {
+		// Cette fonction est appellée à chaque fois que l'on clique sur le bouton "Appliquer".
+		// PRE: Récupère les valeurs des filtres.
+		// POST: Si les test sur les dites valeurs passent, la liste des voitures est triée.
+
+		//date actuelle
+		let currentDate = moment().format("D MMMM YYYY");
+		let currentDay = new window.Date(currentDate);
+
+		//date de début et de fin de location
+		let startDateFormat = startDate.format("YYYY-MM-DD");
+		let startDay = new window.Date(startDateFormat);
+		let endDateFormat = endDate.format("YYYY-MM-DD");
+		let endDay = new window.Date(endDateFormat);
+
+		//si la date est aujourdhui l'heure de début ou de fin doit être supérieur à l'heure actuelle
+		if (startDay.getTime() === currentDay.getTime()) {
+			setError("Veuillez entrez une plage horaire valide !");
+			return;
+		}
+		if (endDay.getTime() === currentDay.getTime()) {
+			setError("Veuillez entrez une plage horaire valide !");
+			return;
+		}
+
+		//si la date de début et de fin est aujourdhui , l'heure de fin de location doit être supérieur à celle de début
+		if (startDay.getTime() === endDay.getTime()) {
+			setError("Veuillez entrez une plage horaire valide !");
+			return;
+		}
+
+		// Une fois les test passé on met les paramètres du filtres dans un objet "slot".
+		const slot = {
+			startDate: startDateFormat,
+			endDate: endDateFormat,
+		};
+		return slot;
+		// Pour finir, on vas chercher les voitures triées selon les honoraires fournis.
+		// props.getCarsByDate(filterInfo);
+	}, [endDate, startDate]);
+
+	const handleTotalPrice = useCallback(() => {
+		const slot = verifDate();
+		if (!slot) {
+			setTotalPrice(data.car.price);
+			return;
+		}
+
+		//date de début et de fin de location
+		else {
+			let startDay = new window.Date(slot.startDate);
+			let endDay = new window.Date(slot.endDate);
+			const diffDays = Math.ceil(
+				Math.abs(endDay - startDay) / (1000 * 60 * 60 * 24)
+			);
+			setTotalPrice(diffDays * data.car.price);
+		}
+	}, [data.car.price, verifDate]);
+	useEffect(() => {
+		handleTotalPrice();
+	}, [startDate, endDate, handleTotalPrice]);
+
 	const handleReservation = () => {
+		const slot = verifDate();
+
+		if (!slot) {
+			return;
+		} else {
+			const reservationInfo = {
+				...slot,
+				totalPrice,
+				idCar: data.car.id,
+				email: props.email,
+				token: props.token,
+			};
+			props.makeReservation(reservationInfo);
+			props.paymentPage();
+		}
+
 		// Cette fonction redirige vers la page de payement quand le client clique sur le bouton "Confirmer la location"
 		// PRE: -
 		// POST: Redirige vers la page de payement
-		props.paymentPage();
 	};
 
 	// Ici, c'est toute la structure de la page carReservation.
@@ -84,23 +178,58 @@ function CarReservation(props) {
 					<Reservation>
 						<Banner>Résumé de la réservation</Banner>
 						<Information>
+							<p>
+								La voiture sera réservée pendant la période
+								suivante:
+							</p>
+							{/* {error ? (
+								<p style={{ color: "red" }}>{error}</p>
+							) : (
+								<></>
+							)} */}
 							<Date>
-								<p>
-									La voiture sera réservée pendant la période
-									suivante:
-								</p>
-								<div>
+								{/* <Slot className="slot" /> */}
+
+								<div className="date">
 									<p>Du</p>
-									<span>01/01/01</span>
+									<StyledDatePickerWrapper>
+										<SingleDatePicker
+											numberOfMonths={1}
+											onDateChange={(date) => {
+												setError("");
+												setStartDate(date);
+											}}
+											onFocusChange={(focus) => {
+												setFocusedStart(focus.focused);
+											}}
+											focused={focusedStart}
+											date={startDate}
+										/>
+									</StyledDatePickerWrapper>
+								</div>
+								<div className="date">
 									<p>au</p>
-									<span>02/02/02</span>
+									<StyledDatePickerWrapper>
+										<SingleDatePicker
+											numberOfMonths={1}
+											onDateChange={(date) => {
+												setError("");
+												setEndDate(date);
+											}}
+											onFocusChange={(focus) => {
+												setFocusedEnd(focus.focused);
+											}}
+											focused={focusedEnd}
+											date={endDate}
+										/>
+									</StyledDatePickerWrapper>{" "}
 								</div>
 							</Date>
 							<Price>
 								<p>Le prix total de location sera:</p>
 								<div>
 									<p>Pour toute la durée:</p>
-									<span>1250€</span>
+									<span>{totalPrice}€</span>
 								</div>
 								<div>
 									<p>Par jour:</p>
@@ -254,45 +383,97 @@ const Banner = styled.div`
 `;
 
 const Information = styled.div`
+	/* border: solid red 1px; */
 	display: flex;
 	flex-direction: column;
+	padding-top: 20px;
 `;
 
 const Date = styled.div`
+	/* border: solid red 1px; */
+	margin-top: 20px;
+	height: 100%;
+	position: relative;
 	display: flex;
-	flex-direction: column;
-	font-size: 18px;
-	margin: 2vh;
-	margin-top: 3vh;
-	padding-bottom: 15px;
-	border-bottom: 1px solid black;
+	flex-direction: row;
+	align-items: center;
 	p {
 		text-align: left;
 	}
-	div {
+	.date {
+		/* border: solid red 1px; */
+		margin-top: 15px;
 		display: flex;
-		gap: 2vh;
-		margin: 2vh 1vh 1vh 2.5vh;
 		align-items: center;
-		font-size: 15px;
-		span {
-			border: 2px solid #00a9ff;
-			padding: 0.5vh;
-			border-radius: 0.5vh;
+		justify-content: space-between;
+		margin: auto;
+		@media (max-width: 1000px) {
+			flex-direction: column;
+			input {
+				margin-top: 5px;
+			}
 		}
 		p {
-			font-weight: bold;
+			/* border : solid red 1px ; */
+			padding-right: 10px;
 		}
 	}
 `;
+const StyledDatePickerWrapper = styled.div`
+	& .SingleDatePicker,
+	.SingleDatePickerInput {
+		.DateInput {
+			width: 100%;
+			height: 40px;
+			display: flex;
+			/* border: solid blue 1px; */
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			.DateInput_input {
+				font-size: 1rem;
+				border-bottom: 0;
+				padding: 12px 16px 14px;
+				/* border: solid blue 1px; */
+			}
+		}
 
+		.SingleDatePickerInput__withBorder {
+			border-radius: 4px;
+			overflow: hidden;
+			display: flex;
+
+			:hover,
+			.DateInput_input__focused {
+				/* border: 1px solid red; */
+			}
+
+			.CalendarDay__selected {
+				background: blue;
+				border: blueviolet;
+				/* border: solid blue 1px; */
+			}
+		}
+
+		.SingleDatePicker_picker.SingleDatePicker_picker {
+			top: 43px;
+			left: 2px;
+			/* border: solid red 1px; */
+			/* top: 43px !important;
+			left: 2px !important; */
+		}
+	}
+`;
 const Price = styled.div`
+	/* border: solid red 1px; */
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	font-size: 18px;
 	margin: 2vh;
-	margin-top: 2vh;
-	padding-bottom: 20px;
+	margin-top: 3vh;
+	padding: 20px;
 	border-bottom: 1px solid black;
 	p {
 		text-align: left;
@@ -406,11 +587,15 @@ const Check = styled.label`
 `;
 
 const mapStateToProps = (state) => {
-	return {};
+	return {
+		token: state.userState.token,
+		email: state.userState.email,
+	};
 };
 const mapStateToDispatch = (dispatch) => {
 	return {
 		paymentPage: () => dispatch(postPaymentPage()),
+		makeReservation: (payload) => dispatch(addOrderInfo(payload)),
 	};
 };
 

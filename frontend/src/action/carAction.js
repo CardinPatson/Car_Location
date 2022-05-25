@@ -9,7 +9,7 @@ import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "axios";
 // const DOMAIN_NAME = `${process.env.REACT_APP_URL}:${process.env.APP_PORT}`;
 const DOMAIN_NAME = `${process.env.REACT_APP_URL}`;
-const DOMAIN_NAME_TEST = `${process.env.REACT_APP_URL_TEST}`;
+// const DOMAIN_NAME_TEST = `${process.env.REACT_APP_URL_TEST}`;
 export const addCarsInfo = createAction(ADD_CARS, function prepare(cars) {
 	return {
 		payload: cars,

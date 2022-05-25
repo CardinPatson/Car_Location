@@ -167,9 +167,7 @@ const addCar = async (req, res) => {
 		airConditioning,
 		description,
 	} = req.body;
-
 	const errors = validationResult(req);
-
 	if (!errors.isEmpty()) {
 		return res.status(422).json({
 			message: "Invalid data",

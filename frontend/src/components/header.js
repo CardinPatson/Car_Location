@@ -3,6 +3,7 @@ import { clearUserInfo } from "../action/userAction";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import localforage from "localforage";
 
 function Header(props) {
 	// Ceci est une fonction de type composant React pour le composant Header. Elle permet à l'utilisateur de naviguer entre les pages.
@@ -16,7 +17,7 @@ function Header(props) {
 				<Logo>
 					<a href="/">
 						<img
-							src="./images/logo.svg"
+							src="/images/logo.svg"
 							alt="Logo of car-rental's site"
 						/>
 					</a>
@@ -53,8 +54,11 @@ function Header(props) {
 						<Logout>
 							<button
 								onClick={() => {
+									localforage.clear();
 									props.signOut();
-									window.location.pathname = "/connreg";
+									setTimeout(() => {
+										window.location.pathname = "/connreg";
+									}, 2000);
 								}}
 								className="logout__button"
 							>

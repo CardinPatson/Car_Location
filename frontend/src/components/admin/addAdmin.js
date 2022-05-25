@@ -13,7 +13,6 @@ function Connexion(props) {
 	const [emailAdmin, setEmailAdmin] = useState("");
 	const [emailUser, setEmailUser] = useState("");
 	const [passwordAdmin, setPasswordAdmin] = useState("");
-	const [passwordUser, setPasswordUser] = useState("");
 
 	const [error, setError] = useState("");
 	const [emailError, setEmailError] = useState("");
@@ -35,7 +34,7 @@ function Connexion(props) {
 			setEmailError("* Veuillez compléter le champ email");
 			return 1;
 		}
-		if (!passwordAdmin && !passwordUser) {
+		if (!passwordAdmin) {
 			setPasswordError("* Veuillez compléter le champ mot de passe");
 			return 1;
 		}
@@ -56,7 +55,6 @@ function Connexion(props) {
 			emailAdmin,
 			passwordAdmin,
 			emailUser,
-			passwordUser,
 			token: props.token,
 		};
 		// On effectue une vérification sur les champs du formulaire.
@@ -132,21 +130,6 @@ function Connexion(props) {
 									""
 								)}
 							</Login>
-							<Password>
-								<p>Mot de passe du nouvel administrateur</p>
-								<input
-									type="password"
-									value={passwordUser}
-									onChange={(e) => {
-										setPasswordUser(e.target.value);
-									}}
-								/>
-								{passwordError ? (
-									<p className="error">{passwordError}</p>
-								) : (
-									""
-								)}
-							</Password>
 							<Confirm>
 								<button
 									onClick={(e) => {

@@ -12,7 +12,7 @@ import { carsSortedWithDate } from "../../../action/orderAction";
 // import { setupServer } from "msw/node";
 
 // We use msw to intercept the network request during the test,
-const initialState = { cars: [], images: [], filterCars: [] };
+// const initialState = { cars: [], images: [], filterCars: [] };
 
 const carProperty = {
 	air_conditioning: true,

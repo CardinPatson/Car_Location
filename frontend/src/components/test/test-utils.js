@@ -1,5 +1,5 @@
 import React from "react";
-import { render as rtlRender, cleanup } from "@testing-library/react";
+import { render as rtlRender } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import carReducer from "../../reducer/carReducer";
 import userReducer from "../../reducer/userReducer";
@@ -18,22 +18,22 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 // import request from "supertest";
 
-afterEach(cleanup);
-const chargeState = async () => {
-	const cars_state = await request(server).get("/api/cars/");
-	// const images_state = await request(server).get("/api/cars/images");
+// afterEach(cleanup);cleanup
+// const chargeState = async () => {
+// 	const cars_state = await request(server).get("/api/cars/");
+// 	// const images_state = await request(server).get("/api/cars/images");
 
-	console.log(cars_state);
+// 	console.log(cars_state);
 
-	return {
-		carState: {
-			cars: [cars_state],
-			images: [images_state],
-		},
-		userState: {},
-	};
-};
-// let preloadedState = {};
+// 	return {
+// 		carState: {
+// 			cars: [cars_state],
+// 			images: [images_state],
+// 		},
+// 		userState: {},
+// 	};
+// };
+// // let preloadedState = {};
 // async () => {
 // 	preloadedState = await chargeState();
 // 	console.log(preloadedState);

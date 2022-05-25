@@ -1,7 +1,7 @@
 //action import
 import { addCarsInfo, addCarsImagesInfo } from "../action/carAction";
 import { carsSortedWithDate } from "../action/orderAction";
-import { createReducer, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 //FAIRE DU STATE INITIALE UN TABLEAU VIDE
 
