@@ -99,6 +99,6 @@ module.exports = [
 
 	body("description")
 		.exists({ checkFalsy: true })
-		.isLength({ min: 10, max: 1000 })
-		.withMessage("Description must have more than 1 000 characters"),
+		.isLength({ min: 5, max: 1000 })
+		.withMessage("Description must have less than 1000 characters"),
 ];
