@@ -118,7 +118,6 @@ const addUser = async (req, res) => {
 const addGoogleUser = async (req, res, next) => {
 	const { userName, userMail } = req.body;
 	//check if user is in database
-	console.log(req);
 	const data = await users.findOne({
 		where: { mail: userMail },
 	});

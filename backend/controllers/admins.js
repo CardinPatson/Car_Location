@@ -44,7 +44,6 @@ exports.addAdmin = async (req, res, next) => {
 			result: "Le nouvel administrateur à bien été enregistré",
 		});
 	} catch (error) {
-		console.log("error 500");
 		res.status(500).json({ error: error });
 	}
 };
