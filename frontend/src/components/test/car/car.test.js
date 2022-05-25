@@ -7,7 +7,7 @@ import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import carReducer from "../../../reducer/carReducer";
 import { addCarsImagesInfo, addCarsInfo } from "../../../action/carAction";
-
+import { carsSortedWithDate } from "../../../action/orderAction";
 // import { rest } from "msw";
 // import { setupServer } from "msw/node";
 
@@ -44,6 +44,103 @@ const imageProperty = {
 	length: 2,
 	id: 1,
 };
+
+const carsList = {
+	oldStateCars: [
+		{
+			air_conditioning: true,
+			boot_size: 143,
+			brand_id: 2,
+			cars_brands: { brand: "Audi", id: 2, model: "RS 3" },
+			color: "Gris Nardo",
+			description: "hello",
+			doors: 5,
+			energy: "Essence",
+			id: 2,
+			is_automatic: true,
+			is_available: true,
+			mileage: null,
+			name: "RS3_Gris-Nardo",
+			number_plate: null,
+			passengers: 5,
+			price: 100,
+			type: "Sportive",
+			year: null,
+		},
+		{
+			air_conditioning: false,
+			boot_size: 143,
+			brand_id: 2,
+			cars_brands: { brand: "Porsche", id: 3, model: "O.8" },
+			color: "Rouge",
+			description: "hello",
+			doors: 3,
+			energy: "Essence",
+			id: 3,
+			is_automatic: false,
+			is_available: true,
+			mileage: null,
+			name: "RS3_Gris-Nardo",
+			number_plate: null,
+			passengers: 5,
+			price: 100,
+			type: "Sportive",
+			year: null,
+		},
+		{
+			air_conditioning: false,
+			boot_size: 143,
+			brand_id: 2,
+			cars_brands: { brand: "Porsche", id: 3, model: "O.8" },
+			color: "Rouge",
+			description: "hello",
+			doors: 3,
+			energy: "Essence",
+			id: 4,
+			is_automatic: false,
+			is_available: true,
+			mileage: null,
+			name: "RS3_Gris-Nardo",
+			number_plate: null,
+			passengers: 5,
+			price: 100,
+			type: "Sportive",
+			year: null,
+		},
+	],
+	carsByDates: [
+		{
+			car_id: 2,
+		},
+		{
+			car_id: 3,
+		},
+	],
+};
+
+const carsLeft = [
+	{
+		air_conditioning: false,
+		boot_size: 143,
+		brand_id: 2,
+		cars_brands: { brand: "Porsche", id: 3, model: "O.8" },
+		color: "Rouge",
+		description: "hello",
+		doors: 3,
+		energy: "Essence",
+		id: 4,
+		is_automatic: false,
+		is_available: true,
+		mileage: null,
+		name: "RS3_Gris-Nardo",
+		number_plate: null,
+		passengers: 5,
+		price: 100,
+		type: "Sportive",
+		year: null,
+	},
+];
+
 // export const handlers = [
 // 	rest.get("/api/cars", (req, res, ctx) => {
 // 		return res(ctx.json({ data: carProperty }), ctx.delay(150));
@@ -85,6 +182,22 @@ test("should return the image state", () => {
 		cars: [],
 		images: imageProperty,
 		filterCars: [],
+	});
+});
+
+test("should sort cars", () => {
+	expect(
+		carReducer(
+			undefined,
+			carsSortedWithDate(
+				carsList["carsByDates"],
+				carsList["oldStateCars"]
+			)
+		)
+	).toEqual({
+		cars: [],
+		images: [],
+		filterCars: carsLeft,
 	});
 });
 
