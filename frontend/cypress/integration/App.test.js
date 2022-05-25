@@ -5,6 +5,9 @@ import App from "../../src/App";
 import { Provider } from "react-redux";
 import store from "./state";
 
+/**
+ * TEST END TO END POUR LE MONTAGE DES ROUTES DE LAPPLICATION
+ */
 it("renders App link", () => {
 	mount(
 		<Provider store={store}>
@@ -12,12 +15,4 @@ it("renders App link", () => {
 		</Provider>,
 		{ wrapper: MemoryRouter }
 	);
-	// cy.get("/");
-	// cy.contains(/Choisissez une date/i).should("be.visible");
-	
 });
-// describe("LOAD OK", function () {
-// 	it("should load without crashing", function () {
-// 		cy.visit("http://localhost:8081");
-// 	});
-// });

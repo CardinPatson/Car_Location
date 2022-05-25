@@ -204,14 +204,29 @@ const Details = styled.div`
 		justify-content: center; */
 	}
 `;
+
+/**
+ * Récupère les informations de l'état dont la page à besoin
+ *
+ * @param {Object} state object
+ * @returns {Object} object
+ */
 const mapStateToProps = (state) => {
 	return {
 		status: state.userState.status,
 	};
 };
 
+/**
+ * Récupère les actions(ceux qui font les appels) dont la page à besoin
+ *
+ * @param {Object} dispatch object
+ * @returns {Object} object
+ */
 const mapStateToDispatch = (dispatch) => {
 	return {};
 };
+
+//connecter l'état aux actions pour observer les changements
 const connector = connect(mapStateToProps, mapStateToDispatch);
 export default connector(CarSlot);

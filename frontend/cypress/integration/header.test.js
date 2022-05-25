@@ -6,8 +6,11 @@ import { Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./state";
 
+/**
+ * TEST END TO END POUR LE HEADER DE LAPPLICATION
+ */
 describe("TodoList", () => {
-	it("renders the Home page", () => {
+	it("renders the header", () => {
 		const history = createMemoryHistory();
 		history.push("/");
 		mount(
@@ -18,18 +21,5 @@ describe("TodoList", () => {
 			</Provider>,
 			{ wrapper: MemoryRouter }
 		);
-		// cy.contains(/Choisissez une date/i).should("be.visible");
-		// cy.get("[data-testid=todo-list]").should("exist");
 	});
-
-	// it("contains the correct number of todos", () => {
-	// 	const todos = [
-	// 		{ text: "Buy milk", id: 1 },
-	// 		{ text: "Learn Component Testing", id: 2 },
-	// 	];
-
-	// 	mount(<TodoList todos={todos} />);
-
-	// 	cy.get("[data-testid=todos]").should("have.length", todos.length);
-	// });
 });

@@ -8,7 +8,7 @@ import { signInUser } from "../../action/userAction";
 function Connreg(props) {
 	// C'est un fonction de type composant React qui va servir à l'utilisateur de se logger
 	// PRE : -
-	// Celle-ci va retourner une page qui va servir pour se connecter et aussi qui contient des liens qui menent vers (creation du compte et mot de passe oublié) 
+	// Celle-ci va retourner une page qui va servir pour se connecter et aussi qui contient des liens qui menent vers (creation du compte et mot de passe oublié)
 	const [connexion, setConnexion] = useState(true);
 	const toggle = React.useCallback(() => {
 		setConnexion(!connexion);
@@ -49,9 +49,22 @@ const Content = styled.div`
 	background-size: cover;
 	background-position: center;
 `;
+
+/**
+ * Récupère les informations de l'état dont la page à besoin
+ *
+ * @param {Object} state object
+ * @returns {Object} object
+ */
 const mapStateToProps = (state) => {
 	return {};
 };
+/**
+ * Récupère les actions(ceux qui font les appels) dont la page à besoin
+ *
+ * @param {Object} dispatch object
+ * @returns {Object} object
+ */
 const mapStateToDispatch = (dispatch) => {
 	return {
 		signin: () => {
@@ -59,5 +72,6 @@ const mapStateToDispatch = (dispatch) => {
 		},
 	};
 };
+//connecter l'état aux actions pour observer les changements
 const connector = connect(mapStateToProps, mapStateToDispatch);
 export default connector(Connreg);

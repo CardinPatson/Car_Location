@@ -57,7 +57,9 @@ function ForgotPassword(props) {
 							</button>
 						</Confirm>
 						{message && (
-							<Message style={{ color: "red" }}>{message}</Message>
+							<Message style={{ color: "red" }}>
+								{message}
+							</Message>
 						)}
 						{message && (
 							<Message>
@@ -195,6 +197,13 @@ const Message = styled.div`
 	border-bottom: 1px solid black;
 	color: #00a9ff;
 `;
+
+/**
+ * Récupère les informations de l'état dont la page à besoin
+ *
+ * @param {Object} state object
+ * @returns {Object} object
+ */
 const mapStateToProps = (state) => {
 	return {
 		firstName: state.userState.firstName,
@@ -202,9 +211,16 @@ const mapStateToProps = (state) => {
 	};
 };
 
+/**
+ * Récupère les actions(ceux qui font les appels) dont la page à besoin
+ *
+ * @param {Object} dispatch object
+ * @returns {Object} object
+ */
 const mapStateToDispatch = (dispatch) => {
 	return {};
 };
 
+//connecter l'état aux actions pour observer les changements
 const connector = connect(mapStateToProps, mapStateToDispatch);
 export default connector(ForgotPassword);

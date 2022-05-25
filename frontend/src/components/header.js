@@ -216,7 +216,12 @@ const Menu = styled.div`
 		display: none;
 	}
 `;
-
+/**
+ * Récupère les informations de l'état dont la page à besoin
+ *
+ * @param {Object} state object
+ * @returns {Object} object
+ */
 const mapStateToProps = (state) => {
 	return {
 		firstName: state.userState.firstName,
@@ -224,6 +229,12 @@ const mapStateToProps = (state) => {
 	};
 };
 
+/**
+ * Récupère les actions(ceux qui font les appels) dont la page à besoin
+ *
+ * @param {Object} dispatch object
+ * @returns {Object} object
+ */
 const mapStateToDispatch = (dispatch) => {
 	return {
 		signOut: () => {
@@ -232,6 +243,7 @@ const mapStateToDispatch = (dispatch) => {
 	};
 };
 
+//connecter l'état aux actions pour observer les changements
 const connector = connect(mapStateToProps, mapStateToDispatch);
 
 export default connector(Header);

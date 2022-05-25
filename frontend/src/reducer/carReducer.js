@@ -1,31 +1,18 @@
-//action import
 import { addCarsInfo, addCarsImagesInfo } from "../action/carAction";
 import { carsSortedWithDate } from "../action/orderAction";
 import { createSlice } from "@reduxjs/toolkit";
 
-//FAIRE DU STATE INITIALE UN TABLEAU VIDE
-
-// const initialState = {
-//   name: "",
-//   description: "",
-//   brand: "",
-//   model: "",
-//   color: "",
-//   doors: 0,
-//   bootSize: 0,
-//   energy: "",
-//   passengers: 0,
-//   type: "", //sport ou suv
-//   price: 0,
-//   airCondition: false,
-//   isAutomatic: false,
-//   images: [],
-// };
+//Etat initiale des voitures
 const initialState = { cars: [], images: [], filterCars: [] };
 
-//L'action addCars ne renvoie rien mais déclenchera une rafraichissement pour prendre en compte le nouveau véhicule rajouté
-
-//CE REDUCER SERA UTILISE DANS LE CAS DUNE RECUPERATION DE VOITURE POUR LA SAUVEGARDE DE LETAT DES VOITURES EN LOCALE
+/**
+ * Reducteur pour les voitures (stocke/supprime/modifie l'état des voitures en local)
+ *
+ * @param {Object} initialState object
+ * @param {Object} name string
+ * @param {Object} reducer object (contient les fonctions redux : qui gèrent les types d'action)
+ * @returns {Object} object
+ */
 const carReducer = createSlice({
 	name: "cars",
 	initialState: initialState,
@@ -33,23 +20,26 @@ const carReducer = createSlice({
 	extraReducers: (builder) => {
 		builder
 			.addCase(addCarsInfo, (state, action) => {
-				// state.push(action.payload);
-				// state = [...state.slice(0, state.length)];
+				// Ajouter les informations des voitures à l'état(local)
 				state.cars = action.payload;
 				state.filterCars = [];
 			})
 			.addCase(addCarsImagesInfo, (state, action) => {
+				//Ajout des images des voitures à l'état(local)
 				state.images = action.payload;
 			})
 			.addCase(carsSortedWithDate, (state, action) => {
+				//Filtre les voitures sur la date
+
 				let tempId = [];
 				let tempArray = [];
-				//GET ALL ID CARS NOT AVAILABLE
+
+				//Récupérer tous les id non disponible
 				action.payload.carsByDates.forEach((x) =>
 					tempId.push(x.car_id)
 				);
 
-				//PUSH CAR THAT NOT CORRESPOND
+				//Ajouter les voitures qui ne corresponde pas au id précédent
 				for (let car of action.payload.oldStateCars) {
 					if (tempId.indexOf(car.id) === -1) {
 						tempArray.push(car);
@@ -65,5 +55,3 @@ const carReducer = createSlice({
 });
 
 export default carReducer.reducer;
-//Reducer pour la recupération des voitures
-//L'etat

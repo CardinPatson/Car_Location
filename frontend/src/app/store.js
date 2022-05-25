@@ -11,6 +11,7 @@ import {
 import localForage from "localforage";
 import rootReducer from "../reducer";
 
+// Options de sauvegarde des informations en local
 const persistConfig = {
 	key: "root",
 	version: 1,
@@ -20,6 +21,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+// Configuration de l'emplacement de sauvegarde
 export const store = configureStore({
 	reducer: persistedReducer,
 	middleware: (getDefaultMiddleware) =>

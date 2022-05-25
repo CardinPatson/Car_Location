@@ -2,7 +2,7 @@ import carReducer from "../../src/reducer/carReducer";
 import userReducer from "../../src/reducer/userReducer";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
-
+//PRECHARGEMENT DU STATE DANS LE CAS OU ON A PAS DE REPONSE AU DEPART
 export const preloadedState = {
 	carState: {
 		cars: [
@@ -52,11 +52,21 @@ export const preloadedState = {
 	},
 };
 
+//Construction de l'objet des images pour les voitures
+export let carsImages = {};
+if (preloadedState.carState.images && preloadedState.carState.images.length) {
+	for (let image of preloadedState.carState.images) {
+		if (image.car_id) carsImages[image.car_id] = image.file_names;
+	}
+}
+
+//CONSTRUCTION DE LETAT
 const rootReducer = combineReducers({
 	carState: carReducer,
 	userState: userReducer,
 });
 
+//STORE DE LAPPLICATION DE TEST
 const store = configureStore({ reducer: rootReducer, preloadedState });
 
 export default store;

@@ -6,11 +6,11 @@ import { connect } from "react-redux";
 import { googleSignIn, signInUser } from "../../action/userAction";
 
 function Connexion(props) {
-	// C'est un composant  REACT qui va nous servir de trouver les options de connection. 
+	// C'est un composant  REACT qui va nous servir de trouver les options de connection.
 	// PRE: -
-	// POST: Il va retourner la page de connexion qui va être affiché sur le navigateur. 
+	// POST: Il va retourner la page de connexion qui va être affiché sur le navigateur.
 
-	// On voit ici les HOOKS qui vont nous servir à stocker les informations de l'utilisateur. 
+	// On voit ici les HOOKS qui vont nous servir à stocker les informations de l'utilisateur.
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [remember, setRemember] = useState(false);
@@ -21,7 +21,7 @@ function Connexion(props) {
 	function clearErrors() {
 		// Cette fonction sert à test erreur qui pourrait se trouver dans Email et password.
 		// PRE: -
-		// POST: Il va renvoyer un message d'erreur si les champs ne respect pas les conditions. 
+		// POST: Il va renvoyer un message d'erreur si les champs ne respect pas les conditions.
 		setEmailError("");
 		setPasswordError("");
 	}
@@ -39,9 +39,9 @@ function Connexion(props) {
 			return 1;
 		}
 	}
-     
+
 	const handleConnexion = (e) => {
-		// C'est une fonction qui va nous servir lorsqu'on click sur le bouton se connecter. 
+		// C'est une fonction qui va nous servir lorsqu'on click sur le bouton se connecter.
 		// PRE:
 		// POST: Renvoie une autre page après un click sur le bouton.
 		e.preventDefault();
@@ -70,7 +70,11 @@ function Connexion(props) {
 								setEmail(e.target.value);
 							}}
 						/>
-						{emailError ? <p className="error">{emailError}</p> : ""}
+						{emailError ? (
+							<p className="error">{emailError}</p>
+						) : (
+							""
+						)}
 					</Login>
 					<Password>
 						<p>Mot de passe</p>
@@ -81,7 +85,11 @@ function Connexion(props) {
 								setPassword(e.target.value);
 							}}
 						/>
-						{passwordError ? <p className="error">{passwordError}</p> : ""}
+						{passwordError ? (
+							<p className="error">{passwordError}</p>
+						) : (
+							""
+						)}
 					</Password>
 					<Confirm>
 						<Remember>
@@ -104,18 +112,24 @@ function Connexion(props) {
 								props.googleSignIn();
 							}}
 						>
-							<img src="/images/google.svg" alt=""></img>Se connecter avec
-							google
+							<img src="/images/google.svg" alt=""></img>Se
+							connecter avec google
 						</Google>
 					</Confirm>
 					<Options>
 						<Forgotpassword>
-							<Link to="/forgotPassword" style={{ color: "#00A9FF" }}>
+							<Link
+								to="/forgotPassword"
+								style={{ color: "#00A9FF" }}
+							>
 								Mot de passe oublié ?
 							</Link>
 						</Forgotpassword>
 						<NoAccount>
-							<span onClick={props.onSwap} style={{ color: "#00A9FF" }}>
+							<span
+								onClick={props.onSwap}
+								style={{ color: "#00A9FF" }}
+							>
 								Créer un compte
 							</span>
 						</NoAccount>
@@ -253,8 +267,8 @@ const Google = styled.div`
 	width: 100%;
 	height: 56px;
 	border-radius: 5px;
-	box-shadow: inset 0 0 0 1px rgb(0 0 0 / 60%), inset 0 0 0 2px rgb(0 0 0 / 0%),
-		inset 0 0 0 1px rgb(0 0 0 / 0%);
+	box-shadow: inset 0 0 0 1px rgb(0 0 0 / 60%),
+		inset 0 0 0 2px rgb(0 0 0 / 0%), inset 0 0 0 1px rgb(0 0 0 / 0%);
 
 	/**BOX SHADOW INSET NOUS PERMET DAVOIR UN EFFET INTERIEUR SUR LES BORDURE */
 	vertical-align: middle;
@@ -285,9 +299,22 @@ const NoAccount = styled.label`
 	text-decoration: underline #00a9ff;
 	font-size: 18px;
 `;
+
+/**
+ * Récupère les informations de l'état dont la page à besoin
+ *
+ * @param {Object} state object
+ * @returns {Object} object
+ */
 const mapStateToProps = (state) => {
 	return {};
 };
+/**
+ * Récupère les actions(ceux qui font les appels) dont la page à besoin
+ *
+ * @param {Object} dispatch object
+ * @returns {Object} object
+ */
 const mapStateToDispatch = (dispatch) => {
 	return {
 		signIn: (payload) => {
@@ -299,5 +326,6 @@ const mapStateToDispatch = (dispatch) => {
 	};
 };
 
+//connecter l'état aux actions pour observer les changements
 const connector = connect(mapStateToProps, mapStateToDispatch);
 export default connector(Connexion);

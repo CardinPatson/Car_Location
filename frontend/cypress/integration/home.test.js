@@ -6,8 +6,11 @@ import { Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import stores from "./state";
 
-//CONTACTER LA BASE DE DONNEES POUR RECUPERER TOUTES LES VOITURES
 const store = stores;
+
+/**
+ * TEST END TO END POUR LA PAGE HOME DE LAPPLICATION
+ */
 describe("TodoList", () => {
 	it("renders the Home page", () => {
 		const history = createMemoryHistory();
@@ -21,17 +24,5 @@ describe("TodoList", () => {
 			{ wrapper: MemoryRouter }
 		);
 		cy.contains(/Choisissez une date/i).should("be.visible");
-		// cy.get("[data-testid=todo-list]").should("exist");
 	});
-
-	// it("contains the correct number of todos", () => {
-	// 	const todos = [
-	// 		{ text: "Buy milk", id: 1 },
-	// 		{ text: "Learn Component Testing", id: 2 },
-	// 	];
-
-	// 	mount(<TodoList todos={todos} />);
-
-	// 	cy.get("[data-testid=todos]").should("have.length", todos.length);
-	// });
 });

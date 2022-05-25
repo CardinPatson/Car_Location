@@ -15,16 +15,11 @@ import PaymentDenied from "./components/clients/paymentDenied";
 import FormIdentities from "./components/clients/formIdentities";
 import AddAdmin from "./components/admin/addAdmin";
 
-export const LocationDisplay = () => {
-	const location = useLocation();
-
-	return <div data-testid="location-display">{location.pathname}</div>;
-};
-
 function App(props) {
 	return (
 		<Router>
 			<Routes>
+				{/* Route admin + user */}
 				<Route path="/" element={<Home />} />
 				<Route path="/cars" element={<Cars name="mercedes" />} />
 				<Route path="/connreg" element={<Connreg />} />
@@ -35,12 +30,18 @@ function App(props) {
 				<Route path="/paymentDenied" element={<PaymentDenied />} />
 				<Route path="/formIdentities" element={<FormIdentities />} />
 
-				{/* admin */}
+				{/*Route admin */}
 				{props.status === "admin" && (
 					<>
 						<Route path="/add-cars" element={<AddCars />} />
-						<Route path="/modifyDetails" element={<ModifyDetails />} />
-						<Route path="/add-administrator" element={<AddAdmin />} />
+						<Route
+							path="/modifyDetails"
+							element={<ModifyDetails />}
+						/>
+						<Route
+							path="/add-administrator"
+							element={<AddAdmin />}
+						/>
 					</>
 				)}
 			</Routes>
@@ -58,5 +59,3 @@ const mapStateToDispatch = (dispatch) => {
 };
 const connector = connect(mapStateToProps, mapStateToDispatch);
 export default connector(App);
-//IN REACT DOM V6 SWITCH IS REPLACE BY Routes
-//IMPORoute

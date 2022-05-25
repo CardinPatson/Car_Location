@@ -37,10 +37,6 @@ const AddCars = (props) => {
 		localStorage.getItem("popup", true) === "true"
 	);
 
-	// useEffect(()=>{
-	// 	console.log(localStorage.getItem("popup" , true) === "true");
-	// } , [])
-
 	const removeImage = (e) => {
 		// Cette fonction permet d'enlever une image de la liste de celles actuellement ajoutées par l'administrateur.
 		// PRE: Récupère la liste des images.
@@ -62,8 +58,6 @@ const AddCars = (props) => {
 		// Cette fonction est exécutée à chaque fois que le bouton "envoyer" est cliqué
 		// PRE: Récupère les valeurs des champs du formulaire.
 		// POST: Si aucune erreur n'est générée, elle envoie les données à la db pour ajouter la voiture.
-
-		// Le e.preventDefault() permet de contrer le comportement naturel de la page. Ce dernier impose un rafraichissement de la page une fois que le formulaire est complété.
 		e.preventDefault();
 
 		// Cette boucle permet de supprimer tous les messages d'erreur précédents.
@@ -77,7 +71,8 @@ const AddCars = (props) => {
 			if (input_div[0].innerHTML) input_div[0].innerHTML = "";
 		}
 
-		// Ici on stocke toutes les valeurs des hooks (et donc des champs) dans un objet. Si tous les tests de vérification passent, c'est cet objet qui sera envoyé avec la requête POST cars
+		// Ici on stocke toutes les valeurs des hooks (et donc des champs) dans un objet.
+		//Si tous les tests de vérification passent, c'est cet objet qui sera envoyé avec la requête POST cars
 		const carProperty = {
 			name,
 			description,
@@ -124,9 +119,8 @@ const AddCars = (props) => {
 			window.location.reload();
 		}, 3000);
 	};
-	//INSERTION DE VOITURE DANS LA BASE DE DONNEES
 
-	// Ici, c'est toute la structure de la page addCars.
+	// structure de la page addCars
 	return (
 		<Container>
 			<Header />
@@ -249,14 +243,6 @@ const AddCars = (props) => {
 						<span>Type</span>
 						<div>
 							<p></p>
-							{/* <input
-								type="text"
-								value={type}
-								onChange={(e) => {
-									setType(e.target.value);
-								}}
-								"Berline","Break","Coupe","Cabriolet","Monospace","SUV","4x4","Fourgonnette"
-							/> */}
 							<select
 								className="add__detail__cars__select"
 								value={type}
@@ -377,7 +363,6 @@ const AddCars = (props) => {
 					</div>
 					<div className="photo__cars">
 						{image.map((x) => {
-							// console.log(<img className="cars__photo" alt="cars" src={x} />);
 							return (
 								<div key={x} className="container__photo">
 									<img
@@ -693,16 +678,31 @@ const Message = styled.div`
 	}
 `;
 
+/**
+ * Récupère les informations de l'état dont la page à besoin
+ *
+ * @param {Object} state object
+ * @returns {Object} object
+ */
 const mapStateToProps = (state) => {
 	return {
 		//recuperation des propriétés nécessaires
 	};
 };
+
+/**
+ * Récupère les actions(ceux qui font les appels) dont la page à besoin
+ *
+ * @param {Object} dispatch object
+ * @returns {Object} object
+ */
 const mapStateToDispatch = (dispatch) => {
 	return {
-		//property est un objet contenant les propriétés du véhicule
+		//payload est un objet contenant les propriétés du véhicule
 		addCars: (payload) => dispatch(addCarsProperty(payload)),
 	};
 };
+
+//connecter l'état aux actions pour observer les changements
 const connector = connect(mapStateToProps, mapStateToDispatch);
 export default connector(AddCars);

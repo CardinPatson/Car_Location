@@ -7,15 +7,27 @@ import {
 } from "./actionTypes";
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "axios";
-// const DOMAIN_NAME = `${process.env.REACT_APP_URL}:${process.env.APP_PORT}`;
+
 const DOMAIN_NAME = `${process.env.REACT_APP_URL}`;
-// const DOMAIN_NAME_TEST = `${process.env.REACT_APP_URL_TEST}`;
+
+/**
+ * Passe les informations des voitures aux reducers cars
+ *
+ * @param {Object} cars object
+ * @returns {Object} object
+ */
 export const addCarsInfo = createAction(ADD_CARS, function prepare(cars) {
 	return {
 		payload: cars,
 	};
 });
 
+/**
+ * Passe les images des voitures aux reducers cars
+ *
+ * @param {Object} images object
+ * @returns {Object} object
+ */
 export const addCarsImagesInfo = createAction(
 	GET_CARS_IMAGES,
 	function prepare(images) {
@@ -25,8 +37,12 @@ export const addCarsImagesInfo = createAction(
 	}
 );
 
-//INSERER LA VOITURE DANS LA BASE DE DONNEES
-
+/**
+ * Ajoute une voiture dans la DB
+ *
+ * @param {Object} arg object
+ * @returns {Object} object
+ */
 export const addCarsProperty = createAsyncThunk(
 	ADD_CARS,
 	async (arg, thunkAPI) => {
@@ -55,13 +71,15 @@ export const addCarsProperty = createAsyncThunk(
 			}
 		)
 			.then((rep) => {
-				//TODO recuperer l'id du véhicule et faire un insertion dans la table des images
+				// Formulaire contenant l'id de voiture et ses images
 				const id = rep.data.id;
 				let formData = new FormData();
 
 				Object.values(arg.image).forEach((file) => {
 					formData.append("image", file);
 				});
+
+				//Requête d'insertion de la voiture dans la DB
 				Axios.post(`${DOMAIN_NAME}/api/cars/${id}/images`, formData, {
 					headers: {
 						"Content-Type": "multipart/form-data",
@@ -80,7 +98,11 @@ export const addCarsProperty = createAsyncThunk(
 	}
 );
 
-//RECUPERATION DES VOITURES DANS LA BASE DE DONNEES
+/**
+ * Récupère les infos des voitures de la DB
+ *
+ * @returns {Object} thunkAPI object
+ */
 export const getCarsProperty = createAsyncThunk(
 	GET_CARS,
 
@@ -92,6 +114,11 @@ export const getCarsProperty = createAsyncThunk(
 	}
 );
 
+/**
+ * Récupère les images des voitures de la DB
+ *
+ * @returns {Object} thunkAPI object
+ */
 export const getCarsImages = createAsyncThunk(
 	GET_CARS_IMAGES,
 	async (arg, thunkAPI) => {
@@ -100,10 +127,16 @@ export const getCarsImages = createAsyncThunk(
 		).catch((err) => {
 			console.error(err);
 		});
+
 		thunkAPI.dispatch(addCarsImagesInfo(carsImages.data));
 	}
 );
 
+/**
+ * Supprime une voiture de la DB
+ *
+ * @param {Object} arg object
+ */
 export const deleteCars = createAsyncThunk(
 	DELETE_CARS,
 	async (arg, thunkAPI) => {
@@ -114,6 +147,12 @@ export const deleteCars = createAsyncThunk(
 	}
 );
 
+/**
+ * Modifie les informations d'une voiture de la DB
+ *
+ * @param {Object} arg object
+ *
+ */
 export const modifyCarsProperty = createAsyncThunk(
 	UPDATE_CARS,
 	async (arg, thunkAPI) => {
@@ -146,37 +185,3 @@ export const modifyCarsProperty = createAsyncThunk(
 		});
 	}
 );
-
-// data: Array(1)
-// 0:
-// air_conditioning: true
-// boot_size: 1500
-// brand: "Mercedes"
-// color: "Rouge"
-// description: "Belle petite voiture"
-// doors: 4
-// energy: "Essence"
-// id: 8
-// id_brand: 8
-// is_automatic: true
-// model: "Classe A"
-// name: "Berline"
-// passengers: 5
-// price: 1500
-// type: "SUV"
-
-// payload: {
-// 			name: payload.name,
-// 			description: payload.description,
-// 			brand: payload.brand,
-// 			model: payload.model,
-// 			color: payload.color,
-// 			doors: payload.doors,
-// 			bootSize: payload.boot_size,
-// 			energy: payload.energy,
-// 			passengers: payload.passengers,
-// 			type: payload.type,
-// 			price: payload.price,
-// 			airCondition: payload.air_conditioning,
-// 			isAutomatic: payload.is_automatic,
-// 		},

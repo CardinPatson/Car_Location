@@ -5,62 +5,6 @@ import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { render, screen } from "../test-utils";
 
-//INITIAL STATE
-// const initialState = {
-// 	cars: [
-// 		{
-// 			air_conditioning: true,
-// 			boot_size: 143,
-// 			brand_id: 2,
-// 			cars_brands: { brand: "Audi", id: 2, model: "RS 3" },
-// 			color: "Gris Nardo",
-// 			description: "hello",
-// 			doors: 5,
-// 			energy: "Essence",
-// 			id: 2,
-// 			is_automatic: true,
-// 			is_available: true,
-// 			mileage: null,
-// 			name: "RS3_Gris-Nardo",
-// 			number_plate: null,
-// 			passengers: 5,
-// 			price: 100,
-// 			type: "Sportive",
-// 			year: null,
-// 		},
-// 	],
-// 	images: [
-// 		{
-// 			car_id: 2,
-// 			file_names: [
-// 				"http://localhost:3001/images/tyler-clemmensen-d1Jum1vVLew-unsplash.jpg1651331740235.jpg",
-// 				"http://localhost:3001/images/kevin-bhagat-3cLpiv8h5so-unsplash.jpg1651331740244.jpg",
-// 			],
-// 			length: 2,
-// 			id: 1,
-// 		},
-// 	],
-// 	filterCars: [],
-// };
-
-//Pour se mocker des liens
-// jest.mock("react-router-dom", () => ({
-// 	Link: jest.fn().mockImplementation(({ children }) => {
-// 		return children;
-// 	}),
-// }));
-
-//Pour un fake return
-// jest.mock("react-loader-spinner", () => {
-// 	return {
-// 		__esModule: true,
-// 		A: true,
-// 		default: () => {
-// 			return <div>This is the loader</div>;
-// 		},
-// 	};
-// });
-
 test("Get Legend", async () => {
 	const history = createMemoryHistory();
 	history.push("/cars");

@@ -44,7 +44,6 @@ function Cars(props) {
 
 	const onChangeBrand = useCallback(
 		(value) => {
-			// function onChangeBrand(value) {
 			// Cette fonction permet de générer le select des modèles en focntion de la marque sélectionnée.
 			// PRE: Récupère la valeur de la marque actuellement sélectionnée.
 			// POST: Génère le select du modèle avec tous les modèles disponibles pour cette marque.
@@ -81,7 +80,6 @@ function Cars(props) {
 
 	const manageBrandModal = useCallback(
 		(cars) => {
-			// function manageBrandModal(cars) {
 			// Cette fonction gère les filtres en général.
 			// PRE: Récupère la liste des voitures affichées.
 			// POST: Règle les paramètres des filtres pour qu'ils soient adaptés aux voitures actuellement affichées.
@@ -134,7 +132,7 @@ function Cars(props) {
 		[location, onChangeBrand]
 	);
 
-	// Le useEffect est une fonction exécutée au chargement de la page
+	// fonction exécutée chaque fois qu'on a un changement dans la page
 	useEffect(() => {
 		// Cette fontion permet de récupérer la liste des voitures initiale.
 		// PRE: -
@@ -679,7 +677,12 @@ const StyledDatePickerWrapper = styled.div`
 		}
 	}
 `;
-
+/**
+ * Récupère les informations de l'état dont la page à besoin
+ *
+ * @param {Object} state object
+ * @returns {Object} object
+ */
 const mapStateToProps = (state) => {
 	return {
 		cars: state.carState.cars,
@@ -687,6 +690,12 @@ const mapStateToProps = (state) => {
 		carsByDates: state.carState.filterCars,
 	};
 };
+/**
+ * Récupère les actions(ceux qui font les appels) dont la page à besoin
+ *
+ * @param {Object} dispatch object
+ * @returns {Object} object
+ */
 const mapStateToDispatch = (dispatch) => {
 	return {
 		getCars: () => dispatch(getCarsProperty()),
@@ -694,5 +703,6 @@ const mapStateToDispatch = (dispatch) => {
 		getCarsByDate: (payload) => dispatch(getOrdersInfoByDates(payload)),
 	};
 };
+//connecter l'état aux actions pour observer les changements
 const connector = connect(mapStateToProps, mapStateToDispatch);
 export default connector(Cars);

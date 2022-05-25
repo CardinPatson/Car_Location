@@ -9,8 +9,15 @@ import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
 import Axios from "axios";
-// const DOMAIN_NAME = `http://${process.env.REACT_APP_URL}:${process.env.APP_PORT}`;
+
 const DOMAIN_NAME = `${process.env.REACT_APP_URL}`;
+
+/**
+ * Passe les informations de l'utilisateur lors de son inscription au reducer user
+ *
+ * @param {Object} user object
+ * @returns {Object} object
+ */
 export const addUserRegisterInfo = createAction(
 	ADD_USER_REGISTER,
 	function prepare(user) {
@@ -20,6 +27,12 @@ export const addUserRegisterInfo = createAction(
 	}
 );
 
+/**
+ * Passe les informations de l'utilisateur lors de sa connexion au reducer user
+ *
+ * @param {Object} user object
+ * @returns {Object} object
+ */
 export const addUserSignInInfo = createAction(
 	ADD_USER_SIGNIN,
 	function prepare(user) {
@@ -29,6 +42,12 @@ export const addUserSignInInfo = createAction(
 	}
 );
 
+/**
+ * Passe les informations google de l'utilisateur au reducer user
+ *
+ * @param {Object} user object
+ * @returns {Object} object
+ */
 export const addUserGoogleInfo = createAction(
 	ADD_USER_GOOGLE,
 	function prepare(user) {
@@ -38,12 +57,23 @@ export const addUserGoogleInfo = createAction(
 	}
 );
 
+/**
+ * Supprime les informations de l'utilisateur au reducer user (Déconnexion)
+ *
+ * @returns {Object} object
+ */
 export const clearUserInfo = createAction(CLEAR_USER, function prepare() {
 	return {
 		payload: [],
 	};
 });
-//REGISTER USER VIA FORM
+
+/**
+ * Ajoute les informations de l'utilisateur dans la DB
+ *
+ * @param {Object} arg object
+ * @returns {Object} thunkAPI object
+ */
 export const registerUser = createAsyncThunk(
 	ADD_USER_REGISTER,
 	async (arg, thunkAPI) => {
@@ -68,7 +98,12 @@ export const registerUser = createAsyncThunk(
 	}
 );
 
-//CONNECT USER VIA FORM
+/**
+ * Récupère les informations de l'utilisateur de la DB
+ *
+ * @param {Object} arg object
+ * @returns {Object} thunkAPI object
+ */
 export const signInUser = createAsyncThunk(
 	ADD_USER_SIGNIN,
 	async (arg, thunkAPI) => {
@@ -85,19 +120,25 @@ export const signInUser = createAsyncThunk(
 	}
 );
 
+/**
+ * Ajoute/Récupère les informations google de l'utilisateur dansla DB
+ *
+ * @param {Object} arg object
+ * @returns {Object} thunkAPI object
+ */
 export const googleSignIn = createAsyncThunk(
 	ADD_USER_GOOGLE,
 	async (arg, thunkAPI) => {
 		let token = "";
 
+		//Récupérer les infos google de l'utilisateur
 		const payload = await signInWithPopup(auth, provider).catch((err) => {
 			console.error(err);
 		});
-
-		// const credential = GoogleAuthProvider.credentialFromResult(payload);
+		// Générer un token pour l'utilisateur
 		token = await auth.currentUser.getIdToken();
+
 		if (payload.user && token) {
-			//check if user is in database or not
 			const response = await Axios.post(
 				`${DOMAIN_NAME}/api/users/google`,
 				{
@@ -114,6 +155,7 @@ export const googleSignIn = createAsyncThunk(
 			});
 			window.location.pathname = "/";
 			console.log(response);
+			//Sauvegarder les infos de l'utilisateur
 			thunkAPI.dispatch(
 				addUserSignInInfo({
 					user: response.data.user,
@@ -127,6 +169,12 @@ export const googleSignIn = createAsyncThunk(
 	}
 );
 
+/**
+ * Ajoute les informations d'un administrateur dans la DB
+ *
+ * @param {Object} arg object
+ * @returns {Object} thunkAPI object
+ */
 export const registerAdmin = createAsyncThunk(
 	ADD_ADMIN,
 	async (arg, thunkAPI) => {

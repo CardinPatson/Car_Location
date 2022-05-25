@@ -6,6 +6,9 @@ import { Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "../state";
 
+/**
+ * TEST END TO END POUR LA PAGE CARS DE LAPPLICATION
+ */
 describe("TodoList", () => {
 	it("renders the Home page", () => {
 		const history = createMemoryHistory();
@@ -21,17 +24,5 @@ describe("TodoList", () => {
 		cy.contains(/Audi RS 3/i).should("be.visible");
 		cy.contains(/Type/i).should("be.visible");
 		cy.contains(/Marque et modèle/i).should("be.visible");
-		// cy.get("[data-testid=todo-list]").should("exist");
 	});
-
-	// it("contains the correct number of todos", () => {
-	// 	const todos = [
-	// 		{ text: "Buy milk", id: 1 },
-	// 		{ text: "Learn Component Testing", id: 2 },
-	// 	];
-
-	// 	mount(<TodoList todos={todos} />);
-
-	// 	cy.get("[data-testid=todos]").should("have.length", todos.length);
-	// });
 });

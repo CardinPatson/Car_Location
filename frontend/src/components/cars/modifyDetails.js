@@ -700,18 +700,30 @@ const Buttons = styled.div`
 	}
 `;
 
+/**
+ * Récupère les informations de l'état dont la page à besoin
+ *
+ * @param {Object} state object
+ * @returns {Object} object
+ */
 const mapStateToProps = (state) => {
 	return {
 		//recuperation des propriétés nécessaires
 	};
 };
+/**
+ * Récupère les actions(ceux qui font les appels) dont la page à besoin
+ *
+ * @param {Object} dispatch object
+ * @returns {Object} object
+ */
 const mapStateToDispatch = (dispatch) => {
 	return {
-		//property est un objet contenant les propriétés du véhicule
-		deleteCars: (property) => dispatch(deleteCars(property)),
-		modifyCarsProperty: (property) =>
-			dispatch(modifyCarsProperty(property)),
+		//payload est un objet contenant les propriétés du véhicule
+		deleteCars: (payload) => dispatch(deleteCars(payload)),
+		modifyCarsProperty: (payload) => dispatch(modifyCarsProperty(payload)),
 	};
 };
+//connecter l'état aux actions pour observer les changements
 const connector = connect(mapStateToProps, mapStateToDispatch);
 export default connector(ModifyDetails);

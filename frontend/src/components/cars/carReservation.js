@@ -16,7 +16,7 @@ function CarReservation(props) {
 	// PRE: -
 	// POST: retourne la page réservation de la voiture pour qu'elle soit affichée.
 
-	// Ces deux lignes permettent de récupérer les données transmisent pas le composant parent. Dans ce cas si, il transmet les données de la voiture que le client veux réserver.
+	// Récupérer les données de la voiture réservé du composant parent.
 	const location = useLocation();
 	const { data } = location.state;
 
@@ -26,13 +26,17 @@ function CarReservation(props) {
 	const [startDate, setStartDate] = useState(moment());
 	const [endDate, setEndDate] = useState(moment());
 
-	// Ce hooks "error" sera utilisé quand le filtre date est sera mal rempli.
+	// Ce hooks "error" sera utilisé quand le filtre date est mal rempli.
 	const [error, setError] = useState("");
 
 	const [totalPrice, setTotalPrice] = useState(data.car.price);
 
+	/**
+	 * Verifie la plage horaire entré par l'utilisateur
+	 *
+	 * @returns {Object} slot object
+	 */
 	const verifDate = useCallback(() => {
-		// Cette fonction est appellée à chaque fois que l'on clique sur le bouton "Appliquer".
 		// PRE: Récupère les valeurs des filtres.
 		// POST: Si les test sur les dites valeurs passent, la liste des voitures est triée.
 
@@ -68,11 +72,14 @@ function CarReservation(props) {
 			endDate: endDateFormat,
 		};
 		return slot;
-		// Pour finir, on vas chercher les voitures triées selon les honoraires fournis.
-		// props.getCarsByDate(filterInfo);
 	}, [endDate, startDate]);
 
+	/**
+	 * Calcule le prix total de la réservation
+	 */
 	const handleTotalPrice = useCallback(() => {
+		// PRE: Récupère le plage horaire entré par l'uitlisateur.
+		// POST: Si les test sur les dites valeurs passent, le prix total de réservation.
 		const slot = verifDate();
 		if (!slot) {
 			setTotalPrice(data.car.price);
@@ -89,11 +96,16 @@ function CarReservation(props) {
 			setTotalPrice(diffDays * data.car.price);
 		}
 	}, [data.car.price, verifDate]);
+
+	//Appelé à chaque modification de startDate, endDate et handleTotalPrice
 	useEffect(() => {
 		handleTotalPrice();
 	}, [startDate, endDate, handleTotalPrice]);
 
 	const handleReservation = () => {
+		// Enregistre la réservation et procède au paiement
+		// PRE: vérifier la plage horaire entré par l'uitlisateur
+		// POST: Redirige vers la page de payement
 		const slot = verifDate();
 
 		if (!slot) {
@@ -109,13 +121,9 @@ function CarReservation(props) {
 			props.makeReservation(reservationInfo);
 			props.paymentPage();
 		}
-
-		// Cette fonction redirige vers la page de payement quand le client clique sur le bouton "Confirmer la location"
-		// PRE: -
-		// POST: Redirige vers la page de payement
 	};
 
-	// Ici, c'est toute la structure de la page carReservation.
+	//structure de la page carReservation.
 	return (
 		<Container>
 			<Header />
@@ -586,12 +594,24 @@ const Check = styled.label`
 	}
 `;
 
+/**
+ * Récupère les informations de l'état dont la page à besoin
+ *
+ * @param {Object} state object
+ * @returns {Object} object
+ */
 const mapStateToProps = (state) => {
 	return {
 		token: state.userState.token,
 		email: state.userState.email,
 	};
 };
+/**
+ * Récupère les actions(ceux qui font les appels) dont la page à besoin
+ *
+ * @param {Object} dispatch object
+ * @returns {Object} object
+ */
 const mapStateToDispatch = (dispatch) => {
 	return {
 		paymentPage: () => dispatch(postPaymentPage()),
@@ -599,5 +619,6 @@ const mapStateToDispatch = (dispatch) => {
 	};
 };
 
+//connecter l'état aux actions pour observer les changements
 const connector = connect(mapStateToProps, mapStateToDispatch);
 export default connector(CarReservation);
