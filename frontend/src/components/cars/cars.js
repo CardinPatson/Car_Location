@@ -141,7 +141,6 @@ function Cars(props) {
 		// POST: Effectue les requêtes pour réucpérer les voitures ainsi que les images de ces dernières.
 		props.getCars();
 		props.getCarsImages();
-
 		if (props.carsByDates && props.carsByDates.length) {
 			manageBrandModal(props.carsByDates);
 		} else {

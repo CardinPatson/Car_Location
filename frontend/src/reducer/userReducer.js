@@ -44,16 +44,18 @@ const userReducer = createSlice({
 				if (action.payload.user.address)
 					state.address = action.payload.user.address;
 				if (action.payload.user.telephone)
-					state.address = action.payload.user.telephone;
+					state.telephone = action.payload.user.telephone;
 				if (action.payload.user.mail)
 					state.email = action.payload.user.mail;
 				if (action.payload.token) state.token = action.payload.token;
 				if (action.payload.status) state.status = action.payload.status;
 			})
 			.addCase(addUserGoogleInfo, (state, action) => {
+				console.log(action);
+				console.log("Hellooooo");
 				state.firstName = action.payload.firstName;
 				state.email = action.payload.email;
-				state.token = action.token;
+				state.token = action.payload.token;
 			})
 			.addCase(clearUserInfo, (state, payload) => {
 				state = initialState;
