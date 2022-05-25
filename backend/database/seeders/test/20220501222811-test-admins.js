@@ -1,6 +1,5 @@
 "use strict";
 
-
 module.exports = {
 	async up(queryInterface, Sequelize) {
 		/**
@@ -16,7 +15,6 @@ module.exports = {
 			"admins",
 			[
 				{
-					id: 1,
 					email: "test.toto@gmail.com",
 				},
 			],

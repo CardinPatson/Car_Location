@@ -15,7 +15,6 @@ module.exports = {
 			"orders",
 			[
 				{
-					id: 2,
 					car_id: 2,
 					user_id: 1,
 					date_order: "2022-03-31T22:00:00.000Z",
@@ -24,7 +23,6 @@ module.exports = {
 					total_price: 7680,
 				},
 				{
-					id: 1,
 					car_id: 1,
 					user_id: 1,
 					date_order: "2022-04-30T12:00:00.000Z",

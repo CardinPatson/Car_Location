@@ -2,7 +2,7 @@ const router = require("express").Router();
 const adminsCtrl = require("../controllers/admins");
 const auth = require("../middleware/authentification");
 
-//check if the admin have token
+//Insertion d'admin
 router.post("/", auth, adminsCtrl.addAdmin);
 
 module.exports = router;

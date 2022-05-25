@@ -123,47 +123,6 @@ const getAllOrders = async (req, res) => {
 	}
 };
 
-/**
- * Return a specific order by id
- *
- * @param {Object} req Request
- * @param {Object} res Response
- *
- * @returns {Object} Order
- */
-const getOrderById = async (req, res) => {
-	try {
-		const orderId = parseInt(req.params.order_id);
-
-		const orderData = await orders.findByPk(orderId, {
-			include: [
-				{
-					model: cars,
-					as: "car",
-				},
-				{
-					model: users,
-					as: "user",
-				},
-			],
-		});
-
-		if (orderData) {
-			return res.status(200).json({
-				order: orderData,
-			});
-		} else {
-			return res.status(404).json({
-				message: "Order not found",
-			});
-		}
-	} catch (error) {
-		return res.status(500).json({
-			message: "Internal server error",
-		});
-	}
-};
-
 // return price of cars from date departure to date return
 
 /**
@@ -203,7 +162,7 @@ const getPrice = async (req, res) => {
 };
 
 /**
- * Create a new order
+ * Ajouter une nouvelle réservation
  *
  * @param {Object} req Request
  * @param {Object} res Response
@@ -212,19 +171,11 @@ const getPrice = async (req, res) => {
  */
 const addOrder = async (req, res) => {
 	try {
-		//NEST EFFECTUER QUE SI ON A TOUTES LES INFOS DU USER
 		// const carId = parseInt(req.params.carId);
 
 		const { idCar, startDate, endDate, email, totalPrice } = req.body;
 
-		//const userActive = await isUserActive(orderData.user_id);
-
-		// if (!userActive) {
-		// 	return res.status(404).json({
-		// 		message: "user not Active",
-		// 	});
-		// }
-
+		//Vérifier si la voiture existe dans la DB
 		const carData = await cars.findByPk(idCar);
 
 		if (!carData) {
@@ -232,16 +183,15 @@ const addOrder = async (req, res) => {
 				message: "Car not found",
 			});
 		}
-
-		//find user
+		//Retrouver l'utilisateur
 		const dataUser = await users.findOne({
-			email: email,
+			where: {
+				mail: email,
+			},
 		});
-
 		// const nbrOfDays = differenceBetweenDates(startDate, endDate);
 
 		// const price = carData.price * nbrOfDays;
-
 		const orderData = await orders.create({
 			car_id: idCar,
 			user_id: dataUser.dataValues.id,
@@ -249,7 +199,6 @@ const addOrder = async (req, res) => {
 			return_date: endDate,
 			total_price: totalPrice,
 		});
-
 		return res.status(201).json({
 			message: "Order created",
 			order: orderData,
@@ -262,7 +211,7 @@ const addOrder = async (req, res) => {
 };
 
 /**
- * Update an order
+ * Modifier une réservation
  *
  * @param {Object} req Request
  * @param {Object} res Response
@@ -271,11 +220,10 @@ const addOrder = async (req, res) => {
  */
 const updateOrder = async (req, res) => {
 	try {
-		const orderId = parseInt(req.params.order_id);
+		const orderId = parseInt(req.params.id);
 
-		const { carId, userId, departureDate, returnDate, totalPrice } =
-			req.body;
-
+		const { idCar, email, startDate, endDate, totalPrice } = req.body;
+		//Verifier si la réservation existe
 		const orderData = await orders.findByPk(orderId);
 
 		if (!orderData) {
@@ -283,34 +231,37 @@ const updateOrder = async (req, res) => {
 				message: "Order not found",
 			});
 		}
-
-		const carData = await cars.findByPk(carId);
+		//Vérifier si l'id existe
+		const carData = await cars.findByPk(idCar);
 
 		if (!carData) {
 			return res.status(404).json({
 				message: "Car not found",
 			});
 		}
-
-		const userData = await users.findByPk(userId);
+		const userData = await users.findOne({
+			where: {
+				mail: email,
+			},
+		});
 
 		if (!userData) {
 			return res.status(404).json({
 				message: "user not found",
 			});
 		}
+		//DONT WORK 
+		// const nbrOfDays = differenceBetweenDates(startDate, endDate);
 
-		const nbrOfDays = differenceBetweenDates(departureDate, returnDate);
-
-		const price = carData.price * nbrOfDays;
+		// const price = carData.price * nbrOfDays;
 
 		const updatedOrderData = await orders.update(
 			{
-				car_id: carId,
-				user_id: userId,
-				departure_date: departureDate,
-				return_date: returnDate,
-				total_price: price,
+				car_id: idCar,
+				user_id: userData.dataValues.id,
+				departure_date: startDate,
+				return_date: endDate,
+				total_price: totalPrice,
 			},
 			{
 				where: {
@@ -339,7 +290,7 @@ const CLIENT_MAIL = "bellaalirachid@gmail.com";
 const QUANTITY = 1;
 
 /**
- * Initialize payment session with Stripe
+ * Initialisation de la session de paiement avec Stripe
  *
  * @param {Object} req Request
  * @param {Object} res Response
@@ -360,17 +311,11 @@ const payement = async (req, res) => {
 		success_url: `${FRONT_DOMAIN}/paymentAccepted`,
 		cancel_url: `${FRONT_DOMAIN}/paymentDenied`,
 	});
-	// res.header("Access-Control-Allow-Origin", FRONT_DOMAIN); // update to match the domain you will make the request from
-	// res.header(
-	// 	"Access-Control-Allow-Headers",
-	// 	"Origin, X-Requested-With, Content-Type, Accept"
-	// );
-	res.json({ url: session.url }); // <-- this is the changed line
+	res.json({ url: session.url });
 };
 
 module.exports = {
 	getAllOrders,
-	getOrderById,
 	addOrder,
 	getPrice,
 	updateOrder,

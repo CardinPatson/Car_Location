@@ -3,13 +3,13 @@ const user = require("../database/models/users");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const chai = require("chai");
-// const { agent } = require("supertest");
 const request = require("supertest");
 const { omit } = require("lodash");
-
-// const request = agent(server);
 const { expect } = chai;
 
+/**
+ * TEST D'INTEGRATION POUR LES ROUTES USERS
+ */
 const shouldAddUser = {
 	firstName: "toto",
 	lastName: "exemple",
@@ -35,7 +35,6 @@ describe("POST /api/users", async () => {
 		const response = await request(server)
 			.post("/api/users")
 			.send(shouldAddUser);
-		console.log(response);
 		expect(response.status).to.equal(200);
 		expect(response.request._data).to.deep.include(shouldAddUser);
 	});
@@ -45,7 +44,6 @@ describe("POST /api/users", async () => {
 		const response = await request(server)
 			.post("/api/users")
 			.send(shouldNotAddExistingUser);
-		console.log(response.body);
 		expect(response.status).to.equal(200);
 		expect(response.body).to.deep.include(shouldReturnErrorExistingUser);
 	});

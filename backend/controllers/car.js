@@ -26,10 +26,10 @@ const isUniqueCarName = async (name) => {
 };
 
 /**
- * Returns all available cars
+ * Retourne toutes les voitures disponibles
  *
- * @param {Object} req Request object
- * @param {Object} res Response object
+ * @param {Object} req Objet de requête
+ * @param {Object} res Objet de réponse
  * @returns {Object} JSON object
  *
  * */
@@ -53,77 +53,10 @@ const getAllCars = async (req, res) => {
 };
 
 /**
- * Return a car with the specified id
+ * Retourne toutes les images des voitures
  *
- * @param {Object} req Request object
- * @param {Object} res Response object
- * @returns {Object} JSON object
- * */
-const getCarById = async (req, res) => {
-	try {
-		if (req.params.id) {
-			const id = parseInt(req.params.id);
-
-			const data = await cars.findByPk(id, {
-				include: [
-					{
-						model: cars_brands,
-						required: true,
-						as: "cars_brands",
-					},
-					{
-						model: images,
-						required: false,
-						as: "images",
-					},
-				],
-			});
-			return res.status(200).json(data);
-		}
-	} catch (error) {
-		return res.status(500).send(error.message);
-	}
-};
-
-/**
- * Return a car with specified name
- *
- * @param {Object} req Request object
- * @param {Object} res Response object
- * @returns {Object} JSON object
- * */
-const getCarByName = async (req, res) => {
-	try {
-		if (typeof req.params.name === "string") {
-			const name = req.params.name;
-
-			const data = await cars.findOne({
-				where: { name: name },
-				include: [
-					{
-						model: cars_brands,
-						required: true,
-						as: "cars_brands",
-					},
-					{
-						model: images,
-						required: true,
-						as: "images",
-					},
-				],
-			});
-			return res.status(200).json({ data });
-		}
-	} catch (error) {
-		return res.status(500).send(error.message);
-	}
-};
-
-/**
- * Return all images of a cars
- *
- * @param {Object} req Request object
- * @param {Object} res Response object
+ * @param {Object} req Objet de requête
+ * @param {Object} res Objet de réponse
  * @returns {Object} JSON object
  * */
 const getCarsImages = async (req, res) => {
@@ -144,10 +77,10 @@ const getCarsImages = async (req, res) => {
 // POST !!!
 
 /**
- * Add a new car
+ * Ajoute une nouvelle voiture
  *
- * @param {Object} req Request object
- * @param {Object} res Response object
+ * @param {Object} req Objet de requete
+ * @param {Object} res Objet de réponse
  * @returns {Object} JSON object
  */
 const addCar = async (req, res) => {
@@ -176,18 +109,11 @@ const addCar = async (req, res) => {
 	}
 
 	try {
+		//Vérifier si la marque et le modèle existe
 		const data = await cars_brands.findOrCreate({
 			where: { brand: brand, model: model },
 			attributes: ["id"],
 		});
-
-		// const nameExists = await isUniqueCarName(name);
-
-		// if (!nameExists) {
-		//     return res.status(409).json({
-		//         message: "Car name already exists"
-		//     });
-		// }
 
 		const data2 = await cars.create({
 			name: name,
@@ -213,20 +139,20 @@ const addCar = async (req, res) => {
 };
 
 /**
- * Add a new image to a car
+ * Ajoute les images d'une voiture
  *
- * @param {Object} req Request object
- * @param {Object} res Response object
+ * @param {Object} req Objet de requête
+ * @param {Object} res Objet de réponse
  * @returns {Object} JSON object
  */
 const addCarImages = async (req, res, next) => {
 	try {
 		const car_id = req.params.id;
 
-		//RETRIEVE THE PATH OF THE IMAGES
+		//Construire le chemin vers l'image
 		const url_prev = `${req.protocol}://${req.get("host")}`;
 
-		//MAKE A TABLE WITH IDCARS AND IMAGES PATH
+		//Construire une table avec les idcars et les chemins des images
 		const values = req.files.map((x) => {
 			return `${url_prev}/images/${x.filename}`;
 		});
@@ -246,10 +172,10 @@ const addCarImages = async (req, res, next) => {
 
 // Seule petit problème : Si on modifie la marque et le modèle, les ancienne données resterons dans la DB meme s'il ne sont reliée a aucune voiture !!!
 /**
- * Update a car
+ * Modifier les informations d'une voiture
  *
- * @param {Object} req Request object
- * @param {Object} res Response object
+ * @param {Object} req Objet de requête
+ * @param {Object} res Objet de réponse
  *
  * @returns {Object} JSON object
  */
@@ -272,13 +198,12 @@ const updateCar = async (req, res) => {
 	} = req.body;
 
 	try {
-		if (!req.params.id) {
+		if (!req.params && !req.params.id) {
 			return res.status(400).json({
 				message: "Bad request",
 			});
 		}
 		const car_id = parseInt(req.params.id);
-
 		const dataCar = await cars.findByPk(car_id, {
 			include: [
 				{
@@ -288,7 +213,7 @@ const updateCar = async (req, res) => {
 				},
 			],
 		});
-
+		// const dataCar = await cars.findByPk(car_id);
 		if (!dataCar) {
 			return res.status(404).json({
 				message: "Car not found",
@@ -353,10 +278,10 @@ const updateCar = async (req, res) => {
 };
 
 /**
- * Delete a car
+ * Supprimer une voiture
  *
- * @param {Object} req Request object
- * @param {Object} res Response object
+ * @param {Object} req Objet de requête
+ * @param {Object} res Objet de réponse
  *
  * @returns {Object} JSON object
  */
@@ -378,8 +303,6 @@ const deleteCar = async (req, res) => {
 
 module.exports = {
 	getAllCars,
-	getCarById,
-	getCarByName,
 	addCar,
 	updateCar,
 	deleteCar,

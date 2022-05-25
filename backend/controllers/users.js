@@ -12,23 +12,34 @@ const getUserById = async (req, res) => {
 	return;
 };
 
+/**
+ * Récupérer un utilisateur
+ *
+ * @param {Object} req Request object
+ * @param {Object} res Response object
+ *
+ * @returns {Object} JSON object
+ */
 const getUser = async (req, res) => {
 	try {
 		const { email, password } = req.query;
 		let status = "";
+
+		//Vérifier si admin
 		const adminData = await admins.findOne({ where: { email: email } });
 		if (adminData) {
 			status = "admin";
 		} else {
 			status = "client";
 		}
+		//Vérifier s'il existe dans la db
 		const data = await users.findOne({ where: { mail: email } });
-		//CHECK IF USERS IN DATABASE
 		if (!data) {
 			res.status(404).json({ error: "Utilisateur introuvable" });
 			return;
 		}
-		//CHECK IF PASSWORD IS THE SAME
+
+		//Vérifier si le password est correct
 		const hash = await bcrypt.compare(password, data.password);
 		if (!hash) {
 			res.status(401).json({ error: "Mot de passe incorrect" });
@@ -51,7 +62,7 @@ const getUser = async (req, res) => {
 };
 
 /**
- * Add a new user
+ * Ajouter un nouvelle utilisateur
  *
  * @param {Object} req Request object
  * @param {Object} res Response object
@@ -62,6 +73,7 @@ const addUser = async (req, res) => {
 	try {
 		const { firstName, lastName, email, password } = req.body;
 
+		//Validation des données
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
 			return res.status(422).json({
@@ -70,7 +82,7 @@ const addUser = async (req, res) => {
 			});
 		}
 
-		//CHECK IF EMAIL IS UNIQUE
+		//Vérifier si l'email de l'utilisateur existe
 		const data = await users.findOne({
 			where: { mail: email },
 		});
@@ -81,7 +93,8 @@ const addUser = async (req, res) => {
 
 		//ENCRYPTER LE PASSWORD DU USER
 		const hash = await bcrypt.hash(password, 10);
-		//CREATE USERS
+
+		//Création de l'utilisateur
 		const response = await users.create({
 			first_name: firstName,
 			last_name: lastName,
@@ -108,7 +121,7 @@ const addUser = async (req, res) => {
 //AUTHENTIFICATION VIA GOOGLE
 
 /**
- * Add a new user with Google account
+ * Ajouter les informations google d'un utilisateur
  *
  * @param {Object} req Request object
  * @param {Object} res Response object
@@ -117,11 +130,14 @@ const addUser = async (req, res) => {
  */
 const addGoogleUser = async (req, res, next) => {
 	const { userName, userMail } = req.body;
-	//check if user is in database
+	//Vérifier si l'utilisateur existe dans la db
 	const data = await users.findOne({
 		where: { mail: userMail },
 	});
+
+	//vérifier si l'utilisateur est admin
 	const adminData = await admins.findOne({ where: { email: userMail } });
+
 	if (adminData && data) {
 		res.status(200).json({ user: data.dataValues, status: "admin" });
 		return;
@@ -131,7 +147,7 @@ const addGoogleUser = async (req, res, next) => {
 		res.status(200).json({ user: data.dataValues, status: "client" });
 		return;
 	}
-
+	//création de l'utilisateur
 	const response = await users.create({
 		first_name: userName,
 		mail: userMail,

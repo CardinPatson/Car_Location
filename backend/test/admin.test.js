@@ -1,14 +1,14 @@
 const server = require("../app");
 const chai = require("chai");
 const jwt = require("jsonwebtoken");
-// const { agent } = require("supertest");
 const request = require("supertest");
 const { omit } = require("lodash");
-
-// const request = agent(server);
 const { expect } = chai;
-
+/**
+ * TEST D'INTEGRATION POUR L'INSERTION D'UN ADMINISTRATEUR DANS LA DB
+ */
 describe("POST /api/admins", async () => {
+	//CAS OU LEMAIL USER EST DEJA ADMIN
 	it("Should return 400 email already admin", async () => {
 		const response = await request(server)
 			.post("/api/admins")
@@ -32,7 +32,7 @@ describe("POST /api/admins", async () => {
 			error: "email already an admin",
 		});
 	});
-
+	//CAS OU L'EMAIL USER NEXISTE PAS
 	it("Should return 404 user email not found", async () => {
 		const response = await request(server)
 			.post("/api/admins")
@@ -52,8 +52,11 @@ describe("POST /api/admins", async () => {
 				)}`
 			);
 		expect(response.status).to.equal(404);
-		expect(response.body).to.deep.include({ error: "User email not found" });
+		expect(response.body).to.deep.include({
+			error: "User email not found",
+		});
 	});
+	//CAS OU LE PASSWORD ADMIN EST INCORRECT
 	it("Should return 404 admin password incorrect", async () => {
 		const response = await request(server)
 			.post("/api/admins")
@@ -75,7 +78,7 @@ describe("POST /api/admins", async () => {
 		expect(response.status).to.equal(404);
 		expect(response.body).to.deep.include({ error: "wrong password" });
 	});
-
+	//CAS OU LES INFORMATIONS SONT CORRECT
 	it("Should add admin", async () => {
 		const response = await request(server)
 			.post("/api/admins")

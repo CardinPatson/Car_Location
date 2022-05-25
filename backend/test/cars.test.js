@@ -1,13 +1,13 @@
 const server = require("../app");
 const cars = require("../database/models/cars");
 const chai = require("chai");
-// const { agent } = require("supertest");
 const request = require("supertest");
 const { omit } = require("lodash");
 
-// const request = agent(server);
 const { expect } = chai;
-
+/**
+ * TEST D'INTEGRATION POUR LES ROUTES CARS
+ */
 const shouldAddCars = {
 	name: "okooo",
 	price: 500,
@@ -51,29 +51,25 @@ const shouldGetCarsImages = {
 	car_id: 1,
 	file_names: ["imagesblabla.jpg", "ramadan.jpg"],
 };
-//Make request that fail add cars
-const shouldNotAddCars = {};
 
 describe("POST /api/cars", async () => {
+	//CAS OU ON AJOUTE DES VOITURES
 	it("Should add car", async () => {
 		const response = await request(server)
 			.post("/api/cars/")
 			.send(shouldAddCars);
-		console.log(response);
 		expect(response.status).to.equal(201);
 	});
 });
 
 describe("GET /api/cars", async () => {
+	//CAS OU ON RECUPERE TOUTES LES VOITURES
 	it("Should return all cars", async () => {
 		const response = await request(server).get("/api/cars/");
-		console.log(response.body);
 		expect(response.status).to.equal(200);
 		expect(response.redirect).to.equal(false);
-		// Cette ligne cause un problème:
-		// expect(response.body).to.deep.include(shouldGetCars);
-		console.log(response.body);
-		// On va tester les champs de chaque objets
+		expect(response.body).to.deep.include(shouldGetCars);
+
 		for (let i = 0; i < response.body.length; i++) {
 			let object = response.body[i];
 			expect(object["name"]).not.be.undefined;
@@ -85,23 +81,72 @@ describe("GET /api/cars", async () => {
 	});
 });
 describe("GET /api/cars/images", async () => {
+	//CAS OU ON RECUPERE TOUTES LES IMAGES DES VOITURES
 	it("Should return all cars images", async () => {
+		const response = await request(server).get(`/api/cars/images`);
+		expect(response.status).to.equal(200);
+		expect(response.body).to.deep.include(shouldGetCarsImages);
+	});
+	it("Should fail to return all cars images", async () => {
 		const response = await request(server).get(`/api/cars/images`);
 		expect(response.status).to.equal(200);
 		expect(response.body).to.deep.include(shouldGetCarsImages);
 	});
 });
 
-describe("POST /api/cars/images", async () => {
-	it("Should add cars images", async () => {
-		// let formData = new FormData();
-		// const imagesTest = ["image1.jpg", "image2.png", "image3.jpeg"];
-		// imagesTest.forEach((x) => {
-		// 	formData.append("image", x);
-		// });
-		// const response = await request(server)
-		// 	.post(`/api/cars/${shouldAddCarsImages.id}images`)
-		// 	.send(shouldAddCarsImages);
-		// expect(response.status).to.equal(201);
+describe("PUT /api/cars", async () => {
+	//CAS OU ON MODIFIE LES INFOS DUNE VOITURE
+	const shouldModifyCars = {
+		newName: "RS3 Gris",
+		newPrice: 500,
+		newBrand: "mercedes",
+		newModel: "1996",
+		newColor: "rouge",
+		newDoors: 5,
+		newBootSize: 140,
+		newType: "SUV",
+		newEnergy: "Diesel",
+		newIsAutomatic: true,
+		newAirConditioning: true,
+		newIsAvailable: true,
+		newPassengers: 5,
+		newDescription: "RS3 est une belle voiture",
+	};
+	it("should fail to modify cars due to wrong param", async () => {
+		const response = await request(server)
+			.put(`/api/cars`)
+			.send(shouldModifyCars);
+
+		expect(response.status).to.equal(404);
+	});
+	it("should fail to modify cars due to wrong id car", async () => {
+		const response = await request(server)
+			.put(`/api/cars/999`)
+			.send(shouldModifyCars);
+		expect(response.status).to.equal(404);
+	});
+	it("Should successfull modify cars", async () => {
+		const response = await request(server)
+			.put(`/api/cars/3`)
+			.send(shouldModifyCars);
+		expect(response.status).to.equal(200);
+		expect(response.status).to.equal(200);
+		expect(response.body).to.deep.include({
+			message: "Car updated",
+			modiffCars: [1],
+		});
+	});
+});
+
+describe("DELETE /api/cars", async () => {
+	//CAS OU ON SUPPRIME UNE VOITURE
+	it("Should fail to delete cars due to wrong param", async () => {
+		const response = await request(server).delete(`/api/cars`);
+		expect(response.status).to.equal(404);
+	});
+	it("Should delete cars", async () => {
+		const response = await request(server).delete(`/api/cars/3`);
+		expect(response.status).to.equal(200);
+		expect(response.body).to.deep.include({ data: 1 });
 	});
 });
