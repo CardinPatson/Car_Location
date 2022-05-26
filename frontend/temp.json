@@ -3,3 +3,12 @@
 	"db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all --seeders-path ../backend/database/seeders/test",
 	"pretest": "cross-env NODE_ENV=test npm run db:reset"
 }
+
+REACT_APP_FIREBASE_API_KEY= 'AIzaSyBSIWWiRE6Fh4EXz3rZhT9_tbDWKDuoedg'
+REACT_APP_FIREBASE_AUTH_DOMAIN= 'car-rental-1f117.firebaseapp.com'
+REACT_APP_FIREBASE_PROJECT_ID= 'car-rental-1f1178'
+REACT_APP_FIREBASE_DATABASE_URL= 'https://car-rental-1f117-default-rtdb.europe-west1.firebasedatabase.app'
+REACT_APP_FIREBASE_STORAGE_BUCKET= 'car-rental-1f117.appspot.com'
+REACT_APP_FIREBASE_MESSAGING_ID= '271151798149'
+REACT_APP_FIREBASE_APP_ID= '1:271151798149:web:b26f30f3b7163e58c196ec'
+REACT_APP_FIREBASE_MEASUREMENT_ID= 'G-GREMLX6ZZ9'

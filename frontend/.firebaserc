@@ -1,8 +1,5 @@
 {
   "projects": {
-    "default": "car-rental-345808",
-    "car_rental": "car-rental-345808",
-    "car-location": "car-rental-345808"
-  },
-  "targets": {}
+    "default": "car-rental-1f117"
+  }
 }
