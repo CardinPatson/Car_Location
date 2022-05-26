@@ -139,9 +139,12 @@ function Cars(props) {
 		// POST: Effectue les requêtes pour réucpérer les voitures ainsi que les images de ces dernières.
 		props.getCars();
 		props.getCarsImages();
+		console.log(props.carsByDates);
 		if (props.carsByDates && props.carsByDates.length) {
+			console.log("changement");
 			manageBrandModal(props.carsByDates);
 		} else {
+			console.log("changement in else");
 			manageBrandModal(props.cars);
 		}
 	}, []);
@@ -383,7 +386,6 @@ function Cars(props) {
 										key={car.id}
 										car={car}
 										images={carsImages[car.id]}
-										verifDate={handleClick}
 									/>
 								);
 							})

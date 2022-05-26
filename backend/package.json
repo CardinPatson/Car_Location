@@ -20,6 +20,7 @@
 		"pg-format": "^1.0.4",
 		"pg-hstore": "^2.3.4",
 		"pg-promise": "^10.11.1",
+		"postgre": "^0.1.8",
 		"sequelize": "^6.19.2",
 		"stripe": "^8.216.0",
 		"supertest": "^6.2.3",
