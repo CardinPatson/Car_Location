@@ -13,14 +13,26 @@ d'exécution NodeJS pour le backend. Une base de données PostgreSQL pour la
 persistance des données et l'ORM Sequelize pour assurer une prise en charge
 adéquate de ces derniers.
 
+## Auteurs
+
+- **Abderrachid BELLAALI** [@Rachiid007](https://github.com/Rachiid007)
+- **Aymar Davy HAKIZIMANA** [@HaAymar](https://github.com/HaAymar)
+- **Michaël POURBAIX** [@Pourbaix](https://github.com/Pourbaix)
+- **Patson Cardin TIAKO NGOUADJE** [@CardinPatson](https://github.com/CardinPatson)
+
 ### Pré-requis
 
 - NodeJS & npm
 - PostgreSQL
 
+Ou la plateforme `Docker` pour le lancement de ces applications dans un container.
+
 ### Installation
 
-Clonez le Github avec `git clone https://github.com/CardinPatson/Car_Location`
+Clonez le Github :
+```
+git clone https://github.com/CardinPatson/Car_Location
+```
 
 npm run -- --coverage --watchAll=false
 
@@ -31,19 +43,13 @@ commande `npm install` pour installer les dépendances et `npm start` pour lance
 le serveur. Faites de même avec le répertoire _backend_. Veuillez garder les
 deux fenêtres des consoles ouvertes.
 
-## Auteurs
+## Type de commit
 
-- **Abderrachid BELLAALI** [@Rachiid007](https://github.com/Rachiid007)
-- **Aymar Davy HAKIZIMANA** [@HaAymar](https://github.com/HaAymar)
-- **Michaël POURBAIX** [@Pourbaix](https://github.com/Pourbaix)
-- **Patson Cardin TIAKO NGOUADJE**
-  [@CardinPatson ](https://github.com/CardinPatson)
-
-## Type of commit
-
-- [FIX] : When you fix a bug
-- [ADD] : When you complete some functionality
-- [DEL] : When you remove some functionality or file
-- [UPG] : When you improve some functionality
-- [REF] : When you improve the structure of the code
-- [PEND] : When you start some functionnality but not complete
+- [FIX] : un bug ou un problème a été identifié et fixé dans la projet
+- [ADD] : une fonctionnalité a été terminé ou un nouveau fichier a été ajouté 
+- [DEL] : une fonctionnalité ou un fichier a été supprimé
+- [UPG] : une fonctionnalité a été amélioré
+- [PEND] : une fonctionnalité a été entamé mais est toujours en phase de réalisation
+- [REF] : la structure du code ou d'une fonctionnalité a été modifié
+- [UPD] : une fonctionnalité fonctionnelle a été optimisé 
+- [TEST] : une fonctionnalité fonctionnelle est en cours de test 
