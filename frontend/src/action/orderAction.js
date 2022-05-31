@@ -74,9 +74,7 @@ export const addOrderInfo = createAsyncThunk(
 				},
 			}
 		)
-			.then((res) => {
-				console.log(res);
-			})
+			.then((res) => {})
 			.catch();
 	}
 );
@@ -90,7 +88,7 @@ export const postPaymentPage = createAsyncThunk(
 	async (arg, thunkAPI) => {
 		await Axios.post(
 			`${DOMAIN_NAME}/api/orders/create-checkout-session`,
-			{},
+			{ email: arg.email },
 			{
 				headers: {
 					"Access-Control-Allow-Origin": "*",

@@ -130,7 +130,7 @@ export const googleSignIn = createAsyncThunk(
 	ADD_USER_GOOGLE,
 	async (arg, thunkAPI) => {
 		let token = "";
-
+		console.log("inside request");
 		//Récupérer les infos google de l'utilisateur
 		const payload = await signInWithPopup(auth, provider).catch((err) => {
 			console.error(err);
@@ -154,7 +154,6 @@ export const googleSignIn = createAsyncThunk(
 				console.error(err);
 			});
 			window.location.pathname = "/";
-			console.log(response);
 			//Sauvegarder les infos de l'utilisateur
 			thunkAPI.dispatch(
 				addUserSignInInfo({

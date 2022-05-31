@@ -3,6 +3,7 @@
 		"testFiles": "**/*.{test,spec}.{js,jsx,ts,tsx}",
 		"componentFolder": "cypress",
 		"viewportHeight": 1000,
-		"viewportWidth": 1300
+		"viewportWidth": 1300,
+		"warning": false
 	}
 }

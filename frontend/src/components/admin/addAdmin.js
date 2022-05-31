@@ -49,7 +49,6 @@ function Connexion(props) {
 		// PRE: Récupère les valeurs des champs du formulaire.
 		// POST: Si tous les champs sont correctes, la fonction envoi les données à la DB.
 		e.preventDefault();
-		clearErrors();
 		// On crée un objet avec les valeurs des champs.
 		const connexionProperty = {
 			emailAdmin,
@@ -60,6 +59,7 @@ function Connexion(props) {
 		// On effectue une vérification sur les champs du formulaire.
 		// Si tous les champs sont correctes on passe à la suite, sinon, on quitte la fonction handleConnexion.
 		if (checkValues() === 1) {
+			clearErrors();
 			return;
 		}
 		// Ici, on essaye d'ajouter l'administrateur à la db.

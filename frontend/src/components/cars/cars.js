@@ -383,7 +383,6 @@ function Cars(props) {
 										key={car.id}
 										car={car}
 										images={carsImages[car.id]}
-										verifDate={handleClick}
 									/>
 								);
 							})
