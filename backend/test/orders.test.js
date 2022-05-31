@@ -78,7 +78,7 @@ describe("POST /api/orders", async () => {
 			departure_date: "2022-05-05T08:00:00.000Z",
 			return_date: "2022-05-10T13:00:00.000Z",
 			total_price: 800,
-			date_order: "2022-05-25T16:48:34.020Z",
+			//date_order: "2022-05-25T16:48:34.020Z",
 		});
 		console.log(response.body);
 	});

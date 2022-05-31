@@ -250,7 +250,7 @@ const updateOrder = async (req, res) => {
 				message: "user not found",
 			});
 		}
-		//DONT WORK 
+		//DONT WORK
 		// const nbrOfDays = differenceBetweenDates(startDate, endDate);
 
 		// const price = carData.price * nbrOfDays;
@@ -283,7 +283,7 @@ const updateOrder = async (req, res) => {
 
 // front
 const YOUR_DOMAIN = `${process.env.APP_IP}:${process.env.APP_PORT}`;
-const FRONT_DOMAIN = "http://localhost:3000";
+const FRONT_DOMAIN = "https://car-rental-1f117.web.app";
 
 const PRICE_ID = "price_1KmyUUAid8mWK1L4RVC47QQ8";
 const CLIENT_MAIL = "bellaalirachid@gmail.com";
@@ -299,7 +299,7 @@ const QUANTITY = 1;
  */
 const payement = async (req, res) => {
 	const session = await stripe.checkout.sessions.create({
-		customer_email: CLIENT_MAIL,
+		customer_email: req.body.email,
 		line_items: [
 			{
 				// Provide the exact Price ID (for example, pr_1234) of the product you want to sell
