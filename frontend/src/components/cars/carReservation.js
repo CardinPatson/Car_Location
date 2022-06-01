@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useRef } from "react";
 import Header from "../header";
 import styled from "styled-components";
 import { useState } from "react";
@@ -73,6 +73,14 @@ function CarReservation(props) {
 		};
 		return slot;
 	}, [endDate, startDate]);
+	const firstUpdate = useRef(true);
+	useEffect(() => {
+		if (firstUpdate.current) {
+			firstUpdate.current = false;
+			return;
+		}
+		handleTotalPrice();
+	}, [endDate, startDate]);
 
 	/**
 	 * Calcule le prix total de la réservation
@@ -97,17 +105,18 @@ function CarReservation(props) {
 		}
 	}, [data.car.price, verifDate]);
 
-	//Appelé à chaque modification de startDate, endDate et handleTotalPrice
-	useEffect(() => {
-		handleTotalPrice();
-	}, [startDate, endDate, handleTotalPrice]);
-
 	const handleReservation = () => {
 		// Enregistre la réservation et procède au paiement
 		// PRE: vérifier la plage horaire entré par l'uitlisateur
 		// POST: Redirige vers la page de payement
 		const slot = verifDate();
 
+		if (!props.email) {
+			setError(
+				"Veuillez vous connecter afin de confirmer votre réservation"
+			);
+			return;
+		}
 		if (!slot) {
 			return;
 		} else {
@@ -119,7 +128,7 @@ function CarReservation(props) {
 				token: props.token,
 			};
 			props.makeReservation(reservationInfo);
-			props.paymentPage();
+			props.paymentPage({ token: props.token, email: props.email });
 		}
 	};
 
@@ -190,11 +199,11 @@ function CarReservation(props) {
 								La voiture sera réservée pendant la période
 								suivante:
 							</p>
-							{/* {error ? (
+							{error ? (
 								<p style={{ color: "red" }}>{error}</p>
 							) : (
 								<></>
-							)} */}
+							)}
 							<Date>
 								{/* <Slot className="slot" /> */}
 
@@ -614,7 +623,7 @@ const mapStateToProps = (state) => {
  */
 const mapStateToDispatch = (dispatch) => {
 	return {
-		paymentPage: () => dispatch(postPaymentPage()),
+		paymentPage: (payload) => dispatch(postPaymentPage(payload)),
 		makeReservation: (payload) => dispatch(addOrderInfo(payload)),
 	};
 };
