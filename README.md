@@ -8,7 +8,7 @@ Application Web de location de voiture développée dans le cadre du cours
 "Développement informatique III" du bachelier Technologie de l'informatique à
 l'EPHEC.
 
-Ce projet utilise la bibliothèque ReactJS pour le Frontend, l'environnement
+Ce [projet](https://car-rental-345808.web.app/) utilise la bibliothèque ReactJS pour le Frontend, l'environnement
 d'exécution NodeJS pour le backend. Une base de données PostgreSQL pour la
 persistance des données et l'ORM Sequelize pour assurer une prise en charge
 adéquate de ces derniers.
